@@ -1,10 +1,9 @@
-import Login from '@/component/login/Login'
+import ConfirmNum from '@/component/confirmNumber/ConfirmNum'
 import React from 'react'
 
 const page = () => {
   return (
-      <Login />
-  )
+<ConfirmNum />  )
 }
 
 export default page

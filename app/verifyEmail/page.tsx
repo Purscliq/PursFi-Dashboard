@@ -1,10 +1,9 @@
-import Login from '@/component/login/Login'
+import VerifyEmail from '@/component/verifyEmail/VerifyEmail'
 import React from 'react'
 
 const page = () => {
   return (
-      <Login />
-  )
+<VerifyEmail />  )
 }
 
 export default page
