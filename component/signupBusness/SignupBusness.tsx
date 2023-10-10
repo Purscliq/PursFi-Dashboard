@@ -9,30 +9,44 @@ interface Country {
   name: {
     common: string;
   };
+  flags: {
+    svg: string;
+  };
 }
 const SignupBusness = () => {
-  const [countries, setCountries] = useState<string[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState("us");
+  const [countries, setCountries] = useState<Record<string, string>[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
 
   useEffect(() => {
     axios
       .get<Country[]>("https://restcountries.com/v3.1/all")
       .then((response: AxiosResponse<Country[]>) => {
         const countryData = response.data;
-        console.log(countryData)
-        const countryNames = countryData.map((country) => country.name.common);
+        console.log(countryData);
+        const countryNames = countryData.map((country) => ({
+          label: country.name.common,
+          flag: country?.flags?.svg,
+          value: country.name.common,
+        }));
         setCountries(countryNames);
+        setSelectedCountry(
+          countryNames.find((country) => country.label === "Nigeria")?.flag!
+        );
       })
       .catch((error) => {
         console.error("Error fetching countries:", error);
       });
   }, []);
 
-  const handleCountryChange = (value: string) => {
-    setSelectedCountry(value);
+  const handleCountryChange = (
+    value: string,
+    option: Record<string, string>
+  ) => {
+    console.log(option);
+    setSelectedCountry(option.flag);
   };
   console.log(selectedCountry);
-  
+
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
       <nav className="py-4 px-8">
@@ -64,22 +78,20 @@ const SignupBusness = () => {
             <Select
               showSearch
               placeholder="Select a country"
-              optionFilterProp="children"
+              optionFilterProp="value"
               onChange={handleCountryChange}
               style={{ width: "100%" }}
-            >
-              {countries.map((countryName) => (
-                <Select.Option key={countryName} value={countryName}>
-                  {countryName}
-                </Select.Option>
-              ))}
-            </Select>
-            <Image
-              src={`https://flagcdn.com/w320/${selectedCountry}.png`}
-              alt="flag"
-              width={40}
-              height={40}
-              className=" border"
+              options={countries}
+              defaultValue={"Nigeria"}
+              suffixIcon={
+                <Image
+                  src={selectedCountry}
+                  alt="flag"
+                  width={40}
+                  height={45}
+                  className=" border"
+                />
+              }
             />
           </div>
           <div className="">

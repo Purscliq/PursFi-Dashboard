@@ -78,10 +78,14 @@ const SignUp = () => {
               Phone number
             </label>
             <div className="phone-input-container">
-              <PhoneInput country={"ng"} containerClass="" inputClass="phone-input-input "/>
+              <PhoneInput
+                country={"ng"}
+                containerClass="!w-full"
+                inputClass="phone-input-input !w-full"
+              />
             </div>{" "}
           </div>{" "}
-          <div >
+          <div>
             <label htmlFor="" className="text-gray-700 text-sm mb-4 ">
               Create your Password
             </label>

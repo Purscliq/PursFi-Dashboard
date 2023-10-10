@@ -1,5 +1,13 @@
 "use client";
-import { ConfigProvider, Button, ButtonProps, Input, InputProps, Radio, RadioProps } from "antd";
+import {
+  ConfigProvider,
+  Button,
+  ButtonProps,
+  Input,
+  InputProps,
+  Radio,
+  RadioProps,
+} from "antd";
 import { Archivo } from "next/font/google";
 const archivo = Archivo({ subsets: ["latin"] });
 const primaryConfig = {
@@ -15,24 +23,26 @@ export const CustomButton = ({ ...props }: ButtonProps) => (
 export const CustomPasswordInput = ({ ...props }: InputProps) => (
   <ConfigProvider
     theme={{
-      token: {},
+      token: {
+        ...primaryConfig,
+      },
     }}
   >
     <Input.Password {...props} style={{ padding: 8 }} />
   </ConfigProvider>
 );
 
-
 export const CustomInput = ({ ...props }: InputProps) => (
   <ConfigProvider
     theme={{
-      token: {},
+      token: { ...primaryConfig },
     }}
   >
     <Input {...props} style={{ padding: 8 }} />
-  </ConfigProvider>)
-  export const CustomRadio = ({ ...props }: RadioProps) => (
-    <ConfigProvider>
-      <Radio {...props} className="!text-white"/>
-    </ConfigProvider>
-  );
+  </ConfigProvider>
+);
+export const CustomRadio = ({ ...props }: RadioProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Radio {...props} className="!text-white" />
+  </ConfigProvider>
+);
