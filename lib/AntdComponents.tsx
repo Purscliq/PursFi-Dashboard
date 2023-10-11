@@ -7,6 +7,8 @@ import {
   InputProps,
   Radio,
   RadioProps,
+  Tabs,
+  TabsProps,
 } from "antd";
 import { Archivo } from "next/font/google";
 const archivo = Archivo({ subsets: ["latin"] });
@@ -44,5 +46,23 @@ export const CustomInput = ({ ...props }: InputProps) => (
 export const CustomRadio = ({ ...props }: RadioProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <Radio {...props} className="!text-white" />
+  </ConfigProvider>
+);
+export const CustomTabs = ({ ...props }: TabsProps) => (
+  <ConfigProvider
+    theme={{
+      token: { ...primaryConfig },
+      components: {
+        Tabs: {
+          itemSelectedColor: "#181336",
+          itemActiveColor: "#181336",
+          itemColor: "#515B6F",
+          fontSize: 16,
+          fontWeightStrong: 600,
+        },
+      },
+    }}
+  >
+    <Tabs {...props} />
   </ConfigProvider>
 );
