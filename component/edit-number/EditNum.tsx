@@ -1,18 +1,17 @@
 import Image from "next/image";
 import logo from "@/assets/logo 3.png";
-import Link from "next/link";
 import { CustomInput as Input } from "@/lib/AntdComponents";
-const ConfirmNum = () => {
+const EditNum = () => {
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
       <nav className="py-4 px-8">
         <Image src={logo} alt="logo" />
       </nav>
-      <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
+      <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[450px] mx-auto mt-4 p-6">
         <h1 className="font-semibold text-xl mb-2 text-Primary">
           Edit Your Phone Number!{" "}
         </h1>
-        <p className=" text-gray-700">
+        <p className=" text-gray-700  text-center">
           Cross check your number or enter another phone number to receive your
           OTP{" "}
         </p>
@@ -27,7 +26,7 @@ const ConfirmNum = () => {
             <div className="flex ">
               <select
                 id="phone"
-                className="border border-gray-300 px-2 py-1 rounded-l bg-blue-100"
+                className="  px-2 py-1 rounded-l bg-blue-100"
               >
                 <option value="+234">+234</option>
                 <option value="+1">+1</option>
@@ -54,4 +53,4 @@ const ConfirmNum = () => {
   );
 };
 
-export default ConfirmNum;
+export default EditNum;

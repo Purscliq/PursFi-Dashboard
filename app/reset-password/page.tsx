@@ -1,9 +1,9 @@
-import ConfirmNum from '@/component/confirmNumber/ConfirmNum'
+import ResetPass from '@/component/reset-password/ResetPass'
 import React from 'react'
 
 const page = () => {
   return (
-<ConfirmNum />  )
+<ResetPass />  )
 }
 
 export default page

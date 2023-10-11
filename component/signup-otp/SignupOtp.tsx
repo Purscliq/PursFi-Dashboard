@@ -5,7 +5,7 @@ import Image from "next/image";
 import logo from "@/assets/logo 3.png";
 import Link from "next/link";
 
-const ForgetPass = () => {
+const SignupOtp = () => {
   const [code, setCode] = useState();
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
@@ -57,7 +57,7 @@ const ForgetPass = () => {
           </p>
           <p className="bg-blue-100 text-sm p-2 text-Primary">
             Still not recevie your OTP kindly cross check you phone number by
-            <Link href="confirmNumber" className="font-semibold">
+            <Link href="edit-number" className="font-semibold">
               Click here
             </Link>
           </p>
@@ -70,4 +70,4 @@ const ForgetPass = () => {
   );
 };
 
-export default ForgetPass;
+export default SignupOtp;
