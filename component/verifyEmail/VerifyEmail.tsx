@@ -4,7 +4,7 @@ import verifyImage from "@/assets/Group 5.png";
 import Image from "next/image";
 import { useState } from "react";
 import { Modal } from "antd";
-import { CustomRadio  } from "@/lib/AntdComponents";
+import { CustomRadio } from "@/lib/AntdComponents";
 const VerifyEmail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
@@ -42,15 +42,98 @@ const VerifyEmail = () => {
             We have sent a confirmation email to the address you provided. This
             verification link is only good for 24 hours.{" "}
           </p>
-          <div className="flex flex-col space-y-5 bg-black/80 p-3 rounded text-white">
-            <p className="text-lg">NON Governmental Organization</p>
-            <CustomRadio value="1" >Business Information</CustomRadio>
-            <CustomRadio value="2">CAC IT form</CustomRadio>
-            <CustomRadio value="3">CAC IT form</CustomRadio>
-            <CustomRadio value="4">CAC IT form</CustomRadio>
-            <CustomRadio value="5">CAC IT form</CustomRadio>
+          <div className="flex flex-col space-y-2 bg-black p-3 rounded text-white ">
+            <p className="text-lg mb-4">NON Governmental Organization</p>
+            <div className="flex space-x-2 items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="13"
+                viewBox="0 0 13 13"
+                fill="none"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6.5 0C2.9159 0 0 2.9159 0 6.5C0 10.0841 2.9159 13 6.5 13C10.0841 13 13 10.0841 13 6.5C13 2.9159 10.0841 0 6.5 0ZM5.20065 9.36845L2.7872 6.9602L3.705 6.0398L5.19935 7.53155L8.64045 4.09045L9.55955 5.00955L5.20065 9.36845Z"
+                  fill="#2EB57E"
+                />
+              </svg>{" "}
+              <p className="text-sm">Business Information</p>
+            </div>
+            <div className="flex space-x-2 items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="13"
+                viewBox="0 0 13 13"
+                fill="none"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6.5 0C2.9159 0 0 2.9159 0 6.5C0 10.0841 2.9159 13 6.5 13C10.0841 13 13 10.0841 13 6.5C13 2.9159 10.0841 0 6.5 0ZM5.20065 9.36845L2.7872 6.9602L3.705 6.0398L5.19935 7.53155L8.64045 4.09045L9.55955 5.00955L5.20065 9.36845Z"
+                  fill="#2EB57E"
+                />
+              </svg>{" "}
+              <p className="text-sm"> CAC IT form</p>
+            </div>{" "}
+            <div className="flex space-x-2 items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="13"
+                viewBox="0 0 13 13"
+                fill="none"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6.5 0C2.9159 0 0 2.9159 0 6.5C0 10.0841 2.9159 13 6.5 13C10.0841 13 13 10.0841 13 6.5C13 2.9159 10.0841 0 6.5 0ZM5.20065 9.36845L2.7872 6.9602L3.705 6.0398L5.19935 7.53155L8.64045 4.09045L9.55955 5.00955L5.20065 9.36845Z"
+                  fill="#2EB57E"
+                />
+              </svg>{" "}
+              <p className="text-sm"> CAC IT form</p>
+            </div>
+            <div className="flex space-x-2 items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="13"
+                viewBox="0 0 13 13"
+                fill="none"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6.5 0C2.9159 0 0 2.9159 0 6.5C0 10.0841 2.9159 13 6.5 13C10.0841 13 13 10.0841 13 6.5C13 2.9159 10.0841 0 6.5 0ZM5.20065 9.36845L2.7872 6.9602L3.705 6.0398L5.19935 7.53155L8.64045 4.09045L9.55955 5.00955L5.20065 9.36845Z"
+                  fill="#2EB57E"
+                />
+              </svg>{" "}
+              <p className="text-sm"> CAC IT form</p>
+            </div>
+            <div className="flex space-x-2 items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="13"
+                viewBox="0 0 13 13"
+                fill="none"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6.5 0C2.9159 0 0 2.9159 0 6.5C0 10.0841 2.9159 13 6.5 13C10.0841 13 13 10.0841 13 6.5C13 2.9159 10.0841 0 6.5 0ZM5.20065 9.36845L2.7872 6.9602L3.705 6.0398L5.19935 7.53155L8.64045 4.09045L9.55955 5.00955L5.20065 9.36845Z"
+                  fill="#2EB57E"
+                />
+              </svg>{" "}
+              <p className="text-sm"> CAC IT form</p>
+            </div>
           </div>
-          <button onClick={() => setIsModalOpen(false)} className="btn bg-transparent hover:bg-transparent border-gray-200 text-Primary capitalize w-full  hover:border-gray-300 mt-4">
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="btn bg-transparent hover:bg-transparent border-gray-200 text-Primary capitalize w-full  hover:border-gray-300 mt-4"
+          >
             Cancel{" "}
           </button>
         </Modal>

@@ -1,4 +1,3 @@
-import { CustomRadio } from "@/lib/AntdComponents";
 import { Avatar } from "antd";
 import React from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -20,7 +19,7 @@ const AsideBar = () => {
         </div>
         <div className="flex flex-col space-y-2 bg-black p-3 rounded text-white">
           <p className="text-lg mb-4">Tip to upload Document</p>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="13"
@@ -37,7 +36,7 @@ const AsideBar = () => {
             </svg>{" "}
             <p className="text-sm"> use clear not blurry image</p>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="13"
@@ -54,7 +53,7 @@ const AsideBar = () => {
             </svg>{" "}
             <p className="text-sm"> make sure your ID number is visible</p>
           </div>{" "}
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="13"
