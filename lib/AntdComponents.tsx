@@ -9,6 +9,12 @@ import {
   RadioProps,
   Tabs,
   TabsProps,
+  Upload,
+  UploadProps,
+  Select,
+  SelectProps,
+  DatePicker,
+  DatePickerProps,
 } from "antd";
 import { Archivo } from "next/font/google";
 const archivo = Archivo({ subsets: ["latin"] });
@@ -19,7 +25,7 @@ const primaryConfig = {
 
 export const CustomButton = ({ ...props }: ButtonProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
-    <Button {...props} className="" />
+    <Button {...props} />
   </ConfigProvider>
 );
 export const CustomPasswordInput = ({ ...props }: InputProps) => (
@@ -40,12 +46,12 @@ export const CustomInput = ({ ...props }: InputProps) => (
       token: { ...primaryConfig },
     }}
   >
-    <Input {...props} style={{ padding: 8 }} />
+    <Input {...props} />
   </ConfigProvider>
 );
 export const CustomRadio = ({ ...props }: RadioProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
-    <Radio {...props} className="!text-white" />
+    <Radio {...props} />
   </ConfigProvider>
 );
 export const CustomTabs = ({ ...props }: TabsProps) => (
@@ -64,5 +70,23 @@ export const CustomTabs = ({ ...props }: TabsProps) => (
     }}
   >
     <Tabs {...props} />
+  </ConfigProvider>
+);
+
+export const CustomUpload = ({ ...props }: UploadProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Upload.Dragger {...props} />
+  </ConfigProvider>
+);
+
+export const CustomSelect = ({ ...props }: SelectProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Select {...props} />
+  </ConfigProvider>
+);
+
+export const CustomDatePicker = ({ ...props }: DatePickerProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <DatePicker {...props} />
   </ConfigProvider>
 );
