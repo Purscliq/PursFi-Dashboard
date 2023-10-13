@@ -1,10 +1,10 @@
 "use client";
-import logo from "@/assets/logo 3.png";
+import logo from "@/assets/logo.svg";
 import verifyImage from "@/assets/Group 5.png";
 import Image from "next/image";
 import { useState } from "react";
 import { Modal } from "antd";
-import { CustomRadio } from "@/lib/AntdComponents";
+import { CustomButton as Button } from "@/lib/AntdComponents";
 const VerifyEmail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
@@ -27,9 +27,9 @@ const VerifyEmail = () => {
         >
           View Requirement
         </button>
-        <button className="btn bg-transparent hover:bg-transparent border-gray-200 text-Primary capitalize w-full  hover:border-gray-300">
+        <Button type="primary" className="!h-[3rem] !bg-Primary w-full">
           Resend Link
-        </button>
+        </Button>
         <Modal
           open={isModalOpen}
           onCancel={() => setIsModalOpen(false)}

@@ -1,8 +1,9 @@
 "use client";
-import logo from "@/assets/logo 3.png";
+import logo from "@/assets/logo.svg";
 import {
   CustomInput as Input,
   CustomPasswordInput as PasswordInput,
+  CustomButton as Button,
 } from "@/lib/AntdComponents";
 import { Checkbox } from "antd";
 import Image from "next/image";
@@ -130,13 +131,13 @@ const SignUp = () => {
               </span>{" "}
             </label>
           </div>
-          <button className="btn bg-Primary hover:bg-Primary border-none text-white capitalize w-full mb-3!">
+          <Button type="primary" className="!h-[3rem] !bg-Primary w-full">
             Get Started
-          </button>
+          </Button>
           <p className="text-sm font-medium text-gray-600 flex items-center justify-center">
             Already have an account ?{" "}
             <Link
-              href="/login"
+              href="/"
               className="text-md hover:underline hover:duration-300 text-Primary"
             >
               Log in

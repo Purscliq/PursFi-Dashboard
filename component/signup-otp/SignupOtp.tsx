@@ -1,12 +1,13 @@
 "use client";
+import { CustomButton as Button } from "@/lib/AntdComponents";
 import React, { useState } from "react";
 import OTPInput from "react-otp-input";
 import Image from "next/image";
-import logo from "@/assets/logo 3.png";
+import logo from "@/assets/logo.svg";
 import Link from "next/link";
 
 const SignupOtp = () => {
-  const [code, setCode] = useState();
+  const [code, setCode] = useState("");
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
       <nav className="py-4 px-8">
@@ -46,9 +47,9 @@ const SignupOtp = () => {
             )}
             shouldAutoFocus={true}
           />
-          <button className="btn bg-Primary hover:bg-Primary border-none text-white capitalize w-full mb-3!">
+          <Button type="primary" className="!h-[3rem] !bg-Primary w-full">
             verify
-          </button>
+          </Button>
           <p className=" text-sm text-grayText ">
             Didn’t get the code?{" "}
             <button className="text-Primary text-sm font-bold">

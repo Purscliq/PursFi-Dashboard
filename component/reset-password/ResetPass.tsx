@@ -1,7 +1,8 @@
-import logo from "@/assets/logo 3.png";
+import logo from "@/assets/logo.svg";
 import {
   CustomInput as Input,
   CustomPasswordInput as PasswordInput,
+  CustomButton as Button,
 } from "@/lib/AntdComponents";
 import Image from "next/image";
 import Link from "next/link";
@@ -47,9 +48,9 @@ const ResetPass = () => {
               type="password"
             />
           </div>
-          <button className="btn bg-Primary hover:bg-Primary border-none text-white capitalize w-full mb-3!">
-            Change Password{" "}
-          </button>
+          <Button type="primary" className="!h-[3rem] !bg-Primary w-full">
+            Change Password
+          </Button>
         </form>
       </main>
     </div>

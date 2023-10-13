@@ -1,16 +1,16 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './component/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./component/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
         BgImage: "#EEF2F7",
-        Primary: "#3180E7",
+        Primary: "#000000",
       },
     },
     fontSize: {
@@ -29,7 +29,7 @@ const config: Config = {
       "7xl": "5rem",
     },
   },
- 
+
   plugins: [require("daisyui")],
-}
-export default config
+};
+export default config;

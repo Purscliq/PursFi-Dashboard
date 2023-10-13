@@ -1,4 +1,4 @@
-import logo from "@/assets/logo 3.png";
+import logo from "@/assets/logo.svg";
 import {
   CustomInput as Input,
   CustomPasswordInput as PasswordInput,
@@ -12,7 +12,7 @@ const Login = () => {
         <Image src={logo} alt="logo" />
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
-        <h1 className="font-semibold text-xl mb-2 text-Primary">
+        <h1 className="font-semibold text-xl mb-2 text-[#000000]">
           Welcome Back !
         </h1>
         <p className=" text-gray-700">Login to visit your dashboard</p>
@@ -45,7 +45,7 @@ const Login = () => {
               type="password"
             />
           </div>
-          <button className="btn bg-Primary hover:bg-Primary border-none text-white capitalize w-full mb-3!">
+          <button className="btn bg-[#000000] hover:bg-[#000000] border-none text-white capitalize w-full mb-3!">
             Login
           </button>
           <div className=" text-sm hover:underline hover:duration-300 text-gray-600 ">
@@ -54,7 +54,10 @@ const Login = () => {
           <span className="flex justify-center items-center mt-6">
             <p className="text-sm leading-6 text-gray-600">
               New to Purscliq Business?{" "}
-              <Link href="signup" className="hover:underline hover:duration-300 cursor-pointer text-Primary">
+              <Link
+                href="signup"
+                className="hover:underline hover:duration-300 cursor-pointer text-Primary"
+              >
                 {" "}
                 Sign Up
               </Link>{" "}

@@ -1,6 +1,9 @@
 "use client";
-import logo from "@/assets/logo 3.png";
-import { CustomInput as Input } from "@/lib/AntdComponents";
+import logo from "@/assets/logo.svg";
+import {
+  CustomInput as Input,
+  CustomButton as Button,
+} from "@/lib/AntdComponents";
 import { Select } from "antd";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -40,12 +43,12 @@ const SignupBusness = () => {
 
   const handleCountryChange = (
     value: string,
-    option: Record<string, string>
+    option: Record<string, string> | Record<string, string>[]
   ) => {
-    console.log(option);
-    setSelectedCountry(option.flag);
+    if (!Array.isArray(option)) {
+      setSelectedCountry(option?.flag);
+    }
   };
-  console.log(selectedCountry);
 
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
@@ -118,9 +121,9 @@ const SignupBusness = () => {
             </label>
             <Input type="number" />
           </div>
-          <button className="btn bg-Primary hover:bg-Primary border-none text-white capitalize w-full mb-3!">
+          <Button type="primary" className="!h-[3rem] !bg-Primary w-full">
             Submit
-          </button>
+          </Button>
         </form>
       </main>
     </div>

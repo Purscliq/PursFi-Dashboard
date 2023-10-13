@@ -33,7 +33,7 @@ const OwnerInfo = () => {
               Personal information of the business Owner(s)
             </p>
           </span>
-          <Button type="primary" className="!w-fit !bg-[#3180E7] !p-[8px]">
+          <Button type="primary" className="!w-fit !bg-[#000000] !p-[8px]">
             Add Business Owner
           </Button>
         </div>
@@ -56,7 +56,7 @@ const OwnerInfo = () => {
               </label>
               <span>
                 <Input placeholder="BVN" />
-                <p className="text-[#3180E7] text-[14px] font-[400]">
+                <p className="text-[#000000] text-[14px] font-[400]">
                   To get your BVN dial *565*0# on your registered mobile number.
                 </p>
               </span>
@@ -124,7 +124,7 @@ const OwnerInfo = () => {
                 Upload ID
               </label>
               <Upload className="">
-                <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#3180E7]">
+                <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
                   <p className="text-[#515B6F] text-[16px] font-[500]">
                     Attach Document
@@ -133,7 +133,7 @@ const OwnerInfo = () => {
               </Upload>
             </div>
             <Button
-              className="!bg-[#3180E7] !p-[8px] !my-[0.2rem]"
+              className="!bg-[#0000] !p-[8px] !my-[0.2rem]"
               type="primary"
             >
               save

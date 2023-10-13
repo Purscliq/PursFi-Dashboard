@@ -15,12 +15,14 @@ import {
   SelectProps,
   DatePicker,
   DatePickerProps,
+  Checkbox,
+  CheckboxProps,
 } from "antd";
 import { Archivo } from "next/font/google";
 const archivo = Archivo({ subsets: ["latin"] });
 const primaryConfig = {
   fontFamily: archivo.style.fontFamily,
-  colorPrimary: "#3180E7",
+  colorPrimary: "#000000",
 };
 
 export const CustomButton = ({ ...props }: ButtonProps) => (
@@ -88,5 +90,11 @@ export const CustomSelect = ({ ...props }: SelectProps) => (
 export const CustomDatePicker = ({ ...props }: DatePickerProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <DatePicker {...props} />
+  </ConfigProvider>
+);
+
+export const CustomCheckBox = ({ ...props }: CheckboxProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Checkbox {...props} />
   </ConfigProvider>
 );
