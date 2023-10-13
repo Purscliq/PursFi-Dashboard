@@ -10,7 +10,7 @@ const AsideBar = () => {
       <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
       <aside className="flex flex-col justify-between w-[16rem] h-screen overflow-hidden  shadow-xl bg-white p-4">
         <Image src={logo} alt="logo" className="mx-auto" />
-        <div className="flex space-x-2 items-center justify-center mx-2 my-4 bg-[#EEF2F7] rounded-md ">
+        <div className="flex space-x-2 items-center justify-center mx-2 my4 bg-[#EEF2F7] rounded-md ">
           <Avatar
             style={{ backgroundColor: "#CDA4FF", verticalAlign: "middle" }}
             size="large"
