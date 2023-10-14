@@ -1,3 +1,4 @@
+"use client";
 import logo from "@/assets/logo.svg";
 import {
   CustomInput as Input,
@@ -44,6 +45,7 @@ const Login = () => {
         <Image src={logo} alt="logo" />
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
+        {alert && <Alert type="error" closable message={alert} />}
         <h1 className="font-semibold text-xl mb-2 text-[#000000]">
           Welcome Back !
         </h1>

@@ -3,43 +3,49 @@ import logo from "@/assets/logo.svg";
 import {
   CustomInput as Input,
   CustomButton as Button,
+  CustomSelect as Select,
 } from "@/lib/AntdComponents";
-import { Select } from "antd";
+import { message, Alert } from "antd";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
-interface Country {
-  name: {
-    common: string;
-  };
-  flags: {
-    svg: string;
-  };
-}
-const SignupBusness = () => {
-  const [countries, setCountries] = useState<Record<string, string>[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
+import { useFetchCountryQuery } from "@/services/country";
+import { useCreateBusinessMutation } from "@/services/authService";
+import { useState, ChangeEventHandler, FormEventHandler } from "react";
 
-  useEffect(() => {
-    axios
-      .get<Country[]>("https://restcountries.com/v3.1/all")
-      .then((response: AxiosResponse<Country[]>) => {
-        const countryData = response.data;
-        console.log(countryData);
-        const countryNames = countryData.map((country) => ({
-          label: country.name.common,
-          flag: country?.flags?.svg,
-          value: country.name.common,
-        }));
-        setCountries(countryNames);
-        setSelectedCountry(
-          countryNames.find((country) => country.label === "Nigeria")?.flag!
-        );
+const initailState = {
+  businessName: "",
+  country: "Nigeria",
+  merchantType: "",
+  businessSize: "",
+};
+
+const SignupBusness = () => {
+  const { data } = useFetchCountryQuery({});
+  const [create, { isLoading }] = useCreateBusinessMutation();
+  const [selectedCountry, setSelectedCountry] = useState(
+    "https://flagcdn.com/ng.svg"
+  );
+  const [formData, setFormData] = useState(initailState);
+  const [alert, setAlert] = useState("");
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    create(formData)
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        message.success(res?.message);
       })
-      .catch((error) => {
-        console.error("Error fetching countries:", error);
+      .catch((err) => {
+        console.log(err);
+        setAlert(err?.data?.message);
       });
-  }, []);
+  };
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (alert) setAlert("");
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target?.name]: e.target?.value,
+    }));
+  };
 
   const handleCountryChange = (
     value: string,
@@ -47,6 +53,7 @@ const SignupBusness = () => {
   ) => {
     if (!Array.isArray(option)) {
       setSelectedCountry(option?.flag);
+      setFormData((prev) => ({ ...prev, country: option?.name }));
     }
   };
 
@@ -56,13 +63,14 @@ const SignupBusness = () => {
         <Image src={logo} alt="logo" />
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[480px] mx-auto mt-4 p-6">
+        {alert && <Alert type="error" closable message={alert} />}
         <h1 className="font-semibold text-3xl text-Primary">
           Create an account
         </h1>
         <p className="text-sm text-gray-600">
           Sign up to create your merchant account
         </p>
-        <form className="w-full space-y-4 mt-4">
+        <form onSubmit={handleSubmit} className="w-full space-y-4 mt-4">
           <div className="">
             <label
               className="block text-gray-600 text-sm font-semibold mb-2"
@@ -70,7 +78,14 @@ const SignupBusness = () => {
             >
               Busness/ Company Name{" "}
             </label>
-            <Input id="busness" type="text" name="busness" />
+            <Input
+              value={formData.businessName}
+              required
+              onChange={handleChange}
+              id="busness"
+              type="text"
+              name="businessName"
+            />
             <p className="text-xs text-gray-400 my-3">
               Please ensure that the business name provided is the same name on
               your registration documents
@@ -81,10 +96,11 @@ const SignupBusness = () => {
             <Select
               showSearch
               placeholder="Select a country"
+              value={formData.country}
               optionFilterProp="value"
               onChange={handleCountryChange}
               style={{ width: "100%" }}
-              options={countries}
+              options={data}
               defaultValue={"Nigeria"}
               suffixIcon={
                 <Image
@@ -102,26 +118,40 @@ const SignupBusness = () => {
               What type of business do you run?{" "}
             </label>
             <Select
-              style={{ width: "100%" }}
+              onChange={(value) =>
+                setFormData((prev) => ({ ...prev, merchantType: value }))
+              }
+              value={formData.merchantType}
+              className="!w-full"
               options={[
                 { value: "jack", label: "Jack" },
                 { value: "lucy", label: "Lucy" },
               ]}
-            />{" "}
+            />
           </div>
           <div className="">
             <label className="block text-gray-600 text-sm font-semibold mb-2">
               Business size?{" "}
             </label>
-            <Input type="number" />
+            <Select
+              onChange={(value) =>
+                setFormData((prev) => ({ ...prev, businessSize: value }))
+              }
+              value={formData.businessSize}
+              className="!w-full"
+              options={[
+                { value: "0-10", label: "0-10" },
+                { value: "10-50", label: "10-50" },
+                { value: "50-Above", label: "50-Above" },
+              ]}
+            />
           </div>
-          <div className="">
-            <label className="block text-gray-600 text-sm font-semibold mb-2">
-              How long has you company been in business before
-            </label>
-            <Input type="number" />
-          </div>
-          <Button type="primary" className="!h-[3rem] !bg-Primary w-full">
+          <Button
+            loading={isLoading}
+            htmlType="submit"
+            type="primary"
+            className="!h-[3rem] !bg-Primary w-full"
+          >
             Submit
           </Button>
         </form>
