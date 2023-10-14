@@ -1,26 +1,55 @@
 "use client";
 import { CustomButton as Button } from "@/lib/AntdComponents";
-import React, { useState } from "react";
+import { useState, useEffect, FormEventHandler } from "react";
 import OTPInput from "react-otp-input";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import Link from "next/link";
+import {
+  useValidateOtpMutation,
+  useGenerateOtpMutation,
+} from "@/services/authService";
+import { message, Alert } from "antd";
 
 const SignupOtp = () => {
   const [code, setCode] = useState("");
+  const [alert, setAlert] = useState("");
+  const [generateOtp, { isLoading }] = useGenerateOtpMutation();
+  const [validateOtp, { isLoading: isValidating }] = useValidateOtpMutation();
+  const requestOtp = () =>
+    generateOtp({ username: "" })
+      .unwrap()
+      .then(() => message.success("otp sent"));
+  useEffect(() => {
+    requestOtp();
+  }, []);
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    validateOtp({ otp: code, username: "" })
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        message.success("validation successful");
+      })
+      .catch((err) => {
+        console.log(err);
+        setAlert(err?.data?.message);
+      });
+  };
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
       <nav className="py-4 px-8">
         <Image src={logo} alt="logo" />
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
+        {alert && <Alert type="error" closable message={alert} />}
         <h1 className="font-semibold text-xl mb-2 text-Primary">
           Verify Your Phone Number!{" "}
         </h1>
         <p className=" text-gray-700">
           We sent an OTP to 0812xxxx345 by SMS and WhatsApp.
         </p>
-        <form className="w-full space-y-5 mt-4">
+        <form onSubmit={handleSubmit} className="w-full space-y-5 mt-4">
           <h1 className="text-sm">Enter OTP Code</h1>
           <OTPInput
             numInputs={6}
@@ -47,12 +76,20 @@ const SignupOtp = () => {
             )}
             shouldAutoFocus={true}
           />
-          <Button type="primary" className="!h-[3rem] !bg-Primary w-full">
+          <Button
+            htmlType="submit"
+            loading={isValidating}
+            type="primary"
+            className="!h-[3rem] !bg-Primary w-full"
+          >
             verify
           </Button>
           <p className=" text-sm text-grayText ">
             Didn’t get the code?{" "}
-            <button className="text-Primary text-sm font-bold">
+            <button
+              onClick={requestOtp}
+              className="text-Primary text-sm font-bold"
+            >
               Click Resend
             </button>
           </p>
