@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import StyledComponentsRegistry from "@/lib/AntdConfig";
+import StoreProvider from "@/store/StoreProvider";
 
 const archivo = Archivo({ subsets: ["latin"] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={archivo.className}>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <StoreProvider>{children}</StoreProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
