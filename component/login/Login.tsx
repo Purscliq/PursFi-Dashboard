@@ -65,6 +65,7 @@ const Login = () => {
               type="email"
               name="email"
               required
+              onChange={handleChange}
               value={formData.email}
             />
           </div>
