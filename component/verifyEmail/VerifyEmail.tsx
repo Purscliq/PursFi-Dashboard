@@ -3,16 +3,29 @@ import logo from "@/assets/logo.svg";
 import verifyImage from "@/assets/Group 5.png";
 import Image from "next/image";
 import { useState } from "react";
-import { Modal } from "antd";
+import { Modal, message, Alert } from "antd";
 import { CustomButton as Button } from "@/lib/AntdComponents";
+import { useGenerateEmailOtpMutation } from "@/services/authService";
 const VerifyEmail = () => {
+  const [generateMail, { isLoading }] = useGenerateEmailOtpMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [alert, setAlert] = useState("");
+  const Verify = () =>
+    generateMail({ username: "test1@gmail.com" })
+      .unwrap()
+      .then((res) =>
+        message.success(res.data?.responseDescription || "Email sent")
+      )
+      .catch((err) =>
+        setAlert(err?.data?.responseDescription || err?.data?.title)
+      );
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
       <nav className="py-4 px-8">
         <Image src={logo} alt="logo" />
       </nav>
       <main className=" flex flex-col space-y-5 items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
+        {alert && <Alert type="error" closable message={alert} />}
         <Image src={verifyImage} alt="verify-image" />
         <h1 className="font-semibold text-3xl text-Primary">
           Verify your Email{" "}
@@ -27,7 +40,11 @@ const VerifyEmail = () => {
         >
           View Requirement
         </button>
-        <Button type="primary" className="!h-[3rem] !bg-Primary w-full">
+        <Button
+          onClick={Verify}
+          loading={isLoading}
+          className="!h-[3rem] w-full"
+        >
           Resend Link
         </Button>
         <Modal

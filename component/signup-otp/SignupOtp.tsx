@@ -1,5 +1,6 @@
 "use client";
 import { CustomButton as Button } from "@/lib/AntdComponents";
+import { useRouter } from "next/navigation";
 import { useState, useEffect, FormEventHandler } from "react";
 import OTPInput from "react-otp-input";
 import Image from "next/image";
@@ -12,28 +13,26 @@ import {
 import { message, Alert } from "antd";
 
 const SignupOtp = () => {
+  const { replace } = useRouter();
   const [code, setCode] = useState("");
   const [alert, setAlert] = useState("");
-  const [generateOtp, { isLoading }] = useGenerateOtpMutation();
+  const [generateOtp, {}] = useGenerateOtpMutation();
   const [validateOtp, { isLoading: isValidating }] = useValidateOtpMutation();
   const requestOtp = () =>
-    generateOtp({ username: "" })
+    generateOtp({ username: "2347013879246" })
       .unwrap()
       .then(() => message.success("otp sent"));
-  useEffect(() => {
-    requestOtp();
-  }, []);
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    validateOtp({ otp: code, username: "" })
+    validateOtp({ otp: code, username: "2347013879246" })
       .unwrap()
       .then((res) => {
-        console.log(res);
-        message.success("validation successful");
+        message.success(res.data?.responseDescription);
+        setCode("");
+        replace("/signup-business");
       })
       .catch((err) => {
-        console.log(err);
-        setAlert(err?.data?.message);
+        setAlert(err?.data?.responseDescription || err?.data?.title);
       });
   };
   return (

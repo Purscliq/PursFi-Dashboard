@@ -5,8 +5,9 @@ import {
   CustomButton as Button,
 } from "@/lib/AntdComponents";
 import Image from "next/image";
-import Link from "next/link";
+import { useResetPasswordMutation } from "@/services/authService";
 const ResetPass = () => {
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
       <nav className="py-4 px-8">
@@ -48,7 +49,12 @@ const ResetPass = () => {
               type="password"
             />
           </div>
-          <Button type="primary" className="!h-[3rem] !bg-Primary w-full">
+          <Button
+            loading={isLoading}
+            htmlType="submit"
+            type="primary"
+            className="!h-[3rem] !bg-Primary w-full"
+          >
             Change Password
           </Button>
         </form>

@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import logo from "@/assets/logo.svg";
 import {
   CustomInput as Input,
@@ -8,7 +9,10 @@ import {
 import { message, Alert } from "antd";
 import Image from "next/image";
 import { useFetchCountryQuery } from "@/services/country";
-import { useCreateBusinessMutation } from "@/services/authService";
+import {
+  useCreateBusinessMutation,
+  useGenerateEmailOtpMutation,
+} from "@/services/authService";
 import { useState, ChangeEventHandler, FormEventHandler } from "react";
 
 const initailState = {
@@ -19,8 +23,10 @@ const initailState = {
 };
 
 const SignupBusness = () => {
+  const { replace } = useRouter();
   const { data } = useFetchCountryQuery({});
   const [create, { isLoading }] = useCreateBusinessMutation();
+  const [generateMail, {}] = useGenerateEmailOtpMutation();
   const [selectedCountry, setSelectedCountry] = useState(
     "https://flagcdn.com/ng.svg"
   );
@@ -31,12 +37,20 @@ const SignupBusness = () => {
     create(formData)
       .unwrap()
       .then((res) => {
-        console.log(res);
-        message.success(res?.message);
+        message.success(res?.data?.responseDescription);
+        generateMail({ username: "test1@gmail.com" })
+          .unwrap()
+          .then(() => {
+            setFormData(initailState);
+            replace("/verifyEmail");
+          })
+          .catch(() => {
+            setFormData(initailState);
+            replace("/verifyEmail");
+          });
       })
       .catch((err) => {
-        console.log(err);
-        setAlert(err?.data?.message);
+        setAlert(err?.data?.responseDescription || err?.data?.title);
       });
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -124,8 +138,10 @@ const SignupBusness = () => {
               value={formData.merchantType}
               className="!w-full"
               options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
+                { value: "individual", label: "Individual" },
+                { value: "business", label: "Business" },
+                { value: "enterprise", label: "Enterprise" },
+                { value: "limited liability", label: "Limited Liability" },
               ]}
             />
           </div>

@@ -21,7 +21,20 @@ const authSlice = ApiSlice.enhanceEndpoints({
     register: builder.mutation({
       query: (body) => ({
         url: "register/user",
+        method: "POST",
+        body,
       }),
+      onQueryStarted(id, { dispatch, queryFulfilled }) {
+        queryFulfilled
+          .then((apiResponse) => {
+            localStorage.setItem(
+              "refresh",
+              apiResponse.data?.token?.refreshToken
+            );
+            localStorage.setItem("token", apiResponse.data?.token?.token);
+          })
+          .catch(() => {});
+      },
     }),
     profile: builder.query({
       query: () => ({
@@ -38,6 +51,20 @@ const authSlice = ApiSlice.enhanceEndpoints({
     validateOtp: builder.mutation({
       query: (body) => ({
         url: "validation/phone/validate/otp",
+        method: "POST",
+        body,
+      }),
+    }),
+    generateEmailOtp: builder.mutation({
+      query: (body) => ({
+        url: "validation/email/generate/otp",
+        method: "POST",
+        body,
+      }),
+    }),
+    validateEmailOtp: builder.mutation({
+      query: (body) => ({
+        url: "validation/email/validate/otp",
         method: "POST",
         body,
       }),
@@ -98,4 +125,6 @@ export const {
   useRefreshMutation,
   useResetPasswordMutation,
   useValidateOtpMutation,
+  useGenerateEmailOtpMutation,
+  useValidateEmailOtpMutation,
 } = authSlice;

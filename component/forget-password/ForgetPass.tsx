@@ -1,24 +1,40 @@
-"use client"
+"use client";
 import logo from "@/assets/logo 3.png";
 import {
   CustomInput as Input,
+  CustomButton as Button,
 } from "@/lib/AntdComponents";
 import Image from "next/image";
 import Link from "next/link";
+import { message, Alert } from "antd";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForgotPasswordMutation } from "@/services/authService";
 
 const ForgetPass = () => {
-  const route = useRouter()
-  const handleSubmit =(e:React.FormEvent<HTMLFormElement>)=>{
-    e.preventDefault()
-    route.push('reset-password')
-  }
+  const { replace } = useRouter();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
+  const [email, setEmail] = useState("");
+  const [alert, setAlert] = useState("");
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    forgotPassword({ email })
+      .unwrap()
+      .then((res) => {
+        message.success(res?.data?.responseDescription || "reset link sent");
+        replace("reset-password");
+      })
+      .catch((err) => {
+        setAlert(err?.data?.responseDescription || err?.data?.title);
+      });
+  };
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
       <nav className="py-4 px-8">
         <Image src={logo} alt="logo" />
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
+        {alert && <Alert type="error" closable message={alert} />}
         <h1 className="font-semibold text-xl mb-2 text-Primary">
           Reset Password{" "}
         </h1>
@@ -39,22 +55,29 @@ const ForgetPass = () => {
               placeholder="This is a placeholder"
               id="email"
               type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-
-          <button className="btn bg-Primary hover:bg-Primary border-none text-white capitalize w-full mb-3!">
+          <Button
+            loading={isLoading}
+            htmlType="submit"
+            type="primary"
+            className="!h-[3rem] !bg-Primary w-full"
+          >
             Send reset link
-          </button>
+          </Button>
           <span className="flex justify-center items-center mt-6">
             <p className="text-sm leading-6 text-gray-600">
-              Remembered your password ? kindly {" "}
+              Remembered your password ? kindly{" "}
               <Link
                 href="/"
                 className="hover:underline hover:duration-300 cursor-pointer text-Primary"
               >
-              click  here
-              </Link>
-              {' '}to Login
+                click here
+              </Link>{" "}
+              to Login
             </p>
           </span>
         </form>

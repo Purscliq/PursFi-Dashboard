@@ -28,8 +28,7 @@ const Login = () => {
         message.success(res?.message);
       })
       .catch((err) => {
-        console.log(err);
-        setAlert(err?.data?.message);
+        setAlert(err?.data?.responseDescription);
       });
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {

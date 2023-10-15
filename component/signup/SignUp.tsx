@@ -1,5 +1,6 @@
 "use client";
 import "react-phone-input-2/lib/style.css";
+import { useRouter } from "next/navigation";
 import logo from "@/assets/logo.svg";
 import {
   CustomInput as Input,
@@ -11,7 +12,10 @@ import { message, Alert } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import PhoneInput from "react-phone-input-2";
-import { useRegisterMutation } from "@/services/authService";
+import {
+  useRegisterMutation,
+  useGenerateOtpMutation,
+} from "@/services/authService";
 import { passwordSchema } from "@/lib/validationSchema";
 import { useState, ChangeEventHandler, FormEventHandler } from "react";
 
@@ -25,7 +29,9 @@ const initailState = {
 };
 
 const SignUp = () => {
+  const { replace } = useRouter();
   const [register, { isLoading }] = useRegisterMutation();
+  const [generateOtp, { isLoading: isGenerating }] = useGenerateOtpMutation();
   const [formData, setFormData] = useState(initailState);
   const [cta, setCta] = useState(false);
   const [validationError, setValidationError] = useState("");
@@ -37,12 +43,20 @@ const SignUp = () => {
       register(formData)
         .unwrap()
         .then((res) => {
-          console.log(res);
-          message.success(res?.message);
+          message.success("account created successfully");
+          generateOtp({ username: formData.phoneNumber })
+            .unwrap()
+            .then(() => {
+              setFormData(initailState);
+              replace("/signup-otp");
+            })
+            .catch(() => {
+              setFormData(initailState);
+              replace("/signup-otp");
+            });
         })
         .catch((err) => {
-          console.log(err);
-          setAlert(err?.data?.message);
+          setAlert(err?.data?.responseDescription || err?.data?.title);
         });
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -268,7 +282,7 @@ const SignUp = () => {
             </label>
           </div>
           <Button
-            loading={isLoading}
+            loading={isLoading || isGenerating}
             htmlType="submit"
             type="primary"
             className="!h-[3rem] !bg-Primary w-full"
