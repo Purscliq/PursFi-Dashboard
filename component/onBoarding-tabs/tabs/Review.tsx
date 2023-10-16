@@ -8,22 +8,22 @@ const Review = () => {
   return (
     <main>
       <span className="flex flex-col">
-        <h5 className="text-[#181336] text-[18px] font-[700]">
+        <h2 className="text-black font-semibold mb-1">
           Review your Application
-        </h5>
-        <p className="text-[#515B6F] text-[16px] font-[400]">
+        </h2>
+        <p className="text-sm">
           this is the final look at your application. Make sure you met all the
-          registration requirement.
+          registration requirement.{" "}
         </p>
       </span>
-      <div className="bg-white rounded-[10px] px-[20px] py-[24px] grid grid-cols-1 gap-[0.5rem]">
+      <div className="flex flex-col bg-white w-full mt-4 p-3 rounded-md">
         <div className="rounded-[5px] border border-[#E9EBEB] bg-[#FFF] items-center justify-between grid grid-cols-[10%_90%] px-[20px] py-[25px]">
           <FileIcon />
           <span className="flex flex-col gap-[0.2rem]">
-            <h5 className="text-[#181336] text-[18px] font-[500]">
+            <h2 className="text-black font-semibold mb-1">
               Company Information
-            </h5>
-            <p className="text-[#515B6F] text-[16px] font-[400[">
+            </h2>
+            <p className="text-sm">
               Personal information of the business Owner(s)
             </p>
           </span>
@@ -31,10 +31,10 @@ const Review = () => {
         <div className="rounded-[5px] border border-[#E9EBEB] bg-[#FFF] items-center justify-between grid grid-cols-[10%_90%] px-[20px] py-[25px]">
           <FileIcon />
           <span className="flex flex-col gap-[0.2rem]">
-            <h5 className="text-[#181336] text-[18px] font-[500]">
-              Owner Information
-            </h5>
-            <p className="text-[#515B6F] text-[16px] font-[400[">
+            <h2 className="text-black font-semibold mb-1">
+            Owner Information
+            </h2>
+            <p className="text-sm">
               Personal information of the business Owner(s)
             </p>
           </span>
@@ -42,22 +42,22 @@ const Review = () => {
         <div className="rounded-[5px] border border-[#E9EBEB] bg-[#FFF] items-center justify-between grid grid-cols-[10%_90%] px-[20px] py-[25px]">
           <FileIcon />
           <span className="flex flex-col gap-[0.2rem]">
-            <h5 className="text-[#181336] text-[18px] font-[500]">
-              Business Documentation
-            </h5>
-            <p className="text-[#515B6F] text-[16px] font-[400[">
+            <h2 className="text-black font-semibold mb-1">
+            Owner Information
+            </h2>
+            <p className="text-sm">
               Personal information of the business Owner(s)
             </p>
           </span>
         </div>
-        <span className="flex items-center gap-[0.2rem]">
+        <span className="flex items-center gap-[0.5rem]">
           <CheckBox id="check" />
           <label htmlFor="check">
             I Confirm tis information provide Are Accurate and legit
           </label>
         </span>
         <Button
-          className="!bg-[#000] !h-[3rem] !mx-auto w-[50%]"
+          className="!bg-[#000] !h-[3rem] !mx-auto w-[50%] !mt-4"
           type="primary"
         >
           Submit Application

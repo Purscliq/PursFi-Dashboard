@@ -21,33 +21,33 @@ const CompanyInfo = () => {
           This is Company information that you can update anytime.
         </p>
       </span>
-      <div className="flex flex-col bg-white w-full mt-4 p-3">
-        <article className="flex flex-col md:flex-row space-x-14 p-2">
+      <div className="flex flex-col bg-white w-full mt-4 p-3 rounded-md">
+        <article className="flex flex-col md:flex-row space-x-14 p-2 border-b ">
           <div className="w-[28%]">
             <h2 className="text-black font-semibold mb-1">
-              What type of company is PURS
+              Choose Merchant Type{" "}
             </h2>
           </div>{" "}
           <div className=" w-2/4">
-            <h2>Business type</h2>
+            <h2 className="py-2">Merchant type</h2>
             <div className="grid grid-cols-2 gap-4">
-              <span className=" flex items-center justify-center p-2 bg-blue-100 text-blue-300">
+              <span className=" flex items-center justify-center p-2 bg-gray-200 rounded">
                 NGO
               </span>
-              <span className="border flex items-center justify-center p-2">
-                NGO
+              <span className="border flex items-center justify-center p-2 rounded">
+                Sole Propertorship
               </span>
-              <span className="border flex items-center justify-center p-2">
-                NGO
+              <span className="border flex items-center justify-center p-2 rounded">
+                Limited Liability
               </span>
-              <span className="border flex items-center justify-center p-2">
-                NGO
+              <span className="border flex items-center justify-center p-2 rounded">
+                Partnership
               </span>
             </div>
+            <p className="text-sm py-2 underline">View all the requirement document needed</p>
           </div>
         </article>
-        <div className=" border border-b mt-2" />
-        <article className="flex flex-col md:flex-row space-x-14 p-2">
+        <article className="flex flex-col md:flex-row space-x-14 p-2 border-b ">
           <div className="w-[28%]">
             <h2 className="text-black font-semibold mb-1">
               Tell us your business Resister{" "}
@@ -71,8 +71,7 @@ const CompanyInfo = () => {
             </div>
           </div>
         </article>
-        <div className=" border border-b mt-2" />
-        <article className="flex flex-col md:flex-row space-x-14 p-2">
+        <article className="flex flex-col md:flex-row space-x-14 p-2 border-b ">
           <div className="w-[28%]">
             <h2 className="text-black font-semibold mb-1">
               Select your industry{" "}
@@ -101,8 +100,7 @@ const CompanyInfo = () => {
             </div>
           </div>
         </article>
-        <div className=" border border-b mt-2" />
-        <article className="flex flex-col md:flex-row space-x-14 p-2">
+        <article className="flex flex-col md:flex-row space-x-14 p-2 border-b ">
           <div className="w-[28%]">
             <h2 className="text-black font-semibold mb-1">
               Tell us about your business
@@ -134,8 +132,7 @@ const CompanyInfo = () => {
             </div>
           </div>
         </article>
-        <div className=" border border-b mt-2" />
-        <article className="flex flex-col md:flex-row space-x-14 p-2">
+        <article className="flex flex-col md:flex-row space-x-14 p-2 border-b ">
           <div className="w-[28%]">
             <h2 className="text-black font-semibold mb-1">
               Verify your Company Location{" "}
@@ -190,7 +187,6 @@ const CompanyInfo = () => {
             </div>
           </div>
         </article>
-        <div className=" border border-b mt-2" />
         <div className="mt-3 flex space-x-10">
           <div className="w-[30%]"></div>
           <div className="w-2/4">

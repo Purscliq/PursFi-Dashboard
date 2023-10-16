@@ -1,9 +1,9 @@
-import DashboardLayout from "@/component/layout/DashboardLayout";
+import OnboardingLayout from "@/component/layout/OnboardingLayout.tsx";
 
 const template = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <DashboardLayout>{children}</DashboardLayout>
+      <OnboardingLayout>{children}</OnboardingLayout>
     </>
   );
 };

@@ -9,13 +9,3 @@
 body {
   font-family: "Archivo", sans-serif;
 }
-.phone-input-container {
-  width: 100% !important;
-}
-
-/* Style the input field */
-.phone-input-input {
-  color: black;
-}
-
-

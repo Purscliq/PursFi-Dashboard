@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logo from "@/assets/logo 3.png";
+import logo from "@/assets/logo.svg";
 import PhoneInput from "react-phone-input-2";
 import { useRouter } from "next/navigation";
 import { useState, FormEventHandler } from "react";
@@ -43,7 +43,7 @@ const EditNum = () => {
           <PhoneInput
             country={"ng"}
             containerClass="!w-full"
-            inputClass="phone-input-input !w-full"
+            inputClass="phone-input-input !w-full !border !p-1 !rounded !bg-transparent"
             value={username}
             onChange={(value) => setUserName(value)}
           />

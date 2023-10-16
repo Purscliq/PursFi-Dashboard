@@ -1,39 +1,28 @@
-"use client";
-import { CustomTabs as Tabs } from "@/lib/AntdComponents";
-import type { TabsProps } from "antd";
-import CompanyInfo from "./tabs/CompanyInfo";
-import OwnerInfo from "./tabs/OwnerInfo";
-import BusinessDocs from "./tabs/BusinessDocs";
-import Review from "./tabs/Review";
-
-const onChange = (key: string) => {
-  console.log(key);
+import { CgMenuRightAlt } from "react-icons/cg";
+import OnBoardingTabs from "../onBoarding-tabs/OnBoardingTabs";
+const Onboarding = () => {
+  return (
+    <main className="mx-auto flex flex-col p-4 h-screen overflow-y-scroll">
+      <label
+        htmlFor="my-drawer-2"
+        className="flex lg:hidden text-blue-800 px-3"
+      >
+        <CgMenuRightAlt size="25" />
+      </label>
+      <div className="text-center flex flex-col items-center py-6">
+        <h1 className="font-semibold text-black text-lg mb-2">
+          Welcome to your dashboard
+        </h1>
+        <p className="max-w-3xl text-sm">
+          Your account is currently in{" "}
+          <span className="text-red-400">test mode</span>, so there are a few
+          more things to fo before you can go live and start recieving payments,
+          Follow the steps below too get activated.
+        </p>
+      </div>
+      <OnBoardingTabs />
+    </main>
+  );
 };
 
-const items: TabsProps["items"] = [
-  {
-    key: "1",
-    label: "Company information",
-    children: <CompanyInfo />,
-  },
-  {
-    key: "2",
-    label: "Owner information",
-    children: <OwnerInfo />,
-  },
-  {
-    key: "3",
-    label: "Business Documentation",
-    children: <BusinessDocs />,
-  },
-  {
-    key: "4",
-    label: "Review",
-    children: <Review />,
-  },
-];
-const OnBoarding = () => {
-  return <Tabs items={items} onChange={onChange} defaultActiveKey="1" />;
-};
-
-export default OnBoarding;
+export default Onboarding;

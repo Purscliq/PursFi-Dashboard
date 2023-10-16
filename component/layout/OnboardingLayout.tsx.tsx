@@ -1,7 +1,7 @@
 import React from "react";
 import AsideBar from "./AsideBar";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const OnboardingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="drawer lg:drawer-open text-black">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -11,4 +11,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+export default OnboardingLayout;

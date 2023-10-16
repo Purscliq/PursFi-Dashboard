@@ -93,10 +93,11 @@ const SignupOtp = () => {
             </button>
           </p>
           <p className="bg-blue-100 text-sm p-2 text-Primary">
-            Still not recevie your OTP kindly cross check you phone number by
+            Still not recevie your OTP!{" "}
             <Link href="edit-number" className="font-semibold">
-              Click here
+              Click here {" "}
             </Link>
+            to cross check your phone number{" "}
           </p>
         </form>
       </main>
