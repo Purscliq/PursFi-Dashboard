@@ -28,11 +28,7 @@ const SignupBusness = () => {
   const { data } = useFetchCountryQuery({});
   const [create, { isLoading }] = useCreateBusinessMutation();
   const [generateMail, {}] = useGenerateEmailOtpMutation();
-  const {
-    data: {
-      user: { email },
-    },
-  } = useProfileQuery({});
+  const { data: profile } = useProfileQuery({});
   const [selectedCountry, setSelectedCountry] = useState(
     "https://flagcdn.com/ng.svg"
   );
@@ -44,7 +40,7 @@ const SignupBusness = () => {
       .unwrap()
       .then((res) => {
         message.success(res?.data?.responseDescription);
-        generateMail({ username: email })
+        generateMail({ username: profile?.user?.email })
           .unwrap()
           .then(() => {
             setFormData(initailState);

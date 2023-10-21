@@ -2,7 +2,7 @@
 import OnboardingLayout from "@/component/layout/OnboardingLayout.tsx";
 import { useBusinessProfileQuery } from "@/services/authService";
 
-const template = ({ children }: { children: React.ReactNode }) => {
+const Template = ({ children }: { children: React.ReactNode }) => {
   const { isLoading } = useBusinessProfileQuery({});
   return (
     <>
@@ -19,4 +19,4 @@ const template = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default template;
+export default Template;

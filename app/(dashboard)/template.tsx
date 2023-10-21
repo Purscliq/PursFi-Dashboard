@@ -1,8 +1,7 @@
 "use client";
-import OnboardingLayout from "@/component/layout/OnboardingLayout.tsx";
 import { useProfileQuery } from "@/services/authService";
 
-const template = ({ children }: { children: React.ReactNode }) => {
+const Template = ({ children }: { children: React.ReactNode }) => {
   const { isLoading } = useProfileQuery({});
   return (
     <>
@@ -17,4 +16,4 @@ const template = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default template;
+export default Template;

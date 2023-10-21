@@ -19,18 +19,14 @@ const SignupOtp = () => {
   const [alert, setAlert] = useState("");
   const [generateOtp, {}] = useGenerateOtpMutation();
   const [validateOtp, { isLoading: isValidating }] = useValidateOtpMutation();
-  const {
-    data: {
-      user: { phoneNumber },
-    },
-  } = useProfileQuery({});
+  const { data } = useProfileQuery({});
   const requestOtp = () =>
-    generateOtp({ username: phoneNumber })
+    generateOtp({ username: data?.user?.phoneNumber })
       .unwrap()
       .then(() => message.success("otp sent"));
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    validateOtp({ otp: code, username: phoneNumber })
+    validateOtp({ otp: code, username: data?.user?.phoneNumber })
       .unwrap()
       .then((res) => {
         message.success(res.data?.responseDescription);

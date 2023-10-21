@@ -116,7 +116,7 @@ const BusinessDocs = ({
                 beforeUpload={(file) => {
                   setFormData((prev) => ({
                     ...prev,
-                    certIncorporation: file,
+                    docs: file,
                   }));
                   return false;
                 }}

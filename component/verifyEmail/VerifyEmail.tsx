@@ -11,15 +11,11 @@ import {
 } from "@/services/authService";
 const VerifyEmail = () => {
   const [generateMail, { isLoading }] = useGenerateEmailOtpMutation();
-  const {
-    data: {
-      user: { email },
-    },
-  } = useProfileQuery({});
+  const { data } = useProfileQuery({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [alert, setAlert] = useState("");
   const Verify = () =>
-    generateMail({ username: email })
+    generateMail({ username: data?.user?.email })
       .unwrap()
       .then((res) =>
         message.success(res.data?.responseDescription || "Email sent")
