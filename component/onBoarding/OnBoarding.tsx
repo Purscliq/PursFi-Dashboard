@@ -16,7 +16,7 @@ const Onboarding = () => {
         <p className="max-w-3xl text-sm">
           Your account is currently in{" "}
           <span className="text-red-400">test mode</span>, so there are a few
-          more things to fo before you can go live and start recieving payments,
+          more things to do before you can go live and start recieving payments,
           Follow the steps below too get activated.
         </p>
       </div>

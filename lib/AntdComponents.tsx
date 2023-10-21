@@ -7,6 +7,7 @@ import {
   InputProps,
   Radio,
   RadioProps,
+  RadioGroupProps,
   Tabs,
   TabsProps,
   Upload,
@@ -18,6 +19,7 @@ import {
   Checkbox,
   CheckboxProps,
 } from "antd";
+import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
 const archivo = Archivo({ subsets: ["latin"] });
 const primaryConfig = {
@@ -49,6 +51,15 @@ export const CustomInput = ({ ...props }: InputProps) => (
     }}
   >
     <Input {...props} />
+  </ConfigProvider>
+);
+export const CustomText = ({ ...props }: TextAreaProps) => (
+  <ConfigProvider
+    theme={{
+      token: { ...primaryConfig },
+    }}
+  >
+    <Input.TextArea {...props} />
   </ConfigProvider>
 );
 export const CustomRadio = ({ ...props }: RadioProps) => (
@@ -96,5 +107,61 @@ export const CustomDatePicker = ({ ...props }: DatePickerProps) => (
 export const CustomCheckBox = ({ ...props }: CheckboxProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <Checkbox {...props} />
+  </ConfigProvider>
+);
+
+export const ThemeRadioGroup = ({ ...props }: RadioGroupProps) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        ...primaryConfig,
+        borderRadius: 5,
+      },
+      components: {
+        Radio: {
+          buttonBg: "transparent",
+          buttonCheckedBg: "rgb(0, 0, 0,0.5)",
+          buttonSolidCheckedColor: "rgb(0, 0, 0,0.5)",
+          colorBorder: "rgb(0, 0, 0,0.1)",
+        },
+      },
+    }}
+  >
+    <Radio.Group
+      {...props}
+      style={{
+        borderRadius: 8,
+        textAlign: "center",
+      }}
+    />
+  </ConfigProvider>
+);
+
+export const ThemeRadioButton = ({ ...props }: RadioProps) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        ...primaryConfig,
+        borderRadius: 5,
+      },
+      components: {
+        Radio: {
+          buttonCheckedBg: "rgb(0, 0, 0,0.5)",
+          buttonSolidCheckedColor: "rgb(0, 0, 0,0.5)",
+          colorBorder: "rgb(0, 0, 0,0.1)",
+        },
+      },
+    }}
+  >
+    <Radio.Button
+      {...props}
+      style={{
+        borderRadius: 8,
+        textAlign: "center",
+        color: "#000",
+        width: "100%",
+        ...props.style,
+      }}
+    />
   </ConfigProvider>
 );

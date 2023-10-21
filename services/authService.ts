@@ -1,7 +1,7 @@
 import { ApiSlice } from "./Api";
 
 const authSlice = ApiSlice.enhanceEndpoints({
-  addTagTypes: ["profile" as const],
+  addTagTypes: ["profile" as const, "business" as const],
 }).injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
@@ -10,6 +10,14 @@ const authSlice = ApiSlice.enhanceEndpoints({
         method: "POST",
         body,
       }),
+      onQueryStarted(id, { dispatch, queryFulfilled }) {
+        queryFulfilled
+          .then((apiResponse) => {
+            localStorage.setItem("refresh", apiResponse.data?.refreshToken);
+            localStorage.setItem("token", apiResponse.data?.token);
+          })
+          .catch(() => {});
+      },
     }),
     refresh: builder.mutation({
       query: (body) => ({
@@ -40,6 +48,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
       query: () => ({
         url: "user/me",
       }),
+      providesTags: ["profile"],
     }),
     generateOtp: builder.mutation({
       query: (body) => ({
@@ -87,6 +96,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
       query: () => ({
         url: "business",
       }),
+      providesTags: ["business"],
     }),
     createBusiness: builder.mutation({
       query: (body) => ({
@@ -100,6 +110,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
         url: "business/create/owner",
         method: "POST",
         body,
+        formData: true,
       }),
     }),
     completeBusinessOnboarding: builder.mutation({
@@ -107,6 +118,19 @@ const authSlice = ApiSlice.enhanceEndpoints({
         url: "business/complete/onboarding",
         method: "POST",
         body,
+        formData: true,
+      }),
+    }),
+    createIndividualOwner: builder.mutation({
+      query: (body) => ({
+        url: "user/update/owner",
+        method: "POST",
+        body,
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+        },
+        formData: true,
       }),
     }),
   }),
@@ -119,6 +143,7 @@ export const {
   useCompleteBusinessOnboardingMutation,
   useCreateBusinessMutation,
   useCreateBusinessOwnerMutation,
+  useCreateIndividualOwnerMutation,
   useForgotPasswordMutation,
   useGenerateOtpMutation,
   useProfileQuery,

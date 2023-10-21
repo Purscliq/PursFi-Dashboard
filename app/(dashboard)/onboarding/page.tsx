@@ -1,4 +1,4 @@
-import Onboarding from "@/component/onboarding/Onboarding";
+import Onboarding from "@/component/onBoarding/OnBoarding";
 
 const page = () => {
   return <Onboarding />;
