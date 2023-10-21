@@ -21,7 +21,6 @@ const ForgetPass = () => {
     forgotPassword({ email })
       .unwrap()
       .then((res) => {
-        console.log(res);
         message.success(res?.data?.responseDescription || "reset link sent");
         replace("reset-password");
       })
