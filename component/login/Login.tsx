@@ -10,12 +10,14 @@ import Link from "next/link";
 import { message, Alert } from "antd";
 import { useLoginMutation } from "@/services/authService";
 import { useState, ChangeEventHandler, FormEventHandler } from "react";
+import { useRouter } from "next/navigation";
 
 const initailState = {
   email: "",
   password: "",
 };
 const Login = () => {
+  const { replace } = useRouter();
   const [login, { isLoading }] = useLoginMutation();
   const [formData, setFormData] = useState(initailState);
   const [alert, setAlert] = useState("");
@@ -24,11 +26,11 @@ const Login = () => {
     login(formData)
       .unwrap()
       .then((res) => {
-        console.log(res);
-        message.success(res?.message);
+        replace("/onboarding");
+        message.success("login success");
       })
       .catch((err) => {
-        setAlert(err?.data?.responseDescription);
+        setAlert(err?.data?.responseDescription || err?.data?.title);
       });
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {

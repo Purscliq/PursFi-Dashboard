@@ -9,6 +9,7 @@ import Link from "next/link";
 import {
   useValidateOtpMutation,
   useGenerateOtpMutation,
+  useProfileQuery,
 } from "@/services/authService";
 import { message, Alert } from "antd";
 
@@ -18,13 +19,14 @@ const SignupOtp = () => {
   const [alert, setAlert] = useState("");
   const [generateOtp, {}] = useGenerateOtpMutation();
   const [validateOtp, { isLoading: isValidating }] = useValidateOtpMutation();
+  const { data } = useProfileQuery({});
   const requestOtp = () =>
-    generateOtp({ username: "2347013879246" })
+    generateOtp({ username: data?.user?.phoneNumber })
       .unwrap()
       .then(() => message.success("otp sent"));
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    validateOtp({ otp: code, username: "2347013879246" })
+    validateOtp({ otp: code, username: data?.user?.phoneNumber })
       .unwrap()
       .then((res) => {
         message.success(res.data?.responseDescription);
@@ -95,7 +97,7 @@ const SignupOtp = () => {
           <p className="bg-blue-100 text-sm p-2 text-Primary">
             Still not recevie your OTP!{" "}
             <Link href="edit-number" className="font-semibold">
-              Click here {" "}
+              Click here{" "}
             </Link>
             to cross check your phone number{" "}
           </p>

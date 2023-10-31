@@ -1,5 +1,5 @@
 "use client";
-import logo from "@/assets/logo 3.png";
+import logo from "@/assets/logo.svg";
 import {
   CustomInput as Input,
   CustomButton as Button,

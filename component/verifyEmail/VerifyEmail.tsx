@@ -5,13 +5,17 @@ import Image from "next/image";
 import { useState } from "react";
 import { Modal, message, Alert } from "antd";
 import { CustomButton as Button } from "@/lib/AntdComponents";
-import { useGenerateEmailOtpMutation } from "@/services/authService";
+import {
+  useGenerateEmailOtpMutation,
+  useProfileQuery,
+} from "@/services/authService";
 const VerifyEmail = () => {
   const [generateMail, { isLoading }] = useGenerateEmailOtpMutation();
+  const { data } = useProfileQuery({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [alert, setAlert] = useState("");
   const Verify = () =>
-    generateMail({ username: "test1@gmail.com" })
+    generateMail({ username: data?.user?.email })
       .unwrap()
       .then((res) =>
         message.success(res.data?.responseDescription || "Email sent")

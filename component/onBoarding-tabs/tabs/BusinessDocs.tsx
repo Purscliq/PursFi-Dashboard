@@ -1,9 +1,55 @@
 import {
   CustomInput as Input,
   CustomUpload as Upload,
+  CustomButton as Button,
 } from "@/lib/AntdComponents";
 import LinkIcon from "@/assets/icon/LinkIcon";
-const BusinessDocs = () => {
+import type { UploadProps } from "antd";
+import { docsData } from "../OnBoardingTabs";
+import { SetStateAction, FormEventHandler, ChangeEventHandler } from "react";
+import { useCompleteBusinessOnboardingMutation } from "@/services/authService";
+const BusinessDocs = ({
+  formData,
+  setFormData,
+  setActive,
+}: {
+  formData: Record<string, any>;
+  setFormData: React.Dispatch<SetStateAction<docsData>>;
+  setActive: React.Dispatch<SetStateAction<string>>;
+}) => {
+  const [create, { isLoading }] = useCompleteBusinessOnboardingMutation();
+  const dataBody = new FormData();
+  const props: UploadProps = {
+    name: "file",
+    multiple: false,
+    onDrop(e) {
+      // console.log("Dropped files", e.dataTransfer.files);
+    },
+    // accept: "image/png,image/jpeg,video/mp4",
+  };
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    for (const [key, value] of Object.entries(formData)) {
+      dataBody.append(key, value);
+    }
+    create(dataBody)
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        setActive("3");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleChange: ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target?.name]: e.target?.value,
+    }));
+  };
   return (
     <main>
       <span>
@@ -14,7 +60,10 @@ const BusinessDocs = () => {
           Ensure the business documentation you are submitting is valid
         </p>
       </span>
-      <div className="flex flex-col bg-white w-full mt-4 p-3 rounded-md">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col bg-white w-full mt-4 p-3 rounded-md"
+      >
         <article className="flex flex-col md:flex-row space-x-14 p-2 border-b ">
           <div className="w-[28%]">
             <h2 className="text-black font-semibold mb-1">
@@ -33,7 +82,14 @@ const BusinessDocs = () => {
             >
               Tax Identification Number (TIN)
             </label>
-            <Input id="text" type="text" placeholder="placeholder" />
+            <Input
+              name="TIN"
+              required
+              onChange={handleChange}
+              id="text"
+              type="text"
+              placeholder="placeholder"
+            />
           </div>
         </article>
         <article className="flex flex-col md:flex-row space-x-14 p-2 border-b ">
@@ -46,13 +102,26 @@ const BusinessDocs = () => {
               companies regulation agency of a country Note:(PDF,JPEG,PNG only).
               Limited 5mb
             </p>
-          </div>{" "}
-          <div className=" w-2/4">
+          </div>
+          <div className="w-2/4">
             <div className="grid grid-cols-1 gap-[0.1rem] items-stretch">
               <label className="block text-gray-700 text-sm font-semibold mb-2">
                 Upload ID
               </label>
-              <Upload className="">
+              <Upload
+                {...props}
+                onRemove={(file) => {
+                  setFormData((prev) => ({ ...prev, certIncorporation: null }));
+                }}
+                beforeUpload={(file) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    docs: file,
+                  }));
+                  return false;
+                }}
+                className=""
+              >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
                   <p className="text-[#515B6F] text-[16px] font-[500]">
@@ -80,7 +149,23 @@ const BusinessDocs = () => {
               <label className="block text-gray-700 text-sm font-semibold mb-2">
                 Attach your memorandum and articles of association{" "}
               </label>
-              <Upload className="">
+              <Upload
+                {...props}
+                onRemove={(file) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    memorandumAssociation: null,
+                  }));
+                }}
+                beforeUpload={(file) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    memorandumAssociation: file,
+                  }));
+                  return false;
+                }}
+                className=""
+              >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
                   <p className="text-sm font-semibold">
@@ -106,7 +191,20 @@ const BusinessDocs = () => {
               <label className="block text-gray-700 text-sm font-semibold mb-2">
                 Attach your cooperate affairs commission{" "}
               </label>
-              <Upload className="">
+              <Upload
+                {...props}
+                onRemove={(file) => {
+                  setFormData((prev) => ({ ...prev, cac: null }));
+                }}
+                beforeUpload={(file) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    cac: file,
+                  }));
+                  return false;
+                }}
+                className=""
+              >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
                   <p className="text-sm font-semibold">Attach Doc</p>
@@ -128,7 +226,20 @@ const BusinessDocs = () => {
               <label className="block text-gray-700 text-sm font-semibold mb-2">
                 Attach your utility bills{" "}
               </label>
-              <Upload className="">
+              <Upload
+                {...props}
+                onRemove={(file) => {
+                  setFormData((prev) => ({ ...prev, bills: null }));
+                }}
+                beforeUpload={(file) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    bills: file,
+                  }));
+                  return false;
+                }}
+                className=""
+              >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
                   <p className="text-sm font-semibold">Attach Doc</p>
@@ -140,12 +251,17 @@ const BusinessDocs = () => {
         <div className="mt-3 flex space-x-10">
           <div className="w-[30%]"></div>
           <div className="w-2/4">
-            <button className="btn bg-Primary hover:bg-Primary border-none text-white capitalize w-full">
-              Save and continue{" "}
-            </button>
+            <Button
+              loading={isLoading}
+              htmlType="submit"
+              type="primary"
+              className="!h-[3rem] !bg-Primary w-full"
+            >
+              save and continue
+            </Button>
           </div>
         </div>
-      </div>
+      </form>
     </main>
   );
 };

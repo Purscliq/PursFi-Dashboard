@@ -1,9 +1,9 @@
 "use client";
-import DashboardLayout from "@/component/layout/dashboard-layout/DashboardLayout";
-import { useProfileQuery } from "@/services/authService";
+import OnboardingLayout from "@/component/layout/OnboardingLayout.tsx";
+import { useBusinessProfileQuery } from "@/services/authService";
 
 const Template = ({ children }: { children: React.ReactNode }) => {
-  const { isLoading } = useProfileQuery({});
+  const { isLoading } = useBusinessProfileQuery({});
   return (
     <>
       {isLoading ? (
@@ -11,7 +11,9 @@ const Template = ({ children }: { children: React.ReactNode }) => {
           <div className="w-16 h-16 border-t-4 border-black border-solid rounded-full animate-spin"></div>
         </div>
       ) : (
-        <DashboardLayout>{children}</DashboardLayout>
+        <>
+          <OnboardingLayout>{children}</OnboardingLayout>
+        </>
       )}
     </>
   );
