@@ -114,9 +114,10 @@ const BusinessDocs = ({
                   setFormData((prev) => ({ ...prev, certIncorporation: null }));
                 }}
                 beforeUpload={(file) => {
+                  dataBody.append("", file);
                   setFormData((prev) => ({
                     ...prev,
-                    docs: file,
+                    certIncorporation: file,
                   }));
                   return false;
                 }}
@@ -143,7 +144,7 @@ const BusinessDocs = ({
               articles of association - written rules about running the company
               agreed by the shareholders Note:(PDF,JPEG,PNG only) Limited 5mb
             </p>
-          </div>{" "}
+          </div>
           <div className=" w-2/4">
             <div className="grid grid-cols-1 gap-[0.1rem] items-stretch">
               <label className="block text-gray-700 text-sm font-semibold mb-2">
@@ -158,6 +159,7 @@ const BusinessDocs = ({
                   }));
                 }}
                 beforeUpload={(file) => {
+                  dataBody.append("", file);
                   setFormData((prev) => ({
                     ...prev,
                     memorandumAssociation: file,
@@ -185,7 +187,7 @@ const BusinessDocs = ({
               Matters Act (the Act) which includes the regulation and
               supervision of the formation
             </p>
-          </div>{" "}
+          </div>
           <div className=" w-2/4">
             <div className="grid grid-cols-1 gap-[0.1rem] items-stretch">
               <label className="block text-gray-700 text-sm font-semibold mb-2">

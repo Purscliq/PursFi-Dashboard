@@ -32,10 +32,11 @@ type dataType = {
   DateOfBirth: string;
   Nationality: string;
   HomeAddress: string;
-  file: any;
+  isIndividual: string;
   Email: string;
   RoleId: string;
   BusinessId: string;
+  // file: Blob | string;
 };
 const OwnerInfo = () => {
   const dataBody = new FormData();
@@ -47,11 +48,12 @@ const OwnerInfo = () => {
   } = useProfileQuery({});
   const {
     data: {
-      business: { id },
+      business: { id, merchantType },
     },
   } = useBusinessProfileQuery({});
   const [create, { isLoading }] = useCreateBusinessOwnerMutation();
   const [formData, setFormData] = useState<dataType>({
+    isIndividual: (merchantType === "individual").toString(),
     Bvn: "",
     FirstName: "",
     LastName: "",
@@ -59,7 +61,6 @@ const OwnerInfo = () => {
     DateOfBirth: "",
     Nationality: "Nigeria",
     HomeAddress: "",
-    file: null,
     Email: email,
     RoleId: roleId,
     BusinessId: id,
@@ -91,7 +92,6 @@ const OwnerInfo = () => {
     create(dataBody)
       .unwrap()
       .then((res) => {
-        console.log(res);
         // setActive("4");
       })
       .catch((err) => {
@@ -161,8 +161,8 @@ const OwnerInfo = () => {
                 </p>
               </span>
             </div>
-            <div className="flex items-center justify-between gap-[1.5rem]">
-              <span>
+            <div className="flex items-center justify-between gap-[1rem]">
+              <span className="w-full">
                 <label className="block text-gray-700 text-sm font-semibold mb-2">
                   Legal First name
                 </label>
@@ -172,9 +172,10 @@ const OwnerInfo = () => {
                   name="FirstName"
                   required
                   placeholder="First Name"
+                  className="!w-full"
                 />
               </span>
-              <span>
+              <span className="w-full">
                 <label className="block text-gray-700 text-sm font-semibold mb-2">
                   Legal Last name
                 </label>
@@ -184,6 +185,7 @@ const OwnerInfo = () => {
                   name="LastName"
                   required
                   placeholder="Last Name"
+                  className="!w-full"
                 />
               </span>
             </div>
@@ -222,7 +224,7 @@ const OwnerInfo = () => {
                 onChange={(value, date) =>
                   setFormData((prev) => ({
                     ...prev,
-                    DateOfBirth: `${value}`,
+                    DateOfBirth: `${date}`,
                   }))
                 }
               />
@@ -246,7 +248,7 @@ const OwnerInfo = () => {
                     alt="flag"
                     width={40}
                     height={45}
-                    className=" border"
+                    className="border"
                   />
                 }
               />
@@ -291,13 +293,14 @@ const OwnerInfo = () => {
               <Upload
                 {...props}
                 onRemove={(file) => {
-                  setFormData((prev) => ({ ...prev, file: null }));
+                  setFormData((prev) => ({ ...prev, file: "" }));
                 }}
                 beforeUpload={(file) => {
-                  // setFormData((prev) => ({
-                  //   ...prev,
-                  //   file: file,
-                  // }));
+                  setFormData((prev) => ({
+                    ...prev,
+                    file: file,
+                  }));
+                  // dataBody.append("docs", file);
                   return false;
                 }}
                 className=""
@@ -310,19 +313,19 @@ const OwnerInfo = () => {
                 </span>
               </Upload>
             </div>
-            <div className="flex items-center gap-4 my-4">
-              <Button
-                htmlType="submit"
-                loading={isLoading}
-                className="!bg-[#000] !h-[3rem] !mx-auto w-[50%] "
-                type="primary"
-              >
-                save
-              </Button>
-              <Button className="!bg-white !text-black !h-[3rem] !mx-auto w-[50%] ">
+            {/* <div className="flex items-center gap-4 my-4"> */}
+            <Button
+              htmlType="submit"
+              loading={isLoading}
+              className="!bg-[#000] !h-[3rem] !mx-auto w-full"
+              type="primary"
+            >
+              save
+            </Button>
+            {/* <Button className="!bg-white !text-black !h-[3rem] !mx-auto w-[50%] ">
                 Cancel
-              </Button>
-            </div>
+              </Button> */}
+            {/* </div> */}
           </form>
         </div>
       </div>

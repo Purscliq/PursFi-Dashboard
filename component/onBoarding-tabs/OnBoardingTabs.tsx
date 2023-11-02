@@ -8,9 +8,6 @@ import BusinessDocs from "./tabs/BusinessDocs";
 import Review from "./tabs/Review";
 import { useBusinessProfileQuery } from "@/services/authService";
 
-const onChange = (key: string) => {
-  console.log(key);
-};
 export type docsData = {
   Address: string;
   Description: string;
@@ -31,7 +28,11 @@ const OnBoardingTabs = () => {
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: "Company information",
+      label: (
+        <span onClick={() => setActive("1")} className="text-inherit">
+          Company information
+        </span>
+      ),
       children: (
         <CompanyInfo
           setActive={setActive}
@@ -42,7 +43,11 @@ const OnBoardingTabs = () => {
     },
     {
       key: "2",
-      label: "Business Documentation",
+      label: (
+        <span onClick={() => setActive("2")} className="text-inherit">
+          Business Documentation
+        </span>
+      ),
       children: (
         <BusinessDocs
           setActive={setActive}
@@ -53,19 +58,31 @@ const OnBoardingTabs = () => {
     },
     {
       key: "3",
-      label: "Owner information",
+      label: (
+        <span onClick={() => setActive("3")} className="text-inherit">
+          Owner information
+        </span>
+      ),
       children: <OwnerInfo />,
     },
     {
       key: "4",
-      label: "Review",
+      label: (
+        <span onClick={() => setActive("4")} className="text-inherit">
+          Review
+        </span>
+      ),
       children: <Review />,
     },
   ];
   const individualitems: TabsProps["items"] = [
     {
       key: "1",
-      label: "Company information",
+      label: (
+        <span onClick={() => setActive("1")} className="text-inherit">
+          Company information
+        </span>
+      ),
       children: (
         <CompanyInfo
           setActive={setActive}
@@ -76,19 +93,26 @@ const OnBoardingTabs = () => {
     },
     {
       key: "2",
-      label: "Owner information",
+      label: (
+        <span onClick={() => setActive("2")} className="text-inherit">
+          Owner information
+        </span>
+      ),
       children: <OwnerInfo />,
     },
     {
       key: "3",
-      label: "Review",
+      label: (
+        <span onClick={() => setActive("3")} className="text-inherit">
+          Review
+        </span>
+      ),
       children: <Review />,
     },
   ];
   return (
     <Tabs
       items={business?.merchantType === "individual" ? individualitems : items}
-      onChange={onChange}
       defaultActiveKey="1"
       activeKey={active}
     />

@@ -1,3 +1,5 @@
+"use client";
+import { useRouter } from "next/navigation";
 import {
   CustomCheckBox as CheckBox,
   CustomButton as Button,
@@ -5,6 +7,7 @@ import {
 import FileIcon from "@/assets/icon/FileIcon";
 
 const Review = () => {
+  const { push } = useRouter();
   return (
     <main>
       <span className="flex flex-col">
@@ -31,9 +34,7 @@ const Review = () => {
         <div className="rounded-[5px] border border-[#E9EBEB] bg-[#FFF] items-center justify-between grid grid-cols-[10%_90%] px-[20px] py-[25px]">
           <FileIcon />
           <span className="flex flex-col gap-[0.2rem]">
-            <h2 className="text-black font-semibold mb-1">
-            Owner Information
-            </h2>
+            <h2 className="text-black font-semibold mb-1">Owner Information</h2>
             <p className="text-sm">
               Personal information of the business Owner(s)
             </p>
@@ -42,9 +43,7 @@ const Review = () => {
         <div className="rounded-[5px] border border-[#E9EBEB] bg-[#FFF] items-center justify-between grid grid-cols-[10%_90%] px-[20px] py-[25px]">
           <FileIcon />
           <span className="flex flex-col gap-[0.2rem]">
-            <h2 className="text-black font-semibold mb-1">
-            Owner Information
-            </h2>
+            <h2 className="text-black font-semibold mb-1">Owner Information</h2>
             <p className="text-sm">
               Personal information of the business Owner(s)
             </p>
@@ -57,6 +56,7 @@ const Review = () => {
           </label>
         </span>
         <Button
+          onClick={() => push("dashboard")}
           className="!bg-[#000] !h-[3rem] !mx-auto w-[50%] !mt-4"
           type="primary"
         >
