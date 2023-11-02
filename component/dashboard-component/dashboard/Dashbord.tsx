@@ -1,21 +1,24 @@
 "use client";
 import { Select } from "antd";
-import React from "react";
+import React,{useState} from "react";
 import DashboardChart from "./DashboardChart";
 import DashboardTable from "./DashboardTable";
+import DashboardModal from "./DashboardModal";
 
 const Dashbord = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center my-6">
         <span>
-          <h2 className="text-2xl font-medium"> Dashbaord</h2>
+          <h2 className="text-2xl font-medium"> Dashboard</h2>
           <p className="text-sm text-gray-600">
             Showing your Account metrics for July 19, 2021 - July 25, 2021
           </p>
         </span>
         <div className="flex justify-center items-center space-x-5">
-          <button className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case">
+          <button onClick={()=>setIsModalOpen(true)} className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case">
             {" "}
             + AddFund
           </button>
@@ -171,6 +174,7 @@ const Dashbord = () => {
             </div>
           </div>
         </section>
+        <DashboardModal open={isModalOpen} setOpen={setIsModalOpen}/>
       </main>
     </div>
   );
