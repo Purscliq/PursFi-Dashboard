@@ -5,6 +5,7 @@ import {
   useProfileQuery,
   useBusinessProfileQuery,
 } from "@/services/authService";
+import DashboardLayout from "@/component/layout/dashboard-layout/DashboardLayout";
 
 const Template = ({ children }: { children: React.ReactNode }) => {
   const { push } = useRouter();
@@ -14,7 +15,6 @@ const Template = ({ children }: { children: React.ReactNode }) => {
     if (data?.isPhoneValidated) push("/signup-otp");
     if (data?.isEmailValidated) push("/verifyEmail");
   }, [data]);
-
   return (
     <>
       {isLoading && !data && fetchingBusiness ? (
@@ -22,7 +22,9 @@ const Template = ({ children }: { children: React.ReactNode }) => {
           <div className="w-16 h-16 border-t-4 border-black border-solid rounded-full animate-spin"></div>
         </div>
       ) : (
-        <>{children}</>
+        <>
+          <DashboardLayout>{children}</DashboardLayout>
+        </>
       )}
     </>
   );
