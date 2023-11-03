@@ -7,29 +7,30 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
   const params = useSearchParams();
-  const [validate, { isLoading, isSuccess }] = useValidateEmailOtpMutation();
+  const { replace } = useRouter();
+  const [validate, { isLoading }] = useValidateEmailOtpMutation();
   useEffect(() => {
-    validate({ username: "sikirurazak1@gmail.com", otp: params.get("token") })
+    validate({ username: params.get("email"), otp: params.get("token") })
       .unwrap()
       .then((res) => {
         message.success(
           res?.data?.responseDescription || res?.responseDescription
         );
+        replace("/");
       })
       .catch((err) => {
         message.success(
           err?.data?.responseDescription || err?.responseDescription
         );
+        replace("/");
       });
   }, []);
 
   return (
     <>
-      {isLoading && (
-        <div className="h-screen flex items-center justify-center">
-          <div className="w-16 h-16 border-t-4 border-black border-solid rounded-full animate-spin"></div>
-        </div>
-      )}
+      <div className="h-screen flex items-center justify-center">
+        <div className="w-16 h-16 border-t-4 border-black border-solid rounded-full animate-spin"></div>
+      </div>
     </>
   );
 };
