@@ -1,13 +1,14 @@
 "use client";
 import { Select } from "antd";
-import React,{useState} from "react";
+import React, { useState } from "react";
 import DashboardChart from "./DashboardChart";
 import DashboardTable from "./DashboardTable";
 import DashboardModal from "./DashboardModal";
+import { useGetWalletQuery } from "@/services/walletService";
 
 const Dashbord = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { data } = useGetWalletQuery({});
   return (
     <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center my-6">
@@ -18,7 +19,10 @@ const Dashbord = () => {
           </p>
         </span>
         <div className="flex justify-center items-center space-x-5">
-          <button onClick={()=>setIsModalOpen(true)} className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
+          >
             {" "}
             + AddFund
           </button>
@@ -42,7 +46,9 @@ const Dashbord = () => {
                   <p>5.6%</p>
                 </span>
               </div>
-              <p className="text-2xl font-semibold">N566,434,345.00</p>
+              <p className="text-2xl font-semibold">
+                N{data?.wallet?.walletBalance}
+              </p>
             </div>
             <div className="p-3 text-black w-full rounded-md border border-gray-300">
               <div className="flex items-center justify-between">
@@ -174,7 +180,7 @@ const Dashbord = () => {
             </div>
           </div>
         </section>
-        <DashboardModal open={isModalOpen} setOpen={setIsModalOpen}/>
+        <DashboardModal open={isModalOpen} setOpen={setIsModalOpen} />
       </main>
     </div>
   );
