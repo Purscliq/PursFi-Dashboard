@@ -18,6 +18,8 @@ import {
   DatePickerProps,
   Checkbox,
   CheckboxProps,
+  Table,
+  TableProps,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -163,5 +165,11 @@ export const ThemeRadioButton = ({ ...props }: RadioProps) => (
         ...props.style,
       }}
     />
+  </ConfigProvider>
+);
+
+export const CustomTable = ({ ...props }: TableProps<any>) => (
+  <ConfigProvider>
+    <Table {...props} />
   </ConfigProvider>
 );
