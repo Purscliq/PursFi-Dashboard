@@ -18,12 +18,12 @@ export const sidebarData = [
   {
     title: "Account",
     icon: <MdOutlineAccountBalanceWallet className=" font-bold" />,
-    link: "/dashboard/account",
+    link: "/account",
   },
   {
     title: "Payment",
     icon: <AiOutlineIdcard className=" font-bold" />,
-    link: "/dashboard/payment",
+    link: "/payment",
   },
   {
     title: "Payroll",
