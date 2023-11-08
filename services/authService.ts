@@ -1,4 +1,5 @@
 import { ApiSlice } from "./Api";
+import { updateUser, logOut } from "@/store/userSlice";
 
 const authSlice = ApiSlice.enhanceEndpoints({
   addTagTypes: ["profile" as const, "business" as const],
@@ -49,6 +50,15 @@ const authSlice = ApiSlice.enhanceEndpoints({
         url: "user/me",
       }),
       providesTags: ["profile"],
+      onQueryStarted(id, { dispatch, queryFulfilled }) {
+        queryFulfilled
+          .then((apiResponse) => {
+            dispatch(updateUser(apiResponse.data?.user));
+          })
+          .catch(() => {
+            dispatch(logOut());
+          });
+      },
     }),
     generateOtp: builder.mutation({
       query: (body) => ({

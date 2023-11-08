@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = { logOutAction: false, networkError: false };
+const user: Record<string, any> = {};
+const initialState = { logOutAction: false, networkError: false, user };
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -16,8 +16,12 @@ const userSlice = createSlice({
       location.replace("/");
       return { ...initialState };
     },
+    updateUser: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
-export const { logOutAction, logOut, networkTimeOut } = userSlice.actions;
+export const { logOutAction, logOut, networkTimeOut, updateUser } =
+  userSlice.actions;
 export default userSlice;
