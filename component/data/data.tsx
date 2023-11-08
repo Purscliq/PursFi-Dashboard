@@ -38,12 +38,12 @@ export const sidebarData = [
   {
     title: "Invoive",
     icon: <MdOutlineAdminPanelSettings className=" font-bold" />,
-    link: "/dashboard/invoice",
+    link: "/invoice",
   },
   {
     title: "Contact",
     icon: <GrDocumentUser className=" font-bold" />,
-    link: "/dashboard/contact",
+    link: "/contact",
   },
   {
     title: "Administration",
