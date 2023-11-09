@@ -1,5 +1,7 @@
+"use client"
 import { Select } from "antd";
 import React from "react";
+import InvoiceTab from "./InvoiceTab";
 
 const Invoice = () => {
   return (
@@ -44,6 +46,7 @@ const Invoice = () => {
             <p className="text-2xl font-medium">N300,000</p>
           </span>
         </div>{" "}
+        <InvoiceTab />
       </header>
     </div>
   );

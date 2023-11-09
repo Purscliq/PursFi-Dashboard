@@ -46,7 +46,7 @@ const DashboardSider = () => {
           >
             JD
           </Avatar>
-          <span className="">
+          <span className="text-sm">
             <p>Pursfibusiness</p>
             <p>John Doe</p>
           </span>

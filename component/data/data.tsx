@@ -54,6 +54,6 @@ export const sidebarData = [
   {
     title: "Setting",
     icon: <FiSettings className=" font-bold" />,
-    link: "/dashboard/user-setting",
+    link: "/setting",
   },
 ];

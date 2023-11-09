@@ -1,9 +1,8 @@
-import Invoice from '@/component/dashboard-component/invoice/Invoice'
-import React from 'react'
+import Invoice from "@/component/dashboard-component/invoice/Invoice";
+import React from "react";
 
 const page = () => {
-  return (
-<Invoice />  )
-}
+  return <Invoice />;
+};
 
-export default page
+export default page;
