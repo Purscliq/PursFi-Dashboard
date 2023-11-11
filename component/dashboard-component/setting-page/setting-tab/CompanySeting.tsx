@@ -19,7 +19,7 @@ const CompanySeting = () => {
       <div className=" w-full rounded-md">
         {/* profil Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <h1 className="font-semibold ">Company Logo</h1>
+          <h1 className="font-semibold text-sm">Company Logo</h1>
           <div className="flex items-center space-x-3 w-full md:w-[400px]">
             <div>
               <Avatar
@@ -46,7 +46,7 @@ const CompanySeting = () => {
         <hr />
         {/* First Name Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-gray-500 flex-col flex">
+        <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Busness Name</h1>{" "}
             <span className="text-xs mt-2">
               You won&rsquo;t be able to change your name.{" "}
@@ -67,7 +67,7 @@ const CompanySeting = () => {
         <hr />
         {/* Email Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-gray-500 flex-col flex">
+        <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Company Bio</h1>
             <span className="text-xs mt-2">
               Tell us more about your company
@@ -91,7 +91,7 @@ const CompanySeting = () => {
         </div>
         <hr />
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-gray-500 flex-col flex">
+        <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Busness Industry</h1>
             <span className="text-xs mt-2">
               Specific sector, in which your organization primarily operates.
@@ -113,7 +113,7 @@ const CompanySeting = () => {
         </div>
         {/* Phone Number Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-gray-500 flex-col flex">
+        <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Busness Adress</h1>
             <span className="text-xs mt-2">
               This is the location of your business

@@ -12,7 +12,7 @@ const Persoanal = () => {
       <div className=" w-full rounded-md">
         {/* profil Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <h1 className="font-semibold ">Profile Photo</h1>
+          <h1 className="font-semibold text-sm">Profile Photo</h1>
           <div className="flex items-center space-x-3 w-full md:w-[400px]">
             <div>
               <Avatar
@@ -39,7 +39,7 @@ const Persoanal = () => {
         <hr />
         {/* First Name Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-gray-500 flex-col flex">
+        <div className="text-sm flex-col flex">
             <h1 className="font-semibold">First Name</h1>{" "}
             <span className="text-xs mt-2">
               You won&rsquo;t be able to change your name.{" "}
@@ -73,7 +73,7 @@ const Persoanal = () => {
         <hr />
         {/* Email Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-gray-500 flex-col flex">
+        <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Email Adress</h1>
             <span className="text-xs mt-2">
               Your email address will receive all <br />
@@ -95,7 +95,7 @@ const Persoanal = () => {
         <hr />
         {/* Phone Number Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-gray-500 flex-col flex">
+        <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Phone Number</h1>
             <span className="text-xs mt-2">
               OTP is sent to your phone number for verification purposes.{" "}
