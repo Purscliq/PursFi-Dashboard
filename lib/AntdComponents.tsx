@@ -4,6 +4,8 @@ import {
   Button,
   ButtonProps,
   Input,
+  InputNumber,
+  InputNumberProps,
   InputProps,
   Radio,
   RadioProps,
@@ -20,6 +22,8 @@ import {
   CheckboxProps,
   Table,
   TableProps,
+  MenuProps,
+  Menu,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -55,6 +59,15 @@ export const CustomInput = ({ ...props }: InputProps) => (
     <Input {...props} />
   </ConfigProvider>
 );
+export const CustomInputNumber = ({ ...props }: InputNumberProps) => (
+  <ConfigProvider
+    theme={{
+      token: { ...primaryConfig },
+    }}
+  >
+    <InputNumber controls={false} {...props} />
+  </ConfigProvider>
+);
 export const CustomText = ({ ...props }: TextAreaProps) => (
   <ConfigProvider
     theme={{
@@ -67,6 +80,11 @@ export const CustomText = ({ ...props }: TextAreaProps) => (
 export const CustomRadio = ({ ...props }: RadioProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <Radio {...props} />
+  </ConfigProvider>
+);
+export const CustomRadioGroup = ({ ...props }: RadioGroupProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Radio.Group {...props} />
   </ConfigProvider>
 );
 export const CustomTabs = ({ ...props }: TabsProps) => (
@@ -169,7 +187,31 @@ export const ThemeRadioButton = ({ ...props }: RadioProps) => (
 );
 
 export const CustomTable = ({ ...props }: TableProps<any>) => (
-  <ConfigProvider>
+  <ConfigProvider
+    theme={{
+      token: {
+        ...primaryConfig,
+        borderRadius: 5,
+      },
+    }}
+  >
     <Table {...props} />
+  </ConfigProvider>
+);
+
+export const CustomMenu = ({ ...props }: MenuProps) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        borderRadius: 5,
+        fontSize: 16,
+        ...primaryConfig,
+      },
+      components: {
+        Menu: {},
+      },
+    }}
+  >
+    <Menu {...props} />
   </ConfigProvider>
 );

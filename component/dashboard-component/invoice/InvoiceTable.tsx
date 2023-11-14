@@ -103,7 +103,7 @@ const InvoiceTable = ({ data, status }: Props) => {
         </div>
       </div>
       <div className="relative overflow-x-auto  sm:rounded-lg w-[22rem] md:w-full">
-        <Table dataSource={filteredData} columns={columns} />;
+        <Table dataSource={filteredData} columns={columns} />
       </div>
     </div>
   );

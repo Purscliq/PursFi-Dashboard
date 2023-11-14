@@ -2,13 +2,15 @@
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import { Avatar, Dropdown, MenuProps, Space } from "antd";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { sidebarData } from "@/component/data/data";
 import { usePathname, useRouter } from "next/navigation";
 import { AiOutlineCaretDown, AiOutlineFileText } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
 import { MdAccountBalance } from "react-icons/md";
+import { CustomMenu as Menu } from "@/lib/AntdComponents";
+
 const DashboardSider = () => {
   const pathName = usePathname();
   const router = useRouter();
@@ -17,20 +19,20 @@ const DashboardSider = () => {
       key: "1",
       label: "Add Money",
       icon: <BiMoney />,
-      className:'font-semibold'
+      className: "font-semibold",
     },
 
     {
       key: "2",
       label: "Make Payment",
       icon: <MdAccountBalance />,
-      className:'font-semibold'
+      className: "font-semibold",
     },
     {
       key: "3",
       label: "Send Invoice",
       icon: <AiOutlineFileText />,
-      className:'font-semibold'
+      className: "font-semibold",
     },
   ];
   return (
@@ -62,9 +64,9 @@ const DashboardSider = () => {
             </a>
           </Dropdown>
         </div>
-
+        <Menu selectedKeys={[pathName]} items={sidebarData} />
         {/* sidebar content */}
-        <ul className="flex flex-col space-y-4 ">
+        {/* <ul className="flex flex-col space-y-4 ">
           {sidebarData.map((item) => (
             <div
               key={item.link}
@@ -77,7 +79,7 @@ const DashboardSider = () => {
               <span className="mx-4">{item.title}</span>
             </div>
           ))}
-        </ul>
+        </ul> */}
       </aside>
     </div>
   );

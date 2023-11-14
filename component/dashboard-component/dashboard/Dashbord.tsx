@@ -1,5 +1,5 @@
 "use client";
-import { Select } from "antd";
+import { CustomSelect as Select } from "@/lib/AntdComponents";
 import React, { useState } from "react";
 import DashboardChart from "./DashboardChart";
 import DashboardTable from "./DashboardTable";
@@ -9,13 +9,19 @@ import { useGetWalletQuery } from "@/services/walletService";
 const Dashbord = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = useGetWalletQuery({});
+  const date = new Date();
   return (
     <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center my-6">
         <span>
           <h2 className="text-2xl font-medium"> Dashboard</h2>
           <p className="text-sm text-gray-600">
-            Showing your Account metrics for July 19, 2021 - July 25, 2021
+            Showing your Account metrics for{" "}
+            {date.toLocaleString("en-US", {
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+            })}
           </p>
         </span>
         <div className="flex justify-center items-center space-x-5">
@@ -23,39 +29,37 @@ const Dashbord = () => {
             onClick={() => setIsModalOpen(true)}
             className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
           >
-            {" "}
             + AddFund
           </button>
           <Select
-            style={{ width: "100%" }}
+            className="!w-full"
             options={[
               { value: "jack", label: "Jack" },
               { value: "lucy", label: "Lucy" },
             ]}
             placeholder="Show stats Yearly"
-          />{" "}
+          />
         </div>
-      </header>{" "}
-      <main className="grid grid-cols-1 md:grid-cols-[1fr,400px] gap-6">
+      </header>
+      <main className="grid grid-cols-1 md:grid-cols-[53%_45%] gap-[2%]">
         <section className="flex flex-col space-y-5 ">
-          <article className="flex items-center space-x-4 ">
+          <article className="flex items-stretch space-x-4">
             <div className="p-4 bg-black text-white w-full rounded-md">
               <div className="flex items-center justify-between">
                 <p>Account Balance</p>
-                <span>
-                  <p>5.6%</p>
-                </span>
+                <span>{/* <p>5.6%</p> */}</span>
               </div>
               <p className="text-2xl font-semibold">
-                N{data?.wallet?.walletBalance}
+                N{Number(data?.wallet?.walletBalance).toLocaleString("en-US")}
               </p>
             </div>
             <div className="p-3 text-black w-full rounded-md border border-gray-300">
               <div className="flex items-center justify-between">
-                <p>Today, january 2023</p>
-                <span>
-                  <p>5.6%</p>
-                </span>
+                <p>
+                  Today, {date.toLocaleString("en-US", { month: "long" })}{" "}
+                  {date.getFullYear()}
+                </p>
+                <span>{/* <p>5.6%</p> */}</span>
               </div>
               <p className="text-2xl font-semibold">N566,434,345.00</p>
             </div>

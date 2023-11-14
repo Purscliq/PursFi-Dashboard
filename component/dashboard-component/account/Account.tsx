@@ -10,13 +10,17 @@ import MoveFundModal from "./modal/MoveFundModal";
 import StatementModal from "./modal/StatementModal";
 import SettingModal from "./modal/SettingModal";
 import SubAccount from "./modal/SubAccount";
+import { useAppSelector } from "@/store/hooks";
+import { useGetWalletQuery } from "@/services/walletService";
 const Account = () => {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
   const [isMoveFundModalOpen, setIsMoveFundModalOpen] = useState(false);
   const [isStatementModalOpen, setIsStatementModalOpen] = useState(false);
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
   const [isSubModalOpen, setIsSubModalOpen] = useState(false);
-
+  const wallet = useAppSelector((store) => store.user.wallet);
+  const date = new Date();
+  useGetWalletQuery({});
   return (
     <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
       <header className="flex flex-col space-y-6 my-6">
@@ -24,11 +28,19 @@ const Account = () => {
           <span>
             <h2 className="text-2xl font-medium"> Account </h2>
             <p className="text-sm text-gray-600">
-              Showing your Account metrics for July 19, 2021 - July 25, 2021
+              Showing your Account metrics for{" "}
+              {date.toLocaleString("en-US", {
+                month: "long",
+                day: "2-digit",
+                year: "numeric",
+              })}
             </p>
           </span>
           <div className="flex justify-center items-center space-x-5">
-            <button onClick={()=>setIsSubModalOpen(true)}  className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case">
+            <button
+              onClick={() => setIsSubModalOpen(true)}
+              className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
+            >
               {" "}
               + Add sub account
             </button>
@@ -55,22 +67,26 @@ const Account = () => {
       <main className="grid grid-cols-1 gap-4">
         <section className="grid grid-cols-1 md:grid-cols-2 md:gap-y-0 md:gap-x-24 gap-y-10 ">
           <article>
-            <div className="flex items-center space-x-6 ">
+            <div className="flex items-stretch space-x-6 ">
               <div className="p-4 bg-black text-white w-full rounded-md">
                 <div className="flex items-center justify-between">
                   <p>Account Balance</p>
-                  <span>
-                    <p>5.6%</p>
-                  </span>
+                  <span>{/* <p>5.6%</p> */}</span>
                 </div>
-                <p className="text-2xl font-semibold">N36,332,00</p>
+                <p className="text-2xl font-semibold">
+                  N{Number(wallet?.walletBalance).toLocaleString("en-US")}
+                </p>
               </div>
               <div className="p-3 text-black w-full rounded-md border border-gray-300">
                 <div className="flex items-center justify-between">
-                  <p>Today, january 2023</p>
-                  <span>
-                    <p>5.6%</p>
-                  </span>
+                  <p>
+                    Today,{" "}
+                    {date.toLocaleString("en-US", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <span>{/* <p>5.6%</p> */}</span>
                 </div>
                 <p className="text-2xl font-semibold">N566,434,345.00</p>
               </div>
@@ -98,15 +114,15 @@ const Account = () => {
               </div>{" "}
               <span className="flex justify-between items-center">
                 <p className="text-gray-500 ">Bank Name</p>
-                <p>First Bank</p>
+                <p>{wallet?.accountDetails?.bankName}</p>
               </span>
               <span className="flex justify-between items-center">
                 <p className="text-gray-500 ">Account Name</p>
-                <p>David Joe</p>
+                <p>{wallet?.accountDetails?.accountName}</p>
               </span>
               <span className="flex justify-between items-center">
-                <p className="text-gray-500 ">Account Name</p>
-                <p>204523522</p>
+                <p className="text-gray-500 ">Account Number</p>
+                <p>{wallet?.accountDetails?.accountNumber}</p>
               </span>
               <span className="flex justify-between items-center">
                 <p className="text-gray-500 ">Account allas</p>

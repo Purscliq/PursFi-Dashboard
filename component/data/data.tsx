@@ -9,51 +9,65 @@ import { FaRegUser } from "react-icons/fa";
 import { GrTransaction, GrDocumentUser } from "react-icons/gr";
 import { FiSettings } from "react-icons/fi";
 import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
-export const sidebarData = [
+import { MenuProps } from "antd";
+import Link from "next/link";
+export const sidebarData: MenuProps["items"] = [
   {
-    title: "Dashboard",
+    label: <Link href="/dashboard">Dashboard</Link>,
     icon: <MdAccountBalance className=" font-bold" />,
-    link: "/dashboard",
+    key: "/dashboard",
   },
   {
-    title: "Account",
+    label: <Link href="/account">Account</Link>,
     icon: <MdOutlineAccountBalanceWallet className=" font-bold" />,
-    link: "/account",
+    key: "/account",
   },
   {
-    title: "Payment",
+    label: <Link href="/payment">Payment</Link>,
     icon: <AiOutlineIdcard className=" font-bold" />,
-    link: "/payment",
+    key: "/payment",
   },
   {
-    title: "Payroll",
+    label: <Link href="/payroll">Payroll</Link>,
     icon: <FaRegUser className=" font-bold" />,
-    link: "/dashboard/payroll",
+    key: "/payroll",
   },
   {
-    title: "Transaction",
+    label: <Link href="/transaction">Transaction</Link>,
     icon: <GrTransaction className=" font-bold" />,
-    link: "/dashboard/transactions",
+    key: "/transactions",
   },
   {
-    title: "Invoive",
+    label: <Link href="/invoice">Invoive</Link>,
     icon: <MdOutlineAdminPanelSettings className=" font-bold" />,
+<<<<<<< HEAD
     link: "/invoice",
+=======
+    key: "/invoice",
+>>>>>>> b5a63466fbcd60d9396bead401b51c0017d62725
   },
   {
-    title: "Contact",
+    label: <Link href="/contact">Contact</Link>,
     icon: <GrDocumentUser className=" font-bold" />,
+<<<<<<< HEAD
     link: "/contact",
+=======
+    key: "/contact",
+>>>>>>> b5a63466fbcd60d9396bead401b51c0017d62725
   },
   {
-    title: "Administration",
+    label: <Link href="/administration">Administration</Link>,
     icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
-    link: "/dashboard/administration",
+    key: "/administration",
   },
 
   {
-    title: "Setting",
+    label: <Link href="/setting">Setting</Link>,
     icon: <FiSettings className=" font-bold" />,
+<<<<<<< HEAD
     link: "/setting",
+=======
+    key: "/setting",
+>>>>>>> b5a63466fbcd60d9396bead401b51c0017d62725
   },
 ];

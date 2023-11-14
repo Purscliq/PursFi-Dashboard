@@ -7,7 +7,25 @@ const transactionSlice = ApiSlice.injectEndpoints({
         url: "transactions/expense",
       }),
     }),
+    Transactions: builder.mutation({
+      query: (body) => ({
+        url: "transactions/filters",
+        body,
+        method: "POST",
+      }),
+    }),
+    disbursementTransactions: builder.mutation({
+      query: (body) => ({
+        url: "transactions/disbursement",
+        body,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useGetExpensesQuery } = transactionSlice;
+export const {
+  useGetExpensesQuery,
+  useTransactionsMutation,
+  useDisbursementTransactionsMutation,
+} = transactionSlice;

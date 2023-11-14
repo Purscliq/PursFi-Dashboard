@@ -24,12 +24,6 @@ export interface TableParams {
   pagination?: TablePaginationConfig;
 }
 
-const getRandomuserParams = (params: TableParams) => ({
-  results: params.pagination?.pageSize,
-  page: params.pagination?.current,
-  ...params,
-});
-
 const AccountTable = () => {
   const [data, setData] = useState<DataType[]>();
   const [loading, setLoading] = useState(false);
