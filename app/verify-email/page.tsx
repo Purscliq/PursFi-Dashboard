@@ -5,7 +5,7 @@ import { useValidateEmailOtpMutation } from "@/services/authService";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const params = useSearchParams();
   const { replace } = useRouter();
   const [validate, { isLoading }] = useValidateEmailOtpMutation();
@@ -35,4 +35,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
