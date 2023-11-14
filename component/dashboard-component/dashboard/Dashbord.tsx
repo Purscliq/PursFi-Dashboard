@@ -16,7 +16,12 @@ const Dashbord = () => {
         <span>
           <h2 className="text-2xl font-medium"> Dashboard</h2>
           <p className="text-sm text-gray-600">
-            Showing your Account metrics for July 19, 2021 - July 25, 2021
+            Showing your Account metrics for{" "}
+            {date.toLocaleString("en-US", {
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+            })}
           </p>
         </span>
         <div className="flex justify-center items-center space-x-5">
@@ -42,12 +47,10 @@ const Dashbord = () => {
             <div className="p-4 bg-black text-white w-full rounded-md">
               <div className="flex items-center justify-between">
                 <p>Account Balance</p>
-                <span>
-                  <p>5.6%</p>
-                </span>
+                <span>{/* <p>5.6%</p> */}</span>
               </div>
               <p className="text-2xl font-semibold">
-                N{data?.wallet?.walletBalance}
+                N{Number(data?.wallet?.walletBalance).toLocaleString("en-US")}
               </p>
             </div>
             <div className="p-3 text-black w-full rounded-md border border-gray-300">
@@ -56,9 +59,7 @@ const Dashbord = () => {
                   Today, {date.toLocaleString("en-US", { month: "long" })}{" "}
                   {date.getFullYear()}
                 </p>
-                <span>
-                  <p>5.6%</p>
-                </span>
+                <span>{/* <p>5.6%</p> */}</span>
               </div>
               <p className="text-2xl font-semibold">N566,434,345.00</p>
             </div>

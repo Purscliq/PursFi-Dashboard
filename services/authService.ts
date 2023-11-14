@@ -1,5 +1,10 @@
 import { ApiSlice } from "./Api";
-import { updateUser, logOut } from "@/store/userSlice";
+import {
+  updateUser,
+  logOut,
+  updateBusiness,
+  updateWallet,
+} from "@/store/userSlice";
 
 const authSlice = ApiSlice.enhanceEndpoints({
   addTagTypes: ["profile" as const, "business" as const],
@@ -107,6 +112,15 @@ const authSlice = ApiSlice.enhanceEndpoints({
         url: "business",
       }),
       providesTags: ["business"],
+      onQueryStarted(id, { dispatch, queryFulfilled }) {
+        queryFulfilled
+          .then((apiResponse) => {
+            dispatch(updateBusiness(apiResponse.data?.business));
+          })
+          .catch(() => {
+            dispatch(logOut());
+          });
+      },
     }),
     createBusiness: builder.mutation({
       query: (body) => ({

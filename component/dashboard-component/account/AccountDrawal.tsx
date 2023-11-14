@@ -1,5 +1,4 @@
 import { Drawer } from "antd";
-import React from "react";
 import { DataType } from "./AccountTable";
 import { CustomButton as Button } from "@/lib/AntdComponents";
 interface AccountDetailsProps {

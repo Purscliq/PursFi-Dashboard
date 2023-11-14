@@ -1,4 +1,6 @@
 import { ApiSlice } from "./Api";
+import { updateWallet } from "@/store/userSlice";
+import { logOut } from "@/store/userSlice";
 
 const walletSlice = ApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -6,6 +8,15 @@ const walletSlice = ApiSlice.injectEndpoints({
       query: () => ({
         url: "wallet",
       }),
+      onQueryStarted(id, { dispatch, queryFulfilled }) {
+        queryFulfilled
+          .then((apiResponse) => {
+            dispatch(updateWallet(apiResponse.data?.wallet));
+          })
+          .catch(() => {
+            dispatch(logOut());
+          });
+      },
     }),
     getWalletHistory: builder.query({
       query: () => ({

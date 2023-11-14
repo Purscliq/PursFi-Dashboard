@@ -57,6 +57,15 @@ export const CustomInput = ({ ...props }: InputProps) => (
     <Input {...props} />
   </ConfigProvider>
 );
+export const CustomInputNumber = ({ ...props }: InputNumberProps) => (
+  <ConfigProvider
+    theme={{
+      token: { ...primaryConfig },
+    }}
+  >
+    <InputNumber controls={false} {...props} />
+  </ConfigProvider>
+);
 export const CustomText = ({ ...props }: TextAreaProps) => (
   <ConfigProvider
     theme={{
@@ -69,6 +78,11 @@ export const CustomText = ({ ...props }: TextAreaProps) => (
 export const CustomRadio = ({ ...props }: RadioProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <Radio {...props} />
+  </ConfigProvider>
+);
+export const CustomRadioGroup = ({ ...props }: RadioGroupProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Radio.Group {...props} />
   </ConfigProvider>
 );
 export const CustomTabs = ({ ...props }: TabsProps) => (

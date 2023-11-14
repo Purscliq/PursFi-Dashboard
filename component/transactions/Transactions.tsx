@@ -1,6 +1,7 @@
 import { CustomSelect as Select } from "@/lib/AntdComponents";
 
 const Transactions = () => {
+  const date = new Date();
   return (
     <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center my-6">
