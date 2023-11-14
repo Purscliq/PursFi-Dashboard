@@ -22,6 +22,8 @@ import {
   CheckboxProps,
   Table,
   TableProps,
+  MenuProps,
+  Menu,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -194,5 +196,22 @@ export const CustomTable = ({ ...props }: TableProps<any>) => (
     }}
   >
     <Table {...props} />
+  </ConfigProvider>
+);
+
+export const CustomMenu = ({ ...props }: MenuProps) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        borderRadius: 5,
+        fontSize: 16,
+        ...primaryConfig,
+      },
+      components: {
+        Menu: {},
+      },
+    }}
+  >
+    <Menu {...props} />
   </ConfigProvider>
 );
