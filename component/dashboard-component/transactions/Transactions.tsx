@@ -1,4 +1,5 @@
 import { CustomSelect as Select } from "@/lib/AntdComponents";
+import TransactionTable from "./TransactionTable";
 
 const Transactions = () => {
   const date = new Date();
@@ -20,7 +21,9 @@ const Transactions = () => {
           placeholder="Show stats Yearly"
         />
       </header>
-      <main className="grid grid-cols-1"></main>
+      <main className="grid grid-cols-1">
+        <TransactionTable />
+      </main>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import Payment from "@/component/payment/Payment";
+import Payment from "@/component/dashboard-component/payment/Payment";
 
 const page = () => {
   return <Payment />;

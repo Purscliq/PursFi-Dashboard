@@ -132,7 +132,7 @@ const TransactionTable = () => {
   return (
     <section className="">
       <div className="flex flex-col gap-[1rem]">
-        <span className="flex items-center gap-[1rem]">
+        <span className="flex items-center justify-start gap-[1rem] ">
           <DatePicker placeholder="Start Date" />
           <DatePicker placeholder="End date" />
           <Input placeholder="Amount" />

@@ -2,10 +2,9 @@
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import { Avatar, Dropdown, MenuProps, Space } from "antd";
-import React, { useState, useEffect } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { sidebarData } from "@/component/data/data";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { AiOutlineCaretDown, AiOutlineFileText } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
 import { MdAccountBalance } from "react-icons/md";
@@ -13,7 +12,6 @@ import { CustomMenu as Menu } from "@/lib/AntdComponents";
 
 const DashboardSider = () => {
   const pathName = usePathname();
-  const router = useRouter();
   const items: MenuProps["items"] = [
     {
       key: "1",

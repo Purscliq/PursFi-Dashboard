@@ -33,27 +33,19 @@ export const sidebarData: MenuProps["items"] = [
     key: "/payroll",
   },
   {
-    label: <Link href="/transaction">Transaction</Link>,
+    label: <Link href="/transactions">Transaction</Link>,
     icon: <GrTransaction className=" font-bold" />,
     key: "/transactions",
   },
   {
     label: <Link href="/invoice">Invoive</Link>,
     icon: <MdOutlineAdminPanelSettings className=" font-bold" />,
-<<<<<<< HEAD
-    link: "/invoice",
-=======
     key: "/invoice",
->>>>>>> b5a63466fbcd60d9396bead401b51c0017d62725
   },
   {
     label: <Link href="/contact">Contact</Link>,
     icon: <GrDocumentUser className=" font-bold" />,
-<<<<<<< HEAD
-    link: "/contact",
-=======
     key: "/contact",
->>>>>>> b5a63466fbcd60d9396bead401b51c0017d62725
   },
   {
     label: <Link href="/administration">Administration</Link>,
@@ -64,10 +56,6 @@ export const sidebarData: MenuProps["items"] = [
   {
     label: <Link href="/setting">Setting</Link>,
     icon: <FiSettings className=" font-bold" />,
-<<<<<<< HEAD
-    link: "/setting",
-=======
     key: "/setting",
->>>>>>> b5a63466fbcd60d9396bead401b51c0017d62725
   },
 ];
