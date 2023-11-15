@@ -1,9 +1,79 @@
-import React from 'react'
-
+import TableIcon from "@/assets/icon/TableIcon";
+import { Table } from "antd";
+import React, { useState } from "react";
+import ApprovalModal from "./ApprovalModal";
+const columns = [
+  {
+    title: (
+      <span className="flex items-center">
+        <p>Date Created</p>
+        <TableIcon />
+      </span>
+    ),
+    dataIndex: "DateCreated",
+    key: "DateCreated",
+  },
+  {
+    title: (
+      <span className="flex items-center">
+        <p>Created By</p>
+        <TableIcon />
+      </span>
+    ),
+    dataIndex: "CreatedBy",
+    key: "CreatedBy",
+  },
+  {
+    title: (
+      <span className="flex items-center">
+        <p>Account</p>
+        <TableIcon />
+      </span>
+    ),
+    dataIndex: "account",
+    key: "account",
+  },
+  {
+    title: (
+      <span className="flex items-center">
+        <p>Payment Type</p>
+        <TableIcon />
+      </span>
+    ),
+    dataIndex: "payment",
+    key: "payment",
+  },
+  {
+    title: (
+      <span className="flex items-center">
+        <p>Amount</p>
+        <TableIcon />
+      </span>
+    ),
+    dataIndex: "amount",
+    key: "amount",
+  },
+];
 const AprovalRule = () => {
-  return (
-    <div>AprovalRule</div>
-  )
-}
+  const [open, setOpen] = useState(false);
 
-export default AprovalRule
+  return (
+    <div className="flex flex-col py-4 w-full space-y-6">
+      <span className="flex justify-between items-center">
+        <h1 className="font-semibold">Approval Rule </h1>
+        <button
+          onClick={() => setOpen(true)}
+          className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
+        >
+          + Create Approval
+        </button>
+      </span>
+      <div className="relative overflow-x-auto  sm:rounded-lg w-[22rem] md:w-full">
+        <Table dataSource={[]} columns={columns} />
+      </div>
+      <ApprovalModal open={open} setOpen={setOpen}/>
+    </div>
+  );
+};
+
+export default AprovalRule;

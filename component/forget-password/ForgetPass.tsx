@@ -52,7 +52,7 @@ const ForgetPass = () => {
             </label>
             <Input
               className="w-full authInput"
-              placeholder="This is a placeholder"
+              placeholder="Email Address"
               id="email"
               type="email"
               required

@@ -22,7 +22,7 @@ const Persoanal = () => {
               >
                 JD
               </Avatar>
-              <p className="text-xs mt-1 font-medium"> Add photo</p>
+              <p className="text-sm mt-1 font-medium"> Add photo</p>
             </div>
             <input
               type="file"
@@ -30,7 +30,7 @@ const Persoanal = () => {
               accept="image/*"
               className="hidden w-full h-full cursor-pointer "
             />
-            <p className="text-xs">
+            <p className="text-sm">
               we only accept this type of format (PNG, JPG). <br /> kindly
               upload photo not more that 5mb
             </p>
@@ -41,7 +41,7 @@ const Persoanal = () => {
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
             <h1 className="font-semibold">First Name</h1>{" "}
-            <span className="text-xs mt-2">
+            <span className="text-sm mt-2">
               You won&rsquo;t be able to change your name.{" "}
             </span>
           </div>
@@ -75,7 +75,7 @@ const Persoanal = () => {
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Email Adress</h1>
-            <span className="text-xs mt-2">
+            <span className="text-sm mt-2">
               Your email address will receive all <br />
               communications and activity notifications from your account.{" "}
             </span>
@@ -97,7 +97,7 @@ const Persoanal = () => {
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Phone Number</h1>
-            <span className="text-xs mt-2">
+            <span className="text-sm mt-2">
               OTP is sent to your phone number for verification purposes.{" "}
             </span>
           </div>

@@ -31,7 +31,7 @@ const FundModal = ({
               </label>
               <Select
                 className="!w-full"
-                placeholder="This is a placeholder"
+                placeholder="Account"
                 options={[
                   { value: "individual", label: "Individual" },
                   { value: "business", label: "Business" },
@@ -42,18 +42,18 @@ const FundModal = ({
             </div>
             
            
-            <div className="flex justify-between items-center  border border-gray-300 p-2 rounded-md">
-              <span className="space-y-3">
-                <p className="font-medium ">Bank Transfer</p>
-                <p>Bank Transfer - firstBank</p>{" "}
-                <p >Account Number - 045677880</p>
-                <p>Account Name - Bruce Wayne</p>
-              </span>{" "}
-              <button className="border items-center  flex space-x-2 p-1 rounded-sm">
-                <FaRegCopy className="text-blue-400" />
-                <p>copy</p>{" "}
-              </button>{" "}
-            </div>
+            <div className="flex justify-between items-end  border border-gray-300 p-2 rounded-md">
+            <span className="space-y-3">
+              <p className="font-medium ">Bank Transfer</p>
+              <p>Bank Transfer - firstBank</p>{" "}
+              <p >Account Number - 045677880</p>
+              <p>Account Name - Bruce Wayne</p>
+            </span>{" "}
+            <button className="border items-center  flex space-x-2 p-2 rounded-md">
+              <FaRegCopy className="text-blue-400" />
+              <p>copy</p>{" "}
+            </button>{" "}
+          </div>
           </form>{" "}
         </div>{" "}
       </div>

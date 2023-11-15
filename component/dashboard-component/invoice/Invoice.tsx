@@ -1,9 +1,11 @@
-"use client"
+"use client";
 import { Select } from "antd";
 import React from "react";
 import InvoiceTab from "./InvoiceTab";
+import { useRouter } from "next/navigation";
 
 const Invoice = () => {
+  const { push } = useRouter();
   return (
     <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
       <header className="flex flex-col space-y-9 my-4">
@@ -15,7 +17,10 @@ const Invoice = () => {
             </p>
           </span>
           <div className="flex justify-center items-center space-x-5">
-            <button className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case">
+            <button
+              onClick={() => push("invoice/create")}
+              className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
+            >
               + Create Invoice
             </button>
             <Select

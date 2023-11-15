@@ -60,8 +60,8 @@ const Login = () => {
               Email Address
             </label>
             <Input
-              className="w-full authInput"
-              placeholder="This is a placeholder"
+              className="w-full "
+              placeholder="Email Address"
               id="email"
               type="email"
               name="email"
@@ -79,7 +79,7 @@ const Login = () => {
             </label>
             <PasswordInput
               className="w-full"
-              placeholder="This is a placeholder"
+              placeholder="Enter your password"
               id="password"
               type="password"
               name="password"
