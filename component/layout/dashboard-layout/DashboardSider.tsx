@@ -9,17 +9,21 @@ import { AiOutlineCaretDown, AiOutlineFileText } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
 import { MdAccountBalance } from "react-icons/md";
 import { CustomMenu as Menu } from "@/lib/AntdComponents";
+import DashboardModal from "@/component/dashboard-component/dashboard/DashboardModal";
+import { useState } from "react";
 
 const DashboardSider = () => {
   const pathName = usePathname();
   const { push } = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const items: MenuProps["items"] = [
     {
       key: "1",
       label: "Add Money",
       icon: <BiMoney size={20} />,
       className: "!font-semibold !text-[15px]",
-      onClick: () => push("dashboard"),
+      onClick: () => setIsModalOpen(true),
     },
 
     {
@@ -64,19 +68,7 @@ const DashboardSider = () => {
           
           </ul>
         </details>
-        {/* <div className="flex space-x-2 items-center justify-center mx-2 my-4 p-2 bg-[#EEF2F7] rounded-md ">
-          <Avatar
-            style={{ backgroundColor: "#CDA4FF", verticalAlign: "middle" }}
-            size="large"
-          >
-            JD
-          </Avatar>
-          <span className="text-sm">
-            <p>Pursfibusiness</p>
-            <p>John Doe</p>
-          </span>
-          <RiArrowDropDownLine size={25} />
-        </div> */}
+      
         <div className="flex p-2 items-center justify-center mx-2 my-4 border rounded">
           <Dropdown menu={{ items }}>
             <a onClick={(e) => e.preventDefault()}>
@@ -87,23 +79,9 @@ const DashboardSider = () => {
             </a>
           </Dropdown>
         </div>
-        <Menu selectedKeys={[pathName]} items={sidebarData} />
+        <Menu selectedKeys={[pathName]} items={sidebarData} className="!space-y-3" />
 
-        {/* sidebar content */}
-        {/* <ul className="flex flex-col space-y-4 ">
-          {sidebarData.map((item) => (
-            <div
-              key={item.link}
-              onClick={() => router.push(item.link)}
-              className={`flex items-center px-3 py-2  rounded-lg cursor-pointer text-gray-600 ${
-                pathName.includes(item.link) ? " text-gray-900" : ""
-              }`}
-            >
-              {item.icon}
-              <span className="mx-4">{item.title}</span>
-            </div>
-          ))}
-        </ul> */}
+        <DashboardModal open={isModalOpen} setOpen={setIsModalOpen} />
       </aside>
     </div>
   );

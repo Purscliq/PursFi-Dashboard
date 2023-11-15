@@ -121,7 +121,7 @@ const AccountTable = () => {
               View transaction{" "}
             </Menu.Item>
             <Menu.Item key="download-receipt">Download Receipt</Menu.Item>
-            <Menu.Item key="download-receipt">Report Transaction</Menu.Item>
+            <Menu.Item key="report-transaction">Report Transaction</Menu.Item>
           </Menu>
         );
 

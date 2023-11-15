@@ -1,4 +1,5 @@
 // InvoiceTab.js
+"use client"
 import React, { useState, useEffect } from "react";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import { TabsProps } from "antd";

@@ -1,4 +1,4 @@
-import React from "react";
+"use client"
 import { Input, Table } from "antd";
 import { DataType } from "./InvoiceTab";
 import { ColumnsType } from "antd/es/table";
