@@ -31,7 +31,7 @@ const ResetPass = () => {
             </label>
             <PasswordInput
               className="w-full"
-              placeholder="This is a placeholder"
+              placeholder=" Enter your password"
               id="password"
               type="password"
             />
@@ -45,7 +45,7 @@ const ResetPass = () => {
             </label>
             <PasswordInput
               className="w-full"
-              placeholder="This is a placeholder"
+              placeholder="Confirm your password"
               id="confirmPassword"
               type="password"
             />

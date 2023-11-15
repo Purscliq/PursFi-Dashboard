@@ -184,7 +184,7 @@ const SignUp = () => {
                   Password
                 </label>
                 <PasswordInput
-                  placeholder="This is a placeholder"
+                  placeholder="Enter your password"
                   id="password"
                   type="password"
                   required
@@ -254,7 +254,7 @@ const SignUp = () => {
                   Confirm password
                 </label>
                 <PasswordInput
-                  placeholder="This is a placeholder"
+                  placeholder="Confirm password"
                   id="password"
                   type="password"
                   name="confirmPassword"

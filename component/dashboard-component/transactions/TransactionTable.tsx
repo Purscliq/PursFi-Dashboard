@@ -1,26 +1,14 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useTransactionsMutation } from "@/services/transactionService";
 import {
   CustomTable as Table,
   CustomDatePicker as DatePicker,
   CustomInput as Input,
-  CustomSelect as Select,
 } from "@/lib/AntdComponents";
-import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import TableIcon from "@/assets/icon/TableIcon";
-interface TableParams {
-  pagination?: TablePaginationConfig;
-}
+import FilterIcon from "@/assets/icon/FilterIcon";
+
 const TransactionTable = () => {
-  const [refetch, { isLoading }] = useTransactionsMutation();
-  const [tableParams, setTableParams] = useState<TableParams>({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
-  const columns: ColumnsType<any> = [
+  const columns = [
     {
       title: (
         <span className="flex items-center">
@@ -28,118 +16,82 @@ const TransactionTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "created_at",
-      render: (name) => `${name}`,
-      width: "15%",
+      dataIndex: "date",
+      width: "20%",
     },
     {
       title: (
         <span className="flex items-center">
-          <p>Counterparty</p>
+          <p>Full Name</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "account_name",
-      render: (email) => `${email}`,
-      width: "15%",
+      dataIndex: "name",
+      width: "20%",
     },
     {
       title: (
         <span className="flex items-center">
-          <p>Transaction memo</p>
+          <p>Purpose</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "phone",
-      render: (phone) => `${phone}`,
-      width: "10%",
+      dataIndex: "purpose",
+      width: "20%",
     },
     {
       title: (
         <span className="flex items-center">
-          <p>Status</p>
+          <p>type</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "status",
-      render: (status) => `${status}`,
-      width: "10%",
-    },
+      dataIndex: "type",
 
+      width: "20%",
+    },
     {
       title: (
         <span className="flex items-center">
-          <p>Streaming</p>
+          <p>Amount</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "driver",
-      render: (driver) => (
-        <div className="relative mx-auto w-[20px]">
-          {driver?.streaming_active ? (
-            <span className="animate-ping absolute left-[50%] translate-x-[-50%] inline-flex h-[10px] w-[10px] rounded-full bg-green-400 opacity-75 mx-auto"></span>
-          ) : (
-            <span className="absolute left-[50%] translate-x-[-50%] inline-flex h-[10px] w-[10px] rounded-full bg-gray-400 opacity-75 mx-auto"></span>
-          )}
-        </div>
-      ),
-      width: "5%",
-      fixed: "right",
+      dataIndex: "amount",
+      width: "20%",
     },
     {
       title: (
         <span className="flex items-center">
           <p>Action</p>
-          <TableIcon />
+          <TableIcon className="ml-4" />
         </span>
       ),
       dataIndex: "id",
-      render: (id) => (
-        <span
-          //   onClick={() => push(`dashboard/drivers/${id}`)}
-          className="text-[14px] font-[600] solid-action-btn"
-        >
-          View Details
-        </span>
-      ),
-      width: "10%",
-      fixed: "right",
     },
   ];
-  useEffect(() => {
-    refetch({
-      page: tableParams.pagination?.current,
-      count: tableParams.pagination?.pageSize,
-    })
-      .unwrap()
-      .then((res) => {
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: res.total,
-          },
-        });
-      })
-      .catch();
-  }, [JSON.stringify(tableParams)]);
 
-  const handleTableChange = (pagination: TablePaginationConfig) => {
-    setTableParams({
-      pagination,
-    });
-  };
   return (
-    <section className="">
-      <div className="flex flex-col gap-[1rem]">
-        <span className="flex items-center justify-start gap-[1rem] ">
-          <DatePicker placeholder="Start Date" />
-          <DatePicker placeholder="End date" />
-          <Input placeholder="Amount" />
-        </span>
-        <Table />
+    <div className="bg-white flex flex-col gap-[0.5rem] p-[2%]">
+      <h4 className=" text-[19px] font-[600]">Transaction</h4>
+      <div className="flex items-center justify-start w-full gap-[1rem]">
+        <DatePicker className="h-fit w-fit" placeholder="Start Date" />
+        <DatePicker className="h-fit w-fit" placeholder="End Date" />
+        <div className="w-fit">
+          <Input className="h-fit w-fit" placeholder="Amount" />
+        </div>
+        <div className="flex justify-end w-full cursor-pointer">
+          <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
+            <FilterIcon />
+            <p className="text-[#202430] text-[16px] font-[500]">filter</p>
+          </span>
+        </div>
       </div>
-    </section>
+      <div className="relative overflow-x-auto  sm:rounded-lg w-[22rem] md:w-full">
+        <Table columns={columns} dataSource={[]} />
+      </div>
+     
+    </div>
   );
 };
 

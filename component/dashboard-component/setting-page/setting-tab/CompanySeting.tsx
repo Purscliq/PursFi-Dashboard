@@ -29,7 +29,7 @@ const CompanySeting = () => {
               >
                 JD
               </Avatar>
-              <p className="text-xs mt-1 font-medium"> Add photo</p>
+              <p className="text-sm mt-1 font-medium"> Add photo</p>
             </div>
             <input
               type="file"
@@ -37,7 +37,7 @@ const CompanySeting = () => {
               accept="image/*"
               className="hidden w-full h-full cursor-pointer "
             />
-            <p className="text-xs">
+            <p className="text-sm">
               we only accept this type of format (PNG, JPG). <br /> kindly
               upload photo not more that 5mb
             </p>
@@ -48,7 +48,7 @@ const CompanySeting = () => {
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Busness Name</h1>{" "}
-            <span className="text-xs mt-2">
+            <span className="text-sm mt-2">
               You won&rsquo;t be able to change your name.{" "}
             </span>
           </div>
@@ -69,7 +69,7 @@ const CompanySeting = () => {
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Company Bio</h1>
-            <span className="text-xs mt-2">
+            <span className="text-sm mt-2">
               Tell us more about your company
             </span>
           </div>
@@ -93,7 +93,7 @@ const CompanySeting = () => {
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Busness Industry</h1>
-            <span className="text-xs mt-2">
+            <span className="text-sm mt-2">
               Specific sector, in which your organization primarily operates.
             </span>
           </div>
@@ -115,7 +115,7 @@ const CompanySeting = () => {
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Busness Adress</h1>
-            <span className="text-xs mt-2">
+            <span className="text-sm mt-2">
               This is the location of your business
             </span>
           </div>

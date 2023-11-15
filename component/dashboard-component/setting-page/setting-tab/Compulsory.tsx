@@ -14,7 +14,7 @@ const Compulsory = () => {
         <div className="mb-4 p-2 flex flex-col md:flex-row space-x-24 ">
           <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Busness Owner</h1>{" "}
-            <span className="text-xs mt-2">
+            <span className="text-sm mt-2">
               The companys owner as listed in the registration account{" "}
             </span>
           </div>{" "}
@@ -64,7 +64,7 @@ const Compulsory = () => {
         <div className="mb-4 py-4 px-2 flex flex-col md:flex-row space-x-24 ">
           <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Manage Refrence</h1>{" "}
-            <p className="text-xs mt-2 max-w-xs">
+            <p className="text-sm mt-2 max-w-xs">
               As per the Banking regulation, it is mandatory to provide two
               references.{" "}
             </p>

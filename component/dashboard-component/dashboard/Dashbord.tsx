@@ -5,6 +5,10 @@ import DashboardChart from "./DashboardChart";
 import DashboardTable from "./DashboardTable";
 import DashboardModal from "./DashboardModal";
 import { useGetWalletQuery } from "@/services/walletService";
+import Arrowleft from "@/assets/icon/Arrowleft";
+import { BiArrowFromLeft } from "react-icons/bi";
+import { MdArrowOutward } from "react-icons/md";
+import { FiArrowDownLeft } from "react-icons/fi";
 
 const Dashbord = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +33,7 @@ const Dashbord = () => {
             onClick={() => setIsModalOpen(true)}
             className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
           >
-            + AddFund
+            + Add Fund
           </button>
           <Select
             className="!w-full"
@@ -41,13 +45,15 @@ const Dashbord = () => {
           />
         </div>
       </header>
-      <main className="grid grid-cols-1 md:grid-cols-[53%_45%] gap-[2%]">
+      <main className="grid grid-cols-1 md:grid-cols-2 md:gap-y-0 md:gap-x-24 gap-y-10 ">
         <section className="flex flex-col space-y-5 ">
           <article className="flex items-stretch space-x-4">
             <div className="p-4 bg-black text-white w-full rounded-md">
               <div className="flex items-center justify-between">
                 <p>Account Balance</p>
-                <span>{/* <p>5.6%</p> */}</span>
+                <span className="flex items-center">
+                  <p>5.6%</p> <Arrowleft className=" p-2 rounded !text-white" />
+                </span>
               </div>
               <p className="text-2xl font-semibold">
                 N{Number(data?.wallet?.walletBalance).toLocaleString("en-US")}
@@ -113,15 +119,20 @@ const Dashbord = () => {
           <p className="text-gray-500 underline">view all payment</p>
           <div className="space-y-3 p-2">
             <div className="flex justify-between items-center">
-              <span>
-                <p>Cash Inflow</p>
+              <div>
+                <span className="flex items-center space-x-3">
+                  {" "}
+                  <MdArrowOutward size={20} className="text-[#31CFD5]" />
+                  <p>Cash Inflow</p>
+                </span>
                 <p className="text-xl font-semibold">N434,345.00</p>
-              </span>
+              </div>
               <Select
                 style={{ width: "50%" }}
                 options={[
-                  { value: "jack", label: "Jack" },
-                  { value: "lucy", label: "Lucy" },
+                  { value: "2 months", label: "2 months" },
+                  { value: "3 months", label: "3 months" },
+                  { value: "4-5 months", label: "4-5 months" },
                 ]}
                 placeholder="1 Months"
               />{" "}
@@ -154,10 +165,13 @@ const Dashbord = () => {
           </div>
           <div className="space-y-3 p-2">
             <div className="flex justify-between items-center">
-              <span>
-                <p>Cash Outflow</p>
+              <div>
+                <span className="flex items-center space-x-3">
+                  <FiArrowDownLeft size={20} className="text-red-500" />
+                  <p>Cash Outflow</p>
+                </span>
                 <p className="text-xl font-semibold">N234,345.00</p>
-              </span>
+              </div>
               <Select
                 style={{ width: "50%" }}
                 options={[

@@ -12,12 +12,15 @@ import SettingModal from "./modal/SettingModal";
 import SubAccount from "./modal/SubAccount";
 import { useAppSelector } from "@/store/hooks";
 import { useGetWalletQuery } from "@/services/walletService";
+import PaymentLink from "./modal/PaymentLink";
 const Account = () => {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
   const [isMoveFundModalOpen, setIsMoveFundModalOpen] = useState(false);
   const [isStatementModalOpen, setIsStatementModalOpen] = useState(false);
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
   const [isSubModalOpen, setIsSubModalOpen] = useState(false);
+  const [ispaymentOpen, setIspaymentOpen] = useState(false);
+
   const wallet = useAppSelector((store) => store.user.wallet);
   const date = new Date();
   useGetWalletQuery({});
@@ -58,7 +61,10 @@ const Account = () => {
           <p className="text-md text-gray-800">
             Pursliq limited current account
           </p>
-          <button className="btn btn-md border flex items-center bg-transparent border-black text-sm normal-case">
+          <button
+            onClick={() => setIspaymentOpen(true)}
+            className="btn btn-md border flex items-center bg-transparent border-black text-sm normal-case"
+          >
             Share payment link
             <BiLinkAlt />
           </button>
@@ -159,6 +165,7 @@ const Account = () => {
         </section>
         <AccountTable />
       </main>
+      <PaymentLink open={ispaymentOpen} setOpen={setIspaymentOpen} />
       <FundModal open={isFundModalOpen} setOpen={setIsFundModalOpen} />
       <MoveFundModal
         open={isMoveFundModalOpen}

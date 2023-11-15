@@ -33,7 +33,7 @@ const SettingModal = ({
               required
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="Account details"
             />
           </div>
           <div className="mb-4">
@@ -42,7 +42,7 @@ const SettingModal = ({
             </label>
             <Select
               className="!w-full"
-              placeholder="This is a placeholder"
+              placeholder="Manager"
               options={[
                 { value: "individual", label: "Individual" },
                 { value: "business", label: "Business" },
@@ -63,7 +63,7 @@ const SettingModal = ({
               required
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="Monthly budject"
             />
           </div>
           <div className="mb-4">
@@ -72,7 +72,7 @@ const SettingModal = ({
             </label>
             <Select
               className="!w-full"
-              placeholder="This is a placeholder"
+              placeholder="Time"
               options={[
                 { value: "individual", label: "Individual" },
                 { value: "business", label: "Business" },

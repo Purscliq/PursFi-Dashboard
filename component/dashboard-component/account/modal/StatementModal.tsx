@@ -41,7 +41,7 @@ const StatementModal = ({
               required
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="Time Range"
             />
           </div>
           <div className="flex items-center space-x-3">
@@ -70,10 +70,10 @@ const StatementModal = ({
             </label>
             <Select
               className="!w-full"
-              placeholder="This is a placeholder"
+              placeholder="Format"
               options={[
-                { value: "individual", label: "Individual" },
-                { value: "business", label: "Business" },
+                { value: "PDF", label: "PDF" },
+                { value: "CSV", label: "CSV" },
                 { value: "enterprise", label: "Enterprise" },
                 { value: "limited liability", label: "Limited Liability" },
               ]}
@@ -91,7 +91,7 @@ const StatementModal = ({
               required
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="Email Address"
             />
             <p className="text-xs text-gray-500">
               the statement will be send to This Email.
