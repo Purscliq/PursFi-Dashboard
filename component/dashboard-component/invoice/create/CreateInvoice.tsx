@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { DatePicker } from "antd";
 import { MdDeleteForever } from "react-icons/md";
 import {
@@ -9,8 +9,7 @@ import Image from "next/image";
 import logo from "@/assets/logo.svg";
 const CreateInvoice = () => {
   return (
-    <div       className="grid grid-cols-1 w-[85%] gap-[1rem] px-[3%]"
-    >
+    <div className="grid grid-cols-1 w-[85%] gap-[1rem] px-[3%]">
       <div className="flex items-center justify-between">
         <span>
           <h2 className="font-semibold text-[18px] mb-3">Wayne Enteprise</h2>
@@ -21,7 +20,6 @@ const CreateInvoice = () => {
           <p className="font-semibold  mt-4">Click here to edit address</p>
         </span>
         <Image src={logo} alt="logo" className="" />
-
       </div>
       <hr />{" "}
       <div className="flex items-center justify-between">
