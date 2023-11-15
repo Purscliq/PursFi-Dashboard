@@ -1,3 +1,4 @@
+"use client"
 import { DatePicker } from "antd";
 import { MdDeleteForever } from "react-icons/md";
 import {

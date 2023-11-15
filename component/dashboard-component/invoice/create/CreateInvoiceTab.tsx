@@ -1,3 +1,4 @@
+"use client"
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import type { TabsProps } from "antd";
 import CreateInvoice from "./CreateInvoice";
