@@ -33,12 +33,12 @@ export const sidebarData: MenuProps["items"] = [
     key: "/payroll",
   },
   {
-    label: <Link href="/transaction">Transaction</Link>,
+    label: <Link href="/transactions">Transaction</Link>,
     icon: <GrTransaction className=" font-bold" />,
     key: "/transactions",
   },
   {
-    label: <Link href="/invoice">Invoive</Link>,
+    label: <Link href="/invoice">Invoice</Link>,
     icon: <MdOutlineAdminPanelSettings className=" font-bold" />,
     key: "/invoice",
   },

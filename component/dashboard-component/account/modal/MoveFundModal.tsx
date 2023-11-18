@@ -31,7 +31,7 @@ const MoveFundModal = ({
               required
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="Enter Amount"
             />
           </div>
           <div>
@@ -46,7 +46,7 @@ const MoveFundModal = ({
               required
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="Payment"
             />
           </div>
           <div>
@@ -61,7 +61,7 @@ const MoveFundModal = ({
               required
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="Destintion Account"
             />
               <p className="text-xs text-gray-500">
             Does not require Approval. instant payment{" "}

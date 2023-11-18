@@ -40,7 +40,7 @@ const SubAccount = ({
               required
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="Account details"
             />
             <p className="text-xs text-gray-400">this is a helper text</p>
           </div>
@@ -50,7 +50,7 @@ const SubAccount = ({
             </label>
             <Select
               className="!w-full"
-              placeholder="This is a placeholder"
+              placeholder="Manager"
               options={[
                 { value: "individual", label: "Individual" },
                 { value: "business", label: "Business" },
@@ -71,7 +71,7 @@ const SubAccount = ({
               required
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="Budject"
             />
           </div>
           <div className="mb-4">
@@ -80,7 +80,7 @@ const SubAccount = ({
             </label>
             <Select
               className="!w-full"
-              placeholder="This is a placeholder"
+              placeholder="Time"
               options={[
                 { value: "individual", label: "Individual" },
                 { value: "business", label: "Business" },

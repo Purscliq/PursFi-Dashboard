@@ -1,30 +1,21 @@
-"use client";
-import { useEffect, useState } from "react";
-import qs from "querystring";
-import {
-  CustomTable as Table,
-  CustomDatePicker as DatePicker,
-  CustomInput as Input,
-} from "@/lib/AntdComponents";
-import TableIcon from "@/assets/icon/TableIcon";
 import FilterIcon from "@/assets/icon/FilterIcon";
-import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
-import { Dropdown, Menu, MenuProps } from "antd";
-import AccountDrawal from "./AccountDrawal";
-
+import TableIcon from "@/assets/icon/TableIcon";
+import { Dropdown, Menu, MenuProps, TablePaginationConfig } from "antd";
+import Table, { ColumnsType } from "antd/es/table";
+import React, { useEffect, useState } from "react";
+import { BsSquare } from "react-icons/bs";
+import RequestDrawal from "../contact-drawal/RequestDrawal";
 export interface DataType {
-  name: string;
-  date: string;
-  purpose: string;
-  type: string;
-  amount: string;
+  account: string;
+  profession: string;
+  email: string;
 }
 
 export interface TableParams {
   pagination?: TablePaginationConfig;
 }
 
-const AccountTable = () => {
+const SentRequest = () => {
   const [data, setData] = useState<DataType[]>();
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState<TableParams>({
@@ -35,69 +26,51 @@ const AccountTable = () => {
   });
   const [open, setOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState<DataType | null>(null);
+  const onClose = () => {
+    setOpen(false);
+  };
   const columns: ColumnsType<DataType> = [
     {
       title: (
         <span className="flex items-center">
-          <p>Date</p>
-          <TableIcon />
+          <BsSquare />
         </span>
       ),
-      dataIndex: "date",
-      render: (date) => `${date}`,
+      dataIndex: "",
+      render: () => <BsSquare />,
       width: "20%",
     },
     {
       title: (
         <span className="flex items-center">
-          <p>Full Name</p>
+          <p>Account Name</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "name",
-      render: (name) => `${name}`,
+      dataIndex: "account",
+      render: (account) => `${account}`,
       width: "20%",
     },
     {
       title: (
         <span className="flex items-center">
-          <p>Purpose</p>
+          <p>Email Adress</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "purpose",
-      render: (purpose) => `${purpose}`,
+      dataIndex: "email",
+      render: (email) => `${email}`,
       width: "20%",
     },
     {
       title: (
         <span className="flex items-center">
-          <p>type</p>
+          <p>Profession</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "type",
-      render: (type) =>
-        type === "Debit" ? (
-          <span className="p-[4%] rounded-[80px] bg-[#FF39561A]/[10%] text-[#FF3956] text-center text-[14px] font-[600]">
-            {type}
-          </span>
-        ) : (
-          <span className="p-[4%] rounded-[80px] bg-[#0AA07B]/[10%] text-[#0AA07B] text-center text-[14px] font-[600]">
-            {type}
-          </span>
-        ),
-      width: "20%",
-    },
-    {
-      title: (
-        <span className="flex items-center">
-          <p>Amount</p>
-          <TableIcon />
-        </span>
-      ),
-      dataIndex: "amount",
-      render: (amount) => `${amount}`,
+      dataIndex: "profession",
+      render: (profession) => `${profession}`,
       width: "20%",
     },
     {
@@ -118,10 +91,9 @@ const AccountTable = () => {
                 setOpen(true);
               }}
             >
-              View transaction{" "}
+              View details{" "}
             </Menu.Item>
-            <Menu.Item key="download-receipt">Download Receipt</Menu.Item>
-            <Menu.Item key="report-transaction">Report Transaction</Menu.Item>
+            <Menu.Item key="download-receipt">Cancel request</Menu.Item>
           </Menu>
         );
 
@@ -135,7 +107,7 @@ const AccountTable = () => {
   ];
   const fetchData = () => {
     setLoading(true);
-    fetch(`https://testapi.io/api/sikiru/purscliq-transaction`)
+    fetch(`https://testapi.io/api/omobolaji1/contacts`)
       .then((res) => res.json())
       .then((results) => {
         setData(results);
@@ -162,22 +134,14 @@ const AccountTable = () => {
       setData([]);
     }
   };
-
   return (
     <div className="bg-white flex flex-col gap-[0.5rem] p-[2%]">
-      <h4 className=" text-[19px] font-[600]">Transaction</h4>
-      <div className="flex items-center justify-start w-full gap-[1rem]">
-        <DatePicker className="h-fit w-fit" placeholder="Start Date" />
-        <DatePicker className="h-fit w-fit" placeholder="End Date" />
-        <div className="w-fit">
-          <Input className="h-fit w-fit" placeholder="Amount" />
-        </div>
-        <div className="flex justify-end w-full cursor-pointer">
-          <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
-            <FilterIcon />
-            <p className="text-[#202430] text-[16px] font-[500]">filter</p>
-          </span>
-        </div>
+      <div className="flex justify-between w-full cursor-pointer">
+        <h4 className=" text-[15px] font-[600]">Sent Request</h4>
+        <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
+          <FilterIcon />
+          <p className="text-[#202430] text-[16px] font-[500]">filter</p>
+        </span>
       </div>
       <div className="relative overflow-x-auto  sm:rounded-lg w-[22rem] md:w-full">
         <Table
@@ -188,13 +152,9 @@ const AccountTable = () => {
           onChange={handleTableChange}
         />
       </div>
-      <AccountDrawal
-        Open={open}
-        onClose={() => setOpen(false)}
-        account={selectedAccount}
-      />
+      <RequestDrawal data={selectedAccount} Open={open} onClose={onClose} />
     </div>
   );
 };
 
-export default AccountTable;
+export default SentRequest;

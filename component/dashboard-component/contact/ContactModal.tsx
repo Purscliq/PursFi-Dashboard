@@ -5,9 +5,8 @@ import {
   CustomInput as Input,
   CustomButton as Button,
   CustomSelect as Select,
-  CustomDatePicker as DatePicker,
 } from "@/lib/AntdComponents";
-const StatementModal = ({
+const ContactModal = ({
   open,
   setOpen,
 }: {
@@ -23,25 +22,41 @@ const StatementModal = ({
     >
       <div className=" flex flex-col">
         <h2 className="text-2xl font-bold mb-1 text-center">
-          Get Account Statement
+          Send Contact Request{" "}
         </h2>
         <p className="text-sm text-gray-500 text-center">
-          Obtain a downloadable statement for this account.{" "}
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates
+          quidem voluptatem!{" "}
         </p>
         <form className="w-full space-y-4 mt-4">
           <div>
             <label
               className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="time"
+              htmlFor="email"
             >
-              Time Range{" "}
+              Email Adress{" "}
             </label>
             <Input
               name="time"
               required
               id="text"
               type="text"
-              placeholder="Time Range"
+              placeholder="placeholder"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-black text-sm font-semibold mb-2">
+              Contact Tag{" "}
+            </label>
+            <Select
+              className="!w-full"
+              placeholder="This is a placeholder"
+              options={[
+                { value: "individual", label: "Individual" },
+                { value: "business", label: "Business" },
+                { value: "enterprise", label: "Enterprise" },
+                { value: "limited liability", label: "Limited Liability" },
+              ]}
             />
           </div>
           <div className="flex items-center space-x-3">
@@ -50,34 +65,31 @@ const StatementModal = ({
                 className="block text-gray-700 text-sm font-semibold mb-2"
                 htmlFor="text"
               >
-                Start Date{" "}
+                Bank Name{" "}
               </label>
-              <DatePicker className="h-fit w-full" placeholder="Start Date" />
+              <Input
+                name="time"
+                required
+                id="text"
+                type="text"
+                placeholder="placeholder"
+              />{" "}
             </div>
             <div className=" w-2/4">
               <label
                 className="block text-gray-700 text-sm font-semibold mb-2"
                 htmlFor="text"
               >
-                End Date{" "}
+                Account Number{" "}
               </label>
-              <DatePicker className="h-fit w-full" placeholder="End Date" />
+              <Input
+                name="time"
+                required
+                id="text"
+                type="text"
+                placeholder="placeholder"
+              />{" "}
             </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-black text-sm font-semibold mb-2">
-              Format{" "}
-            </label>
-            <Select
-              className="!w-full"
-              placeholder="Format"
-              options={[
-                { value: "PDF", label: "PDF" },
-                { value: "CSV", label: "CSV" },
-                { value: "enterprise", label: "Enterprise" },
-                { value: "limited liability", label: "Limited Liability" },
-              ]}
-            />
           </div>
           <div>
             <label
@@ -91,20 +103,11 @@ const StatementModal = ({
               required
               id="text"
               type="text"
-              placeholder="Email Address"
+              placeholder="placeholder"
             />
-            <p className="text-xs text-gray-500">
-              the statement will be send to This Email.
-            </p>
           </div>{" "}
           <Button className="!h-[3rem] !bg-Primary w-full text-white hover:!text-white">
-            Submit
-          </Button>
-          <Button
-            onClick={() => setOpen(false)}
-            className="!h-[3rem] !bg-transparent w-full"
-          >
-            Cancel
+            Send request
           </Button>
         </form>{" "}
       </div>{" "}
@@ -112,4 +115,4 @@ const StatementModal = ({
   );
 };
 
-export default StatementModal;
+export default ContactModal;

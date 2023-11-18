@@ -46,7 +46,7 @@ export const CustomPasswordInput = ({ ...props }: InputProps) => (
       },
     }}
   >
-    <Input.Password {...props} style={{ padding: 8 }} />
+    <Input.Password {...props}  />
   </ConfigProvider>
 );
 
@@ -56,7 +56,7 @@ export const CustomInput = ({ ...props }: InputProps) => (
       token: { ...primaryConfig },
     }}
   >
-    <Input {...props} />
+    <Input {...props}  />
   </ConfigProvider>
 );
 export const CustomInputNumber = ({ ...props }: InputNumberProps) => (
