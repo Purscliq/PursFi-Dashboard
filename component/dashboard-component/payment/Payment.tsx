@@ -1,11 +1,10 @@
 "use client";
 import { CustomSelect as Select } from "@/lib/AntdComponents";
 import PaymentTabs from "./PaymentTabs";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Payment = () => {
   const date = new Date();
-  const { push } = useRouter();
   return (
     <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center my-6">
@@ -21,12 +20,12 @@ const Payment = () => {
           </p>
         </span>
         <div className="flex justify-center items-center space-x-5">
-          <button
-            onClick={() => push("payment/create")}
+          <Link
+            href={"/create-payment"}
             className="btn btn-md bg-black hover:bg-black text-white text-sm normal-case"
           >
             + Create payment
-          </button>
+          </Link>
           <Select
             className="!w-full"
             options={[

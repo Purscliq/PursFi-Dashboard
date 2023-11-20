@@ -58,3 +58,15 @@ export const sidebarData: MenuProps["items"] = [
     key: "setting",
   },
 ];
+
+export const activeKeys = [
+  "dashboard",
+  "account",
+  "payment",
+  "payroll",
+  "transactions",
+  "invoice",
+  "contact",
+  "administration",
+  "setting",
+];

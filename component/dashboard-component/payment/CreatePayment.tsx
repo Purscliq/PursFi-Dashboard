@@ -1,3 +1,4 @@
+"use client";
 import CreatePaymentTabs from "./CreatePaymentTabs";
 
 const CreatePayment = () => {

@@ -292,7 +292,7 @@ const SignUp = () => {
           <p className="text-sm font-medium text-gray-600 flex items-center justify-center">
             Already have an account ?{" "}
             <Link
-              href="/"
+              href="/signup/signupee"
               className="text-md hover:underline hover:duration-300 text-Primary"
             >
               Log in

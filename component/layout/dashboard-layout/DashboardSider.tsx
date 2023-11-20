@@ -3,20 +3,23 @@ import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import { Avatar, Dropdown, MenuProps, Space } from "antd";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { sidebarData } from "@/component/data/data";
+import { sidebarData, activeKeys } from "@/component/data/data";
 import { usePathname, useRouter } from "next/navigation";
 import { AiOutlineCaretDown, AiOutlineFileText } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
 import { MdAccountBalance } from "react-icons/md";
 import { CustomMenu as Menu } from "@/lib/AntdComponents";
 import DashboardModal from "@/component/dashboard-component/dashboard/DashboardModal";
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 
 const DashboardSider = () => {
   const pathName = usePathname();
-  console.log(pathName.split("/")[1]);
+  const [activePath, setActivePath] = useState("");
   const { push } = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  useLayoutEffect(() => {
+    setActivePath(activeKeys.filter((value) => pathName.includes(value))[0]);
+  }, [pathName]);
 
   const items: MenuProps["items"] = [
     {
@@ -26,7 +29,6 @@ const DashboardSider = () => {
       className: "!font-semibold !text-[15px]",
       onClick: () => setIsModalOpen(true),
     },
-
     {
       key: "2",
       label: "Make Payment",
@@ -80,11 +82,10 @@ const DashboardSider = () => {
           </Dropdown>
         </div>
         <Menu
-          selectedKeys={[pathName.split("/")[1]]}
+          selectedKeys={[activePath]}
           items={sidebarData}
           className="!space-y-3"
         />
-
         <DashboardModal open={isModalOpen} setOpen={setIsModalOpen} />
       </aside>
     </div>
