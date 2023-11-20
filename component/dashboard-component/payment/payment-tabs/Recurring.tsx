@@ -20,7 +20,7 @@ const Recurring = () => {
   const columns: ColumnsType<any> = [
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Date</p>
           <TableIcon />
         </span>
@@ -31,7 +31,7 @@ const Recurring = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Counterparty</p>
           <TableIcon />
         </span>
@@ -42,18 +42,18 @@ const Recurring = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Payment memo</p>
           <TableIcon />
         </span>
       ),
       dataIndex: "phone",
       render: (phone) => `${phone}`,
-      width: "10%",
+      width: "20%",
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Type</p>
           <TableIcon />
         </span>
@@ -65,7 +65,7 @@ const Recurring = () => {
 
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Amount</p>
           <TableIcon />
         </span>
@@ -77,7 +77,7 @@ const Recurring = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Action</p>
           <TableIcon />
         </span>
@@ -85,7 +85,6 @@ const Recurring = () => {
       dataIndex: "id",
       render: (id) => (
         <span
-          //   onClick={() => push(`dashboard/drivers/${id}`)}
           className="text-[14px] font-[600] solid-action-btn"
         >
           ...

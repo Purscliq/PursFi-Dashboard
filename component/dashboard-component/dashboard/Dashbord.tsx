@@ -6,17 +6,17 @@ import DashboardTable from "./DashboardTable";
 import DashboardModal from "./DashboardModal";
 import { useGetWalletQuery } from "@/services/walletService";
 import Arrowleft from "@/assets/icon/Arrowleft";
-import { BiArrowFromLeft } from "react-icons/bi";
 import { MdArrowOutward } from "react-icons/md";
 import { FiArrowDownLeft } from "react-icons/fi";
+import Link from "next/link";
 
 const Dashbord = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = useGetWalletQuery({});
   const date = new Date();
   return (
-    <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
-      <header className="flex flex-col md:flex-row justify-between items-center my-6">
+    <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
+      <header className="flex flex-col md:flex-row justify-between items-center mt-8">
         <span>
           <h2 className="text-2xl font-medium"> Dashboard</h2>
           <p className="text-sm text-gray-600">
@@ -38,15 +38,15 @@ const Dashbord = () => {
           <Select
             className="!w-full"
             options={[
-              { value: "jack", label: "Jack" },
-              { value: "lucy", label: "Lucy" },
+              { value: "1 month", label: "1 month" },
+              { value: "2 month", label: "2 month" },
             ]}
             placeholder="Show stats Yearly"
           />
         </div>
       </header>
-      <main className="grid grid-cols-1 md:grid-cols-2 md:gap-y-0 md:gap-x-24 gap-y-10 ">
-        <section className="flex flex-col space-y-5 ">
+      <main className="grid grid-cols-1 lg:grid-cols-2 gap-[6rem] mt-8">
+        <section className="flex flex-col space-y-10 ">
           <article className="flex items-stretch space-x-4">
             <div className="p-4 bg-black text-white w-full rounded-md">
               <div className="flex items-center justify-between">
@@ -75,7 +75,7 @@ const Dashbord = () => {
           </div>
           <DashboardTable />
         </section>
-        <section className="flex flex-col space-y-4">
+        <section className="flex flex-col space-y-10">
           <div className="p-3 space-y-2">
             <p>Payment that need Attention</p>
             <div className="flex items-center justify-between">
@@ -88,9 +88,9 @@ const Dashbord = () => {
                 <p className="text-xl font-semibold">10</p>
               </span>
             </div>
-            <p className="text-gray-500 text-sm underline">
+            <Link href="/payment" className="text-gray-500 text-sm underline">
               Respond to Payment{" "}
-            </p>
+            </Link>
           </div>
           <div className=" border-b border-b-gray-400 px-2">
             <span className="flex justify-between">
@@ -116,7 +116,9 @@ const Dashbord = () => {
             </span>
             <p>view all</p>
           </div>
-          <p className="text-gray-500 underline">view all payment</p>
+          <Link href="/payment" className="text-gray-500 text-sm underline">
+            view all payment
+          </Link>
           <div className="space-y-3 p-2">
             <div className="flex justify-between items-center">
               <div>
@@ -143,17 +145,7 @@ const Dashbord = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
-                <p>Flutterwave</p>
-                <p className="text-2xl font-semibold">N200,000,00</p>
-              </div>
-              <div className="p-3 border border-gray-300  rounded-md space-y-1">
-                <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
-                <p>Education</p>
-                <p className="text-2xl font-semibold">N200,000,00</p>
-              </div>
-              <div className="p-3 border border-gray-300  rounded-md space-y-1">
-                <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
-                <p>Paystack</p>
+                <p>Invoice</p>
                 <p className="text-2xl font-semibold">N200,000,00</p>
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
@@ -192,7 +184,7 @@ const Dashbord = () => {
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-red-500 h-3 w-3 rounded-full" />
-                <p>Others</p>
+                <p>Payment</p>
                 <p className="text-2xl font-semibold">N200,000,00</p>
               </div>
             </div>

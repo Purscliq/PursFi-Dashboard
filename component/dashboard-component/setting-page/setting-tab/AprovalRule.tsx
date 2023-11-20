@@ -5,7 +5,7 @@ import ApprovalModal from "./ApprovalModal";
 const columns = [
   {
     title: (
-      <span className="flex items-center">
+      <span className="flex items-center uppercase space-x-2">
         <p>Date Created</p>
         <TableIcon />
       </span>
@@ -15,7 +15,7 @@ const columns = [
   },
   {
     title: (
-      <span className="flex items-center">
+      <span className="flex items-center uppercase space-x-2">
         <p>Created By</p>
         <TableIcon />
       </span>
@@ -25,7 +25,7 @@ const columns = [
   },
   {
     title: (
-      <span className="flex items-center">
+      <span className="flex items-center uppercase space-x-2">
         <p>Account</p>
         <TableIcon />
       </span>
@@ -35,7 +35,7 @@ const columns = [
   },
   {
     title: (
-      <span className="flex items-center">
+      <span className="flex items-center uppercase space-x-2">
         <p>Payment Type</p>
         <TableIcon />
       </span>
@@ -45,7 +45,7 @@ const columns = [
   },
   {
     title: (
-      <span className="flex items-center">
+      <span className="flex items-center uppercase space-x-2">
         <p>Amount</p>
         <TableIcon />
       </span>
@@ -71,7 +71,7 @@ const AprovalRule = () => {
       <div className="relative overflow-x-auto  sm:rounded-lg w-[22rem] md:w-full">
         <Table dataSource={[]} columns={columns} />
       </div>
-      <ApprovalModal open={open} setOpen={setOpen}/>
+      <ApprovalModal open={open} setOpen={setOpen} />
     </div>
   );
 };

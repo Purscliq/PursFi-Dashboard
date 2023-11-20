@@ -48,7 +48,7 @@ const Persoanal = () => {
           <div className="space-x-2 flex flex-col md:flex-row w-full md:w-[400px]">
             <div className="w-full space-y-1">
               <label htmlFor="firstName" className="font-semibold text-sm">
-                FirstName
+                First Name
               </label>
               <input
                 type="text"
@@ -59,7 +59,7 @@ const Persoanal = () => {
             </div>
             <div className="w-full  space-y-1">
               <label htmlFor="firstName" className="font-semibold text-sm">
-                LastName
+                Last Name
               </label>
               <input
                 type="text"
@@ -74,7 +74,7 @@ const Persoanal = () => {
         {/* Email Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
-            <h1 className="font-semibold ">Email Adress</h1>
+            <h1 className="font-semibold ">Email Address</h1>
             <span className="text-sm mt-2">
               Your email address will receive all <br />
               communications and activity notifications from your account.{" "}

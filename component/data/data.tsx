@@ -53,7 +53,7 @@ export const sidebarData: MenuProps["items"] = [
     key: "administration",
   },
   {
-    label: <Link href="/setting">Setting</Link>,
+    label: <Link href="/setting">Settings</Link>,
     icon: <FiSettings className=" font-bold" />,
     key: "setting",
   },

@@ -38,7 +38,7 @@ const AccountTable = () => {
   const columns: ColumnsType<DataType> = [
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Date</p>
           <TableIcon />
         </span>
@@ -49,7 +49,7 @@ const AccountTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Full Name</p>
           <TableIcon />
         </span>
@@ -60,7 +60,7 @@ const AccountTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Purpose</p>
           <TableIcon />
         </span>
@@ -71,7 +71,7 @@ const AccountTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>type</p>
           <TableIcon />
         </span>
@@ -79,7 +79,7 @@ const AccountTable = () => {
       dataIndex: "type",
       render: (type) =>
         type === "Debit" ? (
-          <span className="p-[4%] rounded-[80px] bg-[#FF39561A]/[10%] text-[#FF3956] text-center text-[14px] font-[600]">
+          <span className="p-[4%] rounded-[80px] bg-[#FF39561A]/[10%] text-[#FF3956] text-center  text-[14px] font-[600]">
             {type}
           </span>
         ) : (
@@ -91,7 +91,7 @@ const AccountTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase">
           <p>Amount</p>
           <TableIcon />
         </span>
@@ -102,7 +102,7 @@ const AccountTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Action</p>
           <TableIcon className="ml-4" />
         </span>

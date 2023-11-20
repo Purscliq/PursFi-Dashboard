@@ -4,7 +4,7 @@ import TransactionTable from "./TransactionTable";
 const Transactions = () => {
   const date = new Date();
   return (
-    <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
+    <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
       <header className="flex flex-col space-y-6 my-6">
         <div className="flex items-center justify-between ">
           <span>
@@ -14,14 +14,14 @@ const Transactions = () => {
             </p>
           </span>
           <div className="flex justify-center items-center ">
-            <Select
-              style={{ width: "100%" }}
-              options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-              ]}
-              placeholder="Show stats Yearly"
-            />{" "}
+          <Select
+            className="!w-full"
+            options={[
+              { value: "1 month", label: "1 month" },
+              { value: "2 month", label: "2 month" },
+            ]}
+            placeholder="Show stats Yearly"
+          />
           </div>
         </div>
       </header>
