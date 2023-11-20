@@ -15,47 +15,46 @@ export const sidebarData: MenuProps["items"] = [
   {
     label: <Link href="/dashboard">Dashboard</Link>,
     icon: <MdAccountBalance className=" font-bold" />,
-    key: "/dashboard",
+    key: "dashboard",
   },
   {
     label: <Link href="/account">Account</Link>,
     icon: <MdOutlineAccountBalanceWallet className=" font-bold" />,
-    key: "/account",
+    key: "account",
   },
   {
     label: <Link href="/payment">Payment</Link>,
     icon: <AiOutlineIdcard className=" font-bold" />,
-    key: "/payment",
+    key: "payment",
   },
   {
     label: <Link href="/payroll">Payroll</Link>,
     icon: <FaRegUser className=" font-bold" />,
-    key: "/payroll",
+    key: "payroll",
   },
   {
     label: <Link href="/transactions">Transaction</Link>,
     icon: <GrTransaction className=" font-bold" />,
-    key: "/transactions",
+    key: "transactions",
   },
   {
     label: <Link href="/invoice">Invoice</Link>,
     icon: <MdOutlineAdminPanelSettings className=" font-bold" />,
-    key: "/invoice",
+    key: "invoice",
   },
   {
     label: <Link href="/contact">Contact</Link>,
     icon: <GrDocumentUser className=" font-bold" />,
-    key: "/contact",
+    key: "contact",
   },
   {
     label: <Link href="/administration">Administration</Link>,
     icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
-    key: "/administration",
+    key: "administration",
   },
-
   {
     label: <Link href="/setting">Setting</Link>,
     icon: <FiSettings className=" font-bold" />,
-    key: "/setting",
+    key: "setting",
   },
 ];

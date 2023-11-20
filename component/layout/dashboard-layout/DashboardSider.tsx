@@ -14,6 +14,7 @@ import { useState } from "react";
 
 const DashboardSider = () => {
   const pathName = usePathname();
+  console.log(pathName.split("/")[1]);
   const { push } = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -63,12 +64,11 @@ const DashboardSider = () => {
           </summary>
           <ul className="-mt-4 shadow menu dropdown-content z-[1]  w-52">
             <li className="w-full bg-[#EEF2F7] p-2 cursor-pointer items-center rounded-box ">
-             Log Out
+              Log Out
             </li>
-          
           </ul>
         </details>
-      
+
         <div className="flex p-2 items-center justify-center mx-2 my-4 border rounded">
           <Dropdown menu={{ items }}>
             <a onClick={(e) => e.preventDefault()}>
@@ -79,7 +79,11 @@ const DashboardSider = () => {
             </a>
           </Dropdown>
         </div>
-        <Menu selectedKeys={[pathName]} items={sidebarData} className="!space-y-3" />
+        <Menu
+          selectedKeys={[pathName.split("/")[1]]}
+          items={sidebarData}
+          className="!space-y-3"
+        />
 
         <DashboardModal open={isModalOpen} setOpen={setIsModalOpen} />
       </aside>

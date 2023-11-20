@@ -1,5 +1,4 @@
 "use client";
-import { Select } from "antd";
 import React from "react";
 import SettingTab from "./SettingTab";
 
@@ -12,7 +11,7 @@ const Setting = () => {
           <p className="text-sm text-gray-600">
             Showing your Account metrics for July 19, 2021 - July 25, 2021
           </p>
-        </span>{" "}
+        </span>
         <SettingTab />
       </header>
     </div>
