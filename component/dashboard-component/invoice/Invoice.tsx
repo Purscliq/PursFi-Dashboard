@@ -18,7 +18,7 @@ const Invoice = () => {
           </span>
           <div className="flex justify-center items-center space-x-5">
             <button
-              onClick={() => push("invoice/create")}
+              onClick={() => push("/create-invoice")}
               className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
             >
               + Create Invoice
