@@ -25,8 +25,8 @@ const Account = () => {
   const date = new Date();
   useGetWalletQuery({});
   return (
-    <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
-      <header className="flex flex-col space-y-6 my-6">
+    <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
+      <header className="flex flex-col space-y-6 mt-6">
         <div className="flex items-center justify-between ">
           <span>
             <h2 className="text-2xl font-medium"> Account </h2>
@@ -71,7 +71,7 @@ const Account = () => {
         </div>
       </header>{" "}
       <main className="grid grid-cols-1 gap-4">
-        <section className="grid grid-cols-1 md:grid-cols-2 md:gap-y-0 md:gap-x-24 gap-y-10 ">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-[6rem] mt-8">
           <article>
             <div className="flex items-stretch space-x-6 ">
               <div className="p-4 bg-black text-white w-full rounded-md">

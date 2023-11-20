@@ -20,7 +20,7 @@ const ALL = () => {
   const columns: ColumnsType<any> = [
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Date</p>
           <TableIcon />
         </span>
@@ -31,7 +31,7 @@ const ALL = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Counterparty</p>
           <TableIcon />
         </span>
@@ -42,42 +42,40 @@ const ALL = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Payment memo</p>
           <TableIcon />
         </span>
       ),
       dataIndex: "phone",
       render: (phone) => `${phone}`,
-      width: "10%",
+      width: "20%",
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Type</p>
           <TableIcon />
         </span>
       ),
       dataIndex: "status",
       render: (status) => `${status}`,
-      width: "10%",
     },
 
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Amount</p>
           <TableIcon />
         </span>
       ),
       dataIndex: "driver",
-      render: (driver) => <span></span>,
-      width: "5%",
-      fixed: "right",
+      render: (driver) => <span>{driver}</span>,
+     
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Action</p>
           <TableIcon />
         </span>
@@ -85,7 +83,6 @@ const ALL = () => {
       dataIndex: "id",
       render: (id) => (
         <span
-          //   onClick={() => push(`dashboard/drivers/${id}`)}
           className="text-[14px] font-[600] solid-action-btn"
         >
           ...

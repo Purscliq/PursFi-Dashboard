@@ -7,7 +7,7 @@ const Contact = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
+    <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
       <header className="flex flex-col space-y-3 my-1">
         <div className="flex items-center justify-between ">
           <span>

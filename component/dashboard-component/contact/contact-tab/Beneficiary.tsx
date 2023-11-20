@@ -32,7 +32,7 @@ const Beneficiary = () => {
   const columns: ColumnsType<DataType> = [
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <BsSquare />
         </span>
       ),
@@ -42,7 +42,7 @@ const Beneficiary = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Account Name</p>
           <TableIcon />
         </span>
@@ -53,7 +53,7 @@ const Beneficiary = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Account Number </p>
           <TableIcon />
         </span>
@@ -64,7 +64,7 @@ const Beneficiary = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Account Bank</p>
           <TableIcon />
         </span>
@@ -75,7 +75,7 @@ const Beneficiary = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Action</p>
           <TableIcon className="ml-4" />
         </span>

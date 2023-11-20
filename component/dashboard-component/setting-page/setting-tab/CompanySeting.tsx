@@ -92,7 +92,7 @@ const CompanySeting = () => {
         <hr />
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
-            <h1 className="font-semibold ">Busness Industry</h1>
+            <h1 className="font-semibold ">Business Industry</h1>
             <span className="text-sm mt-2">
               Specific sector, in which your organization primarily operates.
             </span>
@@ -114,7 +114,7 @@ const CompanySeting = () => {
         {/* Phone Number Section */}
         <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
         <div className="text-sm flex-col flex">
-            <h1 className="font-semibold ">Busness Adress</h1>
+            <h1 className="font-semibold ">Business Address</h1>
             <span className="text-sm mt-2">
               This is the location of your business
             </span>
@@ -122,12 +122,12 @@ const CompanySeting = () => {
           <div className="flex flex-col space-y-3">
             <div className="flex flex-col space-y-1 w-full md:w-[400px]">
               <label htmlFor="email" className="font-semibold text-sm">
-                Adress
+                Address
               </label>
               <input
                 type="email"
                 id="email"
-                placeholder="Email"
+                placeholder="your address here"
                 className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
               />
             </div>
@@ -139,10 +139,10 @@ const CompanySeting = () => {
                 <Select
                   style={{ width: "100%" }}
                   options={[
-                    { value: "jack", label: "Jack" },
-                    { value: "lucy", label: "Lucy" },
+                    { value: "eti", label: "Eti-osa" },
+                    { value: "Odi-Olowo", label: "Odi-Olowo" },
                   ]}
-                  placeholder="Placehohlder"
+                  placeholder="local government"
                 />{" "}
               </div>
               <div className="w-full  space-y-1">
@@ -152,10 +152,10 @@ const CompanySeting = () => {
                 <Select
                   style={{ width: "100%" }}
                   options={[
-                    { value: "jack", label: "Jack" },
-                    { value: "lucy", label: "Lucy" },
+                    { value: "Lagos", label: "Lagos" },
+                    { value: "Ibadan", label: "Iadan" },
                   ]}
-                  placeholder="Placehohlder"
+                  placeholder="state"
                 />{" "}
               </div>
             </div>

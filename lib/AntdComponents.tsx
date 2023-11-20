@@ -192,6 +192,7 @@ export const CustomTable = ({ ...props }: TableProps<any>) => (
       token: {
         ...primaryConfig,
         borderRadius: 5,
+      
       },
     }}
   >

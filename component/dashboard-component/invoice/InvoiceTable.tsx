@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import { Input, Table } from "antd";
 import { DataType } from "./InvoiceTab";
 import { ColumnsType } from "antd/es/table";
 import FilterIcon from "@/assets/icon/FilterIcon";
 import { CustomDatePicker as DatePicker } from "@/lib/AntdComponents";
+import TableIcon from "@/assets/icon/TableIcon";
 
 interface Props {
   data: DataType[];
@@ -20,7 +21,12 @@ const InvoiceTable = ({ data, status }: Props) => {
         );
   const columns: ColumnsType<DataType> = [
     {
-      title: "Client Name",
+      title: (
+        <span className="flex items-center uppercase space-x-2">
+          <p>Client Name</p>
+          <TableIcon />
+        </span>
+      ),
       dataIndex: "client",
       key: "client",
       render: (text: string, record: DataType) => (
@@ -31,23 +37,43 @@ const InvoiceTable = ({ data, status }: Props) => {
       ),
     },
     {
-      title: "Issued Date",
+      title: (
+        <span className="flex items-center uppercase space-x-2">
+          <p>Issued Date</p>
+          <TableIcon />
+        </span>
+      ),
       dataIndex: "issuieddate",
       key: "issuieddate",
     },
     {
-      title: "Due Date",
+      title: (
+        <span className="flex items-center uppercase space-x-2">
+          <p>Due date</p>
+          <TableIcon />
+        </span>
+      ),
       dataIndex: "duedate",
       key: "duedate",
     },
     {
-      title: "Amount",
+      title: (
+        <span className="flex items-center uppercase space-x-2">
+          <p>Amount</p>
+          <TableIcon />
+        </span>
+      ),
       dataIndex: "amount",
       key: "amount",
       render: (amount) => `N${amount}`,
     },
     {
-      title: "Status",
+      title: (
+        <span className="flex items-center uppercase space-x-2">
+          <p>Status</p>
+          <TableIcon />
+        </span>
+      ),
       dataIndex: "status",
       key: "status",
       render: (text: string) => {

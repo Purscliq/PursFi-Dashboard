@@ -11,7 +11,7 @@ const TransactionTable = () => {
   const columns = [
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Date</p>
           <TableIcon />
         </span>
@@ -21,7 +21,7 @@ const TransactionTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Full Name</p>
           <TableIcon />
         </span>
@@ -31,7 +31,7 @@ const TransactionTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Purpose</p>
           <TableIcon />
         </span>
@@ -41,7 +41,7 @@ const TransactionTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>type</p>
           <TableIcon />
         </span>
@@ -52,7 +52,7 @@ const TransactionTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Amount</p>
           <TableIcon />
         </span>
@@ -62,7 +62,7 @@ const TransactionTable = () => {
     },
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center uppercase space-x-2">
           <p>Action</p>
           <TableIcon className="ml-4" />
         </span>
@@ -90,7 +90,6 @@ const TransactionTable = () => {
       <div className="relative overflow-x-auto  sm:rounded-lg w-[22rem] md:w-full">
         <Table columns={columns} dataSource={[]} />
       </div>
-     
     </div>
   );
 };

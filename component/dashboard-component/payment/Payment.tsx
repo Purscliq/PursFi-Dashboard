@@ -7,7 +7,7 @@ const Payment = () => {
   const date = new Date();
   const { push } = useRouter();
   return (
-    <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
+    <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center my-6">
         <span>
           <h2 className="text-2xl font-medium"> Payment</h2>
@@ -30,8 +30,8 @@ const Payment = () => {
           <Select
             className="!w-full"
             options={[
-              { value: "jack", label: "Jack" },
-              { value: "lucy", label: "Lucy" },
+              { value: "1 month", label: "1 month" },
+              { value: "2 month", label: "2 month" },
             ]}
             placeholder="Show stats Yearly"
           />

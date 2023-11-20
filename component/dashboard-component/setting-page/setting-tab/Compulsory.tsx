@@ -13,7 +13,7 @@ const Compulsory = () => {
       <div className=" w-full rounded-md">
         <div className="mb-4 p-2 flex flex-col md:flex-row space-x-24 ">
           <div className="text-sm flex-col flex">
-            <h1 className="font-semibold">Busness Owner</h1>{" "}
+            <h1 className="font-semibold">Business Owner</h1>{" "}
             <span className="text-sm mt-2">
               The companys owner as listed in the registration account{" "}
             </span>
@@ -66,7 +66,7 @@ const Compulsory = () => {
             <h1 className="font-semibold">Manage Refrence</h1>{" "}
             <p className="text-sm mt-2 max-w-xs">
               As per the Banking regulation, it is mandatory to provide two
-              references.{" "}
+              refrences.{" "}
             </p>
           </div>{" "}
           <div className="flex flex-col space-y-4 w-full md:w-[400px]">
@@ -78,7 +78,7 @@ const Compulsory = () => {
               >
                 JD
               </Avatar>
-              <p>First Refrenece</p>
+              <p>First Refrence</p>
               <button className="text-sm font-medium">+ Add Refrence</button>
             </div>
             <div className="flex items-center space-x-8">
@@ -89,7 +89,7 @@ const Compulsory = () => {
               >
                 JD
               </Avatar>
-              <p>First Refrenece</p>
+              <p>First Refrence</p>
               <button className="text-sm font-medium">+ Add Refrence</button>
             </div>
           </div>
