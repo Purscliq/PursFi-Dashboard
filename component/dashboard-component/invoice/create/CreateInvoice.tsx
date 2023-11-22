@@ -1,6 +1,5 @@
 "use client";
 import { DatePicker } from "antd";
-import { MdDeleteForever } from "react-icons/md";
 import {
   CustomText as Text,
   CustomButton as Button,
@@ -13,6 +12,7 @@ import { useAppSelector } from "@/store/hooks";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import ItemsTable from "./ItemsTable";
 import { useCreateInvoiceMutation } from "@/services/invoiceService";
+import CreateInvoiceModal from "./CreateInvoiceModal";
 interface DataType {
   key: React.Key;
   itemName: string;
@@ -69,6 +69,8 @@ const CreateInvoice = () => {
       .then(() => {})
       .catch((err) => {});
   };
+  const [open, setOpen] = useState(false);
+
   return (
     <form className="grid grid-cols-1 w-[85%] gap-[1rem] px-[3%]">
       <div className="flex items-center justify-between">
@@ -221,11 +223,13 @@ const CreateInvoice = () => {
         <Button
           type="primary"
           htmlType="submit"
+          onClick={()=>setOpen(true)}
           className="!h-[3rem] !bg-Primary  text-white hover:!text-white"
         >
           Continue
         </Button>
       </div>
+      <CreateInvoiceModal open={open} setOpen={setOpen}  />
     </form>
   );
 };
