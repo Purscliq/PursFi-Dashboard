@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import type { TabsProps } from "antd";
 import CreateInvoice from "./CreateInvoice";
@@ -16,19 +16,6 @@ const items: TabsProps["items"] = [
       </span>
     ),
     children: <CreateInvoice />,
-  },
-  {
-    key: "2",
-    label: (
-      <span className="flex items-center gap-[0.2rem]">
-        <span className="text-[12px] font-[400] text-white py[1%] px-[5%] rounded-full bg-black">
-          2
-        </span>
-        <p className="text-inherit text[#181336] text-[16px] font-[400]">
-          Invoice Items
-        </p>
-      </span>
-    ),
   },
 ];
 const CreateInvioiceTab = () => {

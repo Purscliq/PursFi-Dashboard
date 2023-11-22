@@ -12,15 +12,20 @@ import {
   CustomText as Text,
   CustomRadioGroup as RadioGroup,
   CustomButton as Button,
+  CustomDatePicker as DatePicker,
+  CustomTimePicker as TimePicker,
 } from "@/lib/AntdComponents";
 import {
   useGetBanksQuery,
   useVerifyAccountMutation,
   useSingleTransferMutation,
+  useRecurringExpenditureMutation,
+  useScheduledExpenditureMutation,
 } from "@/services/disbursementService";
 import { valueType } from "antd/es/statistic/utils";
 import { useAppSelector } from "@/store/hooks";
 import SuccessfulPaymentModal from "../modals/successfulPaymentModal";
+import { Dayjs } from "dayjs";
 const options = [
   { label: "instant payment", value: "instant_payment" },
   { label: "Schedule Payment", value: "schedule_payment" },
@@ -33,6 +38,9 @@ const initialState = {
   narration: "",
   businessId: "",
   transactionCategory: "",
+  day: "",
+  hour: "",
+  month: "",
 };
 const initAcctDetails = {
   bankCode: "",
@@ -46,6 +54,10 @@ const MakePayment = () => {
   const { data, isLoading } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
   const [transfer, { isLoading: isProcessing }] = useSingleTransferMutation();
+  const [recurring_transfer, { isLoading: isProcessing_recurring }] =
+    useRecurringExpenditureMutation();
+  const [scheduled_transfer, { isLoading: isProcessing_scheduled }] =
+    useScheduledExpenditureMutation();
   const wallet = useAppSelector((store) => store.user.wallet);
   const [acctdetails, setAcctDetails] = useState(initAcctDetails);
   useEffect(() => {
@@ -61,7 +73,7 @@ const MakePayment = () => {
   }, [acctdetails.accountNumber]);
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    if (formdata.bankName && formdata.transactionCategory)
+    if (formdata.bankName && formdata.transactionCategory === options[0].value)
       transfer({
         ...formdata,
         ...acctdetails,
@@ -77,8 +89,44 @@ const MakePayment = () => {
         .catch((err) => {
           console.log(err);
         });
-    else {
-    }
+    else if (
+      formdata.bankName &&
+      formdata.transactionCategory === options[1].value
+    )
+      scheduled_transfer({
+        ...formdata,
+        ...acctdetails,
+        amount: formdata?.amount.toString(),
+        businessId: profile?.businessId,
+      })
+        .unwrap()
+        .then((res) => {
+          setIsModalOpen(true);
+          setAcctDetails(initAcctDetails);
+          setFormdata(initialState);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    else if (
+      formdata.bankName &&
+      formdata.transactionCategory === options[2].value
+    )
+      recurring_transfer({
+        ...formdata,
+        ...acctdetails,
+        amount: formdata?.amount.toString(),
+        businessId: profile?.businessId,
+      })
+        .unwrap()
+        .then((res) => {
+          setIsModalOpen(true);
+          setAcctDetails(initAcctDetails);
+          setFormdata(initialState);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
   const onSearchChange = (value: string) => {
     setAcctDetails((prev) => ({ ...prev, bankCode: value }));
@@ -177,6 +225,44 @@ const MakePayment = () => {
             className="!flex !justify-start !gap-[4rem]"
           />
         </span>
+        {formdata.transactionCategory === options[2].value && (
+          <span className="flex flex-col gap-1">
+            <label>Select Month and Day</label>
+            <span className="flex items-center justify-between gap-[2rem]">
+              <DatePicker
+                onChange={(value, date) => {
+                  setFormdata((prev) => ({ ...prev, day: date.split("-")[2] }));
+                }}
+                picker="date"
+                className="!w-full"
+              />
+              <TimePicker
+                format={"HH"}
+                onChange={(value, date) => {
+                  setFormdata((prev) => ({ ...prev, hour: date }));
+                }}
+                className="!w-full"
+              />
+            </span>
+          </span>
+        )}
+        {formdata.transactionCategory === options[1].value && (
+          <span className="flex flex-col gap-1">
+            <label>Select Month</label>
+            <span className="flex items-center justify-between gap-[2rem]">
+              <DatePicker
+                onChange={(value, date) => {
+                  setFormdata((prev) => ({
+                    ...prev,
+                    month: date.split("-")[1],
+                  }));
+                }}
+                picker="month"
+                className="!w-full"
+              />
+            </span>
+          </span>
+        )}
         <span className="flex flex-col">
           <label htmlFor="info">Addition Information(optional)</label>
           <Text id="info" />
@@ -186,7 +272,9 @@ const MakePayment = () => {
           </span>
         </span>
         <Button
-          loading={isProcessing}
+          loading={
+            isProcessing || isProcessing_recurring || isProcessing_scheduled
+          }
           htmlType="submit"
           className="!bg-black !h-[45px]"
           type="primary"

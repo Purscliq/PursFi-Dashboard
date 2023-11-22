@@ -24,6 +24,8 @@ import {
   TableProps,
   MenuProps,
   Menu,
+  TimePicker,
+  TimePickerProps,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -46,7 +48,7 @@ export const CustomPasswordInput = ({ ...props }: InputProps) => (
       },
     }}
   >
-    <Input.Password {...props}  />
+    <Input.Password {...props} />
   </ConfigProvider>
 );
 
@@ -56,7 +58,7 @@ export const CustomInput = ({ ...props }: InputProps) => (
       token: { ...primaryConfig },
     }}
   >
-    <Input {...props}  />
+    <Input {...props} />
   </ConfigProvider>
 );
 export const CustomInputNumber = ({ ...props }: InputNumberProps) => (
@@ -121,6 +123,12 @@ export const CustomSelect = ({ ...props }: SelectProps) => (
 export const CustomDatePicker = ({ ...props }: DatePickerProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <DatePicker {...props} />
+  </ConfigProvider>
+);
+
+export const CustomTimePicker = ({ ...props }: TimePickerProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <TimePicker {...props} />
   </ConfigProvider>
 );
 
@@ -192,7 +200,6 @@ export const CustomTable = ({ ...props }: TableProps<any>) => (
       token: {
         ...primaryConfig,
         borderRadius: 5,
-      
       },
     }}
   >
