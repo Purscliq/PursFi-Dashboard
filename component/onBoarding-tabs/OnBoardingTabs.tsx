@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import type { TabsProps } from "antd";
 import CompanyInfo from "./tabs/CompanyInfo";
