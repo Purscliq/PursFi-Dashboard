@@ -94,6 +94,16 @@ const Member = () => {
       ),
       dataIndex: "status",
       key: "status",
+      render: (status) =>
+        status === "Active" ? (
+          <span className="p-[4%] rounded-[80px] bg-green-50  text-[#0AA07B]  text-center  text-[14px] font-[600]">
+            {status}
+          </span>
+        ) : (
+          <span className="p-[4%] rounded-[80px] bg-[#0AA07B]/[10%] text-[#0AA07B] text-center text-[14px] font-[600]">
+            {status}
+          </span>
+        ),
     },
     {
       title: (
