@@ -19,6 +19,7 @@ interface DataType {
   itemQty: number;
   itemPrice: number;
 }
+const date: any = "";
 const initialState = {
   title: "",
   clientPhone: "",
@@ -26,7 +27,7 @@ const initialState = {
   currency: "",
   narration: "",
   discount: 0,
-  dueDate: "",
+  dueDate: date,
   tax: "",
   senderMail: "",
   clientMail: "",
@@ -48,6 +49,7 @@ const initialState = {
 const CreateInvoice = () => {
   const business = useAppSelector((store) => store.user.business);
   const profile = useAppSelector((store) => store.user.user);
+  const wallet = useAppSelector((store) => store.user.wallet);
   const [formData, setFormData] = useState(initialState);
   const [createInvoice, { isLoading }] = useCreateInvoiceMutation();
   const [dataSource, setDataSource] = useState<DataType[]>([
@@ -58,7 +60,9 @@ const CreateInvoice = () => {
       itemQty: 0,
     },
   ]);
-  const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onInputChange: ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (e) => {
     const { value, name } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -154,13 +158,12 @@ const CreateInvoice = () => {
       <div className="grid grid-cols-2 gap-[3rem] items-start justify-between">
         <div className="flex flex-col space-y-3">
           <div className="flex flex-col space-y-1 w-full">
-            <label htmlFor="email" className="font-medium text-sm">
+            <label htmlFor="account" className="font-medium text-sm">
               Pursfibusnnes Account
             </label>
             <input
-              type="email"
-              id="email"
-              placeholder="payment"
+              value={wallet?.accountDetails?.accountName}
+              disabled
               className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
             />
           </div>{" "}
@@ -169,18 +172,35 @@ const CreateInvoice = () => {
               <label htmlFor="email" className="font-medium text-sm">
                 Start Date
               </label>
-              <DatePicker className="h-fit w-fit" placeholder="Start Date" />
+              <DatePicker
+                name=""
+                className="h-fit w-fit"
+                placeholder="Start Date"
+              />
             </div>
             <div className="flex flex-col space-y-1 w-full">
               <label htmlFor="email" className="font-medium text-sm">
                 Start Date
               </label>
-              <DatePicker className="h-fit w-fit" placeholder="Due Date" />
+              <DatePicker
+                name="dueDate"
+                value={formData?.dueDate}
+                onChange={(value, day) => {
+                  setFormData((prev) => ({ ...prev, dueDate: day }));
+                }}
+                className="h-fit w-fit"
+                placeholder="Due Date"
+              />
             </div>{" "}
           </div>
           <span className="flex flex-col">
             <label htmlFor="info">Note/term</label>
-            <Text id="info" />
+            <Text
+              value={formData?.message}
+              name="message"
+              onChange={onInputChange}
+              id="info"
+            />
             <span className="flex justify-between">
               <p>Maximum 500 characters</p>
               <p>0 / 500</p>
@@ -192,7 +212,6 @@ const CreateInvoice = () => {
             {/* <p className="p-2 border text-sm normal-case">+ Discount</p> */}
             <InputNumber
               controls={false}
-              // prefix="+"
               placeholder="Discount"
               suffix="%"
               className="!w-full"
@@ -201,14 +220,12 @@ const CreateInvoice = () => {
               controls={false}
               prefix="+"
               placeholder="Tax"
-              // suffix="%"
               className="!w-full"
             />
             <InputNumber
               controls={false}
               prefix="+"
               placeholder="Shipping"
-              // suffix="%"
               className="!w-full"
             />
           </div>
@@ -223,13 +240,13 @@ const CreateInvoice = () => {
         <Button
           type="primary"
           htmlType="submit"
-          onClick={()=>setOpen(true)}
+          onClick={() => setOpen(true)}
           className="!h-[3rem] !bg-Primary  text-white hover:!text-white"
         >
           Continue
         </Button>
       </div>
-      <CreateInvoiceModal open={open} setOpen={setOpen}  />
+      <CreateInvoiceModal open={open} setOpen={setOpen} />
     </form>
   );
 };

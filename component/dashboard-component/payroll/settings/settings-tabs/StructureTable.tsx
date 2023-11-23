@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import type { InputRef } from "antd";
-import { Form, Input, InputNumber } from "antd";
+import type { InputRef, RefSelectProps } from "antd";
+import { Form, Input, InputNumber, Select } from "antd";
 import type { FormInstance } from "antd/es/form";
 import { MdDeleteForever } from "react-icons/md";
 import {
@@ -9,7 +9,10 @@ import {
 } from "@/lib/AntdComponents";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
-
+const taxableOptions = [
+  { label: "Yes", value: "Yes" },
+  { label: "No", value: "No" },
+];
 interface Item {
   key: string;
   name: string;
@@ -39,7 +42,7 @@ interface EditableCellProps {
   dataIndex: keyof Item;
   record: Item;
   handleSave: (record: Item) => void;
-  type?: string;
+  dataType?: string;
 }
 
 const EditableCell: React.FC<EditableCellProps> = ({
@@ -49,18 +52,20 @@ const EditableCell: React.FC<EditableCellProps> = ({
   dataIndex,
   record,
   handleSave,
-  type,
+  dataType,
   ...restProps
 }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef<InputRef>(null);
   const numinputRef = useRef<HTMLInputElement>(null);
+  const selectRef = useRef<RefSelectProps>(null);
   const form = useContext(EditableContext)!;
 
   useEffect(() => {
     if (editing) {
-      inputRef.current!.focus();
-      numinputRef.current!.focus();
+      selectRef.current!?.focus();
+      inputRef.current!?.focus();
+      numinputRef.current!?.focus();
     }
   }, [editing]);
 
@@ -93,15 +98,32 @@ const EditableCell: React.FC<EditableCellProps> = ({
           },
         ]}
       >
-        {type === "number" ? (
-          <InputNumber ref={numinputRef} onPressEnter={save} onBlur={save} />
-        ) : (
-          <Input
-            placeholder="Enter Item"
-            ref={inputRef}
+        {title === "Percentage  of Salary" ? (
+          <InputNumber
+            suffix="%"
+            ref={numinputRef}
             onPressEnter={save}
             onBlur={save}
+            controls={false}
           />
+        ) : (
+          <>
+            {title === "Taxable" ? (
+              <Select
+                onSelect={save}
+                ref={selectRef}
+                options={taxableOptions}
+                defaultValue={taxableOptions[0].value}
+              />
+            ) : (
+              <Input
+                placeholder="Enter Item"
+                ref={inputRef}
+                onPressEnter={save}
+                onBlur={save}
+              />
+            )}
+          </>
         )}
       </Form.Item>
     ) : (
@@ -122,14 +144,14 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   key: React.Key;
-  itemName: string;
-  itemQty: number;
-  itemPrice: number;
+  name: string;
+  percentage: number;
+  tax: string;
 }
 
 type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 
-const ItemsTable = ({
+const StructureTable = ({
   dataSource,
   setDataSource,
 }: {
@@ -140,39 +162,32 @@ const ItemsTable = ({
 
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
+    console.log(dataSource);
     setDataSource(newData);
   };
 
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
     dataIndex: string;
-    type?: string;
+    dataType?: string;
   })[] = [
     {
-      title: "items",
-      dataIndex: "itemName",
+      title: "Salary Component",
+      dataIndex: "name",
       width: "30%",
       editable: true,
     },
     {
-      title: "quantity",
-      dataIndex: "itemQty",
+      title: "Percentage  of Salary",
+      dataIndex: "percentage",
       editable: true,
-      type: "number",
+      dataType: "number",
     },
     {
-      title: "Price",
-      dataIndex: "itemPrice",
+      title: "Taxable",
+      dataIndex: "tax",
       editable: true,
-      type: "number",
-    },
-    {
-      title: "Amount",
-      dataIndex: "",
-      render: (_, record) => {
-        const amount = record?.itemQty * record?.itemPrice;
-        return <h5>{amount}</h5>;
-      },
+      dataType: "select",
     },
     {
       dataIndex: "operation",
@@ -190,9 +205,9 @@ const ItemsTable = ({
   const handleAdd = () => {
     const newData: DataType = {
       key: count,
-      itemName: "enter item name...",
-      itemQty: 0,
-      itemPrice: 0,
+      name: "Base Salary",
+      percentage: 50,
+      tax: "Yes",
     };
     setDataSource([...dataSource, newData]);
     setCount(count + 1);
@@ -248,4 +263,4 @@ const ItemsTable = ({
   );
 };
 
-export default ItemsTable;
+export default StructureTable;

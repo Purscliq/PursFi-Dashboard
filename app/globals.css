@@ -26,3 +26,9 @@ body {
   border: 1px solid #d9d9d9;
   border-radius: 2px;
 }
+
+.overviewbg {
+  background: url("../assets/overviewbg.svg");
+  background-position: left;
+  background-repeat: no-repeat;
+}
