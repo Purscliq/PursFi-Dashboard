@@ -7,6 +7,7 @@ import {
   CustomButton as Button,
   CustomTable as Table,
 } from "@/lib/AntdComponents";
+import { dataType } from "./CreateInvoice";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -59,8 +60,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   useEffect(() => {
     if (editing) {
-      inputRef.current!.focus();
-      numinputRef.current!.focus();
+      inputRef?.current!?.focus();
+      numinputRef?.current!?.focus();
     }
   }, [editing]);
 
@@ -93,12 +94,17 @@ const EditableCell: React.FC<EditableCellProps> = ({
           },
         ]}
       >
-        {type === "number" ? (
-          <InputNumber ref={numinputRef} onPressEnter={save} onBlur={save} />
-        ) : (
+        {title === "items" ? (
           <Input
             placeholder="Enter Item"
             ref={inputRef}
+            onPressEnter={save}
+            onBlur={save}
+          />
+        ) : (
+          <InputNumber
+            controls={false}
+            ref={numinputRef}
             onPressEnter={save}
             onBlur={save}
           />
@@ -132,9 +138,11 @@ type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 const ItemsTable = ({
   dataSource,
   setDataSource,
+  setFormData,
 }: {
   dataSource: DataType[];
   setDataSource: React.Dispatch<React.SetStateAction<DataType[]>>;
+  setFormData: React.Dispatch<React.SetStateAction<dataType>>;
 }) => {
   const [count, setCount] = useState(1);
 
@@ -207,6 +215,18 @@ const ItemsTable = ({
       ...row,
     });
     setDataSource(newData);
+    const total = newData
+      .map((e) => e.itemQty * e.itemPrice)
+      .reduce((a, b) => a + b, 0);
+    setFormData((prev) => ({
+      ...prev,
+      amount: total,
+      tax: "",
+      taxPercent: 0,
+      discount: 0,
+      discountPercent: 0,
+      shipping: 0,
+    }));
   };
 
   const components = {

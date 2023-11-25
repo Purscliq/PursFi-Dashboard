@@ -11,7 +11,6 @@ import logo from "@/assets/logo.svg";
 import { useAppSelector } from "@/store/hooks";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import ItemsTable from "./ItemsTable";
-import { useCreateInvoiceMutation } from "@/services/invoiceService";
 import CreateInvoiceModal from "./CreateInvoiceModal";
 interface DataType {
   key: React.Key;
@@ -20,6 +19,9 @@ interface DataType {
   itemPrice: number;
 }
 const date: any = "";
+const shipping: any = 0;
+const taxPercent: any = 0;
+const discountPercent: any = 0;
 const initialState = {
   title: "",
   clientPhone: "",
@@ -34,8 +36,8 @@ const initialState = {
   clientName: "",
   message: "",
   subject: "",
-  taxPercent: 0,
-  discountPercent: 0,
+  taxPercent,
+  discountPercent,
   info: [
     {
       itemName: "",
@@ -45,14 +47,21 @@ const initialState = {
     },
   ],
   businessId: "",
+  shipping,
+  Currency: "NGN",
+  ClientPhone: "+2347013879246",
+  SenderMail: "sikirurazak1@gmail.com",
 };
 export type dataType = typeof initialState;
 const CreateInvoice = () => {
   const business = useAppSelector((store) => store.user.business);
   const profile = useAppSelector((store) => store.user.user);
   const wallet = useAppSelector((store) => store.user.wallet);
-  const [formData, setFormData] = useState(initialState);
-  const [createInvoice, { isLoading }] = useCreateInvoiceMutation();
+  const [formData, setFormData] = useState({
+    ...initialState,
+    senderMail: profile?.email,
+    businessId: profile?.businessId,
+  });
   const [dataSource, setDataSource] = useState<DataType[]>([
     {
       key: 0,
@@ -83,7 +92,10 @@ const CreateInvoice = () => {
   };
 
   return (
-    <form className="grid grid-cols-1 w-[85%] gap-[1rem] px-[3%]">
+    <form
+      onSubmit={onFormSubmit}
+      className="grid grid-cols-1 w-[85%] gap-[1rem] px-[3%]"
+    >
       <div className="flex items-center justify-between">
         <span>
           <h2 className="font-semibold text-[18px] mb-3">
@@ -130,7 +142,7 @@ const CreateInvoice = () => {
             </label>
             <div className="flex items-center space-x-3">
               <Input
-                id="name"
+                id="clientName"
                 placeholder="client name"
                 className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
                 value={formData.clientName}
@@ -156,11 +168,15 @@ const CreateInvoice = () => {
               onChange={onInputChange}
               required
             />
-          </div>{" "}
-        </div>{" "}
+          </div>
+        </div>
       </div>
       <hr />
-      <ItemsTable dataSource={dataSource} setDataSource={setDataSource} />
+      <ItemsTable
+        dataSource={dataSource}
+        setDataSource={setDataSource}
+        setFormData={setFormData}
+      />
       <hr />
       <div className="grid grid-cols-2 gap-[3rem] items-start justify-between">
         <div className="flex flex-col space-y-3">
@@ -173,7 +189,7 @@ const CreateInvoice = () => {
               disabled
               className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
             />
-          </div>{" "}
+          </div>
           <div className="flex items-center justify-start w-full gap-[1rem]">
             <div className="flex flex-col space-y-1 w-full">
               <label htmlFor="email" className="font-medium text-sm">
@@ -187,18 +203,18 @@ const CreateInvoice = () => {
             </div>
             <div className="flex flex-col space-y-1 w-full">
               <label htmlFor="email" className="font-medium text-sm">
-                Start Date
+                End Date
               </label>
               <DatePicker
                 name="dueDate"
-                value={formData?.dueDate}
+                // value={formData?.dueDate}
                 onChange={(value, day) => {
                   setFormData((prev) => ({ ...prev, dueDate: day }));
                 }}
                 className="h-fit w-fit"
                 placeholder="Due Date"
               />
-            </div>{" "}
+            </div>
           </div>
           <span className="flex flex-col">
             <label htmlFor="info">Note/term</label>
@@ -207,10 +223,11 @@ const CreateInvoice = () => {
               name="message"
               onChange={onInputChange}
               id="info"
+              required
             />
             <span className="flex justify-between">
               <p>Maximum 500 characters</p>
-              <p>0 / 500</p>
+              <p>{formData?.message?.length} / 500</p>
             </span>
           </span>
         </div>
@@ -219,20 +236,61 @@ const CreateInvoice = () => {
             {/* <p className="p-2 border text-sm normal-case">+ Discount</p> */}
             <InputNumber
               controls={false}
-              placeholder="Discount"
               suffix="%"
+              name="discountPercent"
+              onChange={(value) => {
+                setFormData((prev) => {
+                  const newValue = value ? value : 0;
+                  const currentAmount = prev.amount + Number(prev.discount);
+                  const amount = currentAmount * (Number(newValue) / 100);
+                  return {
+                    ...prev,
+                    discountPercent: value,
+                    amount: currentAmount - amount,
+                    discount: amount,
+                  };
+                });
+              }}
+              value={formData?.discountPercent}
+              placeholder="discount"
               className="!w-full"
             />
             <InputNumber
               controls={false}
-              prefix="+"
+              suffix="%"
+              name="taxPercent"
+              onChange={(value) => {
+                setFormData((prev) => {
+                  const newValue = value ? value : 0;
+                  const currentAmount = prev.amount - Number(prev.tax);
+                  const amount = currentAmount * (Number(newValue) / 100);
+                  return {
+                    ...prev,
+                    taxPercent: value,
+                    amount: currentAmount + amount,
+                    tax: amount.toString(),
+                  };
+                });
+              }}
+              value={formData?.taxPercent}
               placeholder="Tax"
               className="!w-full"
             />
             <InputNumber
               name="shipping"
+              onChange={(value) => {
+                setFormData((prev) => {
+                  const currentAmount = prev.amount - Number(prev.shipping);
+                  return {
+                    ...prev,
+                    shipping: value,
+                    amount: currentAmount + Number(value),
+                  };
+                });
+              }}
               controls={false}
-              prefix="+"
+              suffix="NGN"
+              value={formData?.shipping}
               placeholder="Shipping"
               className="!w-full"
             />
@@ -248,7 +306,6 @@ const CreateInvoice = () => {
         <Button
           type="primary"
           htmlType="submit"
-          onClick={() => setOpen(true)}
           className="!h-[3rem] !bg-Primary  text-white hover:!text-white"
         >
           Continue

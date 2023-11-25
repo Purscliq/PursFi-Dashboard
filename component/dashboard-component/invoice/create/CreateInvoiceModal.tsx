@@ -21,7 +21,6 @@ const CreateInvoiceModal = ({
   formData: dataType;
   setFormData: React.Dispatch<React.SetStateAction<dataType>>;
 }) => {
-  const profile = useAppSelector((store) => store.user.user);
   const [createInvoice, { isLoading }] = useCreateInvoiceMutation();
   const onInputChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -31,7 +30,7 @@ const CreateInvoiceModal = ({
   };
   const onFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    createInvoice({ ...formData, senderMail: profile?.email })
+    createInvoice({ ...formData })
       .unwrap()
       .then((res) => {
         console.log(res);
@@ -65,7 +64,7 @@ const CreateInvoiceModal = ({
             <Input
               disabled
               name="senderMail"
-              value={profile?.email}
+              value={formData?.senderMail}
               required
               id="text"
               type="text"
