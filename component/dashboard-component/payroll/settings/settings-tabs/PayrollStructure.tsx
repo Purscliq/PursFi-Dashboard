@@ -3,20 +3,31 @@ import {
   CustomRadioGroup as RadioGroup,
   CustomButton as Button,
 } from "@/lib/AntdComponents";
-import { useState } from "react";
+import { FormEventHandler, useState } from "react";
 import StructureTable from "./StructureTable";
-
-const payrollOptions = [
-  { label: "Automatically run Payroll on selected date", value: true },
-  { label: "Manually run Payroll on selected date", value: false },
-];
+import { dataType } from "./SettingsTabs";
+import { useCreatePayrollMutation } from "@/services/payrollService";
+import { useAppSelector } from "@/store/hooks";
+import { message } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
   percentage: number;
   tax: string;
 }
-const PayrollStructure = () => {
+const PayrollStructure = ({
+  formData,
+  setFormData,
+  setActiveKey,
+  initialState,
+}: {
+  setFormData: React.Dispatch<React.SetStateAction<dataType>>;
+  setActiveKey: React.Dispatch<React.SetStateAction<number>>;
+  formData: Record<string, any>;
+  initialState: dataType;
+}) => {
+  const [createPayroll, { isLoading }] = useCreatePayrollMutation();
+  const businessId = useAppSelector((store) => store.user.user?.businessId);
   const [dataSource, setDataSource] = useState<DataType[]>([
     {
       key: 0,
@@ -43,8 +54,36 @@ const PayrollStructure = () => {
       tax: "Yes",
     },
   ]);
+  const handleSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
+    if (dataSource.length > 0) {
+      const structure = dataSource.map((e) => ({
+        name: e.name,
+        percentage: e.percentage,
+        tax: e.tax === "Yes" ? true : false,
+      }));
+      createPayroll({
+        ...formData,
+        structure,
+        businessId,
+      })
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+          message.success("Payroll created successfully");
+          setFormData(initialState);
+          setActiveKey(1);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
-    <div className="p-[2%] bg-white flex flex-col gap-[1rem]">
+    <form
+      onSubmit={handleSubmit}
+      className="p-[2%] bg-white flex flex-col gap-[1rem]"
+    >
       <span className="w-full grid grid-cols-[40%_55%] items-center justify-between gap-[5%]">
         <span>
           <h6 className="text-[#181336] text-[16px] font-[700]">
@@ -93,10 +132,15 @@ const PayrollStructure = () => {
           />
         </span>
       </span>
-      <Button type="primary" className="!bg-black !ml-auto !w-[55%] self-end">
+      <Button
+        htmlType="submit"
+        type="primary"
+        loading={isLoading}
+        className="!bg-black !ml-auto !w-[55%] self-end"
+      >
         save
       </Button>
-    </div>
+    </form>
   );
 };
 

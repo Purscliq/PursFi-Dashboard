@@ -30,10 +30,7 @@ const DashNav = () => {
             <span>New update</span>
           </div>
           <IoIosNotifications className="flex lg:hidden" size={26} />
-          <BiSolidHelpCircle
-            className="hidden md:flex text-black"
-            size={26}
-          />
+          <BiSolidHelpCircle className="hidden md:flex text-black" size={26} />
         </div>
       </nav>
       <div className="my-3 border border-gray-200" />

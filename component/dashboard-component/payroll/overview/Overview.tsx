@@ -1,32 +1,38 @@
 "use client";
-import { useState } from "react";
+import AddIcon from "@/assets/icon/AddIcon";
+import {
+  CustomButton as Button,
+  CustomSelect as Select,
+} from "@/lib/AntdComponents";
+import OverviewTable from "./OverviewTable";
 
-const Adminstration = () => {
+const Overview = () => {
   return (
-    <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8">
+    <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA]">
       <header className="flex flex-col space-y-3 my-1">
-        <div className="flex items-center justify-between ">
+        <div className="flex flex-col items-start justify-between ">
           <span>
-            <h2 className="text-2xl font-medium">
-              Administration -{" "}
-              <span className="text-gray-400">Team member</span>{" "}
+            <h2 className="text-[18px] text-[#061A14] font-medium">
+              Add employees and contractors
             </h2>
-            <p className="text-sm text-gray-600">
-              Showing your Account metrics for July 19, 2021 - July 25, 2021
-            </p>
           </span>
-          <button
-            // onClick={() => setOpen(true)}
-            className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
-          >
-            + Send Invite
-          </button>
+          <span className="bg-white rounded-[5px] px-[20px] py-[18px] flex flex-col gap-2">
+            <h6 className="text-[#181336] text-[16px] font-[700]">Add One</h6>
+            <span className="flex items-start gap-2">
+              <p className="text-[] text-[14px] font-[400]">
+                Add Single Employee or a Contractor in Second
+              </p>
+              <Button
+                className="!flex !m-auto !items-center"
+                icon={<AddIcon />}
+              />
+            </span>
+          </span>
         </div>
       </header>
-      {/* <AdministrationTab /> */}
-      {/* <AdmistrationModal open={open} setOpen={setOpen} /> */}
+      <OverviewTable />
     </div>
   );
 };
 
-export default Adminstration;
+export default Overview;

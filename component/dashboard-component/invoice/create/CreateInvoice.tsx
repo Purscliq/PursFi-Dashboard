@@ -46,6 +46,7 @@ const initialState = {
   ],
   businessId: "",
 };
+export type dataType = typeof initialState;
 const CreateInvoice = () => {
   const business = useAppSelector((store) => store.user.business);
   const profile = useAppSelector((store) => store.user.user);
@@ -60,6 +61,7 @@ const CreateInvoice = () => {
       itemQty: 0,
     },
   ]);
+  const [open, setOpen] = useState(false);
   const onInputChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > = (e) => {
@@ -68,12 +70,17 @@ const CreateInvoice = () => {
   };
   const onFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    createInvoice(formData)
-      .unwrap()
-      .then(() => {})
-      .catch((err) => {});
+    if (dataSource.length > 0) {
+      const info = dataSource.map((e) => ({
+        itemName: e.itemName,
+        itemQty: e.itemQty.toString(),
+        itemPrice: e.itemPrice.toString(),
+        itemAmount: (e.itemQty * e.itemPrice).toString(),
+      }));
+      setFormData((prev) => ({ ...prev, info }));
+      setOpen(true);
+    }
   };
-  const [open, setOpen] = useState(false);
 
   return (
     <form className="grid grid-cols-1 w-[85%] gap-[1rem] px-[3%]">
@@ -223,6 +230,7 @@ const CreateInvoice = () => {
               className="!w-full"
             />
             <InputNumber
+              name="shipping"
               controls={false}
               prefix="+"
               placeholder="Shipping"
@@ -231,7 +239,7 @@ const CreateInvoice = () => {
           </div>
           <div className="flex items-center justify-between px-2 py-4 bg-black rounded-md text-white">
             <p>Subtotal:</p>
-            <p>N20,0000,000</p>
+            <p>{formData?.amount}</p>
           </div>
         </div>
       </div>
@@ -246,7 +254,12 @@ const CreateInvoice = () => {
           Continue
         </Button>
       </div>
-      <CreateInvoiceModal open={open} setOpen={setOpen} />
+      <CreateInvoiceModal
+        formData={formData}
+        setFormData={setFormData}
+        open={open}
+        setOpen={setOpen}
+      />
     </form>
   );
 };
