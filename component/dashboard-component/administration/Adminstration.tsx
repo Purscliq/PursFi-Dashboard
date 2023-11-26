@@ -4,6 +4,7 @@ import AdministrationTab from "./AdministrationTab";
 import AdmistrationModal from "./AdmistrationModal";
 
 const Adminstration = () => {
+  const date = new Date();
   const [open, setOpen] = useState(false);
 
   return (
@@ -16,7 +17,12 @@ const Adminstration = () => {
               <span className="text-gray-400">Team member</span>{" "}
             </h2>
             <p className="text-sm text-gray-600">
-              Showing your Account metrics for July 19, 2021 - July 25, 2021
+              Showing your Account metrics for{" "}
+              {date.toLocaleString("en-US", {
+                month: "long",
+                day: "2-digit",
+                year: "numeric",
+              })}
             </p>
           </span>
           <button

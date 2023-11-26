@@ -26,6 +26,8 @@ import {
   Menu,
   TimePicker,
   TimePickerProps,
+  Switch,
+  SwitchProps,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -221,5 +223,11 @@ export const CustomMenu = ({ ...props }: MenuProps) => (
     }}
   >
     <Menu {...props} />
+  </ConfigProvider>
+);
+
+export const CustomSwitch = ({ ...props }: SwitchProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Switch {...props} />
   </ConfigProvider>
 );

@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import React from "react";
-
+import { useGenerateStatementMutation } from "@/services/transactionService";
 import {
   CustomInput as Input,
   CustomButton as Button,
@@ -14,6 +14,7 @@ const StatementModal = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
+  const [generateStatement] = useGenerateStatementMutation();
   return (
     <Modal
       open={open}

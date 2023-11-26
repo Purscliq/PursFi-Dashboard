@@ -1,119 +1,123 @@
-import Active from "@/assets/icon/Active";
-import Inactive from "@/assets/icon/Inactive";
+"use client";
 import { Drawer } from "antd";
+import { useEffect, useState } from "react";
+import { useLazyGetSingleEmployeeQuery } from "@/services/managementService";
+import {
+  CustomSwitch as Switch,
+  CustomInput as Input,
+} from "@/lib/AntdComponents";
+import PreviewRole from "./PreviewRole";
 interface AccountDetailsProps {
   Open: boolean;
   setOpen: (value: boolean) => void;
+  id: string;
 }
 
-const MemberDrawal: React.FC<AccountDetailsProps> = ({ Open, setOpen }) => {
+const MemberDrawal: React.FC<AccountDetailsProps> = ({ Open, setOpen, id }) => {
+  const [getEmployee, { data, isLoading }] = useLazyGetSingleEmployeeQuery();
+  const [childrenDrawer, setChildrenDrawer] = useState(false);
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  const showChildrenDrawer = () => {
+    setChildrenDrawer(true);
+  };
+
+  const onChildrenDrawerClose = () => {
+    setChildrenDrawer(false);
+  };
+  useEffect(() => {
+    if (id)
+      getEmployee(id)
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, [id]);
   return (
-    <Drawer placement="right" onClose={() => setOpen(false)} open={Open}>
-      <div className="grid grid-cols-1 gap-[0.5rem] p-[3%] bg-[#F9FFFF]">
-        <span className="flex flex-col">
-          <h4 className="text-[#181336] text-[16px] font-[700]">
-            Admin role priviledges
-          </h4>
-          <p className="text-[#515B6F] text-[16px] font-[400]">
-            Admin have the following privileges
-          </p>
+    <Drawer
+      onClose={onClose}
+      maskClosable={false}
+      open={Open}
+      extra={
+        <div className="flex items-center gap-[0.5rem]">
+          <p>preview role</p>
+          <Switch
+            className="bg-gray-400"
+            checked={childrenDrawer}
+            onChange={(e) => setChildrenDrawer(e)}
+          />
+        </div>
+      }
+    >
+      <div className="grid grid-cols-1 gap-[0.5rem]">
+        <span className="flex flex-col w-full">
+          <label
+            htmlFor="firstName"
+            className="text-[#181336] text-[16px] font-[600]"
+          >
+            First Name
+          </label>
+          <Input
+            value={data?.data?.firstName}
+            disabled
+            id="firstName"
+            placeholder="First Name"
+          />
         </span>
-        <div className="flex flex-col">
-          <h4 className="text-[#181336] text-[16px] font-[700]">
-            Payment and invoices
-          </h4>
-          <span className="flex items-center justify-between w-full">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Prepare and manage payment and invoices
-            </p>
-            <Inactive />
-          </span>
-        </div>
-        <div className="flex flex-col gap-[0.3rem]">
-          <h4 className="text-[#181336] text-[16px] font-[700]">Account</h4>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can View Account
-            </p>
-            <Inactive />
-          </span>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can download statement
-            </p>
-            <Inactive />
-          </span>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can create account
-            </p>
-            <Active />
-          </span>
-        </div>
-        <div className="flex flex-col gap-[0.3rem]">
-          <h4 className="text-[#181336] text-[16px] font-[700]">Account</h4>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can View Account
-            </p>
-            <Inactive />
-          </span>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can download statement
-            </p>
-            <Inactive />
-          </span>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can create account
-            </p>
-            <Active />
-          </span>
-        </div>
-        <div className="flex flex-col gap-[0.3rem]">
-          <h4 className="text-[#181336] text-[16px] font-[700]">Account</h4>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can View Account
-            </p>
-            <Inactive />
-          </span>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can download statement
-            </p>
-            <Inactive />
-          </span>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can create account
-            </p>
-            <Active />
-          </span>
-        </div>
-        <div className="flex flex-col gap-[0.3rem]">
-          <h4 className="text-[#181336] text-[16px] font-[700]">Account</h4>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can View Account
-            </p>
-            <Inactive />
-          </span>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can download statement
-            </p>
-            <Inactive />
-          </span>
-          <span className="flex items-center justify-between">
-            <p className="text-[#515B6F] text-[16px] font-[400]">
-              Can create account
-            </p>
-            <Active />
-          </span>
-        </div>
+        <span className="flex flex-col w-full">
+          <label
+            htmlFor="lastName"
+            className="text-[#181336] text-[16px] font-[600]"
+          >
+            Last Name
+          </label>
+          <Input
+            value={data?.data?.lastName}
+            disabled
+            id="lastName"
+            placeholder="Last Name"
+          />
+        </span>
+        <span className="flex flex-col w-full">
+          <label
+            htmlFor="email"
+            className="text-[#181336] text-[16px] font-[600]"
+          >
+            Email Address
+          </label>
+          <Input
+            value={data?.data?.email}
+            disabled
+            id="email"
+            type="email"
+            placeholder="Email"
+          />
+        </span>
+        {/* <span className="flex flex-col w-full">
+          <label
+            htmlFor="role"
+            className="text-[#181336] text-[16px] font-[600]"
+          >
+            Role
+          </label>
+          <Input disabled id="email" type="email" placeholder="Email" />
+        </span> */}
+        {/* <Button type="primary">save</Button> */}
+        {/* <Button>cancel</Button> */}
       </div>
+      <Drawer
+        open={childrenDrawer}
+        onClose={onChildrenDrawerClose}
+        closable={false}
+      >
+        <PreviewRole id={id} />
+      </Drawer>
     </Drawer>
   );
 };

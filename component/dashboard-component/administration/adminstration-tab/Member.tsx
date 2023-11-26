@@ -1,53 +1,24 @@
 import TableIcon from "@/assets/icon/TableIcon";
 import { Dropdown, Menu, MenuProps } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
+import {
+  useLazyGetEmployeesQuery,
+  useGetEmployeesQuery,
+} from "@/services/managementService";
+import MemberDrawal from "./MemberDrawal";
+import { useEffect, useState } from "react";
 interface DataType {
-  fullname: string;
+  firstName: string;
   email: string;
-  role: string;
-  activity: string;
+  roleId: string;
+  lastName: string;
   status: string;
 }
 
-const memberData: DataType[] = [
-  {
-    fullname: "Samuel Woodfree",
-    email: "samuel@email.com",
-    role: "Operation Manager",
-    activity: "13th December 2020",
-    status: "Active",
-  },
-  {
-    fullname: "Samuel Woodfree",
-    email: "samuel@email.com",
-    role: "Operation Manager",
-    activity: "13th December 2020",
-    status: "Active",
-  },
-  {
-    fullname: "Samuel Woodfree",
-    email: "samuel@email.com",
-    role: "Operation Manager",
-    activity: "13th December 2020",
-    status: "Active",
-  },
-  {
-    fullname: "Samuel Woodfree",
-    email: "samuel@email.com",
-    role: "Operation Manager",
-    activity: "13th December 2020",
-    status: "Active",
-  },
-  {
-    fullname: "Samuel Woodfree",
-    email: "samuel@email.com",
-    role: "Operation Manager",
-    activity: "13th December 2020",
-    status: "Active",
-  },
-];
-
 const Member = () => {
+  const [getEmployees, { data, isLoading }] = useLazyGetEmployeesQuery();
+  const [Open, setOpen] = useState(false);
+  const [id, setId] = useState("");
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -60,20 +31,26 @@ const Member = () => {
       key: "fullname",
       render: (text: string, record: DataType) => (
         <>
-          <h1 className="font-semibold">{text}</h1>
-          <p>{record.email}</p>
+          <h1 className="font-semibold">
+            {record?.firstName} {record?.lastName}
+          </h1>
         </>
       ),
     },
     {
       title: (
         <span className="flex items-center uppercase space-x-2">
-          <p>Last Activity</p>
+          <p>Email Address</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "activity",
-      key: "activity",
+      dataIndex: "email",
+      key: "email",
+      render: (text: string, record: DataType) => (
+        <>
+          <h1 className="font-semibold">{text}</h1>
+        </>
+      ),
     },
     {
       title: (
@@ -94,16 +71,15 @@ const Member = () => {
       ),
       dataIndex: "status",
       key: "status",
-      render: (status) =>
-        status === "Active" ? (
-          <span className="p-[4%] rounded-[80px] bg-green-50  text-[#0AA07B]  text-center  text-[14px] font-[600]">
-            {status}
-          </span>
-        ) : (
-          <span className="p-[4%] rounded-[80px] bg-[#0AA07B]/[10%] text-[#0AA07B] text-center text-[14px] font-[600]">
-            {status}
-          </span>
-        ),
+      render: (status) => (
+        <span className="p-[4%] rounded-[80px] bg-green-50  text-[#0AA07B]  text-center  text-[14px] font-[600]">
+          Active
+        </span>
+        // ) : (
+        //   <span className="p-[4%] rounded-[80px] bg-[#0AA07B]/[10%] text-[#0AA07B] text-center text-[14px] font-[600]">
+        //     {status}
+        //   </span>
+      ),
     },
     {
       title: (
@@ -112,28 +88,37 @@ const Member = () => {
           <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "id",
-      render: (_: any, record: DataType) => {
-        const menu: React.ReactElement<MenuProps> = (
-          <Menu>
-            <Menu.Item key="show-details">View Rules</Menu.Item>
-            <Menu.Item key="download-receipt">Edit Details</Menu.Item>
-            <Menu.Item key="report-transaction">Delete</Menu.Item>
-          </Menu>
-        );
-
+      dataIndex: "roleId",
+      render: (id: string, record: DataType) => {
         return (
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <span className="cursor-pointer">...</span>
-          </Dropdown>
+          <span
+            onClick={() => {
+              setId(id);
+              setOpen(true);
+            }}
+            className="cursor-pointer"
+          >
+            ...
+          </span>
         );
       },
     },
   ];
+  useEffect(() => {
+    getEmployees({})
+      .unwrap()
+      .then((res) => {
+        // console.log(res);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+  }, []);
   return (
-    <div>
-      <Table columns={columns} dataSource={memberData} />
-    </div>
+    <>
+      <Table loading={isLoading} columns={columns} dataSource={data?.data} />
+      <MemberDrawal Open={Open} setOpen={setOpen} id={id} />
+    </>
   );
 };
 

@@ -21,6 +21,13 @@ const transactionSlice = ApiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
+    generateStatement: builder.mutation({
+      query: (body) => ({
+        url: "transactions/account/statement",
+        body,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -28,4 +35,5 @@ export const {
   useGetExpensesQuery,
   useTransactionsMutation,
   useDisbursementTransactionsMutation,
+  useGenerateStatementMutation,
 } = transactionSlice;

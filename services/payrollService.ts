@@ -11,6 +11,13 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         method: "POST",
       }),
     }),
+    createBeneficiaries: builder.mutation({
+      query: (body) => ({
+        url: "payroll/beneficiaries",
+        body,
+        method: "POST",
+      }),
+    }),
     updatePayroll: builder.mutation({
       query: (body) => ({
         url: "payroll/update",
@@ -32,6 +39,16 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         method: "POST",
       }),
     }),
+    getBeneficiaries: builder.query({
+      query: () => ({
+        url: "payroll/beneficiaries",
+      }),
+    }),
+    getPayroll: builder.query({
+      query: () => ({
+        url: "payroll",
+      }),
+    }),
   }),
 });
 
@@ -40,4 +57,7 @@ export const {
   useManualPayrollMutation,
   usePayrollHistoryMutation,
   useUpdatePayrollMutation,
+  useCreateBeneficiariesMutation,
+  useGetBeneficiariesQuery,
+  useGetPayrollQuery,
 } = payrollSlice;
