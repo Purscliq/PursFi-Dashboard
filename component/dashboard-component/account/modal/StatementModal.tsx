@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import React from "react";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useGenerateStatementMutation } from "@/services/transactionService";
 import {
   CustomInput as Input,
@@ -7,6 +7,12 @@ import {
   CustomSelect as Select,
   CustomDatePicker as DatePicker,
 } from "@/lib/AntdComponents";
+const initialState = {
+  businessId: "",
+  startDate: "",
+  endDate: "",
+};
+import { useAppSelector } from "@/store/hooks";
 const StatementModal = ({
   open,
   setOpen,
@@ -14,7 +20,22 @@ const StatementModal = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
-  const [generateStatement] = useGenerateStatementMutation();
+  const [formData, setFormData] = useState(initialState);
+  const [generateStatement, { isLoading }] = useGenerateStatementMutation();
+  const profile = useAppSelector((store) => store.user.user);
+  const onFormSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
+    if (formData.startDate && formData.endDate)
+      generateStatement({ ...formData, businessId: profile.businessId })
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+          setFormData(initialState);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  };
   return (
     <Modal
       open={open}
@@ -29,8 +50,8 @@ const StatementModal = ({
         <p className="text-sm text-gray-500 text-center">
           Obtain a downloadable statement for this account.{" "}
         </p>
-        <form className="w-full space-y-4 mt-4">
-          <div>
+        <form onSubmit={onFormSubmit} className="w-full space-y-4 mt-4">
+          {/* <div>
             <label
               className="block text-gray-700 text-sm font-semibold mb-2"
               htmlFor="time"
@@ -44,26 +65,36 @@ const StatementModal = ({
               type="text"
               placeholder="Time Range"
             />
+          </div> */}
+          <div className=" w-2/4">
+            <label
+              className="block text-gray-700 text-sm font-semibold mb-2"
+              htmlFor="text"
+            >
+              Start Date{" "}
+            </label>
+            <DatePicker
+              onChange={(_, date) => {
+                setFormData((prev) => ({ ...prev, startDate: date }));
+              }}
+              className="h-fit w-full"
+              placeholder="Start Date"
+            />
           </div>
-          <div className="flex items-center space-x-3">
-            <div className=" w-2/4">
-              <label
-                className="block text-gray-700 text-sm font-semibold mb-2"
-                htmlFor="text"
-              >
-                Start Date{" "}
-              </label>
-              <DatePicker className="h-fit w-full" placeholder="Start Date" />
-            </div>
-            <div className=" w-2/4">
-              <label
-                className="block text-gray-700 text-sm font-semibold mb-2"
-                htmlFor="text"
-              >
-                End Date{" "}
-              </label>
-              <DatePicker className="h-fit w-full" placeholder="End Date" />
-            </div>
+          <div className=" w-2/4">
+            <label
+              className="block text-gray-700 text-sm font-semibold mb-2"
+              htmlFor="text"
+            >
+              End Date{" "}
+            </label>
+            <DatePicker
+              onChange={(_, date) => {
+                setFormData((prev) => ({ ...prev, endDate: date }));
+              }}
+              className="h-fit w-full"
+              placeholder="End Date"
+            />
           </div>
           <div className="mb-4">
             <label className="block text-black text-sm font-semibold mb-2">
@@ -72,15 +103,11 @@ const StatementModal = ({
             <Select
               className="!w-full"
               placeholder="Format"
-              options={[
-                { value: "PDF", label: "PDF" },
-                { value: "CSV", label: "CSV" },
-                { value: "enterprise", label: "Enterprise" },
-                { value: "limited liability", label: "Limited Liability" },
-              ]}
+              defaultValue={"PDF"}
+              options={[{ value: "PDF", label: "PDF" }]}
             />
           </div>
-          <div>
+          {/* <div>
             <label
               className="block text-gray-700 text-sm font-semibold mb-2"
               htmlFor="email"
@@ -97,8 +124,13 @@ const StatementModal = ({
             <p className="text-xs text-gray-500">
               the statement will be send to This Email.
             </p>
-          </div>{" "}
-          <Button className="!h-[3rem] !bg-Primary w-full text-white hover:!text-white">
+          </div> */}
+          <Button
+            loading={isLoading}
+            htmlType="submit"
+            type="primary"
+            className="!h-[3rem] !bg-Primary w-full text-white hover:!text-white"
+          >
             Submit
           </Button>
           <Button

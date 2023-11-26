@@ -71,7 +71,7 @@ const Account = () => {
         </div>
       </header>{" "}
       <main className="grid grid-cols-1 gap-4">
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-[6rem] mt-8">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-[6rem] mt-8">
           <article>
             <div className="flex items-stretch space-x-6 ">
               <div className="p-4 bg-black text-white w-full rounded-md">
@@ -136,7 +136,7 @@ const Account = () => {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <button
+              {/* <button
                 onClick={() => setIsFundModalOpen(true)}
                 className=" font-semibold"
               >
@@ -147,19 +147,19 @@ const Account = () => {
                 className=" font-semibold"
               >
                 + Move Fund
-              </button>
+              </button> */}
               <button
                 onClick={() => setIsStatementModalOpen(true)}
                 className=" font-semibold"
               >
                 + Statement
               </button>
-              <button
+              {/* <button
                 onClick={() => setIsSettingModalOpen(true)}
                 className="flex items-center font-semibold"
               >
                 <IoIosSettings /> Setting
-              </button>
+              </button> */}
             </div>
           </div>{" "}
         </section>
