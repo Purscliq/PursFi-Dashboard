@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import qs from "querystring";
 import {
   CustomTable as Table,
   CustomDatePicker as DatePicker,
@@ -11,6 +10,8 @@ import FilterIcon from "@/assets/icon/FilterIcon";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import { Dropdown, Menu, MenuProps } from "antd";
 import AccountDrawal from "./AccountDrawal";
+import { useTransactionsMutation } from "@/services/transactionService";
+import { useAppSelector } from "@/store/hooks";
 
 export interface DataType {
   name: string;
@@ -23,16 +24,29 @@ export interface DataType {
 export interface TableParams {
   pagination?: TablePaginationConfig;
 }
+const initialState = {
+  userId: "",
+  businessId: "",
+  startDate: "",
+  filterBy: "",
+  endDate: "",
+  amount: "",
+  page: 1,
+  perPage: 5,
+};
 
 const AccountTable = () => {
+  const [fetchTransactions, { isLoading }] = useTransactionsMutation();
+  const profile = useAppSelector((store) => store.user.user);
   const [data, setData] = useState<DataType[]>();
-  const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
       pageSize: 5,
     },
   });
+  const [filter, setFilter] = useState(false);
+  const [tableFilter, setTableFilter] = useState(initialState);
   const [open, setOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState<DataType | null>(null);
   const columns: ColumnsType<DataType> = [
@@ -133,31 +147,50 @@ const AccountTable = () => {
       },
     },
   ];
-  const fetchData = () => {
-    setLoading(true);
-    fetch(`https://testapi.io/api/sikiru/purscliq-transaction`)
-      .then((res) => res.json())
-      .then((results) => {
-        setData(results);
-        setLoading(false);
+  // const fetchData = () => {
+  //   setLoading(true);
+  //   fetch(`https://testapi.io/api/sikiru/purscliq-transaction`)
+  //     .then((res) => res.json())
+  //     .then((results) => {
+  //       setData(results);
+  //       setLoading(false);
+  //       setTableParams({
+  //         ...tableParams,
+  //         pagination: {
+  //           ...tableParams?.pagination,
+  //           total: 200,
+  //         },
+  //       });
+  //     });
+  // };
+
+  useEffect(() => {
+    fetchTransactions({
+      ...tableFilter,
+      page: tableParams?.pagination?.current,
+      userId: profile?.id,
+      businessId: profile?.businessId,
+    })
+      .unwrap()
+      .then((res) => {
         setTableParams({
           ...tableParams,
           pagination: {
-            ...tableParams.pagination,
-            total: 200,
+            ...tableParams?.pagination,
+            total: res.total,
           },
         });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [JSON.stringify(tableParams)]);
+  }, [JSON.stringify(tableParams), filter]);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
-    setTableParams({
+    setTableParams((prev) => ({
+      ...prev,
       pagination,
-    });
+    }));
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
       setData([]);
     }
@@ -167,12 +200,45 @@ const AccountTable = () => {
     <div className="bg-white flex flex-col gap-[0.5rem] p-[2%]">
       <h4 className=" text-[19px] font-[600]">Transaction</h4>
       <div className="flex items-center justify-start w-full gap-[1rem]">
-        <DatePicker className="h-fit w-fit" placeholder="Start Date" />
-        <DatePicker className="h-fit w-fit" placeholder="End Date" />
+        <DatePicker
+          onChange={(_, date) =>
+            setTableFilter((prev) => ({
+              ...prev,
+              startDate: date,
+            }))
+          }
+          className="h-fit w-fit"
+          placeholder="Start Date"
+        />
+        <DatePicker
+          onChange={(_, date) =>
+            setTableFilter((prev) => ({
+              ...prev,
+              amount: date,
+            }))
+          }
+          className="h-fit w-fit"
+          placeholder="End Date"
+        />
         <div className="w-fit">
-          <Input className="h-fit w-fit" placeholder="Amount" />
+          <Input
+            value={tableFilter?.amount}
+            onChange={(e) =>
+              setTableFilter((prev) => ({
+                ...prev,
+                amount: e.target.value,
+              }))
+            }
+            className="h-fit w-fit"
+            placeholder="Amount"
+          />
         </div>
-        <div className="flex justify-end w-full cursor-pointer">
+        <div
+          onClick={() => {
+            setFilter((prev) => !prev);
+          }}
+          className="flex justify-end w-full cursor-pointer"
+        >
           <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
             <FilterIcon />
             <p className="text-[#202430] text-[16px] font-[500]">filter</p>
@@ -184,7 +250,7 @@ const AccountTable = () => {
           columns={columns}
           dataSource={data}
           pagination={tableParams.pagination}
-          loading={loading}
+          loading={isLoading}
           onChange={handleTableChange}
         />
       </div>

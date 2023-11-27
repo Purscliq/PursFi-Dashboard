@@ -28,6 +28,16 @@ const transactionSlice = ApiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
+    getSingleTransaction: builder.query({
+      query: (id) => ({
+        url: `transactions/single?transactionId=${id}`,
+      }),
+    }),
+    getTransactionStatus: builder.query({
+      query: (time) => ({
+        url: `transactions/status?time=${time||"daily"}`,
+      }),
+    }),
   }),
 });
 
@@ -36,4 +46,9 @@ export const {
   useTransactionsMutation,
   useDisbursementTransactionsMutation,
   useGenerateStatementMutation,
+  useLazyGetSingleTransactionQuery,
+  useLazyGetExpensesQuery,
+  useGetTransactionStatusQuery,
+  useGetSingleTransactionQuery,
+  useLazyGetTransactionStatusQuery,
 } = transactionSlice;

@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { FormEventHandler, useState } from "react";
 import { useGenerateStatementMutation } from "@/services/transactionService";
 import {
   CustomInput as Input,
@@ -7,6 +7,7 @@ import {
   CustomSelect as Select,
   CustomDatePicker as DatePicker,
 } from "@/lib/AntdComponents";
+import { message } from "antd";
 const initialState = {
   businessId: "",
   startDate: "",
@@ -26,14 +27,23 @@ const StatementModal = ({
   const onFormSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     if (formData.startDate && formData.endDate)
-      generateStatement({ ...formData, businessId: profile.businessId })
+      generateStatement({
+        ...formData,
+        businessId: profile.businessId,
+        userId: profile?.id,
+      })
         .unwrap()
         .then((res) => {
           console.log(res);
           setFormData(initialState);
+          message.success("account statement sent");
+          setOpen(false);
         })
         .catch((err) => {
           console.log(err);
+          message.error(
+            err?.data?.responseDescription || "something went wrong"
+          );
         });
   };
   return (
@@ -66,7 +76,7 @@ const StatementModal = ({
               placeholder="Time Range"
             />
           </div> */}
-          <div className=" w-2/4">
+          <div className="w-full">
             <label
               className="block text-gray-700 text-sm font-semibold mb-2"
               htmlFor="text"
@@ -77,11 +87,11 @@ const StatementModal = ({
               onChange={(_, date) => {
                 setFormData((prev) => ({ ...prev, startDate: date }));
               }}
-              className="h-fit w-full"
+              className="h-fit !w-full"
               placeholder="Start Date"
             />
           </div>
-          <div className=" w-2/4">
+          <div className="w-full">
             <label
               className="block text-gray-700 text-sm font-semibold mb-2"
               htmlFor="text"
@@ -92,7 +102,7 @@ const StatementModal = ({
               onChange={(_, date) => {
                 setFormData((prev) => ({ ...prev, endDate: date }));
               }}
-              className="h-fit w-full"
+              className="h-fit !w-full"
               placeholder="End Date"
             />
           </div>
