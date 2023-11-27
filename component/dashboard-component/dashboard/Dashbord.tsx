@@ -82,7 +82,7 @@ const Dashbord = () => {
           <DashboardTable />
         </section>
         <section className="flex flex-col space-y-10">
-          <div className="p-3 space-y-2 bg-white p-[2%]">
+          <div className="space-y-2 bg-white p-[2%]">
             <p>Payment that need Attention</p>
             <div className="flex items-center justify-between">
               <span>

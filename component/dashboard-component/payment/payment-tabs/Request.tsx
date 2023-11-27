@@ -84,11 +84,7 @@ const Request = () => {
       ),
       dataIndex: "id",
       render: (id) => (
-        <span
-          className="text-[14px] font-[600] solid-action-btn"
-        >
-          ...
-        </span>
+        <span className="text-[14px] font-[600] solid-action-btn">...</span>
       ),
       width: "10%",
       fixed: "right",
@@ -100,7 +96,7 @@ const Request = () => {
         userId: profile?.id,
         businessId: profile?.businessId,
         page: tableParams.pagination?.current,
-        filterBy: "instant_payment",
+        filterBy: "scheduled_payment",
       })
         .unwrap()
         .then((res) => {
@@ -123,7 +119,7 @@ const Request = () => {
   return (
     <section className="">
       <div className="flex flex-col gap-[1rem] bg-white py-[1%]">
-        <span className="text-[#000000] text-[18px] font-[600]">
+        <span className="px-[2%] text-[#000000] text-[18px] font-[600]">
           Request Attention
         </span>
         <Table

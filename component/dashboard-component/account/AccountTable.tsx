@@ -207,17 +207,17 @@ const AccountTable = () => {
               startDate: date,
             }))
           }
-          className="h-fit w-fit"
+          className="h-fit !w-[15rem]"
           placeholder="Start Date"
         />
         <DatePicker
           onChange={(_, date) =>
             setTableFilter((prev) => ({
               ...prev,
-              amount: date,
+              endDate: date,
             }))
           }
-          className="h-fit w-fit"
+          className="h-fit !w-[15rem]"
           placeholder="End Date"
         />
         <div className="w-fit">

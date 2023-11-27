@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, {
   ChangeEventHandler,
   FormEventHandler,
@@ -115,7 +115,7 @@ const CompanyInfo = ({
                 Note: the name can not be change again
               </span>
             </p>
-          </div>{" "}
+          </div>
           <div className=" w-2/4">
             <div className="">
               <label

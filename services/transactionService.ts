@@ -35,7 +35,7 @@ const transactionSlice = ApiSlice.injectEndpoints({
     }),
     getTransactionStatus: builder.query({
       query: (time) => ({
-        url: `transactions/status?time=${time||"daily"}`,
+        url: `transactions/status?time=${time || "day"}`,
       }),
     }),
   }),

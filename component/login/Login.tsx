@@ -26,7 +26,7 @@ const Login = () => {
     login(formData)
       .unwrap()
       .then((res) => {
-        replace("/onboarding");
+        replace("/dashboard");
         message.success("login success");
       })
       .catch((err) => {

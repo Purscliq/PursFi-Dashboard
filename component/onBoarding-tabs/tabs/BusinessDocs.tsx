@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   CustomInput as Input,
   CustomUpload as Upload,
@@ -30,18 +30,7 @@ const BusinessDocs = ({
   };
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    for (const [key, value] of Object.entries(formData)) {
-      dataBody.append(key, value);
-    }
-    create(dataBody)
-      .unwrap()
-      .then((res) => {
-        console.log(res);
-        setActive("3");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setActive("4");
   };
   const handleChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement

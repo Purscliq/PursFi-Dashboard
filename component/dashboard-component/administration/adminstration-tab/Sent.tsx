@@ -101,7 +101,7 @@ const Sent = () => {
   return (
     <div>
       <Table columns={columns} dataSource={SentData} />
-      <MemberDrawal Open={Open} setOpen={setOpen} />
+      {/* <MemberDrawal Open={Open} setOpen={setOpen} /> */}
     </div>
   );
 };

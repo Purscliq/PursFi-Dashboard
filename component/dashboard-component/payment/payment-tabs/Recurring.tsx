@@ -84,11 +84,7 @@ const Recurring = () => {
       ),
       dataIndex: "id",
       render: (id) => (
-        <span
-          className="text-[14px] font-[600] solid-action-btn"
-        >
-          ...
-        </span>
+        <span className="text-[14px] font-[600] solid-action-btn">...</span>
       ),
       width: "10%",
       fixed: "right",
@@ -123,7 +119,7 @@ const Recurring = () => {
   return (
     <section className="">
       <div className="flex flex-col gap-[1rem] bg-white py-[1%]">
-        <span className="text-[#000000] text-[18px] font-[600]">
+        <span className="px-[1%] text-[#000000] text-[18px] font-[600]">
           Recurring Payment
         </span>
         <Table

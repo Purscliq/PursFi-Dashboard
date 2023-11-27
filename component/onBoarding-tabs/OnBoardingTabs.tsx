@@ -15,13 +15,12 @@ export type docsData = {
   TIN: any;
 };
 const OnBoardingTabs = () => {
-  const {
-    data: { business },
-  } = useBusinessProfileQuery({});
+  const { data: businessProfile } = useBusinessProfileQuery({});
+
   const [formData, setFormData] = useState<docsData>({
-    Address: business?.businessAddress,
-    Description: business?.businessDescription || "",
-    BusinessIndustry: business?.businessIndustry,
+    Address: businessProfile?.business?.businessAddress,
+    Description: businessProfile?.business?.businessDescription || "",
+    BusinessIndustry: businessProfile?.business?.businessIndustry,
     TIN: null,
   });
   const [active, setActive] = useState("1");
@@ -45,6 +44,15 @@ const OnBoardingTabs = () => {
       key: "2",
       label: (
         <span onClick={() => setActive("2")} className="text-inherit">
+          Owner information
+        </span>
+      ),
+      children: <OwnerInfo setActive={setActive} />,
+    },
+    {
+      key: "3",
+      label: (
+        <span onClick={() => setActive("3")} className="text-inherit">
           Business Documentation
         </span>
       ),
@@ -57,65 +65,67 @@ const OnBoardingTabs = () => {
       ),
     },
     {
-      key: "3",
-      label: (
-        <span onClick={() => setActive("3")} className="text-inherit">
-          Owner information
-        </span>
-      ),
-      children: <OwnerInfo />,
-    },
-    {
       key: "4",
       label: (
         <span onClick={() => setActive("4")} className="text-inherit">
           Review
         </span>
       ),
-      children: <Review />,
-    },
-  ];
-  const individualitems: TabsProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <span onClick={() => setActive("1")} className="text-inherit">
-          Company information
-        </span>
-      ),
       children: (
-        <CompanyInfo
+        <Review
           setActive={setActive}
           setFormData={setFormData}
           formData={formData}
         />
       ),
     },
-    {
-      key: "2",
-      label: (
-        <span onClick={() => setActive("2")} className="text-inherit">
-          Owner information
-        </span>
-      ),
-      children: <OwnerInfo />,
-    },
-    {
-      key: "3",
-      label: (
-        <span onClick={() => setActive("3")} className="text-inherit">
-          Review
-        </span>
-      ),
-      children: <Review />,
-    },
   ];
+  // const individualitems: TabsProps["items"] = [
+  //   {
+  //     key: "1",
+  //     label: (
+  //       <span onClick={() => setActive("1")} className="text-inherit">
+  //         Company information
+  //       </span>
+  //     ),
+  //     children: (
+  //       <CompanyInfo
+  //         setActive={setActive}
+  //         setFormData={setFormData}
+  //         formData={formData}
+  //       />
+  //     ),
+  //   },
+  //   {
+  //     key: "2",
+  //     label: (
+  //       <span onClick={() => setActive("2")} className="text-inherit">
+  //         Owner information
+  //       </span>
+  //     ),
+  //     children: <OwnerInfo />,
+  //   },
+  //   {
+  //     key: "3",
+  //     label: (
+  //       <span onClick={() => setActive("3")} className="text-inherit">
+  //         Review
+  //       </span>
+  //     ),
+  //     children: <Review />,
+  //   },
+  // ];
   return (
-    <Tabs
-      items={business?.merchantType === "individual" ? individualitems : items}
-      defaultActiveKey="1"
-      activeKey={active}
-    />
+    <Tabs items={items} defaultActiveKey="1" activeKey={active} />
+    // <Tabs
+    //   items={
+    //     businessProfile?.business?.merchantType === "individual"
+    //       ? individualitems
+    //       : items
+    //   }
+    //   defaultActiveKey="1"
+    //   activeKey={active}
+    // />
   );
 };
 

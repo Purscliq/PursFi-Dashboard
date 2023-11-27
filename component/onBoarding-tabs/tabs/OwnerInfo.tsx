@@ -7,7 +7,7 @@ import {
   CustomDatePicker as DatePicker,
   CustomUpload as Upload,
 } from "@/lib/AntdComponents";
-import type { UploadProps } from "antd";
+import { message, type UploadProps } from "antd";
 import Image from "next/image";
 import PhoneInput from "react-phone-input-2";
 import DeleteIcon from "@/assets/icon/DeleteIcon";
@@ -38,7 +38,11 @@ type dataType = {
   BusinessId: string;
   // file: Blob | string;
 };
-const OwnerInfo = () => {
+const OwnerInfo = ({
+  setActive,
+}: {
+  setActive: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const dataBody = new FormData();
   const { data: country } = useFetchCountryQuery({});
   const {
@@ -92,10 +96,11 @@ const OwnerInfo = () => {
     create(dataBody)
       .unwrap()
       .then((res) => {
-        // setActive("4");
+        setActive("3");
       })
       .catch((err) => {
         console.log(err);
+        message.error(err?.data?.responseDescription || "something went wrong");
       });
   };
   const handleCountryChange = (

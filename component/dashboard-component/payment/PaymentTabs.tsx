@@ -7,13 +7,13 @@ import ALL from "./payment-tabs/All";
 const items: TabsProps["items"] = [
   {
     key: "1",
-    label: "Request Attention",
-    children: <Request />,
+    label: "Payment",
+    children: <ALL />,
   },
   {
     key: "2",
-    label: "Payment",
-    children: <ALL />,
+    label: "Scheduled payment",
+    children: <Request />,
   },
   {
     key: "3",

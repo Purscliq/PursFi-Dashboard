@@ -1,13 +1,47 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   CustomCheckBox as CheckBox,
   CustomButton as Button,
 } from "@/lib/AntdComponents";
 import FileIcon from "@/assets/icon/FileIcon";
+import { message } from "antd";
+import { docsData } from "../OnBoardingTabs";
+import { SetStateAction, FormEventHandler } from "react";
+import { useCompleteBusinessOnboardingMutation } from "@/services/authService";
 
-const Review = () => {
+const Review = ({
+  formData,
+  setFormData,
+  setActive,
+}: {
+  formData: Record<string, any>;
+  setFormData: React.Dispatch<SetStateAction<docsData>>;
+  setActive: React.Dispatch<SetStateAction<string>>;
+}) => {
   const { push } = useRouter();
+  const [checked, setChecked] = useState(false);
+  const [create, { isLoading }] = useCompleteBusinessOnboardingMutation();
+  const dataBody = new FormData();
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (checked) {
+      for (const [key, value] of Object.entries(formData)) {
+        dataBody.append(key, value);
+      }
+      create(dataBody)
+        .unwrap()
+        .then((res) => {
+          push("dashboard");
+        })
+        .catch((err) => {
+          message.error(
+            err?.data?.responseDescription || "something went wrong"
+          );
+        });
+    }
+  };
   return (
     <main>
       <span className="flex flex-col">
@@ -49,19 +83,26 @@ const Review = () => {
             </p>
           </span>
         </div>
-        <span className="flex items-center gap-[0.5rem]">
-          <CheckBox id="check" />
-          <label htmlFor="check">
-            I Confirm tis information provide Are Accurate and legit
-          </label>
-        </span>
-        <Button
-          onClick={() => push("dashboard")}
-          className="!bg-[#000] !h-[3rem] !mx-auto w-[50%] !mt-4"
-          type="primary"
-        >
-          Submit Application
-        </Button>
+        <form className="w-full" onSubmit={handleSubmit}>
+          <span className="flex items-center gap-[0.5rem]">
+            <CheckBox
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+              id="check"
+            />
+            <label htmlFor="check">
+              I Confirm tis information provide Are Accurate and legit
+            </label>
+          </span>
+          <Button
+            htmlType="submit"
+            loading={isLoading}
+            className="!bg-[#000] !h-[3rem] !mx-auto w-[50%] !mt-4 !block"
+            type="primary"
+          >
+            Submit Application
+          </Button>
+        </form>
       </div>
     </main>
   );

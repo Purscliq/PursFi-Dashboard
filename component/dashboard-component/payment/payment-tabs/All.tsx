@@ -71,7 +71,6 @@ const ALL = () => {
       ),
       dataIndex: "driver",
       render: (driver) => <span>{driver}</span>,
-     
     },
     {
       title: (
@@ -82,11 +81,7 @@ const ALL = () => {
       ),
       dataIndex: "id",
       render: (id) => (
-        <span
-          className="text-[14px] font-[600] solid-action-btn"
-        >
-          ...
-        </span>
+        <span className="text-[14px] font-[600] solid-action-btn">...</span>
       ),
       width: "10%",
       fixed: "right",
@@ -121,7 +116,9 @@ const ALL = () => {
   return (
     <section className="">
       <div className="flex flex-col gap-[1rem] bg-white py-[1%]">
-        <span className="text-[#000000] text-[18px] font-[600]">Payment</span>
+        <span className="px-[1%] text-[#000000] text-[18px] font-[600]">
+          Payment
+        </span>
         <Table
           columns={columns}
           //   rowKey={(record) => record.login.uuid}
