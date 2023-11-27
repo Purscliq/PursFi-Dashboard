@@ -14,6 +14,7 @@ import {
   CustomButton as Button,
   CustomSelect as Select,
 } from "@/lib/AntdComponents";
+import { message } from "antd";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -52,11 +53,14 @@ const AdminstrationModal = ({
       createEmployee(formData)
         .unwrap()
         .then((res) => {
-          console.log(res);
           setFormData(initialState);
+          message.success("employee created successfully");
+          setOpen(false);
         })
         .catch((err) => {
-          console.log(err);
+          message.error(
+            err?.data?.responseDescription || "something went wrong"
+          );
         });
   };
   return (

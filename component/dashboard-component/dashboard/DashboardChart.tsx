@@ -19,7 +19,7 @@ const DashboardChart = ({ data }: { data: Record<string, any>[] }) => {
         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
       >
         <XAxis dataKey="date" />
-        {/* <YAxis /> */}
+        <YAxis />
         {/* <CartesianGrid strokeDasharray="3 0" /> */}
         <Tooltip />
         <Area
