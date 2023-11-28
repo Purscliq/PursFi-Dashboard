@@ -14,7 +14,10 @@ const PayrollSettings = () => {
           </span>
         </div>
       </header>
-      <SettingsTabs />
+      <div className="bg-white p-2 rounded-md">
+        {" "}
+        <SettingsTabs />
+      </div>{" "}
       {/* <AdmistrationModal open={open} setOpen={setOpen} /> */}
     </div>
   );

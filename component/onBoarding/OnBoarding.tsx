@@ -1,3 +1,4 @@
+"use client";
 import { CgMenuRightAlt } from "react-icons/cg";
 import OnBoardingTabs from "../onBoarding-tabs/OnBoardingTabs";
 const Onboarding = () => {

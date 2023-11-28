@@ -12,7 +12,9 @@ const Setting = () => {
             Showing your Account metrics for July 19, 2021 - July 25, 2021
           </p>
         </span>
-        <SettingTab />
+        <div className="bg-white p-2 rounded-md">
+          <SettingTab />
+        </div>
       </header>
     </div>
   );

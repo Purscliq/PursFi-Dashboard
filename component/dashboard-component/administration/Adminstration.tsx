@@ -33,7 +33,9 @@ const Adminstration = () => {
           </button>
         </div>
       </header>
-      <AdministrationTab />
+      <div className="bg-white p-2 rounded-md">
+        <AdministrationTab />
+      </div>
       <AdmistrationModal open={open} setOpen={setOpen} />
     </div>
   );
