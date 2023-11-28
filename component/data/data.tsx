@@ -42,11 +42,11 @@ export const sidebarData: MenuProps["items"] = [
     icon: <MdOutlineAdminPanelSettings className=" font-bold" />,
     key: "invoice",
   },
-  {
-    label: <Link href="/contact">Contact</Link>,
-    icon: <GrDocumentUser className=" font-bold" />,
-    key: "contact",
-  },
+  // {
+  //   label: <Link href="/contact">Contact</Link>,
+  //   icon: <GrDocumentUser className=" font-bold" />,
+  //   key: "contact",
+  // },
   {
     label: <Link href="/administration">Administration</Link>,
     icon: <VscGitPullRequestGoToChanges className=" font-bold" />,

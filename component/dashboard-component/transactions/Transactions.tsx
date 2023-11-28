@@ -10,18 +10,23 @@ const Transactions = () => {
           <span>
             <h2 className="text-2xl font-medium"> Account </h2>
             <p className="text-sm text-gray-600">
-              Showing your Account metrics for July 19, 2021 - July 25, 2021{" "}
+              Showing your Account metrics for{" "}
+              {date.toLocaleString("en-US", {
+                month: "long",
+                day: "2-digit",
+                year: "numeric",
+              })}
             </p>
           </span>
           <div className="flex justify-center items-center ">
-          <Select
-            className="!w-full"
-            options={[
-              { value: "1 month", label: "1 month" },
-              { value: "2 month", label: "2 month" },
-            ]}
-            placeholder="Show stats Yearly"
-          />
+            <Select
+              className="!w-full"
+              options={[
+                { value: "1 month", label: "1 month" },
+                { value: "2 month", label: "2 month" },
+              ]}
+              placeholder="Show stats Yearly"
+            />
           </div>
         </div>
       </header>

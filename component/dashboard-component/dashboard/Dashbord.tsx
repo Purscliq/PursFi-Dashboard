@@ -10,13 +10,17 @@ import { MdArrowOutward } from "react-icons/md";
 import { FiArrowDownLeft } from "react-icons/fi";
 import Link from "next/link";
 import { useGetWalletHistoryQuery } from "@/services/walletService";
-import { useGetExpensesQuery } from "@/services/transactionService";
+import {
+  useGetExpensesQuery,
+  useGetTransactionStatusQuery,
+} from "@/services/transactionService";
 
 const Dashbord = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = useGetWalletQuery({});
   const { data: stats } = useGetWalletHistoryQuery({});
   const { data: analysis } = useGetExpensesQuery({});
+  const { data: status } = useGetTransactionStatusQuery("");
   const date = new Date();
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
@@ -87,7 +91,9 @@ const Dashbord = () => {
             <div className="flex items-center justify-between">
               <span>
                 <p className="text-gray-500 text-sm">Today payments</p>
-                <p className="text-xl font-semibold">10</p>
+                <p className="text-xl font-semibold">
+                  {status?.data?.todayPayment}
+                </p>
               </span>
               <span>
                 <p className="text-gray-500 text-sm">Older payments</p>
@@ -104,21 +110,28 @@ const Dashbord = () => {
               <p>Total</p>
             </span>
             <span className="flex justify-between">
-              <p className="text-xl font-semibold">10</p>
-              <p className="text-xl font-semibold">3,5059,340</p>
+              <p className="text-xl font-semibold">
+                {status?.data?.upcomingPaymentCount}
+              </p>
+              <p className="text-xl font-semibold">
+                N
+                {Number(status?.data?.totalUpcomingPayment).toLocaleString(
+                  "en-US"
+                )}
+              </p>
             </span>
           </div>
           <div className="flex justify-between items-center px-2 ">
             <span className="flex space-x-3">
               <p>schedule Payment</p>
-              <p>20</p>
+              <p>{status?.data?.schedulePaymentLength}</p>
             </span>
             <p>view all</p>
           </div>
           <div className="flex justify-between items-center px-2">
             <span className="flex space-x-3">
-              <p>schedule Payment</p>
-              <p>20</p>
+              <p>recurring Payment</p>
+              <p>{status?.data?.recurringPaymentLength}</p>
             </span>
             <p>view all</p>
           </div>
@@ -133,7 +146,9 @@ const Dashbord = () => {
                   <MdArrowOutward size={20} className="text-[#31CFD5]" />
                   <p>Cash Inflow</p>
                 </span>
-                <p className="text-xl font-semibold">N434,345.00</p>
+                <p className="text-xl font-semibold">
+                  N{Number(status?.data?.cashInflow).toLocaleString("en-US")}
+                </p>
               </div>
               <Select
                 style={{ width: "50%" }}
@@ -152,12 +167,19 @@ const Dashbord = () => {
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
                 <p>Invoice</p>
-                <p className="text-2xl font-semibold">N200,000,00</p>
+                <p className="text-2xl font-semibold">
+                  N{Number(status?.data?.invoice).toLocaleString("en-US")}
+                </p>
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
                 <p>Others</p>
-                <p className="text-2xl font-semibold">N200,000,00</p>
+                <p className="text-2xl font-semibold">
+                  N
+                  {Number(status?.data?.otherCollection).toLocaleString(
+                    "en-US"
+                  )}
+                </p>
               </div>
             </div>
           </div>
@@ -168,7 +190,9 @@ const Dashbord = () => {
                   <FiArrowDownLeft size={20} className="text-red-500" />
                   <p>Cash Outflow</p>
                 </span>
-                <p className="text-xl font-semibold">N234,345.00</p>
+                <p className="text-xl font-semibold">
+                  N{Number(status?.data?.cashOutflow).toLocaleString("en-US")}
+                </p>
               </div>
               <Select
                 style={{ width: "50%" }}
@@ -186,12 +210,19 @@ const Dashbord = () => {
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-red-500 h-3 w-3 rounded-full" />
                 <p>Payroll</p>
-                <p className="text-2xl font-semibold">N200,000,00</p>
+                <p className="text-2xl font-semibold">
+                  N{Number(status?.data?.payroll).toLocaleString("en-US")}
+                </p>
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-red-500 h-3 w-3 rounded-full" />
                 <p>Payment</p>
-                <p className="text-2xl font-semibold">N200,000,00</p>
+                <p className="text-2xl font-semibold">
+                  N
+                  {Number(status?.data?.otherDisbursment).toLocaleString(
+                    "en-US"
+                  )}
+                </p>
               </div>
             </div>
           </div>

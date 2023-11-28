@@ -26,14 +26,14 @@ const Payment = () => {
           >
             + Create payment
           </Link>
-          <Select
+          {/* <Select
             className="!w-full"
             options={[
               { value: "1 month", label: "1 month" },
               { value: "2 month", label: "2 month" },
             ]}
             placeholder="Show stats Yearly"
-          />
+          /> */}
         </div>
       </header>
       <main className="grid grid-cols-1 gap-[2%]">

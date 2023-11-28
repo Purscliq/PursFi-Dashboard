@@ -1,23 +1,56 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  CustomTable as Table,
+  CustomDatePicker as DatePicker,
+  CustomInput as Input,
+} from "@/lib/AntdComponents";
+import TableIcon from "@/assets/icon/TableIcon";
+import FilterIcon from "@/assets/icon/FilterIcon";
+import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
+import AccountDrawal from "../../account/AccountDrawal";
 import { useDisbursementTransactionsMutation } from "@/services/transactionService";
 import { useAppSelector } from "@/store/hooks";
-import { CustomTable as Table } from "@/lib/AntdComponents";
-import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
-import TableIcon from "@/assets/icon/TableIcon";
-interface TableParams {
+
+export interface DataType {
+  name: string;
+  date: string;
+  purpose: string;
+  type: string;
+  amount: string;
+}
+
+export interface TableParams {
   pagination?: TablePaginationConfig;
 }
+const initialState = {
+  userId: "",
+  businessId: "",
+  startDate: "",
+  filterBy: "",
+  endDate: "",
+  amount: "",
+  page: 1,
+  perPage: 10,
+};
+
 const Request = () => {
-  const [refetch, { isLoading, data }] = useDisbursementTransactionsMutation();
+  const [fetchTransactions, { isLoading, data }] =
+    useDisbursementTransactionsMutation();
   const profile = useAppSelector((store) => store.user.user);
+  // const [data, setData] = useState<DataType[]>();
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
       pageSize: 10,
     },
   });
-  const columns: ColumnsType<any> = [
+  const [id, setId] = useState("");
+  const [filter, setFilter] = useState(false);
+  const [tableFilter, setTableFilter] = useState(initialState);
+  const [open, setOpen] = useState(false);
+  const [selectedAccount, setSelectedAccount] = useState<DataType | null>(null);
+  const columns: ColumnsType<DataType> = [
     {
       title: (
         <span className="flex items-center uppercase space-x-2">
@@ -25,9 +58,14 @@ const Request = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "created_at",
-      render: (name) => `${name}`,
-      width: "15%",
+      dataIndex: "createdAt",
+      render: (date) =>
+        `${new Date(date).toLocaleString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        })}`,
+      width: "20%",
     },
     {
       title: (
@@ -36,102 +74,175 @@ const Request = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "account_name",
-      render: (email) => `${email}`,
-      width: "15%",
+      dataIndex: "accountName",
+      render: (name) => `${name}`,
+      width: "30%",
     },
+    // {
+    //   title: (
+    //     <span className="flex items-center uppercase space-x-2">
+    //       <p>Purpose</p>
+    //       <TableIcon />
+    //     </span>
+    //   ),
+    //   dataIndex: "purpose",
+    //   render: (purpose) => `${purpose}`,
+    //   width: "20%",
+    // },
     {
       title: (
         <span className="flex items-center uppercase space-x-2">
-          <p>Payment memo</p>
+          <p>Status</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "phone",
-      render: (phone) => `${phone}`,
+      dataIndex: "status",
+      render: (type) =>
+        type === "failed" ? (
+          <span className="p-[4%] rounded-[80px] bg-[#FF39561A]/[10%] text-[#FF3956] text-center  text-[14px] font-[600]">
+            {type}
+          </span>
+        ) : type === "pending" ? (
+          <span className="p-[4%] rounded-[80px] bg-[#FFD03A]/[10%] text-[#FFD03A] text-center  text-[14px] font-[600]">
+            {type}
+          </span>
+        ) : (
+          <span className="p-[4%] rounded-[80px] bg-[#0AA07B]/[10%] text-[#0AA07B] text-center text-[14px] font-[600]">
+            {type}
+          </span>
+        ),
+
+      width: "20%",
+    },
+    {
+      title: (
+        <span className="flex items-center uppercase">
+          <p>Amount</p>
+          <TableIcon />
+        </span>
+      ),
+      dataIndex: "amount",
+      render: (amount) => `${amount}`,
       width: "20%",
     },
     {
       title: (
         <span className="flex items-center uppercase space-x-2">
-          <p>Type</p>
-          <TableIcon />
-        </span>
-      ),
-      dataIndex: "status",
-      render: (status) => `${status}`,
-      width: "10%",
-    },
-
-    {
-      title: (
-        <span className="flex items-center uppercase space-x-2">
-          <p>Amount</p>
-          <TableIcon />
-        </span>
-      ),
-      dataIndex: "driver",
-      render: (driver) => <span></span>,
-      width: "5%",
-      fixed: "right",
-    },
-    {
-      title: (
-        <span className="flex items-center uppercase space-x-2">
           <p>Action</p>
-          <TableIcon />
+          <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "id",
-      render: (id) => (
-        <span className="text-[14px] font-[600] solid-action-btn">...</span>
-      ),
-      width: "10%",
-      fixed: "right",
+      dataIndex: "reference",
+      render: (id: any, record: DataType) => {
+        return (
+          <span
+            onClick={() => {
+              setId(id);
+              setOpen(true);
+            }}
+            className="cursor-pointer"
+          >
+            ...
+          </span>
+        );
+      },
     },
   ];
+  // const fetchData = () => {
+  //   setLoading(true);
+  //   fetch(`https://testapi.io/api/sikiru/purscliq-transaction`)
+  //     .then((res) => res.json())
+  //     .then((results) => {
+  //       setData(results);
+  //       setLoading(false);
+  //       setTableParams({
+  //         ...tableParams,
+  //         pagination: {
+  //           ...tableParams?.pagination,
+  //           total: 200,
+  //         },
+  //       });
+  //     });
+  // };
+
   useEffect(() => {
-    if (profile.id)
-      refetch({
-        userId: profile?.id,
-        businessId: profile?.businessId,
-        page: tableParams.pagination?.current,
-        filterBy: "scheduled_payment",
+    fetchTransactions({
+      ...tableFilter,
+      page: tableParams?.pagination?.current,
+      userId: profile?.id,
+      businessId: profile?.businessId,
+      filterBy:"schedule_payment"
+    })
+      .unwrap()
+      .then((res) => {
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams?.pagination,
+            total: res?.data.total,
+          },
+        });
       })
-        .unwrap()
-        .then((res) => {
-          setTableParams({
-            ...tableParams,
-            pagination: {
-              ...tableParams.pagination,
-              total: res.total,
-            },
-          });
-        })
-        .catch();
-  }, [JSON.stringify(tableParams), profile]);
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [JSON.stringify(tableParams)]);
+  useEffect(() => {
+    fetchTransactions({
+      ...tableFilter,
+      page: 1,
+      userId: profile?.id,
+      businessId: profile?.businessId,
+    })
+      .unwrap()
+      .then((res) => {
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams?.pagination,
+            total: res?.data.total,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [JSON.stringify(filter)]);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
-    setTableParams({
+    setTableParams((prev) => ({
+      ...prev,
       pagination,
-    });
+    }));
+    // if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+    //   setData([]);
+    // }
   };
+
   return (
-    <section className="">
-      <div className="flex flex-col gap-[1rem] bg-white py-[1%]">
-        <span className="px-[2%] text-[#000000] text-[18px] font-[600]">
-          Request Attention
-        </span>
-        <Table
-          columns={columns}
-          //   rowKey={(record) => record.login.uuid}
-          dataSource={data?.data?.data}
-          pagination={tableParams.pagination}
-          loading={isLoading}
-          onChange={handleTableChange}
-        />
-      </div>
-    </section>
+    <>
+      <section className="">
+        <div className="flex flex-col gap-[1rem] bg-white py-[1%]">
+          <span className="px-[1%] text-[#000000] text-[18px] font-[600]">
+            Scheduled Payment
+          </span>
+          <Table
+            columns={columns}
+            //   rowKey={(record) => record.login.uuid}
+            dataSource={data?.data?.data || []}
+            pagination={tableParams.pagination}
+            loading={isLoading}
+            onChange={handleTableChange}
+          />
+        </div>
+      </section>
+      <AccountDrawal
+        Open={open}
+        onClose={() => setOpen(false)}
+        account={selectedAccount}
+        id={id}
+      />
+    </>
   );
 };
 

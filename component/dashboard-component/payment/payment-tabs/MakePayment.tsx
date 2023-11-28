@@ -14,6 +14,7 @@ import {
   CustomButton as Button,
   CustomDatePicker as DatePicker,
   CustomTimePicker as TimePicker,
+  CustomSpinner as Spinner,
 } from "@/lib/AntdComponents";
 import {
   useGetBanksQuery,
@@ -25,7 +26,7 @@ import {
 import { valueType } from "antd/es/statistic/utils";
 import { useAppSelector } from "@/store/hooks";
 import SuccessfulPaymentModal from "../modals/successfulPaymentModal";
-import { Dayjs } from "dayjs";
+import { message } from "antd";
 const options = [
   { label: "instant payment", value: "instant_payment" },
   { label: "Schedule Payment", value: "schedule_payment" },
@@ -51,7 +52,7 @@ const MakePayment = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const profile = useAppSelector((store) => store.user?.user);
   const [formdata, setFormdata] = useState(initialState);
-  const { data, isLoading } = useGetBanksQuery({});
+  const { data } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
   const [transfer, { isLoading: isProcessing }] = useSingleTransferMutation();
   const [recurring_transfer, { isLoading: isProcessing_recurring }] =
@@ -70,7 +71,7 @@ const MakePayment = () => {
         .catch((err) => {
           console.log(err);
         });
-  }, [acctdetails.accountNumber]);
+  }, [acctdetails.accountNumber, acctdetails.bankCode]);
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (formdata.bankName && formdata.transactionCategory === options[0].value)
@@ -85,9 +86,12 @@ const MakePayment = () => {
           setIsModalOpen(true);
           setAcctDetails(initAcctDetails);
           setFormdata(initialState);
+          message.success("payment successful");
         })
         .catch((err) => {
-          console.log(err);
+          message.error(
+            err?.data?.responseDescription || "something went wrong"
+          );
         });
     else if (
       formdata.bankName &&
@@ -104,9 +108,12 @@ const MakePayment = () => {
           setIsModalOpen(true);
           setAcctDetails(initAcctDetails);
           setFormdata(initialState);
+          message.success("payment queued successful");
         })
         .catch((err) => {
-          console.log(err);
+          message.error(
+            err?.data?.responseDescription || "something went wrong"
+          );
         });
     else if (
       formdata.bankName &&
@@ -117,15 +124,20 @@ const MakePayment = () => {
         ...acctdetails,
         amount: formdata?.amount.toString(),
         businessId: profile?.businessId,
+        active: true,
+        automatic: true,
       })
         .unwrap()
         .then((res) => {
           setIsModalOpen(true);
           setAcctDetails(initAcctDetails);
           setFormdata(initialState);
+          message.success("payment successful");
         })
         .catch((err) => {
-          console.log(err);
+          message.error(
+            err?.data?.responseDescription || "something went wrong"
+          );
         });
   };
   const onSearchChange = (value: string) => {
@@ -143,8 +155,13 @@ const MakePayment = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1 w-[80%] gap-[1rem] px-[3%]"
+        className="grid grid-cols-1 w-[80%] gap-[1rem] px-[3%] relative"
       >
+        {isVerifying && (
+          <div className="flex items-center justify-center h-[80vh] w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
+            <Spinner className="!m-auto !block" />
+          </div>
+        )}
         <span className="flex items-center justify-between gap-[2rem]">
           <span className="flex flex-col w-full">
             <label htmlFor="bank">Bank Name</label>
@@ -227,11 +244,15 @@ const MakePayment = () => {
         </span>
         {formdata.transactionCategory === options[2].value && (
           <span className="flex flex-col gap-1">
-            <label>Select Month and Day</label>
+            <label>Select Day</label>
             <span className="flex items-center justify-between gap-[2rem]">
               <DatePicker
                 onChange={(value, date) => {
-                  setFormdata((prev) => ({ ...prev, day: date.split("-")[2] }));
+                  setFormdata((prev) => ({
+                    ...prev,
+                    day: date.split("-")[2],
+                    month: date.split("-")[1],
+                  }));
                 }}
                 picker="date"
                 className="!w-full"
@@ -246,7 +267,7 @@ const MakePayment = () => {
             </span>
           </span>
         )}
-        {formdata.transactionCategory === options[1].value && (
+        {/* {formdata.transactionCategory === options[1].value && (
           <span className="flex flex-col gap-1">
             <label>Select Month</label>
             <span className="flex items-center justify-between gap-[2rem]">
@@ -262,7 +283,7 @@ const MakePayment = () => {
               />
             </span>
           </span>
-        )}
+        )} */}
         <span className="flex flex-col">
           <label htmlFor="info">Addition Information(optional)</label>
           <Text id="info" />

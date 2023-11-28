@@ -53,6 +53,13 @@ const Account = () => {
               {" "}
               + Add sub account
             </button> */}
+            <button
+              onClick={() => setIspaymentOpen(true)}
+              className="btn btn-md border flex items-center bg-transparent border-black text-sm normal-case"
+            >
+              Share payment link
+              <BiLinkAlt />
+            </button>
             <Select
               style={{ width: "100%" }}
               options={[
@@ -63,18 +70,12 @@ const Account = () => {
             />{" "}
           </div>
         </div>
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between">
           <p className="text-md text-gray-800">
             Pursliq limited current account
           </p>
-          <button
-            onClick={() => setIspaymentOpen(true)}
-            className="btn btn-md border flex items-center bg-transparent border-black text-sm normal-case"
-          >
-            Share payment link
-            <BiLinkAlt />
-          </button>
-        </div>
+          
+        </div> */}
       </header>{" "}
       <main className="grid grid-cols-1 gap-4">
         <section className="grid grid-cols-1 lg:grid-cols-[55%_43%] gap-[2%] mt-8">

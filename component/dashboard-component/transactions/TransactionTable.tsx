@@ -8,7 +8,6 @@ import {
 import TableIcon from "@/assets/icon/TableIcon";
 import FilterIcon from "@/assets/icon/FilterIcon";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
-import { Dropdown, Menu, MenuProps } from "antd";
 import AccountDrawal from "../account/AccountDrawal";
 import { useTransactionsMutation } from "@/services/transactionService";
 import { useAppSelector } from "@/store/hooks";
@@ -36,15 +35,16 @@ const initialState = {
 };
 
 const TransactionTable = () => {
-  const [fetchTransactions, { isLoading }] = useTransactionsMutation();
+  const [fetchTransactions, { isLoading, data }] = useTransactionsMutation();
   const profile = useAppSelector((store) => store.user.user);
-  const [data, setData] = useState<DataType[]>();
+  // const [data, setData] = useState<DataType[]>();
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
       pageSize: 10,
     },
   });
+  const [id, setId] = useState("");
   const [filter, setFilter] = useState(false);
   const [tableFilter, setTableFilter] = useState(initialState);
   const [open, setOpen] = useState(false);
@@ -57,8 +57,13 @@ const TransactionTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "date",
-      render: (date) => `${date}`,
+      dataIndex: "createdAt",
+      render: (date) =>
+        `${new Date(date).toLocaleString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        })}`,
       width: "20%",
     },
     {
@@ -68,21 +73,21 @@ const TransactionTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "name",
+      dataIndex: "accountName",
       render: (name) => `${name}`,
-      width: "20%",
+      width: "30%",
     },
-    {
-      title: (
-        <span className="flex items-center uppercase space-x-2">
-          <p>Purpose</p>
-          <TableIcon />
-        </span>
-      ),
-      dataIndex: "purpose",
-      render: (purpose) => `${purpose}`,
-      width: "20%",
-    },
+    // {
+    //   title: (
+    //     <span className="flex items-center uppercase space-x-2">
+    //       <p>Purpose</p>
+    //       <TableIcon />
+    //     </span>
+    //   ),
+    //   dataIndex: "purpose",
+    //   render: (purpose) => `${purpose}`,
+    //   width: "20%",
+    // },
     {
       title: (
         <span className="flex items-center uppercase space-x-2">
@@ -90,9 +95,9 @@ const TransactionTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "type",
+      dataIndex: "transactionType",
       render: (type) =>
-        type === "Debit" ? (
+        type === "debit" ? (
           <span className="p-[4%] rounded-[80px] bg-[#FF39561A]/[10%] text-[#FF3956] text-center  text-[14px] font-[600]">
             {type}
           </span>
@@ -121,28 +126,18 @@ const TransactionTable = () => {
           <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "id",
-      render: (_: any, record: DataType) => {
-        const menu: React.ReactElement<MenuProps> = (
-          <Menu>
-            <Menu.Item
-              key="show-details"
-              onClick={() => {
-                setSelectedAccount(record);
-                setOpen(true);
-              }}
-            >
-              View transaction{" "}
-            </Menu.Item>
-            <Menu.Item key="download-receipt">Download Receipt</Menu.Item>
-            <Menu.Item key="report-transaction">Report Transaction</Menu.Item>
-          </Menu>
-        );
-
+      dataIndex: "reference",
+      render: (id: any, record: DataType) => {
         return (
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <span className="cursor-pointer">...</span>
-          </Dropdown>
+          <span
+            onClick={() => {
+              setId(id);
+              setOpen(true);
+            }}
+            className="cursor-pointer"
+          >
+            ...
+          </span>
         );
       },
     },
@@ -177,27 +172,44 @@ const TransactionTable = () => {
           ...tableParams,
           pagination: {
             ...tableParams?.pagination,
-            total: res.total,
+            total: res?.data.total,
           },
         });
-        setTableFilter((prev) => ({
-          ...prev,
-          page: res.data.page,
-        }));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [JSON.stringify(tableParams), filter]);
+  }, [JSON.stringify(tableParams)]);
+  useEffect(() => {
+    fetchTransactions({
+      ...tableFilter,
+      page: 1,
+      userId: profile?.id,
+      businessId: profile?.businessId,
+    })
+      .unwrap()
+      .then((res) => {
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams?.pagination,
+            total: res?.data.total,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [JSON.stringify(filter)]);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setTableParams((prev) => ({
       ...prev,
       pagination,
     }));
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setData([]);
-    }
+    // if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+    //   setData([]);
+    // }
   };
 
   return (
@@ -211,17 +223,17 @@ const TransactionTable = () => {
               startDate: date,
             }))
           }
-          className="h-fit w-fit"
+          className="h-fit !w-[15rem]"
           placeholder="Start Date"
         />
         <DatePicker
           onChange={(_, date) =>
             setTableFilter((prev) => ({
               ...prev,
-              amount: date,
+              endDate: date,
             }))
           }
-          className="h-fit w-fit"
+          className="h-fit !w-[15rem]"
           placeholder="End Date"
         />
         <div className="w-fit">
@@ -252,7 +264,7 @@ const TransactionTable = () => {
       <div className="relative overflow-x-auto  sm:rounded-lg w-[22rem] md:w-full">
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={data?.data?.data || []}
           pagination={tableParams.pagination}
           loading={isLoading}
           onChange={handleTableChange}
@@ -262,6 +274,7 @@ const TransactionTable = () => {
         Open={open}
         onClose={() => setOpen(false)}
         account={selectedAccount}
+        id={id}
       />
     </div>
   );

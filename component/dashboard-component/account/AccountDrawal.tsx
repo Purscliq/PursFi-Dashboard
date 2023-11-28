@@ -1,16 +1,20 @@
 import { Drawer } from "antd";
 import { DataType } from "./AccountTable";
 import { CustomButton as Button } from "@/lib/AntdComponents";
+import { useLazyGetSingleTransactionQuery } from "@/services/transactionService";
+import { useEffect } from "react";
 interface AccountDetailsProps {
   Open: boolean;
   onClose: () => void;
   account: DataType | null;
+  id: string;
 }
 
 const AccountDrawal: React.FC<AccountDetailsProps> = ({
   Open,
   onClose,
   account,
+  id,
 }) => {
   const getAmountColorClass = (type: string) => {
     if (type === "Debit") {
@@ -19,6 +23,15 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
       return "text-green-500";
     }
   };
+  const [getTransaction, { isLoading, data }] =
+    useLazyGetSingleTransactionQuery();
+  useEffect(() => {
+    if (id)
+      getTransaction(id)
+        .unwrap()
+        .then((res) => {})
+        .catch((err) => {});
+  }, [id]);
 
   return (
     <Drawer placement="right" onClose={onClose} open={Open}>

@@ -28,6 +28,8 @@ import {
   TimePickerProps,
   Switch,
   SwitchProps,
+  Spin,
+  SpinProps,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -229,5 +231,11 @@ export const CustomMenu = ({ ...props }: MenuProps) => (
 export const CustomSwitch = ({ ...props }: SwitchProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <Switch {...props} />
+  </ConfigProvider>
+);
+
+export const CustomSpinner = ({ ...props }: SpinProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Spin {...props} />
   </ConfigProvider>
 );
