@@ -11,13 +11,11 @@ const Template = ({ children }: { children: React.ReactNode }) => {
   const { data, isLoading } = useProfileQuery({});
   const { data: business, isLoading: fetchingBusiness } =
     useBusinessProfileQuery({});
-  useEffect(() => {
-    if (data?.isPhoneValidated) push("/signup-otp");
-    if (data?.isEmailValidated) push("/verifyEmail");
-    if (business?.business?.id && !business?.business?.isOnboardingCompleted) {
-      push("/onboarding");
-    }
-  }, [data, business]);
+  if (data?.isPhoneValidated) push("/signup-otp");
+  if (data?.isEmailValidated) push("/verifyEmail");
+  if (business?.business?.id && !business?.business?.isOnboardingCompleted) {
+    push("/onboarding");
+  }
   return (
     <>
       {isLoading && !data && fetchingBusiness && !business ? (

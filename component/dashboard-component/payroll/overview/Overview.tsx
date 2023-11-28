@@ -18,7 +18,7 @@ const Overview = () => {
           </span>
           <span className="bg-white rounded-[5px] px-[20px] py-[18px] flex flex-col gap-2">
             <h6 className="text-[#181336] text-[16px] font-[700]">Add One</h6>
-            <span className="flex items-start gap-2">
+            <span className="flex items-center gap-2">
               <p className="text-[] text-[14px] font-[400]">
                 Add Single Employee or a Contractor in Second
               </p>

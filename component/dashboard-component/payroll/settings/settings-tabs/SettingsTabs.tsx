@@ -8,12 +8,12 @@ const initialState = {
   automatic: true,
   day: day,
   accountNumber: "",
-  title: "",
-  hour: "",
-  currency: "",
+  title: "test",
   single: true,
   businessId: "",
   structure: [],
+  currency: "NGN",
+  hour: "6",
 };
 export type dataType = typeof initialState;
 const SettingsTabs = () => {

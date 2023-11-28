@@ -28,9 +28,21 @@ export const sidebarData: MenuProps["items"] = [
     key: "payment",
   },
   {
-    label: <Link href="/payroll">Payroll</Link>,
+    label: "Payroll",
     icon: <FaRegUser className=" font-bold" />,
     key: "payroll",
+    children: [
+      {
+        label: <Link href="/payroll-overview">Overview</Link>,
+        icon: <FaRegUser className=" font-bold" />,
+        key: "payroll/overview",
+      },
+      {
+        label: <Link href="/add-payroll">Settings</Link>,
+        icon: <FaRegUser className=" font-bold" />,
+        key: "payroll/settings",
+      },
+    ],
   },
   {
     label: <Link href="/transactions">Transaction</Link>,

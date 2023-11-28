@@ -85,6 +85,7 @@ const DashboardSider = () => {
           selectedKeys={[activePath]}
           items={sidebarData}
           className="!space-y-3"
+          mode="inline"
         />
         <DashboardModal open={isModalOpen} setOpen={setIsModalOpen} />
       </aside>
