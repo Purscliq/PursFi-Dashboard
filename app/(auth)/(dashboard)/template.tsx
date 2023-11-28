@@ -8,7 +8,8 @@ import {
   useGetWalletQuery,
   useGetWalletHistoryQuery,
 } from "@/services/walletService";
-
+import logo from "@/assets/logo.svg";
+import Image from "next/image";
 const Template = ({ children }: { children: React.ReactNode }) => {
   const { isLoading } = useGetWalletHistoryQuery({});
   const { isLoading: isFetchingWallet } = useGetWalletQuery({});
@@ -21,8 +22,11 @@ const Template = ({ children }: { children: React.ReactNode }) => {
       isFetchingExpenses &&
       isFetchingTransactionStatus &&
       isFetchingWallet ? (
-        <div className="h-screen flex items-center justify-center">
-          <div className="w-16 h-16 border-t-4 border-black border-solid rounded-full animate-spin"></div>
+        <div className="h-screen flex items-center justify-center bg-[#FAFAFA]">
+          <div className="fixed top-0 left-0  px-6 py-4">
+            <Image src={logo} alt="logo" className="w-28 h-28" />
+          </div>
+            <div className="w-16 h-16 border-t-4 border-black border-solid rounded-full animate-spin" />
         </div>
       ) : (
         <DashboardLayout>{children}</DashboardLayout>

@@ -8,10 +8,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        BgImage: "#EEF2F7",
-        Primary: "#000000",
-      },
     },
     fontSize: {
       xs: ".75rem",

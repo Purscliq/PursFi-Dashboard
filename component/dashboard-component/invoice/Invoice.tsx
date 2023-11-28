@@ -51,7 +51,9 @@ const Invoice = () => {
             <p className="text-2xl font-medium">N300,000</p>
           </span>
         </div>{" "}
-        <InvoiceTab />
+        <div className="bg-white p-2 rounded-md">
+          <InvoiceTab />
+        </div>
       </header>
     </div>
   );

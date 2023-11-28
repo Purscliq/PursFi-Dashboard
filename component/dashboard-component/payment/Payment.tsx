@@ -36,7 +36,7 @@ const Payment = () => {
           /> */}
         </div>
       </header>
-      <main className="grid grid-cols-1 gap-[2%]">
+      <main className="grid grid-cols-1 gap-[2%] bg-white p-2 rounded-md">
         <PaymentTabs />
       </main>
     </div>

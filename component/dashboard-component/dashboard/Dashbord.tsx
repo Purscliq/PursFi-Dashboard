@@ -5,7 +5,6 @@ import DashboardChart from "./DashboardChart";
 import DashboardTable from "./DashboardTable";
 import DashboardModal from "./DashboardModal";
 import { useGetWalletQuery } from "@/services/walletService";
-import Arrowleft from "@/assets/icon/Arrowleft";
 import { MdArrowOutward } from "react-icons/md";
 import { FiArrowDownLeft } from "react-icons/fi";
 import Link from "next/link";
@@ -121,24 +120,24 @@ const Dashbord = () => {
               </p>
             </span>
           </div>
-          <div className="flex justify-between items-center px-2 ">
+          <div className="flex justify-between items-center px-2  bg-white">
             <span className="flex space-x-3">
               <p>schedule Payment</p>
               <p>{status?.data?.schedulePaymentLength}</p>
             </span>
-            <p>view all</p>
+            <Link href="" className="underline">view all</Link>
           </div>
-          <div className="flex justify-between items-center px-2">
+          <div className="flex justify-between items-center px-2 bg-white">
             <span className="flex space-x-3">
               <p>recurring Payment</p>
               <p>{status?.data?.recurringPaymentLength}</p>
             </span>
-            <p>view all</p>
+            <Link href="/payment" className="underline">view all</Link>
           </div>
           <Link href="/payment" className="text-gray-500 text-sm underline">
             view all payment
           </Link>
-          <div className="space-y-3 p-2">
+          <div className="space-y-3 p-2 bg-white">
             <div className="flex justify-between items-center">
               <div>
                 <span className="flex items-center space-x-3">
@@ -183,7 +182,7 @@ const Dashbord = () => {
               </div>
             </div>
           </div>
-          <div className="space-y-3 p-2">
+          <div className="space-y-3 p-2 bg-white">
             <div className="flex justify-between items-center">
               <div>
                 <span className="flex items-center space-x-3">
