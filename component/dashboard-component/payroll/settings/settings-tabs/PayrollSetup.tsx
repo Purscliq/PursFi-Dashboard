@@ -2,6 +2,7 @@ import {
   CustomRadioGroup as RadioGroup,
   CustomDatePicker as DatePicker,
   CustomButton as Button,
+  CustomInput as Input,
 } from "@/lib/AntdComponents";
 import { dataType } from "./SettingsTabs";
 import { FormEventHandler } from "react";
@@ -27,6 +28,29 @@ const PayrollSetup = ({
   };
   return (
     <form onSubmit={handleSubmit} className="p-[2%] flex flex-col gap-[1rem]">
+      <span className="w-full grid grid-cols-[40%_55%] gap-[5%] items-start justify-between">
+        <label>
+          <h6 className="text-[#181336] text-[16px] font-[700]">
+            Payroll title
+          </h6>
+          <p className="text-[16px] font-[400] text-[#515B6F]">
+            You can decide when to pay your employees.for example, if you choose
+            January 31, your employees will be paid on January 31st. If you
+            choose option 1, your employees will be paid for January on February
+            1st.
+          </p>
+        </label>
+        <Input
+          name="title"
+          value={formData.title}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, title: e.target.value }))
+          }
+          required
+          className="!w-full"
+          placeholder="Enter payroll title"
+        />
+      </span>
       <span className="w-full grid grid-cols-[40%_55%] gap-[5%] items-start justify-between">
         <label>
           <h6 className="text-[#181336] text-[16px] font-[700]">

@@ -48,6 +48,14 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       query: () => ({
         url: "payroll",
       }),
+      transformResponse: (res: Record<string, any>) => {
+        console.log(res);
+        const arrList = res?.data?.map((e: Record<string, string>) => ({
+          label: e?.title,
+          value: e?.reference,
+        }));
+        return arrList;
+      },
     }),
     getPayrollBeneficiaries: builder.query({
       query: (payrollId) => ({

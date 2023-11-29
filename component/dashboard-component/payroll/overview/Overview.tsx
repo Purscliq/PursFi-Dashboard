@@ -1,15 +1,15 @@
 "use client";
 import AddIcon from "@/assets/icon/AddIcon";
-import {
-  CustomButton as Button,
-  CustomSelect as Select,
-} from "@/lib/AntdComponents";
+import { CustomButton as Button } from "@/lib/AntdComponents";
 import OverviewTable from "./OverviewTable";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Overview = () => {
+  const { push } = useRouter();
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA]">
-      <header className="flex flex-col space-y-3 my-1">
+      <header className="flex justify-between items-start space-y-3 my-1">
         <div className="flex flex-col items-start justify-between ">
           <span>
             <h2 className="text-[18px] text-[#061A14] font-medium">
@@ -25,10 +25,17 @@ const Overview = () => {
               <Button
                 className="!flex !m-auto !items-center"
                 icon={<AddIcon />}
+                onClick={() => push("/add-payroll")}
               />
             </span>
           </span>
         </div>
+        <button
+          // onClick={() => setIsModalOpen(true)}
+          className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
+        >
+          + Run Payroll
+        </button>
       </header>
       <OverviewTable />
     </div>

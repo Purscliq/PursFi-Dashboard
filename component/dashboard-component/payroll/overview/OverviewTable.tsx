@@ -132,30 +132,8 @@ const OverviewTable = () => {
       },
     },
   ];
-  // const fetchData = () => {
-  //   setLoading(true);
-  //   fetch(`https://testapi.io/api/sikiru/purscliq-transaction`)
-  //     .then((res) => res.json())
-  //     .then((results) => {
-  //       setData(results);
-  //       setLoading(false);
-  //       setTableParams({
-  //         ...tableParams,
-  //         pagination: {
-  //           ...tableParams?.pagination,
-  //           total: 200,
-  //         },
-  //       });
-  //     });
-  // };
   useEffect(() => {
-    console.log(payroll);
-    const arrList =
-      payroll?.data?.map((e: Record<string, string>) => ({
-        label: e?.title,
-        value: e?.reference,
-      })) || [];
-    setPayrollList([{ label: "All", value: "" }, ...arrList]);
+    if (payroll) setPayrollList([{ label: "All", value: "" }, ...payroll]);
   }, [payroll]);
   useEffect(() => {
     if (id) {
@@ -182,7 +160,7 @@ const OverviewTable = () => {
   return (
     <>
       <section className="">
-        <div className="flex flex-col gap-[1rem] bg-white py-[1%]">
+        <div className="flex flex-col gap-[1rem] bg-white p-[1%]">
           <span>
             <h4 className="text-[18px] font-[600] text-black">Team Members</h4>
             <span className="flex items-baseline gap-1">

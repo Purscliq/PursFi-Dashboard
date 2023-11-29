@@ -38,7 +38,7 @@ export const sidebarData: MenuProps["items"] = [
         key: "payroll/overview",
       },
       {
-        label: <Link href="/add-payroll">Settings</Link>,
+        label: <Link href="/payroll-settings">Create Payroll</Link>,
         icon: <FaRegUser className=" font-bold" />,
         key: "payroll/settings",
       },
