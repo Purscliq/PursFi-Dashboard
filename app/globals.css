@@ -10,6 +10,11 @@ body {
   font-family: "Archivo", sans-serif;
   background-color: white;
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 .editable-cell {
   position: relative;

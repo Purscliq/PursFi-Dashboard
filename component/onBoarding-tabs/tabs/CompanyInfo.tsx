@@ -268,7 +268,7 @@ const CompanyInfo = ({
             <Button
               htmlType="submit"
               type="primary"
-              className="!h-[3rem] !bg-Primary w-full"
+              className="!h-[3rem] bg-black w-full"
             >
               save and continue
             </Button>

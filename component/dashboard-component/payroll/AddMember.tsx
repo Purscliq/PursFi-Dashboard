@@ -104,7 +104,7 @@ const AddMember = () => {
     JSON.stringify(formData.bankCode),
   ]);
   return (
-    <div className="flex flex-col px-[2%] w-[98%] mx-auto">
+    <div className="relative flex flex-col px-[2%] w-[98%] mx-auto">
       <header className="flex flex-col space-y-3 my-1 border-b border-[#D6DDEB] py-[2%]">
         <div className="flex items-center justify-between ">
           <span className="text-2xl font-medium flex gap-1 items-center">
@@ -123,7 +123,7 @@ const AddMember = () => {
         className="bg-white rounded-[10px] flex flex-col p-[2%] gap-[1rem] w[90%] mxauto relative overflow-x-hidden"
       >
         {isVerifying && (
-          <div className="flex items-center justify-center h-[80vh] w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
+          <div className="flex items-center justify-center h-full w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
             <Spinner className="!m-auto !block" />
           </div>
         )}
