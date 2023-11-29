@@ -27,7 +27,7 @@ const Login = () => {
       .unwrap()
       .then((res) => {
         replace("/dashboard");
-        message.success("login success");
+        // message.success("login success");
       })
       .catch((err) => {
         setAlert(err?.data?.responseDescription || err?.data?.title);

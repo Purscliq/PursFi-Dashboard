@@ -43,20 +43,20 @@ const SignUp = () => {
       register(formData)
         .unwrap()
         .then((res) => {
-          message.success("account created successfully");
+          // message.success("account created successfully");
           generateOtp({ username: formData.phoneNumber })
             .unwrap()
-            .then(() => {
-              setFormData(initailState);
-              replace("/signup-otp");
-            })
-            .catch(() => {
+            .finally(() => {
               setFormData(initailState);
               replace("/signup-otp");
             });
         })
         .catch((err) => {
-          setAlert(err?.data?.responseDescription || err?.data?.title);
+          setAlert(
+            err?.data?.responseDescription ||
+              err?.data?.title ||
+              "something went wrong"
+          );
         });
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -292,7 +292,7 @@ const SignUp = () => {
           <p className="text-sm font-medium text-gray-600 flex items-center justify-center">
             Already have an account ?{" "}
             <Link
-              href="/signup/signupee"
+              href="/"
               className="text-md hover:underline hover:duration-300 text-Primary"
             >
               Log in
