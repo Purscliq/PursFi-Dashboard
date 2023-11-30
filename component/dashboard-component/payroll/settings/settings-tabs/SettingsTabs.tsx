@@ -7,7 +7,6 @@ const day: any = "";
 const initialState = {
   automatic: true,
   day: day,
-  accountNumber: "",
   title: "test",
   single: true,
   businessId: "",
