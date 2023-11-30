@@ -42,6 +42,7 @@ const initialState = {
   day: "",
   hour: "",
   month: "",
+  fee: "0",
 };
 const initAcctDetails = {
   bankCode: "",
@@ -242,31 +243,32 @@ const MakePayment = () => {
             className="!flex !justify-start !gap-[4rem]"
           />
         </span>
-        {formdata.transactionCategory === options[2].value && (
-          <span className="flex flex-col gap-1">
-            <label>Select Day</label>
-            <span className="flex items-center justify-between gap-[2rem]">
-              <DatePicker
-                onChange={(value, date) => {
-                  setFormdata((prev) => ({
-                    ...prev,
-                    day: date.split("-")[2],
-                    month: date.split("-")[1],
-                  }));
-                }}
-                picker="date"
-                className="!w-full"
-              />
-              <TimePicker
-                format={"HH"}
-                onChange={(value, date) => {
-                  setFormdata((prev) => ({ ...prev, hour: date }));
-                }}
-                className="!w-full"
-              />
+        {formdata.transactionCategory === options[2].value ||
+          (formdata.transactionCategory === options[1].value && (
+            <span className="flex flex-col gap-1">
+              <label>Select Day</label>
+              <span className="flex items-center justify-between gap-[2rem]">
+                <DatePicker
+                  onChange={(value, date) => {
+                    setFormdata((prev) => ({
+                      ...prev,
+                      day: date.split("-")[2],
+                      month: date.split("-")[1],
+                    }));
+                  }}
+                  picker="date"
+                  className="!w-full"
+                />
+                <TimePicker
+                  format={"HH"}
+                  onChange={(value, date) => {
+                    setFormdata((prev) => ({ ...prev, hour: date }));
+                  }}
+                  className="!w-full"
+                />
+              </span>
             </span>
-          </span>
-        )}
+          ))}
         {/* {formdata.transactionCategory === options[1].value && (
           <span className="flex flex-col gap-1">
             <label>Select Month</label>
