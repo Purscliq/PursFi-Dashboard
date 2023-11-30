@@ -1,3 +1,4 @@
+"use client";
 import Onboarding from "@/component/onBoarding/OnBoarding";
 
 const page = () => {

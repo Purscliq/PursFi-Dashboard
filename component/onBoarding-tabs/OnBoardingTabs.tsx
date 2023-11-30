@@ -7,6 +7,7 @@ import OwnerInfo from "./tabs/OwnerInfo";
 import BusinessDocs from "./tabs/BusinessDocs";
 import Review from "./tabs/Review";
 import { useBusinessProfileQuery } from "@/services/authService";
+import { useAppSelector } from "@/store/hooks";
 
 export type docsData = {
   Address: string;
@@ -15,8 +16,8 @@ export type docsData = {
   TIN: any;
 };
 const OnBoardingTabs = () => {
-  const { data: businessProfile } = useBusinessProfileQuery({});
-
+  // const { data: businessProfile } = useBusinessProfileQuery({});
+  const businessProfile = useAppSelector((state) => state.user.business);
   const [formData, setFormData] = useState<docsData>({
     Address: businessProfile?.business?.businessAddress,
     Description: businessProfile?.business?.businessDescription || "",

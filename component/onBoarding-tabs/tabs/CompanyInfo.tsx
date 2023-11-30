@@ -33,9 +33,7 @@ const CompanyInfo = ({
   setFormData: React.Dispatch<SetStateAction<docsData>>;
   setActive: React.Dispatch<SetStateAction<string>>;
 }) => {
-  const {
-    data: { business },
-  } = useBusinessProfileQuery({});
+  const { data: businessDetails } = useBusinessProfileQuery({});
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     setActive("2");
@@ -72,7 +70,7 @@ const CompanyInfo = ({
             <h2 className="py-2">Merchant type</h2>
             <RadioGroup
               optionType="button"
-              defaultValue={business?.merchantType}
+              defaultValue={businessDetails?.business?.merchantType}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
@@ -126,7 +124,7 @@ const CompanyInfo = ({
               </label>
               <Input
                 name="businessName"
-                value={business?.businessName}
+                value={businessDetails?.business?.businessName}
                 onChange={handleChange}
                 disabled
                 required

@@ -45,19 +45,11 @@ const OwnerInfo = ({
 }) => {
   const dataBody = new FormData();
   const { data: country } = useFetchCountryQuery({});
-  const {
-    data: {
-      user: { email, roleId },
-    },
-  } = useProfileQuery({});
-  const {
-    data: {
-      business: { id, merchantType },
-    },
-  } = useBusinessProfileQuery({});
+  const { data: user } = useProfileQuery({});
+  const { data: business } = useBusinessProfileQuery({});
   const [create, { isLoading }] = useCreateBusinessOwnerMutation();
   const [formData, setFormData] = useState<dataType>({
-    isIndividual: (merchantType === "individual").toString(),
+    isIndividual: (business?.merchantType === "individual").toString(),
     Bvn: "",
     FirstName: "",
     LastName: "",
@@ -65,9 +57,9 @@ const OwnerInfo = ({
     DateOfBirth: "",
     Nationality: "Nigeria",
     HomeAddress: "",
-    Email: email,
-    RoleId: roleId,
-    BusinessId: id,
+    Email: user?.email,
+    RoleId: user?.roleId,
+    BusinessId: business?.id,
   });
   const [selectedCountry, setSelectedCountry] = useState(
     "https://flagcdn.com/ng.svg"

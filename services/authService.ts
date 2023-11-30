@@ -43,7 +43,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
           .then((apiResponse) => {
             localStorage.setItem(
               "refresh",
-              apiResponse.data?.token?.refreshToken
+              apiResponse?.data?.token?.refreshToken
             );
             localStorage.setItem("token", apiResponse.data?.token?.token);
           })
@@ -58,7 +58,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
       onQueryStarted(id, { dispatch, queryFulfilled }) {
         queryFulfilled
           .then((apiResponse) => {
-            dispatch(updateUser(apiResponse.data?.user));
+            dispatch(updateUser(apiResponse?.data?.user));
           })
           .catch(() => {
             dispatch(logOut());
@@ -115,7 +115,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
       onQueryStarted(id, { dispatch, queryFulfilled }) {
         queryFulfilled
           .then((apiResponse) => {
-            dispatch(updateBusiness(apiResponse.data?.business));
+            dispatch(updateBusiness(apiResponse?.data?.business));
           })
           .catch(() => {
             dispatch(logOut());
