@@ -118,7 +118,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
             dispatch(updateBusiness(apiResponse?.data?.business));
           })
           .catch(() => {
-            dispatch(logOut());
+            // dispatch(logOut());
           });
       },
     }),
