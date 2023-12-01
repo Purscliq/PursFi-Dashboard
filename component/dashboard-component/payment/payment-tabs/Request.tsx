@@ -171,7 +171,7 @@ const Request = () => {
       page: tableParams?.pagination?.current,
       userId: profile?.id,
       businessId: profile?.businessId,
-      filterBy:"schedule_payment"
+      filterBy: "schedule_payment",
     })
       .unwrap()
       .then((res) => {
@@ -236,12 +236,7 @@ const Request = () => {
           />
         </div>
       </section>
-      <AccountDrawal
-        Open={open}
-        onClose={() => setOpen(false)}
-        account={selectedAccount}
-        id={id}
-      />
+      <AccountDrawal Open={open} onClose={() => setOpen(false)} id={id} />
     </>
   );
 };
