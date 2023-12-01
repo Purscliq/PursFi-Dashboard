@@ -7,7 +7,7 @@ const day: any = "";
 const initialState = {
   automatic: true,
   day: day,
-  title: "test",
+  title: "",
   single: true,
   businessId: "",
   structure: [],

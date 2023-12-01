@@ -5,6 +5,7 @@ import { useLazyGetSingleEmployeeQuery } from "@/services/managementService";
 import {
   CustomSwitch as Switch,
   CustomInput as Input,
+  CustomSpinner as Spinner,
 } from "@/lib/AntdComponents";
 import PreviewRole from "./PreviewRole";
 interface AccountDetailsProps {
@@ -55,51 +56,57 @@ const MemberDrawal: React.FC<AccountDetailsProps> = ({ Open, setOpen, id }) => {
         </div>
       }
     >
-      <div className="grid grid-cols-1 gap-[0.5rem]">
-        <span className="flex flex-col w-full">
-          <label
-            htmlFor="firstName"
-            className="text-[#181336] text-[16px] font-[600]"
-          >
-            First Name
-          </label>
-          <Input
-            value={data?.data?.firstName}
-            disabled
-            id="firstName"
-            placeholder="First Name"
-          />
-        </span>
-        <span className="flex flex-col w-full">
-          <label
-            htmlFor="lastName"
-            className="text-[#181336] text-[16px] font-[600]"
-          >
-            Last Name
-          </label>
-          <Input
-            value={data?.data?.lastName}
-            disabled
-            id="lastName"
-            placeholder="Last Name"
-          />
-        </span>
-        <span className="flex flex-col w-full">
-          <label
-            htmlFor="email"
-            className="text-[#181336] text-[16px] font-[600]"
-          >
-            Email Address
-          </label>
-          <Input
-            value={data?.data?.email}
-            disabled
-            id="email"
-            type="email"
-            placeholder="Email"
-          />
-        </span>
-        {/* <span className="flex flex-col w-full">
+      {isLoading ? (
+        <div className="flex items-center justify-center h-[100vh] w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
+          <Spinner className="!m-auto !block" />
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 gap-[0.5rem]">
+            <span className="flex flex-col w-full">
+              <label
+                htmlFor="firstName"
+                className="text-[#181336] text-[16px] font-[600]"
+              >
+                First Name
+              </label>
+              <Input
+                value={data?.data?.firstName}
+                disabled
+                id="firstName"
+                placeholder="First Name"
+              />
+            </span>
+            <span className="flex flex-col w-full">
+              <label
+                htmlFor="lastName"
+                className="text-[#181336] text-[16px] font-[600]"
+              >
+                Last Name
+              </label>
+              <Input
+                value={data?.data?.lastName}
+                disabled
+                id="lastName"
+                placeholder="Last Name"
+              />
+            </span>
+            <span className="flex flex-col w-full">
+              <label
+                htmlFor="email"
+                className="text-[#181336] text-[16px] font-[600]"
+              >
+                Email Address
+              </label>
+              <Input
+                value={data?.data?.email}
+                disabled
+                id="email"
+                type="email"
+                placeholder="Email"
+              />
+            </span>
+            {/* <span className="flex flex-col w-full">
           <label
             htmlFor="role"
             className="text-[#181336] text-[16px] font-[600]"
@@ -108,16 +115,18 @@ const MemberDrawal: React.FC<AccountDetailsProps> = ({ Open, setOpen, id }) => {
           </label>
           <Input disabled id="email" type="email" placeholder="Email" />
         </span> */}
-        {/* <Button type="primary">save</Button> */}
-        {/* <Button>cancel</Button> */}
-      </div>
-      <Drawer
-        open={childrenDrawer}
-        onClose={onChildrenDrawerClose}
-        closable={false}
-      >
-        <PreviewRole id={id} />
-      </Drawer>
+            {/* <Button type="primary">save</Button> */}
+            {/* <Button>cancel</Button> */}
+          </div>
+          <Drawer
+            open={childrenDrawer}
+            onClose={onChildrenDrawerClose}
+            closable={false}
+          >
+            <PreviewRole id={id} />
+          </Drawer>
+        </>
+      )}
     </Drawer>
   );
 };

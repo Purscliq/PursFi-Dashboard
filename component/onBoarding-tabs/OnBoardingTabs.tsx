@@ -14,6 +14,9 @@ export type docsData = {
   Description: string;
   BusinessIndustry: string;
   TIN: any;
+  lga: string;
+  state: string;
+  phone: string;
 };
 const OnBoardingTabs = () => {
   // const { data: businessProfile } = useBusinessProfileQuery({});
@@ -23,6 +26,9 @@ const OnBoardingTabs = () => {
     Description: businessProfile?.business?.businessDescription || "",
     BusinessIndustry: businessProfile?.business?.businessIndustry,
     TIN: null,
+    lga: "",
+    state: "",
+    phone: "",
   });
   const [active, setActive] = useState("1");
   const items: TabsProps["items"] = [

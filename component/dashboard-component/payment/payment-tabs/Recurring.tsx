@@ -49,7 +49,6 @@ const Recurring = () => {
   const [filter, setFilter] = useState(false);
   const [tableFilter, setTableFilter] = useState(initialState);
   const [open, setOpen] = useState(false);
-  const [selectedAccount, setSelectedAccount] = useState<DataType | null>(null);
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -239,7 +238,6 @@ const Recurring = () => {
       <AccountDrawal
         Open={open}
         onClose={() => setOpen(false)}
-        account={selectedAccount}
         id={id}
       />
     </>
