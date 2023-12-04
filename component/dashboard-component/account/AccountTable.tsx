@@ -271,12 +271,7 @@ const AccountTable = () => {
           onChange={handleTableChange}
         />
       </div>
-      <AccountDrawal
-        Open={open}
-        onClose={() => setOpen(false)}
-        account={selectedAccount}
-        id={id}
-      />
+      <AccountDrawal Open={open} onClose={() => setOpen(false)} id={id} />
     </div>
   );
 };

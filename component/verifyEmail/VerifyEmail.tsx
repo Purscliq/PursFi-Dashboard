@@ -9,13 +9,15 @@ import {
   useGenerateEmailOtpMutation,
   useProfileQuery,
 } from "@/services/authService";
+import { useAppSelector } from "@/store/hooks";
 const VerifyEmail = () => {
   const [generateMail, { isLoading }] = useGenerateEmailOtpMutation();
-  const { data } = useProfileQuery({});
+  const data = useAppSelector((state) => state.user.user);
+  // const { data } = useProfileQuery({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [alert, setAlert] = useState("");
   const Verify = () =>
-    generateMail({ username: data?.user?.email })
+    generateMail({ username: data?.email })
       .unwrap()
       .then((res) =>
         message.success(res.data?.responseDescription || "Email sent")

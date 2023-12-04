@@ -42,6 +42,7 @@ const initialState = {
   day: "",
   hour: "",
   month: "",
+  fee: "0",
 };
 const initAcctDetails = {
   bankCode: "",
@@ -66,7 +67,10 @@ const MakePayment = () => {
       verify(acctdetails)
         .unwrap()
         .then((res) => {
-          setFormdata((prev) => ({ ...prev, bankName: res?.data?.data }));
+          setFormdata((prev) => ({
+            ...prev,
+            acc: res?.data?.data,
+          }));
         })
         .catch((err) => {
           console.log(err);
@@ -242,7 +246,8 @@ const MakePayment = () => {
             className="!flex !justify-start !gap-[4rem]"
           />
         </span>
-        {formdata.transactionCategory === options[2].value && (
+        {(formdata.transactionCategory === options[2].value ||
+          formdata.transactionCategory === options[1].value) && (
           <span className="flex flex-col gap-1">
             <label>Select Day</label>
             <span className="flex items-center justify-between gap-[2rem]">

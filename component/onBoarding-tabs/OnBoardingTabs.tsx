@@ -7,21 +7,28 @@ import OwnerInfo from "./tabs/OwnerInfo";
 import BusinessDocs from "./tabs/BusinessDocs";
 import Review from "./tabs/Review";
 import { useBusinessProfileQuery } from "@/services/authService";
+import { useAppSelector } from "@/store/hooks";
 
 export type docsData = {
   Address: string;
   Description: string;
   BusinessIndustry: string;
   TIN: any;
+  lga: string;
+  state: string;
+  phone: string;
 };
 const OnBoardingTabs = () => {
-  const { data: businessProfile } = useBusinessProfileQuery({});
-
+  // const { data: businessProfile } = useBusinessProfileQuery({});
+  const businessProfile = useAppSelector((state) => state.user.business);
   const [formData, setFormData] = useState<docsData>({
     Address: businessProfile?.business?.businessAddress,
     Description: businessProfile?.business?.businessDescription || "",
     BusinessIndustry: businessProfile?.business?.businessIndustry,
     TIN: null,
+    lga: "",
+    state: "",
+    phone: "",
   });
   const [active, setActive] = useState("1");
   const items: TabsProps["items"] = [

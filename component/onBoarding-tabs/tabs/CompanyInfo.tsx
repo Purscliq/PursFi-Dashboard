@@ -12,6 +12,8 @@ import {
   ThemeRadioButton as RadioButton,
   ThemeRadioGroup as RadioGroup,
 } from "@/lib/AntdComponents";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { useBusinessProfileQuery } from "@/services/authService";
 import { docsData } from "../OnBoardingTabs";
 const filter = [
@@ -33,12 +35,10 @@ const CompanyInfo = ({
   setFormData: React.Dispatch<SetStateAction<docsData>>;
   setActive: React.Dispatch<SetStateAction<string>>;
 }) => {
-  const {
-    data: { business },
-  } = useBusinessProfileQuery({});
+  const { data: businessDetails } = useBusinessProfileQuery({});
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    setActive("2");
+    if (formData.phone) setActive("2");
   };
   const handleChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -72,7 +72,7 @@ const CompanyInfo = ({
             <h2 className="py-2">Merchant type</h2>
             <RadioGroup
               optionType="button"
-              defaultValue={business?.merchantType}
+              defaultValue={businessDetails?.business?.merchantType}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
@@ -126,7 +126,7 @@ const CompanyInfo = ({
               </label>
               <Input
                 name="businessName"
-                value={business?.businessName}
+                value={businessDetails?.business?.businessName}
                 onChange={handleChange}
                 disabled
                 required
@@ -228,38 +228,57 @@ const CompanyInfo = ({
                 placeholder="placeholder"
               />
             </div>
-            {/* <div className="">
+            <div className="">
               <label
                 className="block text-gray-700 text-sm font-semibold mb-2"
                 htmlFor="text"
               >
                 Local government area{" "}
               </label>
-              <Select
-                style={{ width: "100%" }}
-                options={[
-                  { value: "jack", label: "Jack" },
-                  { value: "lucy", label: "Lucy" },
-                ]}
-                placeholder="placeholder"
-              />{" "}
-            </div> */}
-            {/* <div className="">
+              <Input
+                name="lga"
+                value={formData.lga}
+                onChange={handleChange}
+                required
+                id="text"
+                type="text"
+                placeholder="lga"
+              />
+            </div>
+            <div className="">
               <label
                 className="block text-gray-700 text-sm font-semibold mb-2"
                 htmlFor="state"
               >
                 State
               </label>
-              <Select
-                style={{ width: "100%" }}
-                options={[
-                  { value: "jack", label: "Jack" },
-                  { value: "lucy", label: "Lucy" },
-                ]}
-                placeholder="placeholder"
-              />{" "}
-            </div> */}
+              <Input
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                required
+                id="text"
+                type="text"
+                placeholder="state"
+              />
+            </div>
+            <div className="">
+              <label
+                className="block text-gray-700 text-sm font-semibold mb-2"
+                htmlFor="state"
+              >
+                State
+              </label>
+              <PhoneInput
+                country={"ng"}
+                containerClass="!w-full"
+                inputClass="phone-input-input !w-full"
+                value={formData.phone}
+                onChange={(value) =>
+                  setFormData((prev) => ({ ...prev, phone: value }))
+                }
+              />
+            </div>
           </div>
         </article>
         <div className="mt-3 flex space-x-10">

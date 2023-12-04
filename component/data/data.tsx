@@ -38,7 +38,7 @@ export const sidebarData: MenuProps["items"] = [
         key: "payroll/overview",
       },
       {
-        label: <Link href="/payroll-settings">Create Payroll</Link>,
+        label: <Link href="/payroll">Create Payroll</Link>,
         icon: <FaRegUser className=" font-bold" />,
         key: "payroll/settings",
       },
@@ -59,10 +59,27 @@ export const sidebarData: MenuProps["items"] = [
   //   icon: <GrDocumentUser className=" font-bold" />,
   //   key: "contact",
   // },
+  // {
+  //   label: <Link href="/administration">Administration</Link>,
+  //   icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
+  //   key: "administration",
+  // },
   {
-    label: <Link href="/administration">Administration</Link>,
-    icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
+    label: "Administration",
+    icon: <FaRegUser className=" font-bold" />,
     key: "administration",
+    children: [
+      {
+        label: <Link href="/administration">Team Member</Link>,
+        icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
+        key: "payroll/overview",
+      },
+      {
+        label: <Link href="/roles">Roles And Perimission</Link>,
+        icon: <FaRegUser className=" font-bold" />,
+        key: "payroll/settings",
+      },
+    ],
   },
   {
     label: <Link href="/setting">Settings</Link>,

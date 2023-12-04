@@ -12,6 +12,7 @@ import {
   useProfileQuery,
 } from "@/services/authService";
 import { message, Alert } from "antd";
+import { useAppSelector } from "@/store/hooks";
 
 const SignupOtp = () => {
   const { replace } = useRouter();
@@ -19,14 +20,15 @@ const SignupOtp = () => {
   const [alert, setAlert] = useState("");
   const [generateOtp, {}] = useGenerateOtpMutation();
   const [validateOtp, { isLoading: isValidating }] = useValidateOtpMutation();
-  const { data } = useProfileQuery({});
+  const data = useAppSelector((state) => state.user.user);
+
   const requestOtp = () =>
-    generateOtp({ username: data?.user?.phoneNumber })
+    generateOtp({ username: data?.phoneNumber })
       .unwrap()
       .then(() => message.success("otp sent"));
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    validateOtp({ otp: code, username: data?.user?.phoneNumber })
+    validateOtp({ otp: code, username: data?.phoneNumber })
       .unwrap()
       .then((res) => {
         message.success(res.data?.responseDescription);

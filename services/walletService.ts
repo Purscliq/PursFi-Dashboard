@@ -11,10 +11,10 @@ const walletSlice = ApiSlice.injectEndpoints({
       onQueryStarted(id, { dispatch, queryFulfilled }) {
         queryFulfilled
           .then((apiResponse) => {
-            dispatch(updateWallet(apiResponse.data?.wallet));
+            dispatch(updateWallet(apiResponse?.data?.wallet));
           })
           .catch(() => {
-            dispatch(logOut());
+            // dispatch(logOut());
           });
       },
     }),
