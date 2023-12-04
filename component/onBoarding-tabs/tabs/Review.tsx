@@ -74,7 +74,7 @@ const Review = ({
           <FileIcon />
           <span className="flex flex-col gap-[0.2rem]">
             <h2 className="text-black font-semibold mb-1">Owner Information</h2>
-            <p className="text-sm">Change it to Document uploading</p>
+            <p className="text-sm"> Document uploading</p>
           </span>
         </div>
         <form className="w-full" onSubmit={handleSubmit}>

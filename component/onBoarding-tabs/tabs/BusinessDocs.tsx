@@ -60,9 +60,9 @@ const BusinessDocs = ({
               Tax Identification Number{" "}
             </h2>
             <p className="text-sm">
-            A Taxpayer Identification Number (TIN) is an identification
-number used by the Federal Internal Revenue Service (FIRS) in the
-administration of tax laws.
+              A Taxpayer Identification Number (TIN) is an identification number
+              used by the Federal Internal Revenue Service (FIRS) in the
+              administration of tax laws.
             </p>
           </div>{" "}
           <div className=" w-2/4">
@@ -78,7 +78,7 @@ administration of tax laws.
               onChange={handleChange}
               id="text"
               type="text"
-              placeholder="placeholder"
+              placeholder="TIN"
             />
           </div>
         </article>
@@ -89,8 +89,8 @@ administration of tax laws.
             </h2>
             <p className="text-sm">
               A certificate of incorporation is a document given by the
-              companies regulation agency of a country Note:JPEG only.
-              Limited 5mb
+              companies regulation agency of a country Note:JPEG only. Limited
+              5mb
             </p>
           </div>
           <div className="w-2/4">

@@ -11,9 +11,9 @@ const CompanySeting = () => {
   return (
     <div className="flex flex-col py-4 w-full space-y-3">
       <span>
-        <h1 className="font-semibold">Company Information </h1>
+        <h1 className="font-semibold">Business Information </h1>
         <p className="text-gray-600 text-sm">
-          This is Company information that you can update anytime.
+          This is Business information that you can update anytime.
         </p>
       </span>
       <div className=" w-full rounded-md">

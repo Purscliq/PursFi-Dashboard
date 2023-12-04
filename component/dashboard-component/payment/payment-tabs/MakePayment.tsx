@@ -300,8 +300,8 @@ const MakePayment = () => {
           </span>
         </span>
         <div className="grid grid-cols-1 gap-[0.1rem] items-stretch">
-          <label className="block text-gray-700 text-sm font-semibold mb-2">
-            Attach your utility bills{" "}
+          <label>
+            Attachment (optional)
           </label>
           <Upload className="border border-dashed h-[70px] p-4">
             <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
