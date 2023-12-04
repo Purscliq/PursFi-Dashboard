@@ -12,7 +12,7 @@ const Security = () => {
         </p>
       </span>
       <div className=" w-full rounded-md">
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between ">
+      <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
           <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Change Password</h1>{" "}
             {/* validation */}
@@ -26,7 +26,7 @@ const Security = () => {
                 Current Password
               </label>
               <PasswordInput
-                placeholder="This is a placeholder"
+                placeholder="current password"
                 id="password"
                 type="password"
                 required
@@ -41,7 +41,7 @@ const Security = () => {
                 New Password
               </label>
               <PasswordInput
-                placeholder="This is a placeholder"
+                placeholder="new password"
                 id="password"
                 type="password"
                 required
@@ -56,7 +56,7 @@ const Security = () => {
                 Confirm Password
               </label>
               <PasswordInput
-                placeholder="This is a placeholder"
+                placeholder="confirm password"
                 id="password"
                 type="password"
                 required
@@ -74,8 +74,8 @@ const Security = () => {
           </div>
         </div>
         <hr />
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between ">
-        <div className="text-sm flex-col flex">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+          <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Set pin</h1> {/* validation */}
           </div>
           <div className="w-full md:w-[400px] flex flex-col space-y-2">

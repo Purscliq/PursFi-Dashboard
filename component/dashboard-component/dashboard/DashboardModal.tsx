@@ -20,7 +20,7 @@ const DashboardModal = ({
           move fund from this account to another company account
         </p>
         <div className="mt-5 space-y-4">
-          <Button type="primary" className="!h-[3rem] !bg-Primary">
+          <Button type="primary" className="!h-[3rem] !bg-black">
             Bank Transfer
           </Button>
           <form className="w-full space-y-8 mt-4">

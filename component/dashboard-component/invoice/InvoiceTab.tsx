@@ -60,7 +60,7 @@ const InvoiceTab = () => {
     },
     {
       key: "canceled",
-      label: "canceled",
+      label: "Canceled",
       children: <InvoiceTable data={data} status="canceled" />,
     },
     {

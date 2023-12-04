@@ -114,7 +114,7 @@ export const CustomTabs = ({ ...props }: TabsProps) => (
 
 export const CustomUpload = ({ ...props }: UploadProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
-    <Upload.Dragger {...props} />
+    <Upload {...props} />
   </ConfigProvider>
 );
 

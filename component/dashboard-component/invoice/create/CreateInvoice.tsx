@@ -236,8 +236,8 @@ const CreateInvoice = () => {
             {/* <p className="p-2 border text-sm normal-case">+ Discount</p> */}
             <InputNumber
               controls={false}
-              suffix="%"
-              name="discountPercent"
+              // suffix="%"
+              name="discount"
               onChange={(value) => {
                 setFormData((prev) => {
                   const newValue = value ? value : 0;
@@ -257,8 +257,7 @@ const CreateInvoice = () => {
             />
             <InputNumber
               controls={false}
-              suffix="%"
-              name="taxPercent"
+              name="tax"
               onChange={(value) => {
                 setFormData((prev) => {
                   const newValue = value ? value : 0;
@@ -289,7 +288,7 @@ const CreateInvoice = () => {
                 });
               }}
               controls={false}
-              suffix="NGN"
+              // suffix="NGN"
               value={formData?.shipping}
               placeholder="Shipping"
               className="!w-full"
@@ -306,7 +305,7 @@ const CreateInvoice = () => {
         <Button
           type="primary"
           htmlType="submit"
-          className="!h-[3rem] !bg-Primary  text-white hover:!text-white"
+          className="!h-[3rem] !bg-black  text-white hover:!text-white"
         >
           Continue
         </Button>

@@ -108,7 +108,7 @@ const OwnerInfo = ({
     <main className="">
       <span className="flex flex-col">
         <h2 className="text-black font-semibold mb-1">
-          Tell us about the Business Owner
+          Tell us about yourself
         </h2>
         <p className="text-sm">
           This is Business Owner information that you can update anytime.
@@ -137,7 +137,7 @@ const OwnerInfo = ({
               Tell us your about business
             </h5>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              this most be the name on your registration Documentation.
+              This must be the name on your registration document.
             </p>
           </span>
           <form onSubmit={handleSubmit} className="flex flex-col gap-[0.5rem]">
@@ -300,9 +300,9 @@ const OwnerInfo = ({
                   // dataBody.append("docs", file);
                   return false;
                 }}
-                className=""
+                className="border border-dashed h-[80px] p-4"
               >
-                <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
+                <span className="flex items-center gap-[0.2rem]  stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
                   <p className="text-[#515B6F] text-[16px] font-[500]">
                     Attach Document
@@ -317,7 +317,7 @@ const OwnerInfo = ({
               className="!bg-[#000] !h-[3rem] !mx-auto w-full"
               type="primary"
             >
-              save
+              Save
             </Button>
             {/* <Button className="!bg-white !text-black !h-[3rem] !mx-auto w-[50%] ">
                 Cancel

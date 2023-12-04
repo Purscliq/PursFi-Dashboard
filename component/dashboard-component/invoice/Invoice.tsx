@@ -33,21 +33,21 @@ const Invoice = () => {
             />{" "}
           </div>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="grid grid-cols-4 gap-2 items-center">
           <span>
-            <p className="text-sm">total incoming</p>
+            <p className="text-sm">Total Incoming</p>
             <p className="text-2xl font-medium">N300,000</p>
           </span>
           <span>
-            <p className="text-sm">total outgoing</p>
+            <p className="text-sm">Total Outgoing</p>
             <p className="text-2xl font-medium">N300,000</p>
           </span>
           <span>
-            <p className="text-sm"> overdue invoice </p>
+            <p className="text-sm"> Overdue Invoice </p>
             <p className="text-2xl font-medium">N300,000</p>
           </span>
           <span>
-            <p className="text-sm"> unpaid</p>
+            <p className="text-sm"> Unpaid</p>
             <p className="text-2xl font-medium">N300,000</p>
           </span>
         </div>{" "}

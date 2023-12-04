@@ -15,6 +15,7 @@ import {
   CustomDatePicker as DatePicker,
   CustomTimePicker as TimePicker,
   CustomSpinner as Spinner,
+  CustomUpload as Upload,
 } from "@/lib/AntdComponents";
 import {
   useGetBanksQuery,
@@ -27,6 +28,7 @@ import { valueType } from "antd/es/statistic/utils";
 import { useAppSelector } from "@/store/hooks";
 import SuccessfulPaymentModal from "../modals/successfulPaymentModal";
 import { message } from "antd";
+import LinkIcon from "@/assets/icon/LinkIcon";
 const options = [
   { label: "instant payment", value: "instant_payment" },
   { label: "Schedule Payment", value: "schedule_payment" },
@@ -297,6 +299,17 @@ const MakePayment = () => {
             <p>0 / 500</p>
           </span>
         </span>
+        <div className="grid grid-cols-1 gap-[0.1rem] items-stretch">
+          <label className="block text-gray-700 text-sm font-semibold mb-2">
+            Attach your utility bills{" "}
+          </label>
+          <Upload className="border border-dashed h-[70px] p-4">
+            <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
+              <LinkIcon className="stroke-inherit" />
+              <p className="text-sm font-semibold">Attach Doc</p>
+            </span>
+          </Upload>
+        </div>
         <Button
           loading={
             isProcessing || isProcessing_recurring || isProcessing_scheduled

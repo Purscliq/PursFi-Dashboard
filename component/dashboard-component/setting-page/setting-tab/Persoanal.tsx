@@ -11,7 +11,7 @@ const Persoanal = () => {
       </span>
       <div className=" w-full rounded-md">
         {/* profil Section */}
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
           <h1 className="font-semibold text-sm">Profile Photo</h1>
           <div className="flex items-center space-x-3 w-full md:w-[400px]">
             <div>
@@ -31,16 +31,16 @@ const Persoanal = () => {
               className="hidden w-full h-full cursor-pointer "
             />
             <p className="text-sm">
-              we only accept this type of format (PNG, JPG). <br /> kindly
+              We only accept this type of format (PNG, JPG) only. <br /> kindly
               upload photo not more that 5mb
             </p>
           </div>
         </div>
         <hr />
         {/* First Name Section */}
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-sm flex-col flex">
-            <h1 className="font-semibold">First Name</h1>{" "}
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+          <div className="text-sm flex-col flex">
+            <h1 className="font-semibold">Full Name</h1>{" "}
             <span className="text-sm mt-2">
               You won&rsquo;t be able to change your name.{" "}
             </span>
@@ -72,8 +72,8 @@ const Persoanal = () => {
         </div>
         <hr />
         {/* Email Section */}
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-sm flex-col flex">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+          <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Email Address</h1>
             <span className="text-sm mt-2">
               Your email address will receive all <br />
@@ -94,8 +94,8 @@ const Persoanal = () => {
         </div>
         <hr />
         {/* Phone Number Section */}
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-sm flex-col flex">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+          <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Phone Number</h1>
             <span className="text-sm mt-2">
               OTP is sent to your phone number for verification purposes.{" "}
@@ -125,7 +125,7 @@ const Persoanal = () => {
         </div>
         <hr />
       </div>
-      <div className="flex justify-end items-end my-3">
+      <div className="flex justify-center mx-auto items-end my-3">
         <button
           disabled
           className="btn w-[400px]   disabled:bg-gray-200 disabled:text-white"

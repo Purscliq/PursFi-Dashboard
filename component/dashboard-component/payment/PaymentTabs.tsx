@@ -12,12 +12,12 @@ const items: TabsProps["items"] = [
   },
   {
     key: "2",
-    label: "Scheduled payment",
+    label: "Scheduled Payment",
     children: <Request />,
   },
   {
     key: "3",
-    label: "Recurring payment",
+    label: "Recurring Payment",
     children: <Recurring />,
   },
 ];

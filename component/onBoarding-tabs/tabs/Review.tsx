@@ -49,8 +49,8 @@ const Review = ({
           Review your Application
         </h2>
         <p className="text-sm">
-          this is the final look at your application. Make sure you met all the
-          registration requirement.{" "}
+          This is the final view of your application. Make sure you meet all the
+          registration requirements
         </p>
       </span>
       <div className="flex flex-col bg-white w-full mt-4 p-3 rounded-md">
@@ -60,27 +60,21 @@ const Review = ({
             <h2 className="text-black font-semibold mb-1">
               Company Information
             </h2>
-            <p className="text-sm">
-              Personal information of the business Owner(s)
-            </p>
+            <p className="text-sm">Personal information of the business </p>
           </span>
         </div>
         <div className="rounded-[5px] border border-[#E9EBEB] bg-[#FFF] items-center justify-between grid grid-cols-[10%_90%] px-[20px] py-[25px]">
           <FileIcon />
           <span className="flex flex-col gap-[0.2rem]">
             <h2 className="text-black font-semibold mb-1">Owner Information</h2>
-            <p className="text-sm">
-              Personal information of the business Owner(s)
-            </p>
+            <p className="text-sm">business documentation</p>
           </span>
         </div>
         <div className="rounded-[5px] border border-[#E9EBEB] bg-[#FFF] items-center justify-between grid grid-cols-[10%_90%] px-[20px] py-[25px]">
           <FileIcon />
           <span className="flex flex-col gap-[0.2rem]">
             <h2 className="text-black font-semibold mb-1">Owner Information</h2>
-            <p className="text-sm">
-              Personal information of the business Owner(s)
-            </p>
+            <p className="text-sm">Change it to Document uploading</p>
           </span>
         </div>
         <form className="w-full" onSubmit={handleSubmit}>
@@ -91,7 +85,7 @@ const Review = ({
               id="check"
             />
             <label htmlFor="check">
-              I Confirm tis information provide Are Accurate and legit
+              I confirm this information provided is accurate and legit.{" "}
             </label>
           </span>
           <Button

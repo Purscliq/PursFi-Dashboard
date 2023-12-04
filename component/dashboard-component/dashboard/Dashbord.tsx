@@ -86,57 +86,67 @@ const Dashbord = () => {
         </section>
         <section className="flex flex-col space-y-10">
           <div className="space-y-2 bg-white p-[2%]">
-            <p>Payment that need Attention</p>
-            <div className="flex items-center justify-between">
-              <span>
+            <p className="text-xl font-semibold">Payment that need Attention</p>
+            <div className="grid grid-cols-2 gap-5">
+              <span className="bg-[#FAFAFA] p-2">
                 <p className="text-gray-500 text-sm">Today payments</p>
                 <p className="text-xl font-semibold">
                   {status?.data?.todayPayment}
                 </p>
               </span>
-              <span>
+              <span className="bg-[#FAFAFA] p-2">
                 <p className="text-gray-500 text-sm">Older payments</p>
                 <p className="text-xl font-semibold">10</p>
               </span>
             </div>
             <Link href="/payment" className="text-gray-500 text-sm underline">
-              Respond to Payment{" "}
+              Respond to Payments{" "}
             </Link>
           </div>
-          <div className="bg-white p-[2%] border-b border-b-gray-400 px-2">
-            <span className="flex justify-between">
-              <p className="text-xl font-semibold">Upcoming Payment</p>
-              <p>Total</p>
-            </span>
-            <span className="flex justify-between">
-              <p className="text-xl font-semibold">
-                {status?.data?.upcomingPaymentCount}
-              </p>
-              <p className="text-xl font-semibold">
-                N
-                {Number(status?.data?.totalUpcomingPayment).toLocaleString(
-                  "en-US"
-                )}
-              </p>
-            </span>
+          <div className="p-3 bg-white space-y-6 ">
+            {" "}
+            <div className="bg-white p-[2%] border-b border-b-gray-400 ">
+              <span className="flex justify-between">
+                <p className="text-xl font-semibold">
+                  Upcoming Payment this week
+                </p>
+                <p className="text-gray-400">Total amount </p>
+              </span>
+              <span className="flex justify-between">
+                <p className="text-2xl font-semibold">
+                  {status?.data?.upcomingPaymentCount}
+                </p>
+                <p className="text-2xl font-semibold">
+                  N
+                  {Number(status?.data?.totalUpcomingPayment).toLocaleString(
+                    "en-US"
+                  )}
+                </p>
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="flex space-x-3">
+                <p>Schedule Payment</p>
+                <p>{status?.data?.schedulePaymentLength}</p>
+              </span>
+              <Link href="" className="underline">
+                View
+              </Link>
+            </div>
+            <div className="flex justify-between items-center ">
+              <span className="flex space-x-3">
+                <p>Recurring Payment</p>
+                <p>{status?.data?.recurringPaymentLength}</p>
+              </span>
+              <Link href="/payment" className="underline">
+                View
+              </Link>
+            </div>
+            <Link href="/payment" className="text-gray-500 text-sm underline">
+              View upcoming payment
+            </Link>
           </div>
-          <div className="flex justify-between items-center px-2  bg-white">
-            <span className="flex space-x-3">
-              <p>schedule Payment</p>
-              <p>{status?.data?.schedulePaymentLength}</p>
-            </span>
-            <Link href="" className="underline">view all</Link>
-          </div>
-          <div className="flex justify-between items-center px-2 bg-white">
-            <span className="flex space-x-3">
-              <p>recurring Payment</p>
-              <p>{status?.data?.recurringPaymentLength}</p>
-            </span>
-            <Link href="/payment" className="underline">view all</Link>
-          </div>
-          <Link href="/payment" className="text-gray-500 text-sm underline">
-            view all payment
-          </Link>
+
           <div className="space-y-3 p-2 bg-white">
             <div className="flex justify-between items-center">
               <div>

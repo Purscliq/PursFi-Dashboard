@@ -64,7 +64,7 @@ const DashboardSider = () => {
             </span>
             <RiArrowDropDownLine size={25} />
           </summary>
-          <ul className="-mt-4 shadow menu dropdown-content z-[1]  w-52">
+          <ul className="-mt-4  menu dropdown-content z-[1]  w-52">
             <li className="w-full bg-[#EEF2F7] p-2 cursor-pointer items-center rounded-box ">
               Log Out
             </li>

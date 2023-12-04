@@ -55,7 +55,7 @@ const CompanyInfo = ({
           Tell us about your Company
         </h2>
         <p className="text-sm">
-          This is Company information that you can update anytime.
+          This is company information that can be updated anytime{" "}
         </p>
       </span>
       <form
@@ -107,12 +107,12 @@ const CompanyInfo = ({
         <article className="flex flex-col md:flex-row space-x-14 p-2 border-b ">
           <div className="w-[28%]">
             <h2 className="text-black font-semibold mb-1">
-              Tell us your business Resister{" "}
+              Tell us your business Name{" "}
             </h2>
             <p className="text-sm">
-              this most be the name on your registration Documentation. <br />
+              This must be the name on your registration document. <br />
               <span className="text-red-400">
-                Note: the name can not be change again
+                Note: This name cannot be changed again
               </span>
             </p>
           </div>
@@ -143,8 +143,7 @@ const CompanyInfo = ({
               Select your industry{" "}
             </h2>
             <p className="text-sm">
-              Choose the Industry closet to the ine in which your Business
-              Operate
+              Choose the industry closest to where your business operates.
             </p>
           </div>{" "}
           <div className=" w-2/4">
@@ -158,7 +157,7 @@ const CompanyInfo = ({
               <Select
                 className="!w-full"
                 options={industry}
-                placeholder="placeholder"
+                placeholder="select industry"
                 value={formData.BusinessIndustry}
                 onChange={(value) =>
                   setFormData((prev) => ({ ...prev, BusinessIndustry: value }))
@@ -173,8 +172,8 @@ const CompanyInfo = ({
               Tell us about your business
             </h2>
             <p className="text-sm">
-              in a few sentence describe your Company and the Product or
-              Services your render
+              In a few sentences describe your company, product, and services
+              you render.
             </p>
           </div>{" "}
           <div className=" w-2/4">
@@ -205,8 +204,8 @@ const CompanyInfo = ({
               Verify your Company Location
             </h2>
             <p className="text-sm">
-              We will Require you to Submit A copy of your utility bill
-              associated to the address in the documentation part of the
+              We will require you to submit a copy of your utility bill
+              associated with the address in the documentation part of the
               onboarding
             </p>
           </div>{" "}
@@ -289,7 +288,7 @@ const CompanyInfo = ({
               type="primary"
               className="!h-[3rem] bg-black w-full"
             >
-              save and continue
+              Save and Continue
             </Button>
           </div>
         </div>

@@ -18,8 +18,8 @@ const CompanySeting = () => {
       </span>
       <div className=" w-full rounded-md">
         {/* profil Section */}
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-          <h1 className="font-semibold text-sm">Company Logo</h1>
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+          <h1 className="font-semibold text-sm">Business Logo</h1>
           <div className="flex items-center space-x-3 w-full md:w-[400px]">
             <div>
               <Avatar
@@ -38,18 +38,18 @@ const CompanySeting = () => {
               className="hidden w-full h-full cursor-pointer "
             />
             <p className="text-sm">
-              we only accept this type of format (PNG, JPG). <br /> kindly
+              We only accept this type of format (PNG, JPG).only. <br /> kindly
               upload photo not more that 5mb
             </p>
           </div>
         </div>
         <hr />
         {/* First Name Section */}
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-sm flex-col flex">
-            <h1 className="font-semibold">Busness Name</h1>{" "}
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+          <div className="text-sm flex-col flex">
+            <h1 className="font-semibold">Business Name</h1>{" "}
             <span className="text-sm mt-2">
-              You won&rsquo;t be able to change your name.{" "}
+            You won&rsquo;t  be able to change the business name{" "}
             </span>
           </div>
           <div className="flex flex-col space-y-1 w-full md:w-[400px]">
@@ -66,9 +66,9 @@ const CompanySeting = () => {
         </div>
         <hr />
         {/* Email Section */}
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-sm flex-col flex">
-            <h1 className="font-semibold ">Company Bio</h1>
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+          <div className="text-sm flex-col flex">
+            <h1 className="font-semibold ">Business Bio</h1>
             <span className="text-sm mt-2">
               Tell us more about your company
             </span>
@@ -90,8 +90,8 @@ const CompanySeting = () => {
           </div>
         </div>
         <hr />
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-sm flex-col flex">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+          <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Business Industry</h1>
             <span className="text-sm mt-2">
               Specific sector, in which your organization primarily operates.
@@ -107,13 +107,13 @@ const CompanySeting = () => {
                 { value: "jack", label: "Jack" },
                 { value: "lucy", label: "Lucy" },
               ]}
-              placeholder="Placehohlder"
+              placeholder="select industry"
             />{" "}
           </div>
         </div>
         {/* Phone Number Section */}
-        <div className="mb-4 p-2 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-sm flex-col flex">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+          <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Business Address</h1>
             <span className="text-sm mt-2">
               This is the location of your business
@@ -163,10 +163,10 @@ const CompanySeting = () => {
         </div>
         <hr />{" "}
       </div>
-      <div className="flex justify-end items-end my-3">
+      <div className="flex justify-center mx-auto items-end my-3">
         <button
           disabled
-          className="btn w-[400px]   disabled:bg-gray-200 disabled:text-white"
+          className="btn w-[400px]    disabled:bg-gray-200 disabled:text-white"
         >
           Save Changes
         </button>

@@ -60,9 +60,9 @@ const BusinessDocs = ({
               Tax Identification Number{" "}
             </h2>
             <p className="text-sm">
-              A Taxpayer Identification Number (TIN) is an identification number
-              used by the Internal Revenue Service (IRS) in the administration
-              of tax laws
+            A Taxpayer Identification Number (TIN) is an identification
+number used by the Federal Internal Revenue Service (FIRS) in the
+administration of tax laws.
             </p>
           </div>{" "}
           <div className=" w-2/4">
@@ -89,7 +89,7 @@ const BusinessDocs = ({
             </h2>
             <p className="text-sm">
               A certificate of incorporation is a document given by the
-              companies regulation agency of a country Note:(PDF,JPEG,PNG only).
+              companies regulation agency of a country Note:JPEG only.
               Limited 5mb
             </p>
           </div>
@@ -111,7 +111,7 @@ const BusinessDocs = ({
                   }));
                   return false;
                 }}
-                className=""
+                className="border border-dashed h-[80px] p-4"
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
@@ -156,12 +156,12 @@ const BusinessDocs = ({
                   }));
                   return false;
                 }}
-                className=""
+                className="border border-dashed h-[80px] p-4"
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
                   <p className="text-sm font-semibold">
-                    Attach Doc (PDF, Jpeg, PNG only) Limited 5mb
+                    Attach Doc Jpeg only, Limited 5mb
                   </p>
                 </span>
               </Upload>
@@ -195,7 +195,7 @@ const BusinessDocs = ({
                   }));
                   return false;
                 }}
-                className=""
+                className="border border-dashed h-[80px] p-4"
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
@@ -230,7 +230,7 @@ const BusinessDocs = ({
                   }));
                   return false;
                 }}
-                className=""
+                className="border border-dashed h-[80px] p-4"
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
@@ -249,7 +249,7 @@ const BusinessDocs = ({
               type="primary"
               className="!h-[3rem] bg-black w-full"
             >
-              save and continue
+              Save and Continue
             </Button>
           </div>
         </div>

@@ -139,7 +139,7 @@ const StatementModal = ({
             loading={isLoading}
             htmlType="submit"
             type="primary"
-            className="!h-[3rem] !bg-Primary w-full text-white hover:!text-white"
+            className="!h-[3rem] !bg-black w-full text-white hover:!text-white"
           >
             Submit
           </Button>

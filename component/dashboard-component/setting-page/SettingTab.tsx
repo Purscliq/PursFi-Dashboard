@@ -4,8 +4,8 @@ import { TabsProps } from "antd";
 import Persoanal from "./setting-tab/Persoanal";
 import CompanySetinf from "./setting-tab/CompanySeting";
 import Security from "./setting-tab/Security";
-import Compulsory from "./setting-tab/Compulsory";
-import AprovalRule from "./setting-tab/AprovalRule";
+// import Compulsory from "./setting-tab/Compulsory";
+// import AprovalRule from "./setting-tab/AprovalRule";
 
 const SettingTab = () => {
   const items: TabsProps["items"] = [
@@ -24,16 +24,16 @@ const SettingTab = () => {
       label: "Security",
       children: <Security />,
     },
-    {
-      key: "4",
-      label: "Compulsory",
-      children: <Compulsory />,
-    },
-    {
-      key: "5",
-      label: "Approval Rule",
-      children: <AprovalRule />,
-    },
+    // {
+    //   key: "4",
+    //   label: "Compulsory",
+    //   children: <Compulsory />,
+    // },
+    // {
+    //   key: "5",
+    //   label: "Approval Rule",
+    //   children: <AprovalRule />,
+    // },
   ];
 
   return <Tabs items={items} defaultActiveKey="1" />;
