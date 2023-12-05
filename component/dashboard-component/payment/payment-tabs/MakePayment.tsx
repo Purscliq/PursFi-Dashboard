@@ -71,7 +71,7 @@ const MakePayment = () => {
         .then((res) => {
           setFormdata((prev) => ({
             ...prev,
-            acc: res?.data?.data,
+            bankName: res?.data?.data,
           }));
         })
         .catch((err) => {
@@ -92,7 +92,7 @@ const MakePayment = () => {
           setIsModalOpen(true);
           setAcctDetails(initAcctDetails);
           setFormdata(initialState);
-          message.success("payment successful");
+          // message.success("payment successful");
         })
         .catch((err) => {
           message.error(
@@ -300,9 +300,7 @@ const MakePayment = () => {
           </span>
         </span>
         <div className="grid grid-cols-1 gap-[0.1rem] items-stretch">
-          <label>
-            Attachment (optional)
-          </label>
+          <label>Attachment (optional)</label>
           <Upload className="border border-dashed h-[70px] p-4">
             <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
               <LinkIcon className="stroke-inherit" />
