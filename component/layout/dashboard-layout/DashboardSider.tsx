@@ -11,9 +11,14 @@ import { MdAccountBalance } from "react-icons/md";
 import { CustomMenu as Menu } from "@/lib/AntdComponents";
 import DashboardModal from "@/component/dashboard-component/dashboard/DashboardModal";
 import { useState, useLayoutEffect } from "react";
+import { logOut } from "@/store/userSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const DashboardSider = () => {
   const pathName = usePathname();
+  const dispatch = useAppDispatch();
+  const { user, business } = useAppSelector((store) => store.user);
+  console.log(user, business);
   const [activePath, setActivePath] = useState("");
   const { push } = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,19 +58,29 @@ const DashboardSider = () => {
         <details className="dropdown">
           <summary className=" flex space-x-2 items-center justify-center mx-2 my-4 p-2 bg-[#EEF2F7]">
             <Avatar
-              style={{ backgroundColor: "#CDA4FF", verticalAlign: "middle" }}
+              style={{
+                backgroundColor: "#CDA4FF",
+                verticalAlign: "middle",
+              }}
               size="large"
+              className="!uppercase"
             >
-              JD
+              {user?.firstName.charAt(0)}
+              {user?.lastName.charAt(0)}
             </Avatar>
             <span className="text-sm">
-              <p>Pursfibusiness</p>
-              <p>John Doe</p>
+              <p>{business?.businessName}</p>
+              <p>
+                {user?.firstName} {user?.lastName}
+              </p>
             </span>
-            <RiArrowDropDownLine size={25} />
+            <RiArrowDropDownLine className="cursor-pointer" size={25} />
           </summary>
-          <ul className="-mt-4  menu dropdown-content z-[1]  w-52">
-            <li className="w-full bg-[#EEF2F7] p-2 cursor-pointer items-center rounded-box ">
+          <ul className="-mt-4  menu dropdown-content z-[1]  w[15rem] w-[98%] mx-auto">
+            <li
+              onClick={() => dispatch(logOut())}
+              className="w-full bg-[#EEF2F7] p-2 cursor-pointer text-center items-center rounded-box mx-auto block"
+            >
               Log Out
             </li>
           </ul>

@@ -4,8 +4,12 @@ import { Avatar } from "antd";
 import React from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { BsCameraVideo } from "react-icons/bs";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { logOut } from "@/store/userSlice";
 
 const AsideBar = () => {
+  const dispatch = useAppDispatch();
+  const { user, business } = useAppSelector((store) => store.user);
   return (
     <div className="drawer-side z-10 ">
       <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
@@ -14,16 +18,29 @@ const AsideBar = () => {
         <details className="dropdown">
           <summary className=" flex space-x-2 items-center justify-center mx-2 my-4 p-2 bg-[#EEF2F7]">
             <Avatar
-              style={{ backgroundColor: "#CDA4FF", verticalAlign: "middle" }}
+              style={{
+                backgroundColor: "#CDA4FF",
+                verticalAlign: "middle",
+              }}
               size="large"
+              className="!uppercase"
             >
-              JD
+              {user?.firstName.charAt(0)}
+              {user?.lastName.charAt(0)}
             </Avatar>
-            <span className="font-medium">John Doe</span>
-            <RiArrowDropDownLine size={25} />
+            <span className="text-sm">
+              <p>{business?.businessName}</p>
+              <p>
+                {user?.firstName} {user?.lastName}
+              </p>
+            </span>
+            <RiArrowDropDownLine className="cursor-pointer" size={25} />
           </summary>
-          <ul className="-mt-4  menu dropdown-content z-[1]  w-52">
-            <li className="w-full bg-[#EEF2F7] p-2 cursor-pointer items-center rounded-box ">
+          <ul className="-mt-4  menu dropdown-content z-[1]  w[15rem] w-[98%] mx-auto">
+            <li
+              onClick={() => dispatch(logOut())}
+              className="w-full bg-[#EEF2F7] p-2 cursor-pointer text-center items-center rounded-box mx-auto block"
+            >
               Log Out
             </li>
           </ul>
