@@ -104,7 +104,7 @@ const AddMember = () => {
     JSON.stringify(formData.bankCode),
   ]);
   return (
-    <div className="relative flex flex-col px-[2%] w-[98%] mx-auto">
+    <div className="relative flex flex-col px-[2%] w-[95%] mx-auto">
       <header className="flex flex-col space-y-3 my-1 border-b border-[#D6DDEB] py-[2%]">
         <div className="flex items-center justify-between ">
           <span className="text-2xl font-medium flex gap-1 items-center">
@@ -127,7 +127,7 @@ const AddMember = () => {
             <Spinner className="!m-auto !block" />
           </div>
         )}
-        <span className="grid grid-cols-[40%_60%]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
               Select your option
@@ -148,7 +148,7 @@ const AddMember = () => {
             }}
           />
         </span>
-        <span className="grid grid-cols-[40%_60%]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">Full Name</h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
@@ -181,7 +181,7 @@ const AddMember = () => {
             </span>
           </span>
         </span>
-        <span className="grid grid-cols-[40%_60%]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">Email</h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
@@ -204,7 +204,7 @@ const AddMember = () => {
             />
           </span>
         </span>
-        <span className="grid grid-cols-[40%_60%]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
               Account Details
@@ -250,7 +250,7 @@ const AddMember = () => {
             <Input disabled value={formData.bankName} />
           </span>
         </span>
-        <span className="grid grid-cols-[40%_60%]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">Hire Date</h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
@@ -271,7 +271,7 @@ const AddMember = () => {
             />
           </span>
         </span>
-        <span className="grid grid-cols-[40%_60%]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
               Select Payroll
@@ -294,7 +294,7 @@ const AddMember = () => {
             />
           </span>
         </span>
-        <span className="grid grid-cols-[40%_60%]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
               Provide Phone Number
@@ -319,7 +319,7 @@ const AddMember = () => {
             />
           </span>
         </span>
-        <span className="grid grid-cols-[40%_60%]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">Salary</h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
@@ -343,7 +343,7 @@ const AddMember = () => {
             />
           </span>
         </span>
-        <span className="grid grid-cols-[40%_60%]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">Address</h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
@@ -391,7 +391,7 @@ const AddMember = () => {
           htmlType="submit"
           loading={isLoading}
           type="primary"
-          className="!bg-black !w-[60%] self-end"
+          className="!bg-black !w-[50%] self-end"
         >
           save
         </Button>
