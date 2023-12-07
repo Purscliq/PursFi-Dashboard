@@ -46,6 +46,7 @@ const initialState = {
   hour: "",
   month: "",
   fee: "0",
+  accountName: "",
 };
 const initAcctDetails = {
   bankCode: "",
@@ -81,7 +82,10 @@ const MakePayment = () => {
   }, [acctdetails.accountNumber, acctdetails.bankCode]);
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    if (formdata.bankName && formdata.transactionCategory === options[0].value)
+    if (
+      formdata.accountName &&
+      formdata.transactionCategory === options[0].value
+    )
       transfer({
         ...formdata,
         ...acctdetails,
@@ -101,7 +105,7 @@ const MakePayment = () => {
           );
         });
     else if (
-      formdata.bankName &&
+      formdata.accountName &&
       formdata.transactionCategory === options[1].value
     )
       scheduled_transfer({
@@ -123,7 +127,7 @@ const MakePayment = () => {
           );
         });
     else if (
-      formdata.bankName &&
+      formdata.accountName &&
       formdata.transactionCategory === options[2].value
     )
       recurring_transfer({
@@ -147,11 +151,12 @@ const MakePayment = () => {
           );
         });
   };
-  const onSearchChange = (value: Record<string, string>) => {
+  const onSearchChange = (value: string, option: any) => {
+    console.log(option);
     setAcctDetails((prev) => ({
       ...prev,
-      bankCode: value?.bankCode,
-      bankName: value?.bankName,
+      bankCode: value,
+      bankName: option?.label,
     }));
   };
   const onFormChange: ChangeEventHandler<
@@ -180,7 +185,7 @@ const MakePayment = () => {
               showSearch
               placeholder="select bank"
               optionFilterProp="label"
-              onChange={onSearchChange}
+              onSelect={onSearchChange}
               id="bank"
               options={data}
             />
@@ -201,7 +206,7 @@ const MakePayment = () => {
         </span>
         <span className="flex flex-col">
           <label htmlFor="acct_name">Account Name</label>
-          <Input value={formdata.bankName} disabled={true} id="acct_name" />
+          <Input value={formdata.accountName} disabled={true} id="acct_name" />
         </span>
         <span className="flex items-center justify-between gap-[2rem]">
           <span className="flex flex-col w-full">

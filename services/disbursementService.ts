@@ -29,7 +29,7 @@ const disbursementSlice = ApiSlice.injectEndpoints({
       }),
       transformResponse: (res: Record<string, any>) => {
         const newList = res?.data.map((e: Record<string, string>) => ({
-          value: e,
+          value: e?.bankCode,
           label: e?.bankName,
         }));
         return newList;

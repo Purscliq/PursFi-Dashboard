@@ -225,7 +225,7 @@ const AddMember = () => {
                   onSelect={(value) =>
                     setFormData((prev) => ({
                       ...prev,
-                      bankCode: value?.bankCode,
+                      bankCode: value,
                     }))
                   }
                   id="bank"
