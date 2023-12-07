@@ -17,6 +17,7 @@ import {
   CustomSpinner as Spinner,
   CustomUpload as Upload,
 } from "@/lib/AntdComponents";
+import { DefaultOptionType } from "antd/es/select";
 import {
   useGetBanksQuery,
   useVerifyAccountMutation,
@@ -71,7 +72,7 @@ const MakePayment = () => {
         .then((res) => {
           setFormdata((prev) => ({
             ...prev,
-            bankName: res?.data?.data,
+            accountName: res?.data?.data,
           }));
         })
         .catch((err) => {
@@ -147,7 +148,11 @@ const MakePayment = () => {
         });
   };
   const onSearchChange = (value: string) => {
-    setAcctDetails((prev) => ({ ...prev, bankCode: value }));
+    setAcctDetails((prev) => ({
+      ...prev,
+      bankCode: value,
+      bankName: record?.label,
+    }));
   };
   const onFormChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement

@@ -1,9 +1,8 @@
-import ResetPass from '@/component/reset-password/ResetPass'
-import React from 'react'
+import ResetPass from "@/component/password-reset/ResetPass";
+import React from "react";
 
 const page = () => {
-  return (
-<ResetPass />  )
-}
+  return <ResetPass />;
+};
 
-export default page
+export default page;

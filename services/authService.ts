@@ -137,6 +137,14 @@ const authSlice = ApiSlice.enhanceEndpoints({
         formData: true,
       }),
     }),
+    updateBusinessOwner: builder.mutation({
+      query: (body) => ({
+        url: "business/update",
+        method: "POST",
+        body,
+        formData: true,
+      }),
+    }),
     completeBusinessOnboarding: builder.mutation({
       query: (body) => ({
         url: "business/complete/onboarding",
@@ -168,6 +176,7 @@ export const {
   useCreateBusinessMutation,
   useCreateBusinessOwnerMutation,
   useCreateIndividualOwnerMutation,
+  useUpdateBusinessOwnerMutation,
   useForgotPasswordMutation,
   useGenerateOtpMutation,
   useProfileQuery,

@@ -15,8 +15,8 @@ import LinkIcon from "@/assets/icon/LinkIcon";
 import { useState, ChangeEventHandler, FormEventHandler } from "react";
 import {
   useBusinessProfileQuery,
-  useCreateBusinessOwnerMutation,
   useProfileQuery,
+  useUpdateBusinessOwnerMutation,
 } from "@/services/authService";
 import { useFetchCountryQuery } from "@/services/country";
 
@@ -47,7 +47,7 @@ const OwnerInfo = ({
   const { data: country } = useFetchCountryQuery({});
   const { data: user } = useProfileQuery({});
   const { data: business } = useBusinessProfileQuery({});
-  const [create, { isLoading }] = useCreateBusinessOwnerMutation();
+  const [create, { isLoading }] = useUpdateBusinessOwnerMutation();
   const [formData, setFormData] = useState<dataType>({
     isIndividual: (business?.merchantType === "individual").toString(),
     Bvn: "",
