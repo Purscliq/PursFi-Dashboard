@@ -23,7 +23,7 @@ const Overview = () => {
                 Add Single Employee or a Contractor in Second
               </p>
               <Button
-                className="!flex !m-auto !items-center"
+                className="!flex !m-auto !items-center !border-0"
                 icon={<AddIcon />}
                 onClick={() => push("/add-payroll")}
               />
