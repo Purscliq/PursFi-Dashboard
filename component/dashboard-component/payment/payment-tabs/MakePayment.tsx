@@ -147,11 +147,11 @@ const MakePayment = () => {
           );
         });
   };
-  const onSearchChange = (value: string) => {
+  const onSearchChange = (value: Record<string, string>) => {
     setAcctDetails((prev) => ({
       ...prev,
-      bankCode: value,
-      bankName: record?.label,
+      bankCode: value?.bankCode,
+      bankName: value?.bankName,
     }));
   };
   const onFormChange: ChangeEventHandler<

@@ -223,7 +223,10 @@ const AddMember = () => {
                   placeholder="select bank"
                   optionFilterProp="label"
                   onSelect={(value) =>
-                    setFormData((prev) => ({ ...prev, bankCode: value }))
+                    setFormData((prev) => ({
+                      ...prev,
+                      bankCode: value?.bankCode,
+                    }))
                   }
                   id="bank"
                   options={data}
