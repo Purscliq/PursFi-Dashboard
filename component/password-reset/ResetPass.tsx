@@ -53,7 +53,11 @@ const ResetPass = () => {
         replace("/");
       })
       .catch((err) => {
-        setAlert(err?.data?.title || "something went wrong");
+        setAlert(
+          err?.data?.title ||
+            err?.data?.responseDescription ||
+            "something went wrong"
+        );
       });
   };
   const resendLink = () => {
@@ -126,7 +130,7 @@ const ResetPass = () => {
           </Button>
           <span
             onClick={resendLink}
-            className="text-sm font-medium text-gray-600 flex items-center justify-center"
+            className="text-sm font-medium text-gray-600 flex items-center justify-center cursor-pointer underline"
           >
             Resend Link
           </span>
