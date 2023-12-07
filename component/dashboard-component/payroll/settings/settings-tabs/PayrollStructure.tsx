@@ -59,7 +59,7 @@ const PayrollStructure = ({
     if (dataSource.length > 0) {
       const structure = dataSource.map((e) => ({
         name: e.name,
-        percentage: e.percentage,
+        percentage: e.percentage.toString(),
         tax: e.tax === "Yes" ? true : false,
       }));
       createPayroll({
