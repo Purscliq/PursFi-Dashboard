@@ -11,8 +11,12 @@ const FundModal = ({
   setOpen: (value: boolean) => void;
 }) => {
   return (
-    <Modal open={open} onCancel={() => setOpen(false)} footer={null} centered={true}>
-
+    <Modal
+      open={open}
+      onCancel={() => setOpen(false)}
+      footer={null}
+      centered={true}
+    >
       <div className=" flex flex-col">
         <h2 className="text-2xl font-bold mb-1 text-center">
           Transfer money to your Account
@@ -40,20 +44,19 @@ const FundModal = ({
                 ]}
               />
             </div>
-            
-           
+
             <div className="flex justify-between items-end  border border-gray-300 p-2 rounded-md">
-            <span className="space-y-3">
-              <p className="font-medium ">Bank Transfer</p>
-              <p>Bank Transfer - firstBank</p>{" "}
-              <p >Account Number - 045677880</p>
-              <p>Account Name - Bruce Wayne</p>
-            </span>{" "}
-            <button className="border items-center  flex space-x-2 p-2 rounded-md">
-              <FaRegCopy className="text-blue-400" />
-              <p>copy</p>{" "}
-            </button>{" "}
-          </div>
+              <span className="space-y-3">
+                <p className="font-medium ">Bank Transfer</p>
+                <p>Bank Transfer - firstBank</p>{" "}
+                <p>Account Number - 045677880</p>
+                <p>Account Name - Bruce Wayne</p>
+              </span>{" "}
+              <button className="border items-center  flex space-x-2 p-2 rounded-md">
+                <FaRegCopy className="text-blue-400" />
+                <p>copy</p>{" "}
+              </button>{" "}
+            </div>
           </form>{" "}
         </div>{" "}
       </div>

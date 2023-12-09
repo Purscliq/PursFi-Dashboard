@@ -30,6 +30,8 @@ import {
   SwitchProps,
   Spin,
   SpinProps,
+  Tooltip,
+  TooltipProps,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -237,5 +239,11 @@ export const CustomSwitch = ({ ...props }: SwitchProps) => (
 export const CustomSpinner = ({ ...props }: SpinProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <Spin {...props} />
+  </ConfigProvider>
+);
+
+export const CustomTooltip = ({ ...props }: TooltipProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Tooltip {...props} />
   </ConfigProvider>
 );

@@ -8,6 +8,7 @@ import { useGetWalletQuery } from "@/services/walletService";
 import { MdArrowOutward } from "react-icons/md";
 import { FiArrowDownLeft } from "react-icons/fi";
 import Link from "next/link";
+import { useAppSelector } from "@/store/hooks";
 import { useGetWalletHistoryQuery } from "@/services/walletService";
 import {
   useGetExpensesQuery,
@@ -20,6 +21,7 @@ const Dashbord = () => {
   const { data: stats } = useGetWalletHistoryQuery({});
   const { data: analysis } = useGetExpensesQuery({});
   const { data: status } = useGetTransactionStatusQuery("");
+  const wallet = useAppSelector((store) => store.user.wallet);
   const date = new Date();
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
@@ -96,7 +98,9 @@ const Dashbord = () => {
               </span>
               <span className="bg-[#FAFAFA] p-2">
                 <p className="text-gray-500 text-sm">Older payments</p>
-                <p className="text-xl font-semibold">10</p>
+                <p className="text-xl font-semibold">
+                  {wallet?.transactionCount}
+                </p>
               </span>
             </div>
             <Link href="/payment" className="text-gray-500 text-sm underline">

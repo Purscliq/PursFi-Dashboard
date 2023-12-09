@@ -16,7 +16,7 @@ import { useState, ChangeEventHandler, FormEventHandler } from "react";
 import {
   useBusinessProfileQuery,
   useProfileQuery,
-  useUpdateBusinessOwnerMutation,
+  useUpdateUserOwnerMutation,
 } from "@/services/authService";
 import { useFetchCountryQuery } from "@/services/country";
 
@@ -47,7 +47,7 @@ const OwnerInfo = ({
   const { data: country } = useFetchCountryQuery({});
   const { data: user } = useProfileQuery({});
   const { data: business } = useBusinessProfileQuery({});
-  const [create, { isLoading }] = useUpdateBusinessOwnerMutation();
+  const [create, { isLoading }] = useUpdateUserOwnerMutation();
   const [formData, setFormData] = useState<dataType>({
     isIndividual: (business?.merchantType === "individual").toString(),
     Bvn: "",

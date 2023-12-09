@@ -1,5 +1,8 @@
 "use client";
-import { Select } from "antd";
+import {
+  CustomButton as Button,
+  CustomSelect as Select,
+} from "@/lib/AntdComponents";
 import React, { useState } from "react";
 import { BiLinkAlt } from "react-icons/bi";
 import AccountTable from "./AccountTable";
@@ -132,7 +135,16 @@ const Account = () => {
             </div>
             <div className="flex flex-col space-y-3 bg-white p-[2%]">
               <div className="flex justify-end items-end mb-3">
-                <button className="text-lg font-semibold">+ copy</button>
+                <Button
+                  onClick={() =>
+                    navigator.clipboard.writeText(
+                      `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
+                    )
+                  }
+                  className="text-lg font-semibold !border-none"
+                >
+                  + copy
+                </Button>
               </div>{" "}
               <span className="flex justify-between items-center">
                 <p className="text-gray-500 ">Bank Name</p>

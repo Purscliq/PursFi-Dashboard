@@ -1,6 +1,10 @@
 import { Modal } from "antd";
 import React from "react";
-import { CustomButton as Button } from "@/lib/AntdComponents";
+import {
+  CustomButton as Button,
+  CustomTooltip as Tooltip,
+} from "@/lib/AntdComponents";
+import { useAppSelector } from "@/store/hooks";
 const PaymentLink = ({
   open,
   setOpen,
@@ -8,6 +12,7 @@ const PaymentLink = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
+  const wallet = useAppSelector((store) => store.user.wallet);
   return (
     <Modal
       open={open}
@@ -28,14 +33,20 @@ const PaymentLink = ({
           </p>
           <div className=" border rounded-md flex items-center space-x-2 p-2">
             <textarea
-              className="w-full h-10 p-2  rounded-md resize-none focus:outline-none font-semibold "
+              className="w-full h-10 p-2  rounded-md resize-none focus:outline-none font-semibold text-[0.7rem]"
               readOnly
             >
-              http//pursbusiness/paymemymonet/445467
+              {wallet?.link}
             </textarea>
-            <button className="bg-black text-white px-4 py-1 rounded-md hover:bg-black focus:outline-none">
-              Copy
-            </button>
+            <Tooltip title="copied" trigger={"focus"}>
+              <Button
+                onClick={() => navigator.clipboard.writeText(wallet?.link)}
+                className="bg-black text-white px-4 py-1 rounded-md hover:bg-black focus:outline-none"
+                type="primary"
+              >
+                Copy
+              </Button>
+            </Tooltip>
           </div>
           <p className="font-semibold">Download Payment Flyer</p>
           <div className="bg-[#D9D9D9] h-[12rem] w-full"></div>

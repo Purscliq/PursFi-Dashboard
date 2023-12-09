@@ -81,7 +81,7 @@ const AdminstrationModal = ({
           onSubmit={onFormSubmit}
           className="w-full space-y-4 mt-6 items-center px-2"
         >
-          <div className="space-x-2 flex flex-col md:flex-row w-full md:w-[400px]">
+          <div className="space-x-2 flex flex-col md:flex-row w-full">
             <div className="w-full space-y-1">
               <label htmlFor="firstName" className="font-semibold text-sm">
                 First Name
@@ -112,7 +112,7 @@ const AdminstrationModal = ({
             </div>
           </div>
 
-          <div className="flex flex-col space-y-1 w-full md:w-[400px]">
+          <div className="flex flex-col space-y-1 w-full">
             <label htmlFor="email" className="font-semibold text-sm">
               Email
             </label>
@@ -127,7 +127,7 @@ const AdminstrationModal = ({
               value={formData.email}
             />
           </div>
-          <div className="flex flex-col space-y-1 w-full md:w-[400px]">
+          <div className="flex flex-col space-y-1 w-full">
             <label htmlFor="" className="font-semibold text-sm">
               Phone Number
             </label>
@@ -142,7 +142,7 @@ const AdminstrationModal = ({
             />
           </div>
 
-          <div className="mb-4">
+          <div className="flex flex-col space-y-1 w-full">
             <label className="block text-black text-sm font-semibold mb-2">
               Roles
             </label>
@@ -160,7 +160,7 @@ const AdminstrationModal = ({
             loading={isLoading}
             type="primary"
             htmlType="submit"
-            className="!h-[3rem] !bg-Primary w-full text-white hover:!text-white"
+            className="!h-[3rem] !bg-Primary w-full text-white hover:!text-white !bg-black"
           >
             Send request
           </Button>

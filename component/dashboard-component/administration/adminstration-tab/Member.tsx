@@ -1,6 +1,6 @@
 import TableIcon from "@/assets/icon/TableIcon";
-import { Dropdown, Menu, MenuProps } from "antd";
-import Table, { ColumnsType } from "antd/es/table";
+import { ColumnsType } from "antd/es/table";
+import { CustomTable as Table } from "@/lib/AntdComponents";
 import {
   useLazyGetEmployeesQuery,
   useGetEmployeesQuery,
@@ -46,7 +46,7 @@ const Member = () => {
       ),
       dataIndex: "email",
       key: "email",
-      render: (text: string, record: DataType) => (
+      render: (text: string) => (
         <>
           <h1 className="font-semibold">{text}</h1>
         </>
@@ -59,8 +59,13 @@ const Member = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "role",
+      dataIndex: "roleName",
       key: "role",
+      render: (text: string) => (
+        <>
+          <p className="font-semibold">{text}</p>
+        </>
+      ),
     },
     {
       title: (
@@ -73,7 +78,7 @@ const Member = () => {
       key: "status",
       render: (status) => (
         <span className="p-[4%] rounded-[80px] bg-green-50  text-[#0AA07B]  text-center  text-[14px] font-[600]">
-          Active
+          {status ? "Active" : "Inactive"}
         </span>
         // ) : (
         //   <span className="p-[4%] rounded-[80px] bg-[#0AA07B]/[10%] text-[#0AA07B] text-center text-[14px] font-[600]">
