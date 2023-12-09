@@ -20,7 +20,7 @@ const Review = ({
   setFormData: React.Dispatch<SetStateAction<docsData>>;
   setActive: React.Dispatch<SetStateAction<string>>;
 }) => {
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const [checked, setChecked] = useState(false);
   const [create, { isLoading }] = useCompleteBusinessOnboardingMutation();
   const dataBody = new FormData();
@@ -33,7 +33,7 @@ const Review = ({
       create(dataBody)
         .unwrap()
         .then((res) => {
-          push("dashboard");
+          replace("/dashboard");
         })
         .catch((err) => {
           message.error(

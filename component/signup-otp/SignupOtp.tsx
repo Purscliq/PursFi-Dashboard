@@ -83,7 +83,7 @@ const SignupOtp = () => {
             htmlType="submit"
             loading={isValidating}
             type="primary"
-            className="!h-[3rem] !bg-Primary w-full"
+            className="!h-[3rem] !bg-black w-full"
           >
             verify
           </Button>

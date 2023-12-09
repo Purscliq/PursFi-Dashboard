@@ -124,7 +124,7 @@ const ResetPass = () => {
             htmlType="submit"
             type="primary"
             disabled={isResending}
-            className="!h-[3rem] !bg-Primary w-full"
+            className="!h-[3rem] !bg-black w-full"
           >
             Change Password
           </Button>
