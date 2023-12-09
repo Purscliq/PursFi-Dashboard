@@ -27,11 +27,7 @@ const permissions = [
 const PreviewRole = ({ id }: { id: string }) => {
   const [getRole, { data, isLoading }] = useLazyGetSingleRoleQuery();
   useEffect(() => {
-    if (id)
-      getRole(id)
-        .unwrap()
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+    if (id) getRole(id);
   }, [id]);
   return (
     <div className="grid grid-cols-1 gap-[0.5rem] p-[3%] bg-[#F9FFFF]">

@@ -18,7 +18,6 @@ const DashboardSider = () => {
   const pathName = usePathname();
   const dispatch = useAppDispatch();
   const { user, business } = useAppSelector((store) => store.user);
-  console.log(user, business);
   const [activePath, setActivePath] = useState("");
   const { push } = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);

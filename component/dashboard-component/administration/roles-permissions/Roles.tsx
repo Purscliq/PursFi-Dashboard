@@ -1,9 +1,9 @@
 import TableIcon from "@/assets/icon/TableIcon";
-import { Dropdown, Menu, MenuProps } from "antd";
-import Table, { ColumnsType } from "antd/es/table";
+import { ColumnsType } from "antd/es/table";
 import { useGetRolesQuery } from "@/services/managementService";
 import RoleDrawal from "./RoleDrawal";
 import { useState } from "react";
+import { CustomTable as Table } from "@/lib/AntdComponents";
 interface DataType {
   firstName: string;
   email: string;

@@ -1,8 +1,15 @@
 import { Modal } from "antd";
-import { FormEventHandler, ChangeEventHandler, useState } from "react";
 import {
-  useCreateRoleMutation,
+  FormEventHandler,
+  ChangeEventHandler,
+  useState,
+  useEffect,
+} from "react";
+import {
+  useUpdateRoleMutation,
   useGetPermissionsQuery,
+  useGetSingleRoleQuery,
+  useLazyGetSingleRoleQuery,
 } from "@/services/managementService";
 import {
   CustomInput as Input,
@@ -13,44 +20,70 @@ import { message } from "antd";
 import { useAppSelector } from "@/store/hooks";
 const permissions: string[] | [] = [];
 const initialState = {
-  businessId: "",
+  roleId: "",
   roleName: "",
+  businessId: "",
   description: "",
   permissions,
 };
 type DataType = { label: string; value: string };
-const RoleModal = ({
+const UpdateRoleModal = ({
   open,
   setOpen,
+  id,
 }: {
   open: boolean;
   setOpen: (value: boolean) => void;
+  id: string;
 }) => {
-  const businessProfile = useAppSelector((state) => state.user.business);
+  const [getRole, { data: role, isLoading: isFetchingRole }] =
+    useLazyGetSingleRoleQuery();
   const [formData, setFormData] = useState(initialState);
-  // const [roles, setRoles] = useState<DataType[]>([]);
+  const [rolePermission, setRolePermission] = useState<Record<string, boolean>>(
+    {
+      CreateNewUser: false,
+      ModifyUser: false,
+      CreateRole: false,
+      ModifyRole: false,
+      ViewRole: false,
+      ViewUser: false,
+      ViewBusiness: false,
+      ViewWallet: false,
+      ViewTransaction: false,
+      ViewTransactionStatement: false,
+      CreateCollections: false,
+      CreateDisbursement: false,
+      ViewDisbursement: false,
+      CreateInvoice: false,
+      ViewInvoice: false,
+      CreatePayroll: false,
+      ModifyPayroll: false,
+      ViewPayroll: false,
+    }
+  );
+  useEffect(() => {
+    if (id) {
+      getRole(id)
+        .unwrap()
+        .then((res) => {
+          setRolePermission((prev) => {
+            const permissions: string[] = res?.data?.permissions;
+            for (var i = 0; i < permissions.length; i++) {
+              prev[permissions[i]] = true;
+            }
+            return prev;
+          });
+          setFormData((prev) => ({
+            ...prev,
+            roleName: res?.data?.roleName,
+            description: res?.data?.description,
+          }));
+        });
+    }
+  }, [id]);
+  const businessProfile = useAppSelector((state) => state.user.business);
   const { data } = useGetPermissionsQuery({});
-  const [createRole, { isLoading }] = useCreateRoleMutation();
-  const [rolePermission, setRolePermission] = useState({
-    CreateNewUser: false,
-    ModifyUser: false,
-    CreateRole: false,
-    ModifyRole: false,
-    ViewRole: false,
-    ViewUser: false,
-    ViewBusiness: false,
-    ViewWallet: false,
-    ViewTransaction: false,
-    ViewTransactionStatement: false,
-    CreateCollections: false,
-    CreateDisbursement: false,
-    ViewDisbursement: false,
-    CreateInvoice: false,
-    ViewInvoice: false,
-    CreatePayroll: false,
-    ModifyPayroll: false,
-    ViewPayroll: false,
-  });
+  const [updateRole, { isLoading }] = useUpdateRoleMutation();
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -63,11 +96,11 @@ const RoleModal = ({
     }
     setFormData((prev) => ({ ...prev, permissions: permissionsList }));
     if (formData.permissions.length > 0)
-      createRole({ ...formData, businessId: businessProfile?.id })
+      updateRole({ ...formData, businessId: businessProfile?.id, roleId: id })
         .unwrap()
         .then((res) => {
           setFormData(initialState);
-          message.success("role created successfully");
+          message.success("role updated successfully");
           setOpen(false);
         })
         .catch((err) => {
@@ -86,7 +119,7 @@ const RoleModal = ({
     >
       <div className=" flex flex-col items-center">
         <h2 className="text-2xl font-bold mb-1 text-center">
-          Create Roles and Permission
+          Edit Roles and Permission
         </h2>
         <p className="text-sm text-gray-500 text-center">
           Lorem ipsum dolor sit amet consectetur. Sollicitudin mauris sit
@@ -140,6 +173,7 @@ const RoleModal = ({
                       CreateNewUser: e.target.value,
                     }))
                   }
+                  value={rolePermission?.CreateNewUser}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -157,6 +191,7 @@ const RoleModal = ({
                       ModifyUser: e.target.value,
                     }))
                   }
+                  value={rolePermission?.ModifyUser}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -174,6 +209,7 @@ const RoleModal = ({
                       CreateRole: e.target.value,
                     }))
                   }
+                  value={rolePermission?.CreateRole}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -191,6 +227,7 @@ const RoleModal = ({
                       ModifyRole: e.target.value,
                     }))
                   }
+                  value={rolePermission?.ModifyRole}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -208,6 +245,7 @@ const RoleModal = ({
                       ViewRole: e.target.value,
                     }))
                   }
+                  value={rolePermission?.ViewRole}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -225,6 +263,7 @@ const RoleModal = ({
                       ViewUser: e.target.value,
                     }))
                   }
+                  value={rolePermission?.ViewUser}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -245,6 +284,7 @@ const RoleModal = ({
                       ViewWallet: e.target.value,
                     }))
                   }
+                  value={rolePermission?.ViewWallet}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -262,6 +302,7 @@ const RoleModal = ({
                       ViewTransactionStatement: e.target.value,
                     }))
                   }
+                  value={rolePermission?.ViewTransactionStatement}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -279,6 +320,7 @@ const RoleModal = ({
                       CreateDisbursement: e.target.value,
                     }))
                   }
+                  value={rolePermission?.CreateDisbursement}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -299,6 +341,7 @@ const RoleModal = ({
                       CreateInvoice: e.target.value,
                     }))
                   }
+                  value={rolePermission?.CreateInvoice}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -316,6 +359,7 @@ const RoleModal = ({
                       ViewInvoice: e.target.value,
                     }))
                   }
+                  value={rolePermission?.ViewInvoice}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -336,6 +380,7 @@ const RoleModal = ({
                       CreatePayroll: e.target.value,
                     }))
                   }
+                  value={rolePermission?.CreatePayroll}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -353,6 +398,7 @@ const RoleModal = ({
                       ViewPayroll: e.target.value,
                     }))
                   }
+                  value={rolePermission?.ViewPayroll}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },
@@ -363,9 +409,10 @@ const RoleModal = ({
           </div>
           <Button
             loading={isLoading}
+            disabled={role?.data?.roleName === "SuperAdmin"}
             type="primary"
             htmlType="submit"
-            className="!h-[3rem] !bg-black w-full text-white hover:!text-white"
+            className="!h-[3rem] !bg-black w-full text-white hover:!textwhite"
           >
             save Role
           </Button>
@@ -375,4 +422,4 @@ const RoleModal = ({
   );
 };
 
-export default RoleModal;
+export default UpdateRoleModal;

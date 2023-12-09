@@ -1,13 +1,14 @@
 import { ApiSlice } from "./Api";
 
 const payrollSlice = ApiSlice.enhanceEndpoints({
-  addTagTypes: ["roles" as const, "permissions" as const],
+  addTagTypes: ["roles" as const, "permissions" as const, "employees" as const],
 }).injectEndpoints({
   endpoints: (builder) => ({
     getRoles: builder.query({
       query: () => ({
         url: "roles/business",
       }),
+      providesTags: ["roles"],
     }),
     getSingleRole: builder.query({
       query: (id) => ({
@@ -23,6 +24,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       query: () => ({
         url: "employee",
       }),
+      providesTags: ["employees"],
     }),
     getSingleEmployee: builder.query({
       query: (id) => ({
@@ -35,6 +37,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["roles"],
     }),
     updateRole: builder.mutation({
       query: (body) => ({
@@ -42,6 +45,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["roles"],
     }),
     createEmployee: builder.mutation({
       query: (body) => ({
@@ -49,6 +53,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["employees"],
     }),
     updateEmployee: builder.mutation({
       query: (body) => ({
@@ -72,5 +77,5 @@ export const {
   useUpdateEmployeeMutation,
   useLazyGetEmployeesQuery,
   useLazyGetSingleEmployeeQuery,
-  useLazyGetSingleRoleQuery
+  useLazyGetSingleRoleQuery,
 } = payrollSlice;
