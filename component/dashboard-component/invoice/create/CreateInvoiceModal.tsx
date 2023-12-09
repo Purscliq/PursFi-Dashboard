@@ -8,7 +8,8 @@ import {
 } from "@/lib/AntdComponents";
 import { dataType } from "./CreateInvoice";
 import { useCreateInvoiceMutation } from "@/services/invoiceService";
-import { useAppSelector } from "@/store/hooks";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import ErrorList from "antd/es/form/ErrorList";
 const CreateInvoiceModal = ({
   open,
@@ -105,6 +106,23 @@ const CreateInvoiceModal = ({
               placeholder="subject"
             />
           </div>
+          <div>
+            <label
+              className="block text-gray-700 text-sm font-semibold mb-2"
+              htmlFor="subject"
+            >
+              Client Phone
+            </label>
+            <PhoneInput
+              country={"ng"}
+              containerClass="!w-full"
+              inputClass="phone-input-input !w-full"
+              value={formData.ClientPhone}
+              onChange={(value) =>
+                setFormData((prev) => ({ ...prev, ClientPhone: value }))
+              }
+            />
+          </div>
 
           <span className="flex flex-col">
             <label htmlFor="info">Email Message</label>
@@ -127,9 +145,10 @@ const CreateInvoiceModal = ({
           </span>
           <div className="mt-4 space-y-3">
             <Button
+              type="primary"
               loading={isLoading}
               htmlType="submit"
-              className="!h-[3rem] !bg-Primary w-full text-white hover:!text-white"
+              className="!h-[3rem] !bg-black w-full text-white hover:!text-white"
             >
               Send invite
             </Button>

@@ -1,11 +1,28 @@
 "use client";
-import { Select } from "antd";
-import React from "react";
+import { CustomSelect as Select } from "@/lib/AntdComponents";
+import { useState, useEffect } from "react";
 import InvoiceTab from "./InvoiceTab";
 import { useRouter } from "next/navigation";
-
+import { useLazyInvoiceStatusQuery } from "@/services/invoiceService";
+const options = [
+  { value: "monthly", label: "Month" },
+  { value: "yearly", label: "Yearly" },
+];
 const Invoice = () => {
+  const [stats, setStats] = useState(options[0].value);
+  const [getStats, { isLoading, data }] = useLazyInvoiceStatusQuery();
   const { push } = useRouter();
+  const date = new Date();
+  useEffect(() => {
+    getStats({ time: stats })
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [stats]);
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
       <header className="flex flex-col space-y-9 my-4">
@@ -13,7 +30,12 @@ const Invoice = () => {
           <span>
             <h2 className="text-2xl font-medium"> Invoice </h2>
             <p className="text-sm text-gray-600">
-              Showing your Account metrics for July 19, 2021 - July 25, 2021
+              Showing your Account metrics for{" "}
+              {date.toLocaleString("en-US", {
+                month: "long",
+                day: "2-digit",
+                year: "numeric",
+              })}
             </p>
           </span>
           <div className="flex justify-center items-center space-x-5">
@@ -25,32 +47,31 @@ const Invoice = () => {
             </button>
             <Select
               style={{ width: "100%" }}
-              options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-              ]}
+              options={options}
               placeholder="Show stats Yearly"
-            />{" "}
+              value={stats}
+              onSelect={(value: string) => setStats(value)}
+            />
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-2 items-center">
-          <span>
+        <div className="grid grid-cols-4 gap-[10%] items-center">
+          <span className="bg-white flex flex-col items-center justify-center p-2 rounded-md">
             <p className="text-sm">Total Incoming</p>
             <p className="text-2xl font-medium">N300,000</p>
           </span>
-          <span>
+          <span className="bg-white flex flex-col items-center justify-center p-2 rounded-md">
             <p className="text-sm">Total Outgoing</p>
             <p className="text-2xl font-medium">N300,000</p>
           </span>
-          <span>
+          <span className="bg-white flex flex-col items-center justify-center p-2 rounded-md">
             <p className="text-sm"> Overdue Invoice </p>
             <p className="text-2xl font-medium">N300,000</p>
           </span>
-          <span>
+          <span className="bg-white flex flex-col items-center justify-center p-2 rounded-md">
             <p className="text-sm"> Unpaid</p>
             <p className="text-2xl font-medium">N300,000</p>
           </span>
-        </div>{" "}
+        </div>
         <div className="bg-white p-2 rounded-md">
           <InvoiceTab />
         </div>

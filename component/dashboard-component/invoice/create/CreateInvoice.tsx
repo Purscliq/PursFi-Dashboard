@@ -24,7 +24,6 @@ const taxPercent: any = 0;
 const discountPercent: any = 0;
 const initialState = {
   title: "",
-  clientPhone: "",
   amount: 0,
   currency: "",
   narration: "",
@@ -49,7 +48,7 @@ const initialState = {
   businessId: "",
   shipping,
   Currency: "NGN",
-  ClientPhone: "+2347013879246",
+  ClientPhone: "",
   SenderMail: "sikirurazak1@gmail.com",
 };
 export type dataType = typeof initialState;

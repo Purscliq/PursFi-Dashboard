@@ -13,9 +13,14 @@ const invoiceSlice = ApiSlice.enhanceEndpoints({
     }),
     invoiceHistory: builder.mutation({
       query: (body) => ({
-        url: "invoice/history",
+        url: `invoice/status`,
         body,
         method: "POST",
+      }),
+    }),
+    invoiceStatus: builder.query({
+      query: (body) => ({
+        url: `invoice/history?time=${body?.time}`,
       }),
     }),
     verifyInvoice: builder.query({
@@ -30,4 +35,6 @@ export const {
   useCreateInvoiceMutation,
   useVerifyInvoiceQuery,
   useInvoiceHistoryMutation,
+  useInvoiceStatusQuery,
+  useLazyInvoiceStatusQuery,
 } = invoiceSlice;

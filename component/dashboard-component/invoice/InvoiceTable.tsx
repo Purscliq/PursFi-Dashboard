@@ -1,24 +1,111 @@
 "use client";
-import { Input, Table } from "antd";
-import { DataType } from "./InvoiceTab";
+import { useState, useEffect } from "react";
+import { TablePaginationConfig } from "antd";
 import { ColumnsType } from "antd/es/table";
 import FilterIcon from "@/assets/icon/FilterIcon";
-import { CustomDatePicker as DatePicker } from "@/lib/AntdComponents";
+import {
+  CustomDatePicker as DatePicker,
+  CustomInput as Input,
+  CustomTable as Table,
+} from "@/lib/AntdComponents";
 import TableIcon from "@/assets/icon/TableIcon";
+import { useInvoiceHistoryMutation } from "@/services/invoiceService";
+import { useAppSelector } from "@/store/hooks";
 
-interface Props {
-  data: DataType[];
-  status: string;
+export interface DataType {
+  name: string;
+  date: string;
+  purpose: string;
+  type: string;
+  amount: string;
 }
+export interface TableParams {
+  pagination?: TablePaginationConfig;
+}
+const initialState = {
+  userId: "",
+  businessId: "",
+  startDate: "",
+  filterBy: "",
+  endDate: "",
+  amount: "",
+  status: "",
+  page: 1,
+  perPage: 10,
+};
 
-const InvoiceTable = ({ data, status }: Props) => {
+const InvoiceTable = ({ status }: { status: string }) => {
   // Filter the data based on the selected status, or show all data if status is "all"
-  const filteredData =
-    status === "all"
-      ? data
-      : data.filter(
-          (item) => item.status.toLowerCase() === status.toLowerCase()
-        );
+  // const filteredData =
+  //   status === "all"
+  //     ? data
+  //     : data.filter(
+  //         (item) => item.status.toLowerCase() === status.toLowerCase()
+  //       );
+  const [getInvoice, { isLoading, data }] = useInvoiceHistoryMutation();
+  const profile = useAppSelector((store) => store.user.user);
+  const [filter, setFilter] = useState(false);
+  const [tableFilter, setTableFilter] = useState(initialState);
+  const [tableParams, setTableParams] = useState<TableParams>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  });
+  useEffect(() => {
+    getInvoice({
+      ...tableFilter,
+      page: tableParams?.pagination?.current,
+      userId: profile?.id,
+      businessId: profile?.businessId,
+      status,
+    })
+      .unwrap()
+      .then((res) => {
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams?.pagination,
+            total: res?.data.total,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [JSON.stringify(tableParams)]);
+  useEffect(() => {
+    getInvoice({
+      ...tableFilter,
+      page: 1,
+      userId: profile?.id,
+      businessId: profile?.businessId,
+      status,
+    })
+      .unwrap()
+      .then((res) => {
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams?.pagination,
+            total: res?.data.total,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [JSON.stringify(filter)]);
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    setTableParams((prev) => ({
+      ...prev,
+      pagination,
+    }));
+    // if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+    //   setData([]);
+    // }
+  };
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -32,7 +119,7 @@ const InvoiceTable = ({ data, status }: Props) => {
       render: (text: string, record: DataType) => (
         <>
           <h1 className="font-semibold">{text}</h1>
-          <p>Invoice no:{record.invoiveno}</p>
+          <p>Invoice no:{text}</p>
         </>
       ),
     },
@@ -113,15 +200,45 @@ const InvoiceTable = ({ data, status }: Props) => {
   return (
     <div className="bg-white flex flex-col gap-[0.5rem] space-y-3">
       <div className="flex items-center justify-start w-full gap-[1rem]">
-        <DatePicker className="h-fit w-fit" placeholder="Start Date" />
-        <DatePicker className="h-fit w-fit" placeholder="End Date" />
+        <DatePicker
+          onChange={(_, date) =>
+            setTableFilter((prev) => ({
+              ...prev,
+              startDate: date,
+            }))
+          }
+          className="h-fit !w-[15rem]"
+          placeholder="Start Date"
+        />
+        <DatePicker
+          onChange={(_, date) =>
+            setTableFilter((prev) => ({
+              ...prev,
+              endDate: date,
+            }))
+          }
+          className="h-fit !w-[15rem]"
+          placeholder="End Date"
+        />
         <div className="w-fit">
-          <Input className="h-fit w-fit" placeholder="Amount" />
+          <Input
+            value={tableFilter?.amount}
+            onChange={(e) =>
+              setTableFilter((prev) => ({
+                ...prev,
+                amount: e.target.value,
+              }))
+            }
+            className="h-fit w-fit"
+            placeholder="Amount"
+          />
         </div>
-        <div className="w-fit">
-          <Input className="h-fit w-fit" placeholder="Status" />
-        </div>
-        <div className="flex justify-end w-full cursor-pointer">
+        <div
+          onClick={() => {
+            setFilter((prev) => !prev);
+          }}
+          className="flex justify-end w-full cursor-pointer"
+        >
           <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
             <FilterIcon />
             <p className="text-[#202430] text-[16px] font-[500]">filter</p>
@@ -129,7 +246,14 @@ const InvoiceTable = ({ data, status }: Props) => {
         </div>
       </div>
       <div className="relative overflow-x-auto  sm:rounded-lg w-[22rem] md:w-full">
-        <Table dataSource={filteredData} columns={columns} />
+        <Table
+          columns={columns}
+          //   rowKey={(record) => record.login.uuid}
+          dataSource={data?.data?.data || []}
+          pagination={tableParams.pagination}
+          loading={isLoading}
+          onChange={handleTableChange}
+        />
       </div>
     </div>
   );
