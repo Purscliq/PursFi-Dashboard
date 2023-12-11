@@ -39,7 +39,7 @@ const SignupBusness = () => {
     create(formData)
       .unwrap()
       .then((res) => {
-        message.success(res?.data?.responseDescription);
+        message.success(res?.data?.responseDescription || "success");
         generateMail({ username: profile?.user?.email })
           .unwrap()
           .then(() => {

@@ -128,6 +128,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["business"],
     }),
     createBusinessOwner: builder.mutation({
       query: (body) => ({
@@ -136,6 +137,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
         body,
         formData: true,
       }),
+      invalidatesTags: ["business"],
     }),
     updateBusinessOwner: builder.mutation({
       query: (body) => ({
@@ -144,6 +146,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
         body,
         formData: true,
       }),
+      invalidatesTags: ["business"],
     }),
     updateUserOwner: builder.mutation({
       query: (body) => ({
@@ -160,6 +163,7 @@ const authSlice = ApiSlice.enhanceEndpoints({
         body,
         formData: true,
       }),
+      invalidatesTags: ["business"],
     }),
     createIndividualOwner: builder.mutation({
       query: (body) => ({

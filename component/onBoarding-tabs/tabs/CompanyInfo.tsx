@@ -146,7 +146,7 @@ const CompanyInfo = ({
               Choose the industry closest to where your business operates.
             </p>
           </div>{" "}
-          <div className=" w-2/4">
+          <div className="w-2/4">
             <div className="">
               <label
                 className="block text-gray-700 text-sm font-semibold mb-2"

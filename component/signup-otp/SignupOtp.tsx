@@ -31,7 +31,7 @@ const SignupOtp = () => {
     validateOtp({ otp: code, username: data?.phoneNumber })
       .unwrap()
       .then((res) => {
-        message.success(res.data?.responseDescription);
+        message.success(res.data?.responseDescription||"validation successful");
         setCode("");
         replace("/signup-business");
       })
