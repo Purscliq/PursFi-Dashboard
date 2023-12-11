@@ -14,11 +14,11 @@ const SettingTab = () => {
       label: "Personal Settings",
       children: <Persoanal />,
     },
-    // {
-    //   key: "2",
-    //   label: "Company Settings",
-    //   children: <CompanySetinf />,
-    // },
+    {
+      key: "2",
+      label: "Company Settings",
+      children: <CompanySetinf />,
+    },
     // {
     //   key: "3",
     //   label: "Security",

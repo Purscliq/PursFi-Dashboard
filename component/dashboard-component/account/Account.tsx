@@ -90,7 +90,7 @@ const Account = () => {
                   <span>{/* <p>5.6%</p> */}</span>
                 </div>
                 <p className="text-2xl font-semibold">
-                  N{Number(wallet?.walletBalance).toLocaleString("en-US")}
+                  N{Number(wallet?.walletBalance || 0).toLocaleString("en-US")}
                 </p>
               </div>
               <div className="bg-white p-3 text-black w-full rounded-md border border-gray-300">
@@ -106,7 +106,9 @@ const Account = () => {
                 </div>
                 <p className="text-2xl font-semibold">
                   N
-                  {Number(analysis?.data?.todayBalance).toLocaleString("en-US")}
+                  {Number(analysis?.data?.todayBalance || 0).toLocaleString(
+                    "en-US"
+                  )}
                 </p>
               </div>
             </div>
@@ -120,7 +122,7 @@ const Account = () => {
                 <p>Spend so far</p>{" "}
                 <p className="text-2xl font-semibold">
                   N
-                  {Number(analysis?.data?.currentExpenses).toLocaleString(
+                  {Number(analysis?.data?.currentExpenses || 0).toLocaleString(
                     "en-US"
                   )}
                 </p>

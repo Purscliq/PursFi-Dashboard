@@ -8,9 +8,6 @@ const Setting = () => {
       <header className="flex flex-col space-y-9 my-4">
         <span>
           <h2 className="text-2xl font-medium"> Settings </h2>
-          <p className="text-sm text-gray-600">
-            Showing your Account metrics for July 19, 2021 - July 25, 2021
-          </p>
         </span>
         <div className="bg-white p-2 rounded-md">
           <SettingTab />

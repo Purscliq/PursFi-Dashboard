@@ -18,6 +18,7 @@ export interface DataType {
   purpose: string;
   type: string;
   amount: string;
+  reference: string;
 }
 export interface TableParams {
   pagination?: TablePaginationConfig;
@@ -66,14 +67,14 @@ const InvoiceTable = ({ status }: { status: string }) => {
           ...tableParams,
           pagination: {
             ...tableParams?.pagination,
-            total: res?.data.total,
+            total: res?.data?.total,
           },
         });
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [JSON.stringify(tableParams)]);
+  }, [JSON.stringify(tableParams), status]);
   useEffect(() => {
     getInvoice({
       ...tableFilter,
@@ -114,12 +115,12 @@ const InvoiceTable = ({ status }: { status: string }) => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "client",
+      dataIndex: "clientName",
       key: "client",
       render: (text: string, record: DataType) => (
         <>
           <h1 className="font-semibold">{text}</h1>
-          <p>Invoice no:{text}</p>
+          <p>Invoice no:{record?.reference}</p>
         </>
       ),
     },
@@ -130,8 +131,9 @@ const InvoiceTable = ({ status }: { status: string }) => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "issuieddate",
+      dataIndex: "createdAt",
       key: "issuieddate",
+      render: (text: string) => new Date(text).toDateString(),
     },
     {
       title: (
@@ -140,8 +142,9 @@ const InvoiceTable = ({ status }: { status: string }) => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "duedate",
+      dataIndex: "dueDate",
       key: "duedate",
+      render: (text: string) => new Date(text).toDateString(),
     },
     {
       title: (
@@ -175,12 +178,6 @@ const InvoiceTable = ({ status }: { status: string }) => {
             break;
           case "overdue":
             statusClasses = "text-red-400 bg-red-200";
-            break;
-          case "canceled":
-            statusClasses = "text-gray-400 bg-gray-200";
-            break;
-          case "draft":
-            statusClasses = "text-gray-400 bg-gray-200";
             break;
           default:
             break;

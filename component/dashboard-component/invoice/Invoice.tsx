@@ -14,14 +14,7 @@ const Invoice = () => {
   const { push } = useRouter();
   const date = new Date();
   useEffect(() => {
-    getStats({ time: stats })
-      .unwrap()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    getStats({ time: stats });
   }, [stats]);
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
@@ -54,22 +47,44 @@ const Invoice = () => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-[10%] items-center">
-          <span className="bg-white flex flex-col items-center justify-center p-2 rounded-md">
-            <p className="text-sm">Total Incoming</p>
-            <p className="text-2xl font-medium">N300,000</p>
+        <div className="grid grid-cols-4 gap-[5%] items-center">
+          <span className="bg-white flex flex-col justify-center py-2 px-[5%] rounded-md">
+            <p className="text-[1rem]">Total Incoming</p>
+            <p className="text-2xl font-medium">
+              {isLoading
+                ? "..."
+                : `N${
+                    Number(data?.data?.allInvoice || 0).toLocaleString("en-US") || ""
+                  }`}
+            </p>
           </span>
-          <span className="bg-white flex flex-col items-center justify-center p-2 rounded-md">
-            <p className="text-sm">Total Outgoing</p>
-            <p className="text-2xl font-medium">N300,000</p>
+          <span className="bg-white flex flex-col justify-center py-2 px-[5%] rounded-md">
+            <p className="text-[1rem]">Total Paid</p>
+            <p className="text-2xl font-medium">
+              {isLoading
+                ? "..."
+                : `N${Number(data?.data?.paid || 0).toLocaleString("en-US") || ""}`}
+            </p>
           </span>
-          <span className="bg-white flex flex-col items-center justify-center p-2 rounded-md">
-            <p className="text-sm"> Overdue Invoice </p>
-            <p className="text-2xl font-medium">N300,000</p>
+          <span className="bg-white flex flex-col justify-center py-2 px-[5%] rounded-md">
+            <p className="text-[1rem]"> Overdue Invoice </p>
+            <p className="text-2xl font-medium">
+              {isLoading
+                ? "..."
+                : `N${
+                    Number(data?.data?.overdue || 0).toLocaleString("en-US") || ""
+                  }`}
+            </p>
           </span>
-          <span className="bg-white flex flex-col items-center justify-center p-2 rounded-md">
+          <span className="bg-white flex flex-col justify-center py-2 px-[5%] rounded-md">
             <p className="text-sm"> Unpaid</p>
-            <p className="text-2xl font-medium">N300,000</p>
+            <p className="text-2xl font-medium">
+              {isLoading
+                ? "..."
+                : `N${
+                    Number(data?.data?.unpaid || 0).toLocaleString("en-US")
+                  }`}
+            </p>
           </span>
         </div>
         <div className="bg-white p-2 rounded-md">

@@ -8,8 +8,8 @@ import DashboardModal from "./DashboardModal";
 
 const DashboardTable = () => {
   const [fetchTransactions, { isLoading, data }] = useTransactionsMutation();
+  console.log(data);
   const profile = useAppSelector((store) => store.user.user);
-  console.log(profile);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,7 +52,7 @@ const DashboardTable = () => {
                   <p>{e?.accountName}</p>
                 </span>
                 <p className="font-medium text-lg">
-                  N{Number(e?.amount).toLocaleString("en-US")}
+                  N{Number(e?.amount || 0).toLocaleString("en-US")}
                 </p>
               </div>
             ))}

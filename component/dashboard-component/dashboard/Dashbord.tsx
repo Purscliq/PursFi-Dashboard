@@ -65,7 +65,10 @@ const Dashbord = () => {
                 </span> */}
               {/* </div> */}
               <p className="text-2xl font-semibold">
-                N{Number(data?.wallet?.walletBalance).toLocaleString("en-US")}
+                N
+                {Number(data?.wallet?.walletBalance || 0).toLocaleString(
+                  "en-US"
+                )}
               </p>
             </div>
             <div className="bg-white p-3 text-black w-full rounded-md border border-gray-300">
@@ -77,7 +80,10 @@ const Dashbord = () => {
                 <span>{/* <p>5.6%</p> */}</span>
               </div>
               <p className="text-2xl font-semibold">
-                N{Number(analysis?.data?.todayBalance).toLocaleString("en-US")}
+                N
+                {Number(analysis?.data?.todayBalance || 0).toLocaleString(
+                  "en-US"
+                )}
               </p>
             </div>
           </article>
@@ -122,9 +128,9 @@ const Dashbord = () => {
                 </p>
                 <p className="text-2xl font-semibold">
                   N
-                  {Number(status?.data?.totalUpcomingPayment).toLocaleString(
-                    "en-US"
-                  )}
+                  {Number(
+                    status?.data?.totalUpcomingPayment || 0
+                  ).toLocaleString("en-US")}
                 </p>
               </span>
             </div>
@@ -160,7 +166,10 @@ const Dashbord = () => {
                   <p>Cash Inflow</p>
                 </span>
                 <p className="text-xl font-semibold">
-                  N{Number(status?.data?.cashInflow).toLocaleString("en-US")}
+                  N
+                  {Number(status?.data?.cashInflow || 0).toLocaleString(
+                    "en-US"
+                  )}
                 </p>
               </div>
               <Select
@@ -181,7 +190,7 @@ const Dashbord = () => {
                 <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
                 <p>Invoice</p>
                 <p className="text-2xl font-semibold">
-                  N{Number(status?.data?.invoice).toLocaleString("en-US")}
+                  N{Number(status?.data?.invoice || 0).toLocaleString("en-US")}
                 </p>
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
@@ -189,7 +198,7 @@ const Dashbord = () => {
                 <p>Others</p>
                 <p className="text-2xl font-semibold">
                   N
-                  {Number(status?.data?.otherCollection).toLocaleString(
+                  {Number(status?.data?.otherCollection || 0).toLocaleString(
                     "en-US"
                   )}
                 </p>
@@ -204,7 +213,10 @@ const Dashbord = () => {
                   <p>Cash Outflow</p>
                 </span>
                 <p className="text-xl font-semibold">
-                  N{Number(status?.data?.cashOutflow).toLocaleString("en-US")}
+                  N
+                  {Number(status?.data?.cashOutflow || 0).toLocaleString(
+                    "en-US"
+                  )}
                 </p>
               </div>
               <Select
@@ -224,7 +236,7 @@ const Dashbord = () => {
                 <div className="bg-red-500 h-3 w-3 rounded-full" />
                 <p>Payroll</p>
                 <p className="text-2xl font-semibold">
-                  N{Number(status?.data?.payroll).toLocaleString("en-US")}
+                  N{Number(status?.data?.payroll || 0).toLocaleString("en-US")}
                 </p>
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
@@ -232,7 +244,7 @@ const Dashbord = () => {
                 <p>Payment</p>
                 <p className="text-2xl font-semibold">
                   N
-                  {Number(status?.data?.otherDisbursment).toLocaleString(
+                  {Number(status?.data?.otherDisbursment || 0).toLocaleString(
                     "en-US"
                   )}
                 </p>

@@ -17,20 +17,20 @@ export interface DataType {
 
 const InvoiceTab = () => {
   const items: TabsProps["items"] = [
-    {
-      key: "recent",
-      label: "Recent Invoice",
-      children: <InvoiceTable status="paid" />,
-    },
+    // {
+    //   key: "recent",
+    //   label: "Recent Invoice",
+    //   children: <InvoiceTable status="paid" />,
+    // },
     {
       key: "incoming",
       label: "Incoming",
       children: <InvoiceTable status="all" />,
     },
     {
-      key: "outgoing",
-      label: "Outgoing",
-      children: <InvoiceTable status="all" />,
+      key: "paid",
+      label: "Paid",
+      children: <InvoiceTable status="paid" />,
     },
     {
       key: "overdue",
@@ -38,15 +38,15 @@ const InvoiceTab = () => {
       children: <InvoiceTable status="overdue" />,
     },
     {
-      key: "canceled",
-      label: "Canceled",
-      children: <InvoiceTable status="canceled" />,
+      key: "unpaid",
+      label: "Unpaid",
+      children: <InvoiceTable status="unpaid" />,
     },
-    {
-      key: "draft",
-      label: "Draft",
-      children: <InvoiceTable status="draft" />,
-    },
+    // {
+    //   key: "draft",
+    //   label: "Draft",
+    //   children: <InvoiceTable status="draft" />,
+    // },
   ];
 
   return (
