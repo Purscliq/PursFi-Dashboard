@@ -24,8 +24,22 @@ const filter = [
 ];
 const industry = [
   { value: "finance", label: "Finance" },
-  { value: "tech", label: "Tech" },
+  { value: "tech", label: "Technology" },
+  { value: "healthcare", label: "Healthcare" },
+  { value: "education", label: "Education" },
+  { value: "manufacturing", label: "Manufacturing" },
+  { value: "entertainment", label: "Entertainment" },
+  { value: "retail", label: "Retail" },
+  { value: "real-estate", label: "Real Estate" },
+  { value: "hospitality", label: "Hospitality" },
+  { value: "automotive", label: "Automotive" },
+  { value: "agriculture", label: "Agriculture" },
+  { value: "telecommunications", label: "Telecommunications" },
+  { value: "energy", label: "Energy" },
+  { value: "consulting", label: "Consulting" },
+  { value: "environment", label: "Environmental Services" },
 ];
+
 const CompanyInfo = ({
   formData,
   setFormData,
@@ -48,6 +62,7 @@ const CompanyInfo = ({
       [e.target?.name]: e.target?.value,
     }));
   };
+
   return (
     <main>
       <span>
@@ -155,6 +170,8 @@ const CompanyInfo = ({
                 Select Industry
               </label>
               <Select
+                showSearch
+                optionFilterProp="label"
                 className="!w-full"
                 options={industry}
                 placeholder="select industry"

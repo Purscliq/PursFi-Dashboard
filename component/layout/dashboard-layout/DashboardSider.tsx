@@ -68,9 +68,18 @@ const DashboardSider = () => {
               {user?.lastName.charAt(0)}
             </Avatar>
             <span className="text-sm">
-              <p>{business?.businessName}</p>
               <p>
-                {user?.firstName} {user?.lastName}
+                {" "}
+                {business?.businessName &&
+                  business.businessName.charAt(0).toUpperCase() +
+                    business.businessName.slice(1)}
+              </p>
+              <p>
+                <p>
+                  {user?.firstName &&
+                    user.firstName.charAt(0).toUpperCase() +
+                      user.firstName.slice(1)}
+                </p>{" "}
               </p>
             </span>
             <RiArrowDropDownLine className="cursor-pointer" size={25} />

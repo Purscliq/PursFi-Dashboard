@@ -9,6 +9,8 @@ import DashboardModal from "./DashboardModal";
 const DashboardTable = () => {
   const [fetchTransactions, { isLoading, data }] = useTransactionsMutation();
   const profile = useAppSelector((store) => store.user.user);
+  console.log(profile);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -57,7 +59,12 @@ const DashboardTable = () => {
           </>
         ) : (
           <div className="flex flex-col items-center justify-center space-y-2 p-3">
-            <h2 className="text-xl font-semibold">Hi John</h2>
+            <h2 className="text-xl font-semibold">
+              Hi{" "}
+              {profile?.firstName &&
+                profile.firstName.charAt(0).toUpperCase() +
+                  profile.firstName.slice(1)}
+            </h2>{" "}
             <p className="text-sm text-gray-500 text-center max-w-xs">
               There isn't a transaction for pursbusiness yet. Click here to Add
               fund
