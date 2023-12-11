@@ -1,6 +1,10 @@
+import { useAppSelector } from "@/store/hooks";
 import { Avatar } from "antd";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const Persoanal = () => {
+  const profile = useAppSelector((store) => store.user.user);
   return (
     <div className="flex flex-col py-4 w-full space-y-3">
       <span>
@@ -20,7 +24,7 @@ const Persoanal = () => {
                 size={40}
                 className="!text-sm text-black"
               >
-                JD
+                {`${profile.firstName.charAt(0)}${profile.lastName.charAt(0)}`}{" "}
               </Avatar>
               <p className="text-sm mt-1 font-medium"> Add photo</p>
             </div>
@@ -54,6 +58,8 @@ const Persoanal = () => {
                 type="text"
                 id="firstName"
                 placeholder="First Name"
+                value={profile.firstName}
+                disabled
                 className="  w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
               />
             </div>
@@ -65,7 +71,9 @@ const Persoanal = () => {
                 type="text"
                 id="lastName"
                 placeholder="Last Name"
-                className=" disabled:bg-blue-50 w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
+                value={profile.lastName}
+                disabled
+                className="w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
               />
             </div>
           </div>
@@ -88,6 +96,8 @@ const Persoanal = () => {
               type="email"
               id="email"
               placeholder="Email"
+              value={profile.email}
+              disabled
               className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
             />
           </div>
@@ -102,25 +112,16 @@ const Persoanal = () => {
             </span>
           </div>
           <div className="flex flex-col space-y-1 w-full md:w-[400px]">
-            <label htmlFor="" className="font-semibold text-sm">
+            <label htmlFor="phone" className="font-semibold text-sm">
               Phone Number
             </label>
-            <div className="flex items-center">
-              <select
-                id="countryCode"
-                className="w-1/4 px-3 py-2 disabled:bg-blue-50 border border-gray-300 text-gray-800 text-sm rounded-l-md focus:outline-none"
-              >
-                <option value="+234">+234</option>
-                <option value="+1">+1</option>
-                <option value="+44">+44</option>
-              </select>
-              <input
-                type="tel"
-                id="phone"
-                placeholder="Phone Number"
-                className="w-3/5 px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-r-md focus:outline-none"
-              />
-            </div>
+            <PhoneInput
+              country={"ng"}
+              containerClass="!w-full"
+              inputClass="phone-input-input !w-full !py-[6px] !border !border-gray-400 !rounded-md"
+              value={profile.phoneNumber}
+              disabled
+            />
           </div>
         </div>
         <hr />

@@ -1,7 +1,7 @@
 "use client";
 import { CustomButton as Button } from "@/lib/AntdComponents";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, FormEventHandler } from "react";
+import { useState, FormEventHandler } from "react";
 import OTPInput from "react-otp-input";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
@@ -31,7 +31,9 @@ const SignupOtp = () => {
     validateOtp({ otp: code, username: data?.phoneNumber })
       .unwrap()
       .then((res) => {
-        message.success(res.data?.responseDescription||"validation successful");
+        message.success(
+          res.data?.responseDescription || "validation successful"
+        );
         setCode("");
         replace("/signup-business");
       })
@@ -39,8 +41,16 @@ const SignupOtp = () => {
         setAlert(err?.data?.responseDescription || err?.data?.title);
       });
   };
+  const phoneNumber = data?.phoneNumber;
+
+  const formattedPhoneNumber =
+    phoneNumber && phoneNumber.length >= 4
+      ? `${phoneNumber.substring(0, 4)}xxxx${phoneNumber.substring(
+          phoneNumber.length - 3
+        )}`
+      : "";
   return (
-    <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
+    <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA]">
       <nav className="py-4 px-8">
         <Image src={logo} alt="logo" />
       </nav>
@@ -50,7 +60,7 @@ const SignupOtp = () => {
           Verify Your Phone Number!{" "}
         </h1>
         <p className=" text-gray-700">
-          We sent an OTP to 0812xxxx345 by SMS and WhatsApp.
+          We sent an OTP to {formattedPhoneNumber} by SMS and WhatsApp.
         </p>
         <form onSubmit={handleSubmit} className="w-full space-y-5 mt-4">
           <h1 className="text-sm">Enter OTP Code</h1>
