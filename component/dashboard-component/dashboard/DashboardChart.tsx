@@ -3,7 +3,6 @@ import {
   AreaChart,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Area,
   ResponsiveContainer,
@@ -20,7 +19,6 @@ const DashboardChart = ({ data }: { data: Record<string, any>[] }) => {
       >
         <XAxis dataKey="date" />
         <YAxis />
-        {/* <CartesianGrid strokeDasharray="3 0" /> */}
         <Tooltip />
         <Area
           type="monotone"

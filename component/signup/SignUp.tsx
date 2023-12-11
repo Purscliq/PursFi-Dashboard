@@ -82,7 +82,7 @@ const SignUp = () => {
     }));
   };
   return (
-    <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px]">
+    <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA]">
       <nav className="py-4 px-8">
         <Image src={logo} alt="logo" />
       </nav>
