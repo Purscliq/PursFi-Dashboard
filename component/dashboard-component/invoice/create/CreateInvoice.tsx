@@ -30,7 +30,7 @@ const initialState = {
   discount: 0,
   dueDate: date,
   tax: "",
-  senderMail: "",
+  SenderMail: "",
   clientMail: "",
   clientName: "",
   message: "",
@@ -49,7 +49,6 @@ const initialState = {
   shipping,
   Currency: "NGN",
   ClientPhone: "",
-  SenderMail: "sikirurazak1@gmail.com",
 };
 export type dataType = typeof initialState;
 const CreateInvoice = () => {
@@ -58,7 +57,7 @@ const CreateInvoice = () => {
   const wallet = useAppSelector((store) => store.user.wallet);
   const [formData, setFormData] = useState({
     ...initialState,
-    senderMail: profile?.email,
+    SenderMail: profile?.email,
     businessId: profile?.businessId,
   });
   const [dataSource, setDataSource] = useState<DataType[]>([
@@ -232,66 +231,74 @@ const CreateInvoice = () => {
         </div>
         <div className="space-y-4">
           <div className="flex space-x-6 items-center justify-between">
-            {/* <p className="p-2 border text-sm normal-case">+ Discount</p> */}
-            <InputNumber
-              controls={false}
-              // suffix="%"
-              name="discount"
-              onChange={(value) => {
-                setFormData((prev) => {
-                  const newValue = value ? value : 0;
-                  const currentAmount = prev.amount + Number(prev.discount);
-                  const amount = currentAmount * (Number(newValue) / 100);
-                  return {
-                    ...prev,
-                    discountPercent: value,
-                    amount: currentAmount - amount,
-                    discount: amount,
-                  };
-                });
-              }}
-              value={formData?.discountPercent}
-              placeholder="discount"
-              className="!w-full"
-            />
-            <InputNumber
-              controls={false}
-              name="tax"
-              onChange={(value) => {
-                setFormData((prev) => {
-                  const newValue = value ? value : 0;
-                  const currentAmount = prev.amount - Number(prev.tax);
-                  const amount = currentAmount * (Number(newValue) / 100);
-                  return {
-                    ...prev,
-                    taxPercent: value,
-                    amount: currentAmount + amount,
-                    tax: amount.toString(),
-                  };
-                });
-              }}
-              value={formData?.taxPercent}
-              placeholder="Tax"
-              className="!w-full"
-            />
-            <InputNumber
-              name="shipping"
-              onChange={(value) => {
-                setFormData((prev) => {
-                  const currentAmount = prev.amount - Number(prev.shipping);
-                  return {
-                    ...prev,
-                    shipping: value,
-                    amount: currentAmount + Number(value),
-                  };
-                });
-              }}
-              controls={false}
-              // suffix="NGN"
-              value={formData?.shipping}
-              placeholder="Shipping"
-              className="!w-full"
-            />
+            <span>
+              <p className="text-sm normal-case">Discount</p>
+              <InputNumber
+                controls={false}
+                suffix="%"
+                name="discount"
+                onChange={(value) => {
+                  setFormData((prev) => {
+                    const newValue = value ? value : 0;
+                    const currentAmount = prev.amount + Number(prev.discount);
+                    const amount = currentAmount * (Number(newValue) / 100);
+                    return {
+                      ...prev,
+                      discountPercent: value,
+                      amount: currentAmount - amount,
+                      discount: amount,
+                    };
+                  });
+                }}
+                value={formData?.discountPercent}
+                placeholder="discount"
+                className="!w-full"
+              />
+            </span>
+            <span>
+              <p className="text-sm normal-case">Tax</p>
+              <InputNumber
+                controls={false}
+                name="tax"
+                onChange={(value) => {
+                  setFormData((prev) => {
+                    const newValue = value ? value : 0;
+                    const currentAmount = prev.amount - Number(prev.tax);
+                    const amount = currentAmount * (Number(newValue) / 100);
+                    return {
+                      ...prev,
+                      taxPercent: value,
+                      amount: currentAmount + amount,
+                      tax: amount.toString(),
+                    };
+                  });
+                }}
+                value={formData?.taxPercent}
+                placeholder="Tax"
+                className="!w-full"
+              />
+            </span>
+            <span>
+              <p className="text-sm normal-case">Shipping</p>
+              <InputNumber
+                name="shipping"
+                onChange={(value) => {
+                  setFormData((prev) => {
+                    const currentAmount = prev.amount - Number(prev.shipping);
+                    return {
+                      ...prev,
+                      shipping: value,
+                      amount: currentAmount + Number(value),
+                    };
+                  });
+                }}
+                controls={false}
+                suffix="NGN"
+                value={formData?.shipping}
+                placeholder="Shipping"
+                className="!w-full"
+              />
+            </span>
           </div>
           <div className="flex items-center justify-between px-2 py-4 bg-black rounded-md text-white">
             <p>Subtotal:</p>

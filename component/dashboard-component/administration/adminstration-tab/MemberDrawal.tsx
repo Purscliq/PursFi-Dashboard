@@ -12,9 +12,15 @@ interface AccountDetailsProps {
   Open: boolean;
   setOpen: (value: boolean) => void;
   id: string;
+  memberId: string;
 }
 
-const MemberDrawal: React.FC<AccountDetailsProps> = ({ Open, setOpen, id }) => {
+const MemberDrawal: React.FC<AccountDetailsProps> = ({
+  Open,
+  setOpen,
+  id,
+  memberId,
+}) => {
   const [getEmployee, { data, isLoading }] = useLazyGetSingleEmployeeQuery();
   const [childrenDrawer, setChildrenDrawer] = useState(false);
 
@@ -31,7 +37,7 @@ const MemberDrawal: React.FC<AccountDetailsProps> = ({ Open, setOpen, id }) => {
   };
   useEffect(() => {
     if (id)
-      getEmployee(id)
+      getEmployee(memberId)
         .unwrap()
         .then((res) => {
           console.log(res);
@@ -39,7 +45,7 @@ const MemberDrawal: React.FC<AccountDetailsProps> = ({ Open, setOpen, id }) => {
         .catch((err) => {
           console.log(err);
         });
-  }, [id]);
+  }, [memberId]);
   return (
     <Drawer
       onClose={onClose}

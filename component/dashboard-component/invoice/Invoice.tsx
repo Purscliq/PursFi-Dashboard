@@ -5,8 +5,8 @@ import InvoiceTab from "./InvoiceTab";
 import { useRouter } from "next/navigation";
 import { useLazyInvoiceStatusQuery } from "@/services/invoiceService";
 const options = [
-  { value: "monthly", label: "Month" },
-  { value: "yearly", label: "Yearly" },
+  { value: "month", label: "Month" },
+  { value: "year", label: "Yearly" },
 ];
 const Invoice = () => {
   const [stats, setStats] = useState(options[0].value);

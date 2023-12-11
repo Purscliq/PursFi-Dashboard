@@ -71,14 +71,14 @@ const DashboardSider = () => {
               <p>
                 {" "}
                 {business?.businessName &&
-                  business.businessName.charAt(0).toUpperCase() +
-                    business.businessName.slice(1)}
+                  business?.businessName?.charAt(0).toUpperCase() +
+                    business?.businessName?.slice(1)}
               </p>
               <p>
                 <p>
                   {user?.firstName &&
-                    user.firstName.charAt(0).toUpperCase() +
-                      user.firstName.slice(1)}
+                    user?.firstName?.charAt(0).toUpperCase() +
+                      user?.firstName?.slice(1)}
                 </p>{" "}
               </p>
             </span>
@@ -94,20 +94,24 @@ const DashboardSider = () => {
           </ul>
         </details>
 
-        <div className="flex p-2 items-center justify-center mx-2 my-4 border rounded">
-          <Dropdown menu={{ items }}>
-            <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                <p className="font-semibold"> Quick Action</p>{" "}
-                <AiOutlineCaretDown />
-              </Space>
-            </a>
-          </Dropdown>
-        </div>
+        {/* <div > */}
+        <Dropdown
+          className="flex p-2 items-center justify-center mx-2 my-4 border rounded cursor-pointer"
+          menu={{ items }}
+          trigger={["click"]}
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              <p className="font-semibold"> Quick Action</p>{" "}
+              <AiOutlineCaretDown />
+            </Space>
+          </a>
+        </Dropdown>
+        {/* </div> */}
         <Menu
           selectedKeys={[activePath]}
           items={sidebarData}
-          className="!space-y-3"
+          className="!space-y-3 !w-full"
           mode="inline"
         />
         <DashboardModal open={isModalOpen} setOpen={setIsModalOpen} />

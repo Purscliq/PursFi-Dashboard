@@ -36,7 +36,7 @@ const ForgetPass = () => {
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
         {alert && <Alert type="error" closable message={alert} />}
         <h1 className="font-semibold text-xl mb-2 text-Primary">
-          Reset Password{" "}
+          Reset Password
         </h1>
         <p className=" text-gray-700 text-sm text-center">
           Enter the email associated with your account and we’ll send an email

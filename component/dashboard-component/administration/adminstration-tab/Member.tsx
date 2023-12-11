@@ -13,12 +13,14 @@ interface DataType {
   roleId: string;
   lastName: string;
   status: string;
+  id: string;
 }
 
 const Member = () => {
   const [getEmployees, { data, isLoading }] = useLazyGetEmployeesQuery();
   const [Open, setOpen] = useState(false);
   const [id, setId] = useState("");
+  const [memberId, setMemberId] = useState("");
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -99,6 +101,7 @@ const Member = () => {
           <span
             onClick={() => {
               setId(id);
+              setMemberId(record?.id);
               setOpen(true);
             }}
             className="cursor-pointer"
@@ -122,7 +125,7 @@ const Member = () => {
   return (
     <>
       <Table loading={isLoading} columns={columns} dataSource={data?.data} />
-      <MemberDrawal Open={Open} setOpen={setOpen} id={id} />
+      <MemberDrawal Open={Open} setOpen={setOpen} id={id} memberId={memberId} />
     </>
   );
 };
