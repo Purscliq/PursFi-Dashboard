@@ -1,13 +1,13 @@
-import { Avatar, Select } from "antd";
+import { Avatar, Select, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { ChangeEventHandler, useState } from "react";
+import { IoIosCamera } from "react-icons/io";
+import { useUpdateBusinessLogoMutation } from "@/services/authService";
+import { useAppSelector } from "@/store/hooks";
+import Image from "next/image";
 
 const CompanySeting = () => {
-  const [Description, setDescription] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.target.value);
-  };
+  const [updatePicture, { isLoading }] = useUpdateBusinessLogoMutation({});
+  const business = useAppSelector((store) => store.user.business);
   return (
     <div className="flex flex-col py-4 w-full space-y-3">
       <span>
@@ -22,34 +22,64 @@ const CompanySeting = () => {
           <h1 className="font-semibold text-sm">Business Logo</h1>
           <div className="flex items-center space-x-3 w-full md:w-[400px]">
             <div>
-              <Avatar
-                style={{ backgroundColor: "#CDA4FF" }}
-                size={40}
-                className="!text-sm text-black"
-              >
-                JD
-              </Avatar>
+              <label htmlFor="avatar" className="relative cursor-pointer">
+                {business?.logo ? (
+                  <Image
+                    alt="logo"
+                    className="rounded-full"
+                    src={business?.logo}
+                    height={60}
+                    width={60}
+                  />
+                ) : (
+                  <Avatar
+                    style={{ backgroundColor: "#CDA4FF" }}
+                    size={60}
+                    className="!text-sm text-black relative"
+                  >
+                    {`${business?.businessName?.charAt(0)}`}
+                  </Avatar>
+                )}
+                <IoIosCamera className="absolute bottom-[-100%] right-[0%]" />
+              </label>
               <p className="text-sm mt-1 font-medium"> Add photo</p>
             </div>
+
             <input
               type="file"
               id="avatar"
               accept="image/*"
-              className="hidden w-full h-full cursor-pointer "
+              className="hidden w-full h-full cursor-pointer"
+              onChange={(e) => {
+                if (e.target.files) {
+                  const body = new FormData();
+                  body.append("file", e.target.files[0]);
+                  updatePicture(body)
+                    .unwrap()
+                    .then((res) => {
+                      message.success("profile picture updated");
+                    })
+                    .catch((err) => {
+                      message.error(
+                        err?.data?.responseDescription || "something went wrong"
+                      );
+                    });
+                }
+              }}
             />
             <p className="text-sm">
-              We only accept this type of format (PNG, JPG).only. <br /> kindly
+              We only accept this type of format (PNG, JPG) only. <br /> kindly
               upload photo not more that 5mb
             </p>
           </div>
         </div>
         <hr />
         {/* First Name Section */}
-        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-start">
           <div className="text-sm flex-col flex">
             <h1 className="font-semibold">Business Name</h1>{" "}
             <span className="text-sm mt-2">
-            You won&rsquo;t  be able to change the business name{" "}
+              You won&rsquo;t be able to change the business name{" "}
             </span>
           </div>
           <div className="flex flex-col space-y-1 w-full md:w-[400px]">
@@ -59,6 +89,8 @@ const CompanySeting = () => {
             <input
               type="email"
               id="email"
+              value={business?.businessName}
+              disabled
               placeholder="Busness Name"
               className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
             />
@@ -66,7 +98,7 @@ const CompanySeting = () => {
         </div>
         <hr />
         {/* Email Section */}
-        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-start">
           <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Business Bio</h1>
             <span className="text-sm mt-2">
@@ -78,19 +110,20 @@ const CompanySeting = () => {
               Bio
             </label>
             <TextArea
-              onChange={handleChange}
               name="Description"
               required
               placeholder="Type your text here..."
               rows={5}
               cols={40}
+              value={business?.businessDescription}
+              disabled
               className="w-full bg-transparent border border-gray-200 p-2 outline-none focus:border-blue-300"
             />
-            <p>{Description.length}/500 characters</p>
+            {/* <p>{Description.length}/500 characters</p> */}
           </div>
         </div>
         <hr />
-        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-start">
           <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Business Industry</h1>
             <span className="text-sm mt-2">
@@ -101,18 +134,17 @@ const CompanySeting = () => {
             <label htmlFor="email" className="font-semibold text-sm">
               Industry
             </label>
-            <Select
-              style={{ width: "100%" }}
-              options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-              ]}
-              placeholder="select industry"
-            />{" "}
+            <input
+              id="email"
+              value={business?.businessIndustry}
+              disabled
+              placeholder="your address here"
+              className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
+            />
           </div>
         </div>
         {/* Phone Number Section */}
-        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-center">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-start">
           <div className="text-sm flex-col flex">
             <h1 className="font-semibold ">Business Address</h1>
             <span className="text-sm mt-2">
@@ -127,6 +159,8 @@ const CompanySeting = () => {
               <input
                 type="email"
                 id="email"
+                value={business?.businessAddress}
+                disabled
                 placeholder="your address here"
                 className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
               />
@@ -136,27 +170,25 @@ const CompanySeting = () => {
                 <label htmlFor="firstName" className="font-semibold text-sm">
                   LGA
                 </label>
-                <Select
-                  style={{ width: "100%" }}
-                  options={[
-                    { value: "eti", label: "Eti-osa" },
-                    { value: "Odi-Olowo", label: "Odi-Olowo" },
-                  ]}
-                  placeholder="local government"
-                />{" "}
+                <input
+                  id="email"
+                  value={business?.lga}
+                  disabled
+                  placeholder="your address here"
+                  className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
+                />
               </div>
               <div className="w-full  space-y-1">
                 <label htmlFor="firstName" className="font-semibold text-sm">
                   State
                 </label>
-                <Select
-                  style={{ width: "100%" }}
-                  options={[
-                    { value: "Lagos", label: "Lagos" },
-                    { value: "Ibadan", label: "Iadan" },
-                  ]}
-                  placeholder="state"
-                />{" "}
+                <input
+                  id="email"
+                  value={business?.state}
+                  disabled
+                  placeholder="your address here"
+                  className=" w-full px-3 py-2 border border-gray-300 text-gray-800 placeholder-text-gray-900 text-sm rounded-md focus:outline-none"
+                />
               </div>
             </div>
           </div>
@@ -164,12 +196,12 @@ const CompanySeting = () => {
         <hr />{" "}
       </div>
       <div className="flex justify-center mx-auto items-end my-3">
-        <button
+        {/* <button
           disabled
           className="btn w-[400px]    disabled:bg-gray-200 disabled:text-white"
         >
           Save Changes
-        </button>
+        </button> */}
       </div>
     </div>
   );

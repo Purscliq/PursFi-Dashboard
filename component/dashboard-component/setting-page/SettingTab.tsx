@@ -19,11 +19,11 @@ const SettingTab = () => {
       label: "Company Settings",
       children: <CompanySetinf />,
     },
-    // {
-    //   key: "3",
-    //   label: "Security",
-    //   children: <Security />,
-    // },
+    {
+      key: "3",
+      label: "Security",
+      children: <Security />,
+    },
     // {
     //   key: "4",
     //   label: "Compulsory",

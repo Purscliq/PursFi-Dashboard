@@ -78,7 +78,10 @@ const DashboardSider = () => {
                 <p>
                   {user?.firstName &&
                     user?.firstName?.charAt(0).toUpperCase() +
-                      user?.firstName?.slice(1)}
+                      user?.firstName?.slice(1)}{" "}
+                  {user?.lastName &&
+                    user?.lastName?.charAt(0).toUpperCase() +
+                      user?.lastName?.slice(1)}
                 </p>{" "}
               </p>
             </span>
