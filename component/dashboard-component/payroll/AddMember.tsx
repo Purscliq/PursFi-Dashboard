@@ -130,10 +130,10 @@ const AddMember = () => {
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
-              Select your option
+              Employment Status
             </h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              is this an employee or a contractor.
+              Indicate whether an Employee or Contractor{" "}
             </p>
           </span>
           <RadioGroup
@@ -152,13 +152,14 @@ const AddMember = () => {
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">Full Name</h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              Lorem ipsum dolor sit amet consectetur. Sed purus gravida augue
-              vulputate vel.
+              Please Enter Employee Full Name for Payroll Processing
             </p>
           </span>
           <span className="flex items-start justify-between gap-2">
             <span className="flex flex-col gap-2 w-full">
-              <label className="text-[#24272C]">First Name</label>
+              <label className="text-[#24272C] text-[16px] font-[700]">
+                First Name
+              </label>
               <Input
                 name="firstName"
                 value={formData.firstName}
@@ -169,7 +170,9 @@ const AddMember = () => {
               />
             </span>
             <span className="flex flex-col gap-2 w-full">
-              <label className="text-[#24272C]">Last Name</label>
+              <label className="text-[#24272C] text-[16px] font-[700]">
+                Last Name
+              </label>
               <Input
                 name="lastName"
                 required
@@ -183,10 +186,11 @@ const AddMember = () => {
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
-            <h6 className="text-[#181336] text-[16px] font-[700]">Email</h6>
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Email Address
+            </h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              Lorem ipsum dolor sit amet consectetur. Sed purus gravida augue
-              vulputate vel.
+              Provide a Valid Email for Payroll Notifications and Updates.
             </p>
           </span>
           <span className="flex flex-col gap-2">
@@ -210,14 +214,15 @@ const AddMember = () => {
               Account Details
             </h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              Lorem ipsum dolor sit amet consectetur. Sed purus gravida augue
-              vulputate vel.
+              Securely Enter Employees Necessary Bank Account Informatio
             </p>
           </span>
           <span className="flex flex-col gap-4">
             <span className="flex items-start justify-between gap-3">
               <span className="flex flex-col gap-2 w-full">
-                <label className="text-[#24272C]">Select Bank</label>
+                <label className="text-[#24272C] text-[16px] font-[700]">
+                  Select Bank
+                </label>
                 <Select
                   showSearch
                   placeholder="select bank"
@@ -233,7 +238,9 @@ const AddMember = () => {
                 />
               </span>
               <span className="flex flex-col gap-2 w-full">
-                <label className="text-[#24272C]">Account Number</label>
+                <label className="text-[#24272C] text-[16px] font-[700]">
+                  Account Number
+                </label>
                 <Input
                   onChange={onInputChange}
                   name="accountNumber"
@@ -254,8 +261,7 @@ const AddMember = () => {
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">Hire Date</h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              Lorem ipsum dolor sit amet consectetur. Sed purus gravida augue
-              vulputate vel.
+              Please Specify Employee Joining Date with the Company.
             </p>
           </span>
           <span className="flex flex-col gap-2">
@@ -277,8 +283,7 @@ const AddMember = () => {
               Select Payroll
             </h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              Lorem ipsum dolor sit amet consectetur. Sed purus gravida augue
-              vulputate vel.
+              Choose Payroll Preferences for Customized Payments
             </p>
           </span>
           <span className="flex flex-col gap-2">
@@ -297,11 +302,10 @@ const AddMember = () => {
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
-              Provide Phone Number
+              Phone Number
             </h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              Lorem ipsum dolor sit amet consectetur. Sed purus gravida augue
-              vulputate vel.
+              Enter Employee Contact Number for Communication and Updates
             </p>
           </span>
           <span className="flex flex-col gap-2">
@@ -321,10 +325,11 @@ const AddMember = () => {
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
-            <h6 className="text-[#181336] text-[16px] font-[700]">Salary</h6>
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Salary Information
+            </h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              Lorem ipsum dolor sit amet consectetur. Sed purus gravida augue
-              vulputate vel.
+              Please Provide Details of Your Compensation
             </p>
           </span>
           <span className="flex flex-col gap-2">
@@ -345,15 +350,18 @@ const AddMember = () => {
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
-            <h6 className="text-[#181336] text-[16px] font-[700]">Address</h6>
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Address Details
+            </h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              Lorem ipsum dolor sit amet consectetur. Sed purus gravida augue
-              vulputate vel.
+              Enter Employee Current Residence Information
             </p>
           </span>
           <span className="flex flex-col gap-2">
             <span className="flex flex-col gap-2">
-              <label className="text-[#24272C]">Address</label>
+              <label className="text-[#24272C] text-[16px] font-[700]">
+                Address
+              </label>
               <Input
                 value={formData.address}
                 name="address"
@@ -365,7 +373,9 @@ const AddMember = () => {
             </span>
             <span className="flex items-start gap-2 justify-between">
               <span className="flex flex-col gap-2 w-full">
-                <label className="text-[#24272C]">LGA</label>
+                <label className="text-[#24272C] text-[16px] font-[700]">
+                  LGA
+                </label>
                 <Input
                   name="lga"
                   value={formData.lga}
@@ -375,7 +385,9 @@ const AddMember = () => {
                 />
               </span>
               <span className="flex flex-col gap-2 w-full">
-                <label className="text-[#24272C]">State</label>
+                <label className="text-[#24272C] text-[16px] font-[700]">
+                  State
+                </label>
                 <Input
                   name="state"
                   value={formData.state}

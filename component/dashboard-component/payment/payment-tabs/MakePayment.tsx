@@ -17,7 +17,6 @@ import {
   CustomSpinner as Spinner,
   CustomUpload as Upload,
 } from "@/lib/AntdComponents";
-import { DefaultOptionType } from "antd/es/select";
 import {
   useGetBanksQuery,
   useVerifyAccountMutation,
@@ -30,6 +29,8 @@ import { useAppSelector } from "@/store/hooks";
 import SuccessfulPaymentModal from "../modals/successfulPaymentModal";
 import { message } from "antd";
 import LinkIcon from "@/assets/icon/LinkIcon";
+import dayjs from "dayjs";
+import { UploadChangeParam, UploadFile } from "antd/es/upload";
 const options = [
   { label: "instant payment", value: "instant_payment" },
   { label: "Schedule Payment", value: "schedule_payment" },
@@ -167,6 +168,18 @@ const MakePayment = () => {
   const onAccountNumChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setAcctDetails((prev) => ({ ...prev, accountNumber: e.target?.value }));
   };
+  const maxSize = 3 * 1024 * 1024;
+  const [fileError, setFileError] = useState<string | null>(null);
+
+  const handleFileChange = (info: UploadChangeParam<UploadFile<any>>) => {
+    console.log();
+    if (info.file.size! > maxSize) {
+      setFileError("File size exceeds the limit. Maximum allowed size is 3MB.");
+    } else {
+      setFileError(null);
+      return info.file;
+    }
+  };
   return (
     <>
       <form
@@ -275,11 +288,12 @@ const MakePayment = () => {
                 className="!w-full"
               />
               <TimePicker
-                format={"HH"}
+                defaultValue={dayjs("12:08", "HH:mm")}
+                format={"HH:mm"}
                 onChange={(value, date) => {
                   setFormdata((prev) => ({ ...prev, hour: date }));
                 }}
-                className="!w-full"
+                className="!w-full "
               />
             </span>
           </span>
@@ -311,7 +325,19 @@ const MakePayment = () => {
         </span>
         <div className="grid grid-cols-1 gap-[0.1rem] items-stretch">
           <label>Attachment (optional)</label>
-          <Upload className="border border-dashed h-[70px] p-4">
+          {fileError && <div style={{ color: "red" }}>{fileError}</div>}
+          <Upload
+            className="border border-dashed h-[75px] p-4"
+            beforeUpload={(file) => {
+              const isMax = file.size > maxSize;
+              if (isMax) {
+                setFileError(
+                  "File size exceeds the limit. Maximum allowed size is 3MB."
+                );
+              }
+            }}
+            onChange={handleFileChange}
+          >
             <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
               <LinkIcon className="stroke-inherit" />
               <p className="text-sm font-semibold">Attach Doc</p>
