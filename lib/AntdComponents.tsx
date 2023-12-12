@@ -133,7 +133,7 @@ export const CustomDatePicker = ({ ...props }: DatePickerProps) => (
 );
 
 export const CustomTimePicker = ({ ...props }: TimePickerProps) => (
-  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+  <ConfigProvider >
     <TimePicker {...props} />
   </ConfigProvider>
 );
