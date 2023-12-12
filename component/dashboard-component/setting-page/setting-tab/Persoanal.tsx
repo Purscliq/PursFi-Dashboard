@@ -1,10 +1,13 @@
 import { useAppSelector } from "@/store/hooks";
-import { Avatar } from "antd";
+import { Avatar, message } from "antd";
+import { IoIosCamera } from "react-icons/io";
 import PhoneInput from "react-phone-input-2";
+import { useUpdateProfilePictureMutation } from "@/services/authService";
 import "react-phone-input-2/lib/style.css";
 
 const Persoanal = () => {
   const profile = useAppSelector((store) => store.user.user);
+  const [updatePicture, { isLoading }] = useUpdateProfilePictureMutation();
   return (
     <div className="flex flex-col py-4 w-full space-y-3">
       <span>
@@ -19,20 +22,42 @@ const Persoanal = () => {
           <h1 className="font-semibold text-sm">Profile Photo</h1>
           <div className="flex items-center space-x-3 w-full md:w-[400px]">
             <div>
-              <Avatar
-                style={{ backgroundColor: "#CDA4FF" }}
-                size={40}
-                className="!text-sm text-black"
-              >
-                {`${profile.firstName.charAt(0)}${profile.lastName.charAt(0)}`}{" "}
-              </Avatar>
+              <label htmlFor="avatar" className="relative cursor-pointer">
+                <Avatar
+                  style={{ backgroundColor: "#CDA4FF" }}
+                  size={60}
+                  className="!text-sm text-black relative"
+                >
+                  {`${profile.firstName.charAt(0)}${profile.lastName.charAt(
+                    0
+                  )}`}{" "}
+                </Avatar>
+                <IoIosCamera className="absolute bottom-[-100%] right-[0%]" />
+              </label>
               <p className="text-sm mt-1 font-medium"> Add photo</p>
             </div>
+
             <input
               type="file"
               id="avatar"
               accept="image/*"
-              className="hidden w-full h-full cursor-pointer "
+              className="hidden w-full h-full cursor-pointer"
+              onChange={(e) => {
+                if (e.target.files) {
+                  const body = new FormData();
+                  body.append("file", e.target.files[0]);
+                  updatePicture(body)
+                    .unwrap()
+                    .then((res) => {
+                      message.success("profile picture updated");
+                    })
+                    .catch((err) => {
+                      message.error(
+                        err?.data?.responseDescription || "something went wrong"
+                      );
+                    });
+                }
+              }}
             />
             <p className="text-sm">
               We only accept this type of format (PNG, JPG) only. <br /> kindly
@@ -127,12 +152,12 @@ const Persoanal = () => {
         <hr />
       </div>
       <div className="flex justify-center mx-auto items-end my-3">
-        <button
+        {/* <button
           disabled
           className="btn w-[400px]   disabled:bg-gray-200 disabled:text-white"
         >
           Save Changes
-        </button>
+        </button> */}
       </div>
     </div>
   );

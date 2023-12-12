@@ -177,6 +177,41 @@ const authSlice = ApiSlice.enhanceEndpoints({
         formData: true,
       }),
     }),
+    updateProfilePicture: builder.mutation({
+      query: (body) => ({
+        url: "user/update/profile/picture",
+        method: "PUT",
+        body,
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+        },
+        formData: true,
+      }),
+    }),
+    updateBusinessLogo: builder.mutation({
+      query: (body) => ({
+        url: "business/update/logo",
+        method: "PUT",
+        body,
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+        },
+        formData: true,
+      }),
+    }),
+    updatePassword: builder.mutation({
+      query: (body) => ({
+        url: "password/change",
+        method: "POST",
+        body,
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+        },
+      }),
+    }),
   }),
 });
 
@@ -198,4 +233,7 @@ export const {
   useValidateOtpMutation,
   useGenerateEmailOtpMutation,
   useValidateEmailOtpMutation,
+  useUpdateProfilePictureMutation,
+  useUpdateBusinessLogoMutation,
+  useUpdatePasswordMutation,
 } = authSlice;
