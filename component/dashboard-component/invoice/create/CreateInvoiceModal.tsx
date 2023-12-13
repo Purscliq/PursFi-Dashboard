@@ -65,7 +65,7 @@ const CreateInvoiceModal = ({
             <Input
               disabled
               name="senderMail"
-              value={formData?.senderMail}
+              value={formData?.SenderMail}
               required
               id="text"
               type="text"
