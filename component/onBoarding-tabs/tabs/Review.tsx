@@ -10,6 +10,8 @@ import { message } from "antd";
 import { docsData } from "../OnBoardingTabs";
 import { SetStateAction, FormEventHandler } from "react";
 import { useCompleteBusinessOnboardingMutation } from "@/services/authService";
+import { updateBusiness } from "@/store/userSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const Review = ({
   formData,
@@ -20,6 +22,8 @@ const Review = ({
   setFormData: React.Dispatch<SetStateAction<docsData>>;
   setActive: React.Dispatch<SetStateAction<string>>;
 }) => {
+  const dispatch = useAppDispatch();
+  const { business } = useAppSelector((state) => state.user);
   const { replace } = useRouter();
   const [checked, setChecked] = useState(false);
   const [create, { isLoading }] = useCompleteBusinessOnboardingMutation();
@@ -33,6 +37,9 @@ const Review = ({
       create(dataBody)
         .unwrap()
         .then((res) => {
+          dispatch(
+            updateBusiness({ ...business, isOnboardingCompleted: true })
+          );
           replace("/dashboard");
         })
         .catch((err) => {

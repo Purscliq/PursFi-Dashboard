@@ -7,27 +7,22 @@ import {
 } from "@/services/authService";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
+import { useAppSelector } from "@/store/hooks";
 const Template = ({ children }: { children: React.ReactNode }) => {
   const { push } = useRouter();
   const { data, isLoading, isSuccess } = useProfileQuery({});
-  const {
-    data: business,
-    isLoading: isFetchingBusiness,
-    isSuccess: isBusinessSuccess,
-  } = useBusinessProfileQuery({});
+  const { business, user } = useAppSelector((state) => state.user);
+  const { isLoading: isFetchingBusiness, isSuccess: isBusinessSuccess } =
+    useBusinessProfileQuery({});
   useEffect(() => {
-    if (data?.user?.id && business?.business?.id) {
-      if (!data?.user?.isPhoneValidated && data?.user?.id) {
+    if (user?.id && business?.id) {
+      if (!user?.isPhoneValidated && user?.id) {
         push("/signup-otp");
       }
-      if (!data?.user?.isEmailValidated && data?.user?.id) {
+      if (!user?.isEmailValidated && user?.id) {
         push("/verifyEmail");
       } else {
-        if (
-          business?.business?.id &&
-          !business?.business?.isOnboardingCompleted &&
-          data?.user?.id
-        ) {
+        if (business?.id && !business?.isOnboardingCompleted && user?.id) {
           push("/onboarding");
         }
       }
