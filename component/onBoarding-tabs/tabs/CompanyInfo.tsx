@@ -283,7 +283,7 @@ const CompanyInfo = ({
                 className="block text-gray-700 text-sm font-semibold mb-2"
                 htmlFor="state"
               >
-                State
+                Business Phone
               </label>
               <PhoneInput
                 country={"ng"}

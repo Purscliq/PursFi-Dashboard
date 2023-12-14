@@ -64,8 +64,8 @@ const DashboardSider = () => {
               size="large"
               className="!uppercase"
             >
-              {user?.firstName.charAt(0)}
-              {user?.lastName.charAt(0)}
+              {user?.firstName?.charAt(0)}
+              {user?.lastName?.charAt(0)}
             </Avatar>
             <span className="text-sm">
               <p>
