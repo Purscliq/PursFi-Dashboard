@@ -48,6 +48,7 @@ const OwnerInfo = ({
   const { data: user } = useProfileQuery({});
   const { data: business } = useBusinessProfileQuery({});
   const [create, { isLoading }] = useUpdateUserOwnerMutation();
+  const [bvnError, setBvnError] = useState("");
   const [formData, setFormData] = useState<dataType>({
     isIndividual: (business?.merchantType === "individual").toString(),
     Bvn: "",
@@ -79,21 +80,28 @@ const OwnerInfo = ({
       ...prevState,
       [e.target?.name]: e.target?.value,
     }));
+    if (formData.Bvn.length === 10) {
+      setBvnError("");
+    } else {
+      setBvnError("BVN must be exactly 11 digits"); // Set error message
+    }
   };
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     for (const [key, value] of Object.entries(formData)) {
       dataBody.append(key, value);
     }
-    create(dataBody)
-      .unwrap()
-      .then((res) => {
-        setActive("3");
-      })
-      .catch((err) => {
-        console.log(err);
-        message.error(err?.data?.responseDescription || "something went wrong");
-      });
+    if (!bvnError)
+      create(dataBody)
+        .unwrap()
+        .then((res) => {
+          setActive("3");
+        })
+        .catch((err) => {
+          message.error(
+            err?.data?.responseDescription || "something went wrong"
+          );
+        });
   };
   const handleCountryChange = (
     value: string,
@@ -147,12 +155,19 @@ const OwnerInfo = ({
               </label>
               <span>
                 <Input
+                  max={11}
+                  min={11}
                   name="Bvn"
                   required
                   onChange={handleChange}
                   value={formData.Bvn}
                   placeholder="BVN"
                 />
+                {bvnError && (
+                  <p className="text-red-500 text-[14px] font-[400]">
+                    {bvnError}
+                  </p>
+                )}
                 <p className="text-[#000000] text-[14px] font-[400]">
                   To get your BVN dial *565*0# on your registered mobile number.
                 </p>
