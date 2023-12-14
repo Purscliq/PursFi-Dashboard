@@ -36,9 +36,14 @@ const AsideBar = () => {
               </p>
 
               <p>
-                {user?.firstName &&
-                  user.firstName.charAt(0).toUpperCase() +
-                    user.firstName.slice(1)}
+                <p>
+                  {user?.firstName &&
+                    user?.firstName?.charAt(0).toUpperCase() +
+                      user?.firstName?.slice(1)}{" "}
+                  {user?.lastName &&
+                    user?.lastName?.charAt(0).toUpperCase() +
+                      user?.lastName?.slice(1)}
+                </p>{" "}
               </p>
             </span>
             <RiArrowDropDownLine className="cursor-pointer" size={25} />
