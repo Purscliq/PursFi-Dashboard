@@ -86,7 +86,7 @@ const PayrollStructure = ({
     >
       <span className="w-full grid grid-cols-[40%_55%] items-center justify-between gap-[5%]">
         <span>
-          <h6 className="text-[#181336] text-[16px] font-[700]">
+          <h6 className="text-[#181336] text-[16px] font-[700] mb-2">
             Default Salary Structure
           </h6>
           <p className="text-[16px] font-[400] text-[#515B6F]">
@@ -104,18 +104,11 @@ const PayrollStructure = ({
               default for your employees.
             </p>
           </span>
-          <span className="text-[#181336] text-[16px] font-[700] flex items-center justify-between gap-1">
-            <CheckIcon className="w-[20px]" />
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Enim ut vel diam sociis et
-              cras amet. A turpis massa eu tortor facilisi vel facilisis eros.
-            </p>
-          </span>
         </span>
       </span>
       <span className="w-full grid grid-cols-[40%_55%] items-start justify-between gap-[5%]">
         <span>
-          <h6 className="text-[#181336] text-[16px] font-[700]">
+          <h6 className="text-[#181336] text-[16px] font-[700] mb-2">
             Select your Option
           </h6>
           <p className="text-[16px] font-[400] text-[#515B6F]">

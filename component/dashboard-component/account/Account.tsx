@@ -66,7 +66,7 @@ const Account = () => {
               <BiLinkAlt />
             </button>
             <Select
-              className="!w-full !h-[2.5rem]"
+              className="!w-full !h-[3rem]"
               options={[
                 { value: "1 month", label: "1 month" },
                 { value: "2 month", label: "2 month" },

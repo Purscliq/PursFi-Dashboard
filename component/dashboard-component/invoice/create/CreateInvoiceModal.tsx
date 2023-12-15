@@ -50,10 +50,6 @@ const CreateInvoiceModal = ({
     >
       <div className=" flex flex-col">
         <h2 className="text-2xl font-bold mb-1 text-center">Send Invoice </h2>
-        <p className="text-sm text-gray-500 text-center">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates
-          quidem voluptatem!{" "}
-        </p>
         <form onSubmit={onFormSubmit} className="w-full space-y-4 mt-4">
           <div>
             <label

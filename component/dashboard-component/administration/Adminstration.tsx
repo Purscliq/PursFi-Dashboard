@@ -12,7 +12,7 @@ const Adminstration = () => {
       <header className="flex flex-col space-y-3 my-1">
         <div className="flex items-center justify-between ">
           <span>
-            <h2 className="text-2xl font-medium">
+            <h2 className="text-3xl font-semibold ">
               Administration -{" "}
               <span className="text-gray-400">Team member</span>{" "}
             </h2>

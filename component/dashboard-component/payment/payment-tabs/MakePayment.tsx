@@ -184,7 +184,7 @@ const MakePayment = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1 w-[80%] gap-[1rem] px-[3%] relative"
+        className="grid grid-cols-1 w-[80%] gap-[1.5rem] px-[3%] relative"
       >
         {isVerifying && (
           <div className="flex items-center justify-center h-[80vh] w-full absolute opacity-[0.7] bg-gray-100 z-[100]">

@@ -11,6 +11,7 @@ import { FiSettings } from "react-icons/fi";
 import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 import { MenuProps } from "antd";
 import Link from "next/link";
+import { CgTranscript } from "react-icons/cg";
 export const sidebarData: MenuProps["items"] = [
   {
     label: <Link href="/dashboard">Dashboard</Link>,
@@ -81,6 +82,16 @@ export const sidebarData: MenuProps["items"] = [
       },
     ],
   },
+  {
+    label: <Link href="/remita">Remita</Link>,
+    icon: <CgTranscript className=" font-bold" />,
+    key: "remita",
+  },
+  // {
+  //   label: <Link href="/administration">Administration</Link>,
+  //   icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
+  //   key: "administration",
+  // },
   {
     label: <Link href="/setting">Settings</Link>,
     icon: <FiSettings className=" font-bold" />,

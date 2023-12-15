@@ -160,19 +160,17 @@ const OverviewTable = () => {
   return (
     <>
       <section className="">
-        <div className="flex flex-col gap-[1rem] bg-white p-[1%]">
-          <span>
-            <h4 className="text-[18px] font-[600] text-black">Team Members</h4>
-            <span className="flex items-baseline gap-1">
-              <label htmlFor="select">Filter By:</label>
-              <Select
-                onSelect={(value) => setId(value)}
-                options={payrollList}
-                id="select"
-                defaultValue={payrollList[0].value}
-                className="!w-[15rem]"
-              />
-            </span>
+        <div className="flex flex-col gap-[2rem] bg-white p-[1%]">
+          <h4 className="text-[18px] font-[600] text-black">Team Members</h4>
+          <span className="flex items-baseline gap-1">
+            <label htmlFor="select">Filter By:</label>
+            <Select
+              onSelect={(value) => setId(value)}
+              options={payrollList}
+              id="select"
+              defaultValue={payrollList[0].value}
+              className="!w-[15rem]"
+            />
           </span>
           <Table
             columns={columns}

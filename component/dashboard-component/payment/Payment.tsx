@@ -9,7 +9,7 @@ const Payment = () => {
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center my-6">
         <span>
-          <h2 className="text-2xl font-medium"> Payment</h2>
+          <h2 className="text-3xl font-bold"> Payment - <span className="text-2xl text-gray-400 font-medium">payout</span></h2>
           <p className="text-sm text-gray-600">
             Showing your Account metrics for{" "}
             {date.toLocaleString("en-US", {

@@ -21,7 +21,7 @@ const Invoice = () => {
       <header className="flex flex-col space-y-9 my-4">
         <div className="flex items-center justify-between ">
           <span>
-            <h2 className="text-2xl font-medium"> Invoice </h2>
+            <h2 className="text-3xl font-semibold"> Invoice </h2>
             <p className="text-sm text-gray-600">
               Showing your Account metrics for{" "}
               {date.toLocaleString("en-US", {
@@ -39,7 +39,7 @@ const Invoice = () => {
               + Create Invoice
             </button>
             <Select
-              style={{ width: "100%" }}
+              className="!w-full !h-[2.5rem]"
               options={options}
               placeholder="Show stats Yearly"
               value={stats}
@@ -54,7 +54,9 @@ const Invoice = () => {
               {isLoading
                 ? "..."
                 : `N${
-                    Number(data?.data?.allInvoice || 0).toLocaleString("en-US") || ""
+                    Number(data?.data?.allInvoice || 0).toLocaleString(
+                      "en-US"
+                    ) || ""
                   }`}
             </p>
           </span>
@@ -63,7 +65,9 @@ const Invoice = () => {
             <p className="text-2xl font-medium">
               {isLoading
                 ? "..."
-                : `N${Number(data?.data?.paid || 0).toLocaleString("en-US") || ""}`}
+                : `N${
+                    Number(data?.data?.paid || 0).toLocaleString("en-US") || ""
+                  }`}
             </p>
           </span>
           <span className="bg-white flex flex-col justify-center py-2 px-[5%] rounded-md">
@@ -72,7 +76,8 @@ const Invoice = () => {
               {isLoading
                 ? "..."
                 : `N${
-                    Number(data?.data?.overdue || 0).toLocaleString("en-US") || ""
+                    Number(data?.data?.overdue || 0).toLocaleString("en-US") ||
+                    ""
                   }`}
             </p>
           </span>
@@ -81,9 +86,7 @@ const Invoice = () => {
             <p className="text-2xl font-medium">
               {isLoading
                 ? "..."
-                : `N${
-                    Number(data?.data?.unpaid || 0).toLocaleString("en-US")
-                  }`}
+                : `N${Number(data?.data?.unpaid || 0).toLocaleString("en-US")}`}
             </p>
           </span>
         </div>

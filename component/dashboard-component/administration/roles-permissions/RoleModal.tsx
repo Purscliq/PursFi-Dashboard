@@ -85,19 +85,16 @@ const RoleModal = ({
       width="35%"
     >
       <div className=" flex flex-col items-center">
-        <h2 className="text-2xl font-bold mb-1 text-center">
+        <h2 className="text-3xl font-semibold text-center">
           Create Roles and Permission
         </h2>
-        <p className="text-sm text-gray-500 text-center">
-          Lorem ipsum dolor sit amet consectetur. Sollicitudin mauris sit
-          egestas gravida nisl nunc diam libero amet. Aliquam nunc.
-        </p>
+
         <form
           onSubmit={onFormSubmit}
-          className="w-full space-y-4 mt-6 items-center px-2"
+          className="w-full space-y-6 mt-6 items-center px-2"
         >
           <div className="w-full space-y-1">
-            <label htmlFor="roleName" className="font-semibold text-sm">
+            <label htmlFor="roleName" className="font-semibold text-sm mb-2">
               what do you want to call this role
             </label>
             <Input
@@ -124,8 +121,8 @@ const RoleModal = ({
               value={formData.description}
             />
           </div>
-          <div className="h-[20rem] overflow-y-scroll">
-            <div className="flex flex-col gap-[0.3rem]">
+          <div className="h-[20rem] space-y-3 overflow-y-scroll">
+            <div className="flex flex-col gap-[0.5rem]">
               <h4 className="text-[#181336] text-[16px] font-[700]">
                 User management
               </h4>
@@ -232,8 +229,8 @@ const RoleModal = ({
                 />
               </span>
             </div>
-            <div className="flex flex-col gap-[0.3rem]">
-              <h4 className="text-[#181336] text-[16px] font-[700]">Account</h4>
+            <div className="flex flex-col gap-[0.5rem]">
+              <h4 className="text-[#181336] text-[16px] font-[700 ] font-semibold mb-1">Account</h4>
               <span className="flex items-center justify-between">
                 <p className="text-[#515B6F] text-[16px] font-[400]">
                   Can View Account
@@ -286,7 +283,7 @@ const RoleModal = ({
                 />
               </span>
             </div>
-            <div className="flex flex-col gap-[0.3rem]">
+            <div className="flex flex-col gap-[0.3rem]">                                           
               <h4 className="text-[#181336] text-[16px] font-[700]">Invoice</h4>
               <span className="flex items-center justify-between">
                 <p className="text-[#515B6F] text-[16px] font-[400]">

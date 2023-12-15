@@ -9,13 +9,11 @@ const Overview = () => {
   const { push } = useRouter();
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA]">
-      <header className="flex justify-between items-start space-y-3 my-1">
-        <div className="flex flex-col items-start justify-between ">
-          <span>
-            <h2 className="text-[18px] text-[#061A14] font-medium">
-              Add employees and contractors
-            </h2>
-          </span>
+      <header className="flex justify-between items-start  my-3">
+        <div className="flex flex-col items-start space-y-4 ">
+          <h2 className="text-[18px] text-[#061A14] font-medium">
+            Add employees and contractors
+          </h2>
           <span className="bg-white rounded-[5px] px-[20px] py-[18px] flex flex-col gap-2">
             <h6 className="text-[#181336] text-[16px] font-[700]">Add One</h6>
             <span className="flex items-center gap-2">
@@ -30,12 +28,12 @@ const Overview = () => {
             </span>
           </span>
         </div>
-        <button
+        {/* <button
           // onClick={() => setIsModalOpen(true)}
           className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
         >
           + Run Payroll
-        </button>
+        </button> */}
       </header>
       <OverviewTable />
     </div>

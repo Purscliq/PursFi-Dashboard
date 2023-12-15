@@ -121,7 +121,7 @@ const Security = () => {
             )}
             {/* validation */}
           </div>
-          <div className="w-full md:w-[400px] flex flex-col space-y-2">
+          <div className="w-full md:w-[400px] flex flex-col space-y-4">
             <div className="flex flex-col  ">
               <label
                 className="block text-gray-600 text-sm font-semibold mb-2"

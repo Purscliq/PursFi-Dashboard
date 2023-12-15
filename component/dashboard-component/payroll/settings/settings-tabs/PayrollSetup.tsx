@@ -27,10 +27,13 @@ const PayrollSetup = ({
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="p-[2%] flex flex-col gap-[1rem]">
+    <form
+      onSubmit={handleSubmit}
+      className="p-[2%] flex flex-col gap-[1.5rem] max-w-6xl"
+    >
       <span className="w-full grid grid-cols-[40%_55%] gap-[5%] items-start justify-between">
         <label>
-          <h6 className="text-[#181336] text-[16px] font-[700]">
+          <h6 className="text-[#181336] text-[16px] font-[700] mb-3">
             Payroll title
           </h6>
           <p className="text-[16px] font-[400] text-[#515B6F]">
@@ -53,7 +56,7 @@ const PayrollSetup = ({
       </span>
       <span className="w-full grid grid-cols-[40%_55%] gap-[5%] items-start justify-between">
         <label>
-          <h6 className="text-[#181336] text-[16px] font-[700]">
+          <h6 className="text-[#181336] text-[16px] font-[700] mb-3">
             Select your payroll date
           </h6>
           <p className="text-[16px] font-[400] text-[#515B6F]">
@@ -74,7 +77,7 @@ const PayrollSetup = ({
       </span>
       <span className="w-full grid grid-cols-[40%_55%] gap-[5%] items-start justify-between">
         <label>
-          <h6 className="text-[#181336] text-[16px] font-[700]">
+          <h6 className="text-[#181336] text-[16px] font-[700] mb-3">
             Select your Option
           </h6>
           <p className="text-[16px] font-[400] text-[#515B6F]">
@@ -95,9 +98,9 @@ const PayrollSetup = ({
       <Button
         htmlType="submit"
         type="primary"
-        className="!bg-black !ml-auto !w-[55%] self-end"
+        className="!bg-black !ml-auto !w-[55%] self-end h-[3rem]"
       >
-        save
+        Save
       </Button>
     </form>
   );
