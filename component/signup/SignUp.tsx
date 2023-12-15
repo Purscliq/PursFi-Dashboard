@@ -87,10 +87,10 @@ const SignUp = () => {
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[480px] mx-auto mt-4 p-6">
         {alert && <Alert type="error" closable message={alert} />}
-        <h1 className="font-semibold text-3xl text-Primary">
+        <h1 className="font-[700] text-2xl text-black">
           Create an account
         </h1>
-        <p className="text-sm text-gray-600">
+        <p className="text-[18px]  text-gray-600">
           Sign up to create your merchant account
         </p>
         <form onSubmit={handleSubmit} className="w-full space-y-4 mt-4">
@@ -272,11 +272,12 @@ const SignUp = () => {
               }}
               name="check"
             />
-            <label htmlFor="remember" className="text-gray-600 ml-3 text-sm">
+            <label htmlFor="remember" className="text-gray-400 ml-3 text-sm">
               By clicking continue, you acknowledge that you have read and
               accept the{" "}
-              <span className="text-Primary ">
-                Terms Of Service and Privacy Policy{" "}
+              <span className="">
+                <a href="" className="underline font-semibold text-black"> Terms Of Service</a> and{" "}
+                <a href="" className="underline font-semibold text-black">Privacy Policy</a>
               </span>{" "}
             </label>
           </div>
@@ -292,7 +293,7 @@ const SignUp = () => {
             Already have an account ?{" "}
             <Link
               href="/"
-              className="text-md hover:underline hover:duration-300 text-Primary"
+              className="text-md underline hover:duration-300 text-Primary"
             >
               Log in
             </Link>

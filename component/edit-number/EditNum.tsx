@@ -36,16 +36,16 @@ const EditNum = () => {
       <nav className="py-4 px-8">
         <Image src={logo} alt="logo" />
       </nav>
-      <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[450px] mx-auto mt-4 p-6">
+      <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
         {alert && <Alert type="error" closable message={alert} />}
-        <h1 className="font-semibold text-xl mb-2 text-Primary">
+        <h1 className="font-semibold text-2xl mb-2 text-black">
           Edit Your Phone Number!{" "}
         </h1>
-        <p className=" text-gray-700  text-center">
+        <p className=" text-gray-700  text-center text-lg">
           Cross check your number or enter another phone number to receive your
           OTP{" "}
         </p>
-        <form onSubmit={handleSubmit} className="w-full space-y-5 mt-4">
+        <form onSubmit={handleSubmit} className="w-full space-y-5 mt-8">
           <PhoneInput
             country={"ng"}
             containerClass="!w-full"
@@ -57,15 +57,13 @@ const EditNum = () => {
             htmlType="submit"
             loading={isLoading}
             type="primary"
-            className="!h-[3rem] !bg-Primary w-full"
+            className="!h-[3rem] !bg-black w-full"
           >
             Resend OTP
           </Button>
         </form>
       </main>
-      <p className="flex justify-center my-8 text-gray-400 font-thin ">
-        Terms of service. Having problem with login?
-      </p>
+      
     </div>
   );
 };

@@ -14,6 +14,8 @@ import {
   useGetExpensesQuery,
   useGetTransactionStatusQuery,
 } from "@/services/transactionService";
+import Arrowleft from "@/assets/icon/Arrowleft";
+import ArrowRight from "@/assets/icon/ArrowRight";
 
 const Dashbord = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,7 +47,7 @@ const Dashbord = () => {
             + Add Fund
           </button>
           <Select
-            className="!w-full"
+            className="!w-full !h-[2.5rem]"
             options={[
               { value: "1 month", label: "1 month" },
               { value: "2 month", label: "2 month" },
@@ -54,16 +56,14 @@ const Dashbord = () => {
           />
         </div>
       </header>
-      <main className="grid grid-cols-1 lg:grid-cols-[55%_43%] gap-[2%] mt-8">
-        <section className="flex flex-col space-y-10 ">
-          <article className="flex items-stretch space-x-4 bg-white p-[2%]">
-            <div className="p-4 bg-black text-white w-full rounded-md">
-              {/* <div className="flex itemscenter justify-between"> */}
-              <p>Account Balance</p>
-              {/* <span className="flex items-center">
-                  <p>5.6%</p> <Arrowleft className=" p-2 rounded !text-white" />
-                </span> */}
-              {/* </div> */}
+      <main className="grid grid-cols-1 lg:grid-cols-[58%_40%] gap-[2%] mt-8">
+        <section className="flex flex-col space-y-16 ">
+          <article className="flex flex-col md:flex-row items-stretch space-x-4 bg-white p-[2%]">
+            <div className="p-[20px] bg-black text-white w-full">
+              <div className="flex items-center justify-between">
+                <p>Account Balance</p>
+                <Arrowleft />
+              </div>
               <p className="text-2xl font-semibold">
                 N
                 {Number(data?.wallet?.walletBalance || 0).toLocaleString(
@@ -71,20 +71,20 @@ const Dashbord = () => {
                 )}
               </p>
             </div>
-            <div className="bg-white p-3 text-black w-full rounded-md border border-gray-300">
+            <div className="bg-white p-[20px] text-black w-full border border-gray-300">
               <div className="flex items-center justify-between">
                 <p>
                   Today, {date.toLocaleString("en-US", { month: "long" })}{" "}
                   {date.getFullYear()}
                 </p>
-                <span>{/* <p>5.6%</p> */}</span>
+                <ArrowRight />
               </div>
               <p className="text-2xl font-semibold">
-                N
                 {Number(analysis?.data?.todayBalance || 0).toLocaleString(
                   "en-US"
                 )}
               </p>
+
             </div>
           </article>
           <div className="my-4 bg-white p-[2%]">
@@ -92,7 +92,7 @@ const Dashbord = () => {
           </div>
           <DashboardTable />
         </section>
-        <section className="flex flex-col space-y-10">
+        <section className="flex flex-col space-y-16">
           <div className="space-y-2 bg-white p-[2%]">
             <p className="text-xl font-semibold">Payment that need Attention</p>
             <div className="grid grid-cols-2 gap-5">
