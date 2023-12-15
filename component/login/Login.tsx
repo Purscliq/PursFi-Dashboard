@@ -47,10 +47,10 @@ const Login = () => {
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
         {alert && <Alert type="error" closable message={alert} />}
-        <h1 className="font-semibold text-xl mb-2 text-[#000000]">
+        <h1 className="font-semibold text-2xl mb-2 text-[#000000]">
           Welcome Back !
         </h1>
-        <p className=" text-gray-700">Login to visit your dashboard</p>
+        <p className=" text-gray-700 text-[18px]">Login to visit your dashboard</p>
         <form onSubmit={handleSubmit} className="w-full space-y-5 mt-4">
           <div className="w-full flex flex-col items-start justify-start gap-[0.2rem]">
             <label
@@ -96,7 +96,7 @@ const Login = () => {
           >
             Login
           </Button>
-          <div className=" text-sm hover:underline hover:duration-300 text-gray-600 ">
+          <div className=" text-sm underline duration-300 text-gray-600 ">
             <Link href="forget-password">Forgot Password? </Link>{" "}
           </div>
           <span className="flex justify-center items-center mt-6">
@@ -104,7 +104,7 @@ const Login = () => {
               New to Purscliq Business?{" "}
               <Link
                 href="signup"
-                className="hover:underline hover:duration-300 cursor-pointer text-Primary"
+                className="underline duration-300 cursor-pointer text-Primary"
               >
                 {" "}
                 Sign Up
@@ -113,9 +113,6 @@ const Login = () => {
           </span>
         </form>
       </main>
-      <p className="flex justify-center my-8 text-gray-400 font-thin ">
-        Terms of service. Having problem with login?
-      </p>
     </div>
   );
 };

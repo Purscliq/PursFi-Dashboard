@@ -56,13 +56,13 @@ const SignupOtp = () => {
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
         {alert && <Alert type="error" closable message={alert} />}
-        <h1 className="font-semibold text-xl mb-2 text-Primary">
+        <h1 className="font-semibold text-2xl mb-2 text-black">
           Verify Your Phone Number!{" "}
         </h1>
-        <p className=" text-gray-700">
+        <p className=" text-gray-700 text-lg">
           We sent an OTP to {formattedPhoneNumber} by SMS and WhatsApp.
         </p>
-        <form onSubmit={handleSubmit} className="w-full space-y-5 mt-4">
+        <form onSubmit={handleSubmit} className="w-full space-y-5 mt-8">
           <h1 className="text-sm">Enter OTP Code</h1>
           <OTPInput
             numInputs={6}
@@ -108,16 +108,13 @@ const SignupOtp = () => {
           </p>
           <p className="bg-blue-100 text-sm p-2 text-Primary">
             Still not recevie your OTP!{" "}
-            <Link href="edit-number" className="font-semibold">
+            <Link href="edit-number" className="font-semibold underline">
               Click here{" "}
             </Link>
             to cross check your phone number{" "}
           </p>
         </form>
       </main>
-      <p className="flex justify-center my-8 text-gray-400 font-thin ">
-        Terms of service. Having problem with login?
-      </p>
     </div>
   );
 };

@@ -76,15 +76,15 @@ const ResetPass = () => {
       <nav className="py-4 px-8">
         <Image src={logo} alt="logo" />
       </nav>
-      <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[450px] mx-auto mt-4 p-6">
+      <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[550px] mx-auto mt-4 p-6">
         {alert && <Alert type="error" closable message={alert} />}
-        <h1 className="font-semibold text-xl mb-2 text-Primary">
+        <h1 className="font-semibold text-2xl mb-2 text-black">
           Change Password{" "}
         </h1>
-        <p className=" text-gray-700 text-sm text-center">
+        <p className=" text-gray-700 text-lg text-center">
           Your new password must be different from previous used passwords
         </p>
-        <form onSubmit={handleSubmit} className="w-full space-y-5 mt-4">
+        <form onSubmit={handleSubmit} className="w-full space-y-5 mt-8">
           <div className="w-full flex flex-col items-start justify-start gap-[0.2rem]">
             <label
               htmlFor="password"
@@ -124,10 +124,11 @@ const ResetPass = () => {
             htmlType="submit"
             type="primary"
             disabled={isResending}
-            className="!h-[3rem] !bg-black w-full"
+            className="!h-[3rem] !bg-black w-full !text-white"
           >
-            Change Password
+            {isResending ? "Resending...." : " Reset Password"}
           </Button>
+
           <span
             onClick={resendLink}
             className="text-sm font-medium text-gray-600 flex items-center justify-center cursor-pointer underline"
