@@ -8,7 +8,7 @@ import {
   CustomButton as Button,
   CustomCheckBox as Checkbox,
 } from "@/lib/AntdComponents";
-import { message, Alert } from "antd";
+import { Alert } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import PhoneInput from "react-phone-input-2";
@@ -43,7 +43,6 @@ const SignUp = () => {
       register(formData)
         .unwrap()
         .then((res) => {
-          // message.success("account created successfully");
           generateOtp({ username: formData.phoneNumber })
             .unwrap()
             .finally(() => {
