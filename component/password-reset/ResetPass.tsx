@@ -6,6 +6,7 @@ import {
   useEffect,
 } from "react";
 import logo from "@/assets/logo.svg";
+import { passwordSchema } from "@/lib/validationSchema";
 import {
   CustomPasswordInput as PasswordInput,
   CustomButton as Button,
@@ -29,6 +30,8 @@ const ResetPass = () => {
   const [forgetPassword, { isLoading: isResending }] =
     useForgotPasswordMutation();
   const [formData, setFormData] = useState(initialState);
+  const [validationError, setValidationError] = useState("");
+  const [confirmValidationError, setConfirmValidationError] = useState("");
   const [alert, setAlert] = useState("");
   const searchParams = useSearchParams();
   useEffect(() => {
@@ -37,6 +40,22 @@ const ResetPass = () => {
     setFormData((prev) => ({ ...prev, otp: otp || "", email: email || "" }));
   }, [searchParams]);
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (alert) setAlert("");
+    if (e.target.name === "password")
+      passwordSchema
+        .validate({ password: e.target?.value })
+        .then(() => setValidationError(""))
+        .catch((error) => setValidationError(error.message));
+    if (
+      e.target.name === "confirmPassword" &&
+      e.target.value !== formData.newPassword
+    )
+      setConfirmValidationError("password must match");
+    else if (
+      e.target.name === "confirmPassword" &&
+      e.target.value == formData.confirmPassword
+    )
+      setConfirmValidationError("");
     setFormData((prevState) => ({
       ...prevState,
       [e.target?.name]: e.target?.value,
@@ -45,20 +64,21 @@ const ResetPass = () => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    resetPassword(formData)
-      .unwrap()
-      .then((res) => {
-        message.success("password reset successfully");
-        setFormData(initialState);
-        replace("/");
-      })
-      .catch((err) => {
-        setAlert(
-          err?.data?.title ||
-            err?.data?.responseDescription ||
-            "something went wrong"
-        );
-      });
+    if (!validationError && !confirmValidationError)
+      resetPassword(formData)
+        .unwrap()
+        .then((res) => {
+          message.success("password reset successfully");
+          setFormData(initialState);
+          replace("/");
+        })
+        .catch((err) => {
+          setAlert(
+            err?.data?.title ||
+              err?.data?.responseDescription ||
+              "something went wrong"
+          );
+        });
   };
   const resendLink = () => {
     forgetPassword({ email: formData.email })
@@ -101,6 +121,58 @@ const ResetPass = () => {
               value={formData.newPassword}
               onChange={handleChange}
             />
+            {formData.newPassword && validationError && (
+              <ul className="bg-white rounded-[5px] p-[3%]">
+                <li className="flex items-center gap-[0.5rem]">
+                  <span
+                    className={`h-[13px] w-[13px] rounded-full ${
+                      /^(.{8,})$/.test(formData.newPassword)
+                        ? "bg-black"
+                        : "bg-slate-300"
+                    }`}
+                  ></span>
+                  <p className="text-[#252B33] text-[12px] font-[400]">
+                    A minimum of 8 characters
+                  </p>
+                </li>
+                <li className="flex items-center gap-[0.5rem]">
+                  <span
+                    className={`h-[13px] w-[13px] rounded-full ${
+                      /.*[a-zA-Z].*/.test(formData.newPassword)
+                        ? "bg-black"
+                        : "bg-slate-300"
+                    }`}
+                  ></span>
+                  <p className="text-[#252B33] text-[12px] font-[400]">
+                    At least one letter
+                  </p>
+                </li>
+                <li className="flex items-center gap-[0.5rem]">
+                  <span
+                    className={`h-[13px] w-[13px] rounded-full ${
+                      /.*[0-9].*/.test(formData.newPassword)
+                        ? "bg-black"
+                        : "bg-slate-300"
+                    }`}
+                  ></span>
+                  <p className="text-[#252B33] text-[12px] font-[400]">
+                    At least one number
+                  </p>
+                </li>
+                <li className="flex items-center gap-[0.5rem]">
+                  <span
+                    className={`h-[13px] w-[13px] rounded-full ${
+                      /[!@#$%^&*(),.?":{}|<>]/.test(formData.newPassword)
+                        ? "bg-black"
+                        : "bg-slate-300"
+                    }`}
+                  ></span>
+                  <p className="text-[#252B33] text-[12px] font-[400]">
+                    At least one special character
+                  </p>
+                </li>
+              </ul>
+            )}
           </div>
           <div className="w-full flex flex-col items-start justify-start gap-[0.2rem]">
             <label
@@ -118,6 +190,7 @@ const ResetPass = () => {
               onChange={handleChange}
               name="confirmPassword"
             />
+            <p>{confirmValidationError}</p>
           </div>
           <Button
             loading={isLoading}

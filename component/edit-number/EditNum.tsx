@@ -28,7 +28,11 @@ const EditNum = () => {
         replace("/signup-otp");
       })
       .catch((err) => {
-        setAlert(err?.data?.responseDescription || err?.data?.title);
+        setAlert(
+          err?.data?.responseDescription ||
+            err?.data?.title ||
+            "something went wrong"
+        );
       });
   };
   return (
@@ -49,7 +53,7 @@ const EditNum = () => {
           <PhoneInput
             country={"ng"}
             containerClass="!w-full"
-            inputClass="phone-input-input !w-full !border !p-1 !rounded !bg-transparent"
+            inputClass="phone-input-input !w-full"
             value={username}
             onChange={(value) => setUserName(value)}
           />
@@ -63,7 +67,6 @@ const EditNum = () => {
           </Button>
         </form>
       </main>
-      
     </div>
   );
 };

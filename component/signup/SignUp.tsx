@@ -87,16 +87,13 @@ const SignUp = () => {
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[480px] mx-auto mt-4 p-6">
         {alert && <Alert type="error" closable message={alert} />}
-        <h1 className="font-[700] text-2xl text-black">
-          Create an account
-        </h1>
+        <h1 className="font-[700] text-2xl text-black">Create an account</h1>
         <p className="text-[18px]  text-gray-600">
           Sign up to create your merchant account
         </p>
         <form onSubmit={handleSubmit} className="w-full space-y-4 mt-4">
           <div className="flex justify-between items-center">
             <div className="flex-1 ">
-              {" "}
               <label
                 className="block text-gray-600 text-sm font-semibold mb-2"
                 htmlFor="firstName"
@@ -115,7 +112,6 @@ const SignUp = () => {
               />
             </div>
             <div className="flex-1 ml-2">
-              {" "}
               <label
                 className="block text-gray-600 text-sm font-semibold mb-2"
                 htmlFor="lastName"
@@ -276,8 +272,14 @@ const SignUp = () => {
               By clicking continue, you acknowledge that you have read and
               accept the{" "}
               <span className="">
-                <a href="" className="underline font-semibold text-black"> Terms Of Service</a> and{" "}
-                <a href="" className="underline font-semibold text-black">Privacy Policy</a>
+                <a href="" className="underline font-semibold text-black">
+                  {" "}
+                  Terms Of Service
+                </a>{" "}
+                and{" "}
+                <a href="" className="underline font-semibold text-black">
+                  Privacy Policy
+                </a>
               </span>{" "}
             </label>
           </div>
