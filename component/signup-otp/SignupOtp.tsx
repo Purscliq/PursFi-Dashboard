@@ -9,12 +9,13 @@ import Link from "next/link";
 import {
   useValidateOtpMutation,
   useGenerateOtpMutation,
-  useProfileQuery,
 } from "@/services/authService";
 import { message, Alert } from "antd";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { updateUser } from "@/store/userSlice";
 
 const SignupOtp = () => {
+  const dispatch = useAppDispatch();
   const { replace } = useRouter();
   const [code, setCode] = useState("");
   const [alert, setAlert] = useState("");
@@ -34,18 +35,23 @@ const SignupOtp = () => {
         message.success(
           res.data?.responseDescription || "validation successful"
         );
+        dispatch(updateUser({ ...data, isPhoneValidated: true }));
         setCode("");
         replace("/signup-business");
       })
       .catch((err) => {
-        setAlert(err?.data?.responseDescription || err?.data?.title);
+        setAlert(
+          err?.data?.responseDescription ||
+            err?.data?.title ||
+            "something went wrong"
+        );
       });
   };
   const phoneNumber = data?.phoneNumber;
 
   const formattedPhoneNumber =
     phoneNumber && phoneNumber.length >= 4
-      ? `${phoneNumber.substring(0, 4)}xxxx${phoneNumber.substring(
+      ? `+${phoneNumber.substring(0, 4)}xxxx${phoneNumber.substring(
           phoneNumber.length - 3
         )}`
       : "";

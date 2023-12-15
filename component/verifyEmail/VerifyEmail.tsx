@@ -5,15 +5,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { Modal, message, Alert } from "antd";
 import { CustomButton as Button } from "@/lib/AntdComponents";
-import {
-  useGenerateEmailOtpMutation,
-  useProfileQuery,
-} from "@/services/authService";
+import { useGenerateEmailOtpMutation } from "@/services/authService";
 import { useAppSelector } from "@/store/hooks";
 const VerifyEmail = () => {
   const [generateMail, { isLoading }] = useGenerateEmailOtpMutation();
   const data = useAppSelector((state) => state.user.user);
-  // const { data } = useProfileQuery({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [alert, setAlert] = useState("");
   const Verify = () =>
@@ -23,7 +19,11 @@ const VerifyEmail = () => {
         message.success(res.data?.responseDescription || "Email sent")
       )
       .catch((err) =>
-        setAlert(err?.data?.responseDescription || err?.data?.title)
+        setAlert(
+          err?.data?.responseDescription ||
+            err?.data?.title ||
+            "something went wrong"
+        )
       );
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA]">

@@ -25,7 +25,11 @@ const ForgetPass = () => {
         replace("reset-password");
       })
       .catch((err) => {
-        setAlert(err?.data?.responseDescription || err?.data?.title);
+        setAlert(
+          err?.data?.responseDescription ||
+            err?.data?.title ||
+            "something went wrong"
+        );
       });
   };
   return (

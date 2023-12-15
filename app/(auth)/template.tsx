@@ -15,9 +15,12 @@ const Template = ({ children }: { children: React.ReactNode }) => {
   const { isLoading: isFetchingBusiness, isSuccess: isBusinessSuccess } =
     useBusinessProfileQuery({});
   useEffect(() => {
-    if (user?.id && business?.id) {
+    if (user?.id) {
       if (!user?.isPhoneValidated && user?.id) {
         push("/signup-otp");
+      }
+      if (!business?.id) {
+        push("/signup-business");
       }
       if (!user?.isEmailValidated && user?.id) {
         push("/verifyEmail");

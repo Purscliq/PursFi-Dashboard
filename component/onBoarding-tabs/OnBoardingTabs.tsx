@@ -32,11 +32,7 @@ const OnBoardingTabs = () => {
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: (
-        <span onClick={() => setActive("1")} className="text-inherit">
-          Company Information
-        </span>
-      ),
+      label: <span className="text-inherit">Company Information</span>,
       children: (
         <CompanyInfo
           setActive={setActive}
@@ -47,20 +43,12 @@ const OnBoardingTabs = () => {
     },
     {
       key: "2",
-      label: (
-        <span onClick={() => setActive("2")} className="text-inherit">
-          Owner Information
-        </span>
-      ),
+      label: <span className="text-inherit">Owner Information</span>,
       children: <OwnerInfo setActive={setActive} />,
     },
     {
       key: "3",
-      label: (
-        <span onClick={() => setActive("3")} className="text-inherit">
-          Business Documentation
-        </span>
-      ),
+      label: <span className="text-inherit">Business Documentation</span>,
       children: (
         <BusinessDocs
           setActive={setActive}
@@ -71,11 +59,7 @@ const OnBoardingTabs = () => {
     },
     {
       key: "4",
-      label: (
-        <span onClick={() => setActive("4")} className="text-inherit">
-          Review
-        </span>
-      ),
+      label: <span className="text-inherit">Review</span>,
       children: (
         <Review
           setActive={setActive}
@@ -86,9 +70,7 @@ const OnBoardingTabs = () => {
     },
   ];
 
-  return (
-    <Tabs items={items} defaultActiveKey="1" activeKey={active} />
-  );
+  return <Tabs items={items} defaultActiveKey="1" activeKey={active} />;
 };
 
 export default OnBoardingTabs;
