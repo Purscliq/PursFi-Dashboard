@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
-      <body className={archivo.className}>
+      <body className={`${archivo.className} bg-[#FAFAFA]`}>
         <StyledComponentsRegistry>
           <StoreProvider>{children}</StoreProvider>
         </StyledComponentsRegistry>
