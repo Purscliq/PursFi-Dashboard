@@ -2,24 +2,25 @@
 import React from "react";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
-import { CustomButton as Button } from "@/lib/AntdComponents";
-import { CustomInput as Input } from "@/lib/AntdComponents";
+import {
+  CustomInput as Input,
+  CustomButton as Button,
+} from "@/lib/AntdComponents";
 import { FaRegCopy } from "react-icons/fa";
 import { useAppSelector } from "@/store/hooks";
 const PaymentGateway = () => {
   const wallet = useAppSelector((store) => store.user.wallet);
   return (
     <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA]">
-      <nav className="py-4 px-8">
+      <nav className="py-4 px-8 bg-white flex justify-between items-center">
         <Image src={logo} alt="logo" />
+        <Button>learn about us</Button>
       </nav>
-      <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[600px] mx-auto mt-6 py-6 px-[1%]">
-        <div className=" flex flex-col">
-          <h2 className="text-2xl font-bold mb-1">
-            Transfer money to your Account
-          </h2>
-          <p className="text-sm text-gray-500">
-            move fund from this account to another company account
+      <main className=" flex flex-col items-center justify-center bg-white w-[95%] md:w-[35%] m-auto mt-[2rem] py-6 px-[1%]">
+        <div className="flex flex-col w-full">
+          <h2 className="text-2xl font-bold mb-1 text-center">Pay Business</h2>
+          <p className="text-sm text-gray-500 text-center">
+            Make Payment to business account
           </p>
           <div className="mt-5 space-y-4">
             <Button type="primary" className="!h-[3rem] !bg-black w-full">
@@ -54,10 +55,10 @@ const PaymentGateway = () => {
                       `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
                     )
                   }
-                  className="border items-center  flex space-x-3 p-2 rounded-md"
+                  className="border !items-center !flex space-x-3 p-2 rounded-md"
+                  icon={<FaRegCopy className="text-blue-400" />}
                 >
-                  <FaRegCopy className="text-blue-400" />
-                  <p>copy</p>{" "}
+                  copy
                 </Button>{" "}
               </div>
             </form>{" "}

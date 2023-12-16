@@ -42,7 +42,7 @@ const primaryConfig = {
 };
 
 export const CustomButton = ({ ...props }: ButtonProps) => (
-  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+  <ConfigProvider theme={{ token: { ...primaryConfig, borderRadius: 5 } }}>
     <Button {...props} />
   </ConfigProvider>
 );
@@ -133,7 +133,7 @@ export const CustomDatePicker = ({ ...props }: DatePickerProps) => (
 );
 
 export const CustomTimePicker = ({ ...props }: TimePickerProps) => (
-  <ConfigProvider >
+  <ConfigProvider>
     <TimePicker {...props} />
   </ConfigProvider>
 );
