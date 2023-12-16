@@ -84,7 +84,7 @@ const Remita = () => {
           <div
             key={index}
             onClick={() => route.push(item.route)}
-            className="p-4 bg-white flex items-center space-x-6 justify-center"
+            className="p-4 bg-white flex items-center space-x-6 justify-center cursor-pointer"
           >
             {item.icon}
             <p className="text-[18px]">{item.title}</p>
