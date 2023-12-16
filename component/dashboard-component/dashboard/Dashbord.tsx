@@ -29,7 +29,7 @@ const Dashbord = () => {
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center mt-8">
         <span>
-          <h2 className="text-2xl font-medium"> Dashboard</h2>
+          <h2 className="text-3xl font-bold mb-1"> Dashboard</h2>
           <p className="text-sm text-gray-600">
             Showing your Account metrics for{" "}
             {date.toLocaleString("en-US", {

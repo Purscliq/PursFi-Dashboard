@@ -40,7 +40,7 @@ const Account = () => {
       <header className="flex flex-col space-y-6 mt-6">
         <div className="flex items-center justify-between ">
           <span>
-            <h2 className="text-2xl font-medium"> Account </h2>
+            <h2 className="text-3xl font-bold mb-1"> Account </h2>
             <p className="text-sm text-gray-600">
               Showing your Account metrics for{" "}
               {date.toLocaleString("en-US", {

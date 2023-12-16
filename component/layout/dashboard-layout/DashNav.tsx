@@ -26,7 +26,7 @@ const DashNav = () => {
         </div>
         <div className="space-x-4 items-center flex">
           <div className="hidden lg:flex space-x-3  px-2 items-center border border-gray-700 rounded-full">
-            <span className="w-2 h-2 rounded-full bg-green-700"></span>
+            <span className="w-2 h-2 rounded-full bg-red-700"></span>
             <span>New update</span>
           </div>
           <IoIosNotifications className="flex lg:hidden" size={26} />
