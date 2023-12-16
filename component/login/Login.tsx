@@ -7,7 +7,7 @@ import {
 } from "@/lib/AntdComponents";
 import Image from "next/image";
 import Link from "next/link";
-import { message, Alert } from "antd";
+import { Alert } from "antd";
 import { useLoginMutation } from "@/services/authService";
 import { useState, ChangeEventHandler, FormEventHandler } from "react";
 import { useRouter } from "next/navigation";
@@ -27,10 +27,13 @@ const Login = () => {
       .unwrap()
       .then((res) => {
         replace("/dashboard");
-        // message.success("login success");
       })
       .catch((err) => {
-        setAlert(err?.data?.responseDescription || err?.data?.title);
+        setAlert(
+          err?.data?.responseDescription ||
+            err?.data?.title ||
+            "something went wrong"
+        );
       });
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {

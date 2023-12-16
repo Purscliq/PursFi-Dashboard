@@ -80,11 +80,12 @@ const OwnerInfo = ({
       ...prevState,
       [e.target?.name]: e.target?.value,
     }));
-    if (formData.Bvn.length === 10) {
-      setBvnError("");
-    } else {
-      setBvnError("BVN must be exactly 11 digits"); // Set error message
-    }
+    if (e.target?.name === "Bvn")
+      if (e.target?.value?.length === 11) {
+        setBvnError("");
+      } else {
+        setBvnError("BVN must be exactly 11 digits");
+      }
   };
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();

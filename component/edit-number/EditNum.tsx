@@ -1,4 +1,5 @@
 "use client";
+import "react-phone-input-2/lib/style.css";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import PhoneInput from "react-phone-input-2";
@@ -6,8 +7,12 @@ import { useRouter } from "next/navigation";
 import { useState, FormEventHandler } from "react";
 import { CustomButton as Button } from "@/lib/AntdComponents";
 import { useGenerateOtpMutation } from "@/services/authService";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { message, Alert } from "antd";
+import { updateUser } from "@/store/userSlice";
 const EditNum = () => {
+  const dispatch = useAppDispatch();
+  const profile = useAppSelector((store) => store.user.user);
   const { replace } = useRouter();
   const [requestOtp, { isLoading }] = useGenerateOtpMutation();
   const [username, setUserName] = useState("");
@@ -17,12 +22,17 @@ const EditNum = () => {
     requestOtp({ username })
       .unwrap()
       .then((res) => {
-        message.success(res.data?.responseDescription);
+        message.success(res.data?.responseDescription || "OTP sent");
         setUserName("");
+        dispatch(updateUser({ ...profile, phoneNumber: username }));
         replace("/signup-otp");
       })
       .catch((err) => {
-        setAlert(err?.data?.responseDescription || err?.data?.title);
+        setAlert(
+          err?.data?.responseDescription ||
+            err?.data?.title ||
+            "something went wrong"
+        );
       });
   };
   return (
@@ -43,7 +53,7 @@ const EditNum = () => {
           <PhoneInput
             country={"ng"}
             containerClass="!w-full"
-            inputClass="phone-input-input !w-full !border !p-1 !rounded !bg-transparent"
+            inputClass="phone-input-input !w-full"
             value={username}
             onChange={(value) => setUserName(value)}
           />
@@ -57,7 +67,6 @@ const EditNum = () => {
           </Button>
         </form>
       </main>
-      
     </div>
   );
 };

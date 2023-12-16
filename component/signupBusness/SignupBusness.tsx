@@ -12,9 +12,9 @@ import { useFetchCountryQuery } from "@/services/country";
 import {
   useCreateBusinessMutation,
   useGenerateEmailOtpMutation,
-  useProfileQuery,
 } from "@/services/authService";
 import { useState, ChangeEventHandler, FormEventHandler } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 const initailState = {
   businessName: "",
@@ -28,7 +28,7 @@ const SignupBusness = () => {
   const { data } = useFetchCountryQuery({});
   const [create, { isLoading }] = useCreateBusinessMutation();
   const [generateMail, {}] = useGenerateEmailOtpMutation();
-  const { data: profile } = useProfileQuery({});
+  const profile = useAppSelector((store) => store.user.user);
   const [selectedCountry, setSelectedCountry] = useState(
     "https://flagcdn.com/ng.svg"
   );
@@ -40,7 +40,7 @@ const SignupBusness = () => {
       .unwrap()
       .then((res) => {
         message.success(res?.data?.responseDescription || "success");
-        generateMail({ username: profile?.user?.email })
+        generateMail({ username: profile?.email })
           .unwrap()
           .then(() => {
             setFormData(initailState);

@@ -14,13 +14,17 @@ const Page = () => {
       .unwrap()
       .then((res) => {
         message.success(
-          res?.data?.responseDescription || res?.responseDescription
+          res?.data?.responseDescription ||
+            res?.responseDescription ||
+            "verification successfull"
         );
         replace("/");
       })
       .catch((err) => {
         message.success(
-          err?.data?.responseDescription || err?.responseDescription
+          err?.data?.responseDescription ||
+            err?.responseDescription ||
+            "something went wrong"
         );
         replace("/");
       });
