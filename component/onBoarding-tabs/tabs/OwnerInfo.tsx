@@ -19,6 +19,7 @@ import {
   useUpdateUserOwnerMutation,
 } from "@/services/authService";
 import { useFetchCountryQuery } from "@/services/country";
+import { RcFile } from "antd/es/upload";
 
 const gender = [
   { label: "Male", value: "Male" },
@@ -36,7 +37,7 @@ type dataType = {
   Email: string;
   RoleId: string;
   BusinessId: string;
-  // file: Blob | string;
+  file: RcFile | string;
 };
 const OwnerInfo = ({
   setActive,
@@ -44,6 +45,13 @@ const OwnerInfo = ({
   setActive: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const dataBody = new FormData();
+  const checkFileSize = (file: RcFile) => {
+    const isLt2M = file.size / 1024 / 1024 < 5;
+    if (!isLt2M) {
+      message.error("Image must must be less than 5MB!");
+    }
+    return isLt2M;
+  };
   const { data: country } = useFetchCountryQuery({});
   const { data: user } = useProfileQuery({});
   const { data: business } = useBusinessProfileQuery({});
@@ -61,6 +69,7 @@ const OwnerInfo = ({
     Email: user?.email,
     RoleId: user?.roleId,
     BusinessId: business?.id,
+    file: "",
   });
   const [selectedCountry, setSelectedCountry] = useState(
     "https://flagcdn.com/ng.svg"
@@ -68,6 +77,7 @@ const OwnerInfo = ({
   const props: UploadProps = {
     name: "file",
     multiple: false,
+    accept: ".jpg",
     onDrop(e) {
       // console.log("Dropped files", e.dataTransfer.files);
     },
@@ -92,7 +102,7 @@ const OwnerInfo = ({
     for (const [key, value] of Object.entries(formData)) {
       dataBody.append(key, value);
     }
-    if (!bvnError)
+    if (!bvnError && formData?.file)
       create(dataBody)
         .unwrap()
         .then((res) => {
@@ -309,11 +319,11 @@ const OwnerInfo = ({
                   setFormData((prev) => ({ ...prev, file: "" }));
                 }}
                 beforeUpload={(file) => {
-                  setFormData((prev) => ({
-                    ...prev,
-                    file: file,
-                  }));
-                  // dataBody.append("docs", file);
+                  if (checkFileSize(file))
+                    setFormData((prev) => ({
+                      ...prev,
+                      file: file,
+                    }));
                   return false;
                 }}
                 className="border border-dashed h-[80px] p-4"

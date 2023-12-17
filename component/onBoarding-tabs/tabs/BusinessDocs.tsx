@@ -6,9 +6,10 @@ import {
 } from "@/lib/AntdComponents";
 import LinkIcon from "@/assets/icon/LinkIcon";
 import type { UploadProps } from "antd";
+import { message } from "antd";
+import { RcFile } from "antd/es/upload";
 import { docsData } from "../OnBoardingTabs";
 import { SetStateAction, FormEventHandler, ChangeEventHandler } from "react";
-import { useCompleteBusinessOnboardingMutation } from "@/services/authService";
 const BusinessDocs = ({
   formData,
   setFormData,
@@ -18,11 +19,17 @@ const BusinessDocs = ({
   setFormData: React.Dispatch<SetStateAction<docsData>>;
   setActive: React.Dispatch<SetStateAction<string>>;
 }) => {
-  const [create, { isLoading }] = useCompleteBusinessOnboardingMutation();
-  const dataBody = new FormData();
+  const checkFileSize = (file: RcFile) => {
+    const isLt2M = file.size / 1024 / 1024 < 5;
+    if (!isLt2M) {
+      message.error("Image must must be less than 5MB!");
+    }
+    return isLt2M;
+  };
   const props: UploadProps = {
     name: "file",
     multiple: false,
+    accept: ".jpg",
     onDrop(e) {
       // console.log("Dropped files", e.dataTransfer.files);
     },
@@ -30,7 +37,16 @@ const BusinessDocs = ({
   };
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    setActive("4");
+    if (
+      formData?.certIncorporation &&
+      formData?.memorandumAssociation &&
+      formData?.cac &&
+      formData?.bills
+    ) {
+      setActive("4");
+    } else {
+      message.error("Please upload all documents");
+    }
   };
   const handleChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -104,11 +120,12 @@ const BusinessDocs = ({
                   setFormData((prev) => ({ ...prev, certIncorporation: null }));
                 }}
                 beforeUpload={(file) => {
-                  dataBody.append("", file);
-                  setFormData((prev) => ({
-                    ...prev,
-                    certIncorporation: file,
-                  }));
+                  if (checkFileSize(file)) {
+                    setFormData((prev) => ({
+                      ...prev,
+                      certIncorporation: file,
+                    }));
+                  }
                   return false;
                 }}
                 className="border border-dashed h-[80px] p-4"
@@ -149,11 +166,12 @@ const BusinessDocs = ({
                   }));
                 }}
                 beforeUpload={(file) => {
-                  dataBody.append("", file);
-                  setFormData((prev) => ({
-                    ...prev,
-                    memorandumAssociation: file,
-                  }));
+                  if (checkFileSize(file)) {
+                    setFormData((prev) => ({
+                      ...prev,
+                      memorandumAssociation: file,
+                    }));
+                  }
                   return false;
                 }}
                 className="border border-dashed h-[80px] p-4"
@@ -161,7 +179,7 @@ const BusinessDocs = ({
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
                   <p className="text-sm font-semibold">
-                    Attach Doc Jpeg only, Limited 5mb
+                    Attach Jpeg only, Limited 5mb
                   </p>
                 </span>
               </Upload>
@@ -189,11 +207,12 @@ const BusinessDocs = ({
                   setFormData((prev) => ({ ...prev, cac: null }));
                 }}
                 beforeUpload={(file) => {
-                  setFormData((prev) => ({
-                    ...prev,
-                    cac: file,
-                  }));
-                  return false;
+                  if (checkFileSize(file))
+                    setFormData((prev) => ({
+                      ...prev,
+                      cac: file,
+                    }));
+                  return;
                 }}
                 className="border border-dashed h-[80px] p-4"
               >
@@ -224,11 +243,12 @@ const BusinessDocs = ({
                   setFormData((prev) => ({ ...prev, bills: null }));
                 }}
                 beforeUpload={(file) => {
-                  setFormData((prev) => ({
-                    ...prev,
-                    bills: file,
-                  }));
-                  return false;
+                  if (checkFileSize(file))
+                    setFormData((prev) => ({
+                      ...prev,
+                      bills: file,
+                    }));
+                  return;
                 }}
                 className="border border-dashed h-[80px] p-4"
               >
@@ -244,7 +264,6 @@ const BusinessDocs = ({
           <div className="w-[30%]"></div>
           <div className="w-2/4">
             <Button
-              loading={isLoading}
               htmlType="submit"
               type="primary"
               className="!h-[3rem] bg-black w-full"
