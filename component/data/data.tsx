@@ -82,11 +82,11 @@ export const sidebarData: MenuProps["items"] = [
       },
     ],
   },
-  {
-    label: <Link href="/remita">Remita</Link>,
-    icon: <CgTranscript className=" font-bold" />,
-    key: "remita",
-  },
+  // {
+  //   label: <Link href="/remita">Remita</Link>,
+  //   icon: <CgTranscript className=" font-bold" />,
+  //   key: "remita",
+  // },
   // {
   //   label: <Link href="/administration">Administration</Link>,
   //   icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
