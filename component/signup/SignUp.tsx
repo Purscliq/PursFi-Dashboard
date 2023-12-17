@@ -272,15 +272,21 @@ const SignUp = () => {
               By clicking continue, you acknowledge that you have read and
               accept the{" "}
               <span className="">
-                <a href="" className="underline font-semibold text-black">
+                <a
+                  href="https://purscliq.ng/terms/"
+                  className="underline font-semibold text-black"
+                >
                   {" "}
                   Terms Of Service
                 </a>{" "}
                 and{" "}
-                <a href="" className="underline font-semibold text-black">
+                <a
+                  href="https://purscliq.ng/privacy-policy/"
+                  className="underline font-semibold text-black"
+                >
                   Privacy Policy
                 </a>
-              </span>{" "}
+              </span>
             </label>
           </div>
           <Button

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   useProfileQuery,
   useBusinessProfileQuery,
@@ -20,18 +20,17 @@ const Template = ({ children }: { children: React.ReactNode }) => {
         push("/signup-otp");
         return;
       }
+      if (!business?.id) {
+        push("/signup-business");
+        return;
+      }
       if (!user?.isEmailValidated && user?.id) {
         push("/verifyEmail");
         return;
       }
-      if (!business?.id) {
-        push("/signup-business");
+      if (business?.id && !business?.isOnboardingCompleted && user?.id) {
+        push("/onboarding");
         return;
-      } else {
-        if (business?.id && !business?.isOnboardingCompleted && user?.id) {
-          push("/onboarding");
-          return;
-        }
       }
     }
   }, [JSON.stringify(user), JSON.stringify(business)]);
