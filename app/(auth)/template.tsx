@@ -11,16 +11,19 @@ import { useAppSelector } from "@/store/hooks";
 const Template = ({ children }: { children: React.ReactNode }) => {
   const { push } = useRouter();
   const { isLoading, isSuccess } = useProfileQuery({});
+  const {
+    isLoading: isFetchingBusiness,
+    isSuccess: isBusinessSuccess,
+    isError,
+  } = useBusinessProfileQuery({});
   const { business, user } = useAppSelector((state) => state.user);
-  const { isLoading: isFetchingBusiness, isSuccess: isBusinessSuccess } =
-    useBusinessProfileQuery({});
   useEffect(() => {
     if (user?.id) {
       if (!user?.isPhoneValidated && user?.id) {
         push("/signup-otp");
         return;
       }
-      if (!business?.id) {
+      if (!business?.id && isError) {
         push("/signup-business");
         return;
       }
