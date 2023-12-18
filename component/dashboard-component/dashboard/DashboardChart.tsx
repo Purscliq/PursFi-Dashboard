@@ -25,7 +25,7 @@ const DashboardChart = ({ data }: { data: Record<string, any>[] }) => {
           dataKey="balance"
           stroke="#000"
           fillOpacity={1}
-          fill="#84818A"
+          fill="#FAFAFA"
         />
       </AreaChart>
     </ResponsiveContainer>
