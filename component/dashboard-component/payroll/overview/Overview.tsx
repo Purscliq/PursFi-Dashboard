@@ -9,7 +9,7 @@ const Overview = () => {
   const { push } = useRouter();
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA]">
-      <header className="flex justify-between items-start  my-3">
+      <header className="flex justify-between items-start ">
         <div className="flex flex-col items-start space-y-4 ">
           <h2 className="text-[18px] text-[#061A14] font-medium">
             Add employees and contractors

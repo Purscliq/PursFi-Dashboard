@@ -18,7 +18,7 @@ const Invoice = () => {
   }, [stats]);
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
-      <header className="flex flex-col space-y-9 my-4">
+      <header className="flex flex-col space-y-9 ">
         <div className="flex items-center justify-between ">
           <span>
             <h2 className="text-3xl font-bold mb-1"> Invoice </h2>

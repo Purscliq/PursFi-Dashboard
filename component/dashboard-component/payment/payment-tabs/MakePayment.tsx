@@ -78,7 +78,6 @@ const MakePayment = () => {
           }));
         })
         .catch((err) => {
-          console.log(err);
         });
   }, [acctdetails.accountNumber, acctdetails.bankCode]);
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {

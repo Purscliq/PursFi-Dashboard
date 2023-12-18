@@ -48,12 +48,7 @@ const PaymentLink = ({
               </Button>
             </Tooltip>
           </div>
-          <p className="font-semibold">Download Payment Flyer</p>
-          <div className="bg-[#D9D9D9] h-[12rem] w-full"></div>
         </div>{" "}
-        <Button className="!h-[3rem] !bg-black w-full text-white hover:!text-white">
-          Download Flyer
-        </Button>
       </div>{" "}
     </Modal>
   );

@@ -6,6 +6,7 @@ import RemitaWaec from "@/assets/icon/RemitaWaec";
 import RemitaWater from "@/assets/icon/RemitaWater";
 import { CustomSelect as Select } from "@/lib/AntdComponents";
 import { useRouter } from "next/navigation";
+import RemitaTable from "./RemitaTable";
 
 const Remita = () => {
   const date = new Date();
@@ -49,7 +50,7 @@ const Remita = () => {
   ];
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
-      <header className="flex flex-col md:flex-row justify-between items-center mt-8">
+      <header className="flex flex-col md:flex-row justify-between items-center ">
         <span>
           <h2 className="text-3xl font-bold mb-1">
             {" "}
@@ -90,6 +91,9 @@ const Remita = () => {
             <p className="text-[18px]">{item.title}</p>
           </div>
         ))}
+      </div>
+      <div className="mt-8">
+        <RemitaTable />
       </div>
     </div>
   );

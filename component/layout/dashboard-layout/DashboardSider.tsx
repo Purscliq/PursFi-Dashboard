@@ -51,19 +51,23 @@ const DashboardSider = () => {
   return (
     <div className="drawer-side z-10 ">
       <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-      <aside className="flex flex-col space-y-5 w-[16rem] h-screen overflow-hidden  shadow-xl bg-white px-4 py-2 overflow-y-scroll">
+      <aside className="flex flex-col space-y-4 w-[16rem] h-screen overflow-hidden  shadow-xl bg-white px-4 py-2 overflow-y-scroll">
         <Image src={logo} alt="logo" className="mx-auto" />
         <div className=" border border-gray-200" />
         <details className="dropdown">
-          <summary className=" flex space-x-2 items-center justify-center mx-2 my-4 p-2 bg-[#EEF2F7]">
+          <summary className=" flex space-x-2 items-center justify-center  my-4  ">
             {user?.profilePicture ? (
-              <Image
-                alt="logo"
-                className="rounded-full"
-                src={user?.profilePicture}
-                height={60}
-                width={60}
-              />
+              <div className="avatar">
+                <div className="w-12 rounded-full">
+                  <Image
+                    src={user.profilePicture}
+                    alt="User-pic"
+                    width={100}
+                    height={100}
+                    objectFit="center"
+                  />{" "}
+                </div>
+              </div>
             ) : (
               <Avatar
                 style={{ backgroundColor: "#CDA4FF" }}
@@ -74,7 +78,7 @@ const DashboardSider = () => {
               </Avatar>
             )}
             <span className="text-sm">
-              <p>
+              <p className="font-medium text-[16px]">
                 {" "}
                 {business?.businessName &&
                   business?.businessName?.charAt(0).toUpperCase() +
@@ -102,10 +106,10 @@ const DashboardSider = () => {
             </li>
           </ul>
         </details>
+        <div className=" border border-gray-200" />
 
-        {/* <div > */}
         <Dropdown
-          className="flex p-2 items-center justify-center mx-2 my-4 border rounded cursor-pointer"
+          className="flex p-2 items-center justify-center mx-2 my-4 border rounded cursor-pointer bg-[#FAFAFA]"
           menu={{ items }}
           trigger={["click"]}
         >
@@ -116,7 +120,8 @@ const DashboardSider = () => {
             </Space>
           </a>
         </Dropdown>
-        {/* </div> */}
+        <div className=" border border-gray-200" />
+
         <Menu
           selectedKeys={[activePath]}
           items={sidebarData}

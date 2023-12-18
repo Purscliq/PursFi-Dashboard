@@ -7,12 +7,18 @@ import {
   CustomButton as Button,
   CustomSelect as Select,
   CustomRadioGroup as RadioGroup,
+  CustomDatePicker as DatePicker,
+  CustomTimePicker as TimePicker,
 } from "@/lib/AntdComponents";
 import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
 import RemitaCable from "@/assets/icon/RemitaCable";
+import { useState } from "react";
+import dayjs from "dayjs";
 const Cable = () => {
   const { back } = useRouter();
+  const [selectedOption, setSelectedOption] = useState("");
+
   const options = [
     { label: "instant payment", value: "instant_payment" },
     { label: "Schedule Payment", value: "schedule_payment" },
@@ -134,8 +140,24 @@ const Cable = () => {
               id="tag"
               name="transactionCategory"
               options={options}
+              onChange={(e) => setSelectedOption(e.target.value)}
+
               className="!flex !justify-start !gap-[1rem]"
             />
+            {(selectedOption === options[2].value ||
+              selectedOption === options[1].value) && (
+              <span className="flex flex-col gap-1">
+                <label>Select Day</label>
+                <span className="flex items-center justify-between gap-[2rem]">
+                  <DatePicker picker="date" className="!w-full" />
+                  <TimePicker
+                    defaultValue={dayjs("12:08", "HH:mm")}
+                    format={"HH:mm"}
+                    className="!w-full "
+                  />
+                </span>
+              </span>
+            )}
 
             <div className="mt-4 space-y-3">
               <Button

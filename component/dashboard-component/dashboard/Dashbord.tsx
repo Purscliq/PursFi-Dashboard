@@ -27,7 +27,7 @@ const Dashbord = () => {
   const date = new Date();
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
-      <header className="flex flex-col md:flex-row justify-between items-center mt-8">
+      <header className="flex flex-col md:flex-row justify-between items-center ">
         <span>
           <h2 className="text-3xl font-bold mb-1"> Dashboard</h2>
           <p className="text-sm text-gray-600">
@@ -47,7 +47,7 @@ const Dashbord = () => {
             + Add Fund
           </button>
           <Select
-            className="!w-full !h-[2.5rem]"
+            className="!w-full !h-[2.7rem]"
             options={[
               { value: "1 month", label: "1 month" },
               { value: "2 month", label: "2 month" },

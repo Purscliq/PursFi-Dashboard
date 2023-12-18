@@ -25,13 +25,17 @@ const Persoanal = () => {
             <div>
               <label htmlFor="avatar" className="relative cursor-pointer block">
                 {profile?.profilePicture ? (
-                  <Image
-                    alt="logo"
-                    className="rounded-full"
-                    src={profile?.profilePicture}
-                    height={60}
-                    width={60}
-                  />
+                  <div className="avatar">
+                    <div className="w-20 rounded-full">
+                      <Image
+                        src={profile.profilePicture}
+                        alt="User-pic"
+                        width={100}
+                        height={100}
+                        objectFit="center"
+                       />{" "}
+                    </div>
+                  </div>
                 ) : (
                   <Avatar
                     style={{ backgroundColor: "#CDA4FF" }}
