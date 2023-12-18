@@ -52,11 +52,11 @@ const DashboardModal = ({
                     `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
                   )
                 }
-                className="border items-center  flex space-x-3 p-2 rounded-md"
+                icon={<FaRegCopy />}
+                className="border !items-center !flex space-x-3 p-2 rounded-md"
               >
-                <FaRegCopy className="text-blue-400" />
-                <p>copy</p>{" "}
-              </Button>{" "}
+                copy
+              </Button>
             </div>
           </form>{" "}
         </div>{" "}
