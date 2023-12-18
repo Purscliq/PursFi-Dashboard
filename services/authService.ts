@@ -187,8 +187,8 @@ const authSlice = ApiSlice.enhanceEndpoints({
           Accept: "application/json",
         },
         formData: true,
-        invalidatesTags: ["profile"],
       }),
+      invalidatesTags: ["profile"],
     }),
     updateBusinessLogo: builder.mutation({
       query: (body) => ({
@@ -200,8 +200,8 @@ const authSlice = ApiSlice.enhanceEndpoints({
           Accept: "application/json",
         },
         formData: true,
-        invalidatesTags: ["business"],
       }),
+      invalidatesTags: ["business"],
     }),
     updatePassword: builder.mutation({
       query: (body) => ({

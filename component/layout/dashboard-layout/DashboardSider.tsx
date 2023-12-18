@@ -56,17 +56,23 @@ const DashboardSider = () => {
         <div className=" border border-gray-200" />
         <details className="dropdown">
           <summary className=" flex space-x-2 items-center justify-center mx-2 my-4 p-2 bg-[#EEF2F7]">
-            <Avatar
-              style={{
-                backgroundColor: "#CDA4FF",
-                verticalAlign: "middle",
-              }}
-              size="large"
-              className="!uppercase"
-            >
-              {user?.firstName?.charAt(0)}
-              {user?.lastName?.charAt(0)}
-            </Avatar>
+            {user?.profilePicture ? (
+              <Image
+                alt="logo"
+                className="rounded-full"
+                src={user?.profilePicture}
+                height={60}
+                width={60}
+              />
+            ) : (
+              <Avatar
+                style={{ backgroundColor: "#CDA4FF" }}
+                size={60}
+                className="!text-sm text-black relative"
+              >
+                {`${user?.firstName.charAt(0)}${user?.lastName.charAt(0)}`}{" "}
+              </Avatar>
+            )}
             <span className="text-sm">
               <p>
                 {" "}

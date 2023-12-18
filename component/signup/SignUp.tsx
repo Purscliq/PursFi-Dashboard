@@ -40,7 +40,7 @@ const SignUp = () => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (!validationError && !confirmValidationError && cta)
-      register(formData)
+      register({ ...formData, email: formData.email.toLowerCase() })
         .unwrap()
         .then((res) => {
           generateOtp({ username: formData.phoneNumber })

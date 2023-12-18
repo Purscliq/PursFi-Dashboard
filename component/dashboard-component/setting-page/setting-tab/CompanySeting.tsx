@@ -22,7 +22,7 @@ const CompanySeting = () => {
           <h1 className="font-semibold text-sm">Business Logo</h1>
           <div className="flex items-center space-x-3 w-full md:w-[400px]">
             <div>
-              <label htmlFor="avatar" className="relative cursor-pointer">
+              <label htmlFor="avatar" className="relative cursor-pointer block">
                 {business?.logo ? (
                   <Image
                     alt="logo"
@@ -37,12 +37,14 @@ const CompanySeting = () => {
                     size={60}
                     className="!text-sm text-black relative"
                   >
-                    {`${business?.businessName?.charAt(0)}`}
+                    {business?.businessName?.charAt(0)}
                   </Avatar>
                 )}
-                <IoIosCamera className="absolute bottom-[-100%] right-[0%]" />
+                <IoIosCamera className="absolute bottom-[0%] right-[2%]" />
+                {isLoading && (
+                  <span className="loading loading-spinner loading-xs absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50"></span>
+                )}
               </label>
-              <p className="text-sm mt-1 font-medium"> Add photo</p>
             </div>
 
             <input

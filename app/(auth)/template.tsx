@@ -45,7 +45,8 @@ const Template = ({ children }: { children: React.ReactNode }) => {
             <Image src={logo} alt="logo" className="w-28 h-28" />
           </div>
           <div className="fixed inset-0 bg-black opacity-50 z-50" />
-          <div className="w-16 h-16 border-t-4 border-black border-solid rounded-full animate-spin z-50" />
+          {/* <div className="w-16 h-16 border-t-4 border-black border-solid rounded-full animate-spin z-50" /> */}
+          <span className="loading loading-spinner loading-lg"></span>
         </div>
       ) : (
         <>{children}</>

@@ -7,6 +7,7 @@ import {
   CustomButton as Button,
   CustomTable as Table,
 } from "@/lib/AntdComponents";
+import { message } from "antd";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 const taxableOptions = [
@@ -205,12 +206,22 @@ const StructureTable = ({
   const handleAdd = () => {
     const newData: DataType = {
       key: count,
-      name: "Base Salary",
-      percentage: 50,
+      name: "Enter Structure Title",
+      percentage: 0,
       tax: "Yes",
     };
-    setDataSource([...dataSource, newData]);
-    setCount(count + 1);
+    const percentage = dataSource.reduce(
+      (acc, curr) => acc + curr.percentage,
+      0
+    );
+    console.log(percentage);
+    if (percentage + newData.percentage >= 100) {
+      message.error("Total percentage cannot exceed 100%");
+      return;
+    } else {
+      setDataSource([...dataSource, newData]);
+      setCount(count + 1);
+    }
   };
 
   const handleSave = (row: DataType) => {

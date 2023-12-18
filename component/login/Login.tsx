@@ -23,7 +23,7 @@ const Login = () => {
   const [alert, setAlert] = useState("");
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    login(formData)
+    login({ ...formData, email: formData.email.toLowerCase() })
       .unwrap()
       .then((res) => {
         replace("/dashboard");
@@ -53,7 +53,9 @@ const Login = () => {
         <h1 className="font-semibold text-2xl mb-2 text-[#000000]">
           Welcome Back !
         </h1>
-        <p className=" text-gray-700 text-[18px]">Login to visit your dashboard</p>
+        <p className=" text-gray-700 text-[18px]">
+          Login to visit your dashboard
+        </p>
         <form onSubmit={handleSubmit} className="w-full space-y-5 mt-4">
           <div className="w-full flex flex-col items-start justify-start gap-[0.2rem]">
             <label

@@ -3,6 +3,7 @@ import { Avatar, message } from "antd";
 import { IoIosCamera } from "react-icons/io";
 import PhoneInput from "react-phone-input-2";
 import { useUpdateProfilePictureMutation } from "@/services/authService";
+import Image from "next/image";
 import "react-phone-input-2/lib/style.css";
 
 const Persoanal = () => {
@@ -22,17 +23,30 @@ const Persoanal = () => {
           <h1 className="font-semibold text-sm">Profile Photo</h1>
           <div className="flex items-center space-x-3 w-full md:w-[400px]">
             <div>
-              <label htmlFor="avatar" className="relative cursor-pointer">
-                <Avatar
-                  style={{ backgroundColor: "#CDA4FF" }}
-                  size={60}
-                  className="!text-sm text-black relative"
-                >
-                  {`${profile.firstName.charAt(0)}${profile.lastName.charAt(
-                    0
-                  )}`}{" "}
-                </Avatar>
-                <IoIosCamera className="absolute bottom-[-100%] right-[0%]" />
+              <label htmlFor="avatar" className="relative cursor-pointer block">
+                {profile?.profilePicture ? (
+                  <Image
+                    alt="logo"
+                    className="rounded-full"
+                    src={profile?.profilePicture}
+                    height={60}
+                    width={60}
+                  />
+                ) : (
+                  <Avatar
+                    style={{ backgroundColor: "#CDA4FF" }}
+                    size={60}
+                    className="!text-sm text-black relative"
+                  >
+                    {`${profile?.firstName.charAt(0)}${profile?.lastName.charAt(
+                      0
+                    )}`}{" "}
+                  </Avatar>
+                )}
+                <IoIosCamera className="absolute bottom-[0%] right-[2%]" />
+                {isLoading && (
+                  <span className="loading loading-spinner loading-xs absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"></span>
+                )}
               </label>
               <p className="text-sm mt-1 font-medium"> Add photo</p>
             </div>
