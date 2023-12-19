@@ -1,3 +1,4 @@
+"use client";
 import { useAppSelector } from "@/store/hooks";
 import { Avatar, message } from "antd";
 import { IoIosCamera } from "react-icons/io";
@@ -33,7 +34,7 @@ const Persoanal = () => {
                         width={100}
                         height={100}
                         objectFit="center"
-                       />{" "}
+                      />{" "}
                     </div>
                   </div>
                 ) : (

@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, Select, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { IoIosCamera } from "react-icons/io";
@@ -6,7 +7,7 @@ import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 
 const CompanySeting = () => {
-  const [updatePicture, { isLoading }] = useUpdateBusinessLogoMutation({});
+  const [updateBusinessLogo, { isLoading }] = useUpdateBusinessLogoMutation();
   const business = useAppSelector((store) => store.user.business);
   return (
     <div className="flex flex-col py-4 w-full space-y-3">
@@ -22,7 +23,10 @@ const CompanySeting = () => {
           <h1 className="font-semibold text-sm">Business Logo</h1>
           <div className="flex items-center space-x-3 w-full md:w-[400px]">
             <div>
-              <label htmlFor="avatar" className="relative cursor-pointer block">
+              <label
+                htmlFor="avatarbusiness"
+                className="relative cursor-pointer block"
+              >
                 {business?.logo ? (
                   <Image
                     alt="logo"
@@ -49,17 +53,18 @@ const CompanySeting = () => {
 
             <input
               type="file"
-              id="avatar"
+              id="avatarbusiness"
               accept="image/*"
               className="hidden w-full h-full cursor-pointer"
               onChange={(e) => {
                 if (e.target.files) {
                   const body = new FormData();
                   body.append("file", e.target.files[0]);
-                  updatePicture(body)
+                  updateBusinessLogo(body)
                     .unwrap()
                     .then((res) => {
                       message.success("profile picture updated");
+                      console.log("business photo updated");
                     })
                     .catch((err) => {
                       message.error(
