@@ -214,7 +214,7 @@ const AddMember = () => {
               Account Details
             </h6>
             <p className="text-[#515B6F] text-[16px] font-[400]">
-              Securely Enter Employees Necessary Bank Account Informatio
+              Securely Enter Employees Necessary Bank Account Information
             </p>
           </span>
           <span className="flex flex-col gap-4">

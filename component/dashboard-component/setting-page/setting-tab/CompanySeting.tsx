@@ -28,13 +28,17 @@ const CompanySeting = () => {
                 className="relative cursor-pointer block"
               >
                 {business?.logo ? (
-                  <Image
-                    alt="logo"
-                    className="rounded-full"
-                    src={business?.logo}
-                    height={60}
-                    width={60}
-                  />
+                  <div className="avatar">
+                    <div className="w-20 rounded-full">
+                      <Image
+                        src={business?.logo}
+                        alt="User-pic"
+                        width={100}
+                        height={100}
+                        objectFit="center"
+                      />{" "}
+                    </div>
+                  </div>
                 ) : (
                   <Avatar
                     style={{ backgroundColor: "#CDA4FF" }}
