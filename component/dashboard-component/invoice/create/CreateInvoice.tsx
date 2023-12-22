@@ -104,7 +104,7 @@ const CreateInvoice = () => {
           <p className="text-gray-500">{profile?.phoneNumber}</p>
           {/* <p className="font-semibold  mt-4">Click here to edit address</p> */}
         </span>
-        <Image src={business?.logo || logo} alt="logo" className="" />
+        <Image src={business?.logo || logo} alt="logo" className=""  width={100} height={100}/>
       </div>
       <hr />{" "}
       <div className="flex items-center justify-between">

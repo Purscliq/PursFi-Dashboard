@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import {
@@ -8,6 +8,8 @@ import {
 } from "@/lib/AntdComponents";
 import { ColumnsType } from "antd/es/table";
 import InvoicePaymentModal from "./InvoicePaymentModal";
+import { useLazyVerifyInvoiceQuery, useVerifyInvoiceQuery } from "@/services/invoiceService";
+import { useSearchParams } from "next/navigation";
 interface DataType {
   key: string;
   title: string;
@@ -92,9 +94,26 @@ const data: DataType[] = [
   },
 ];
 const InvoiceGateway = () => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("");
+  const [getInvoice, { isLoading, data }] = useLazyVerifyInvoiceQuery();
+  useEffect(() => {
+    if (search) getInvoice(search);
+  }, [search]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
+    {isLoading ? (
+      <div className="relative h-screen flex items-center justify-center bg-[#FAFAFA]">
+        <div className="fixed top-0 left-0 px-6 py-4">
+          <Image src={logo} alt="logo" className="w-28 h-28" />
+        </div>
+        <div className="fixed inset-0 bg-black opacity-50 z-50" />
+        <div className="w-16 h-16 border-t-4 border-black border-solid rounded-full animate-spin z-50" />
+      </div>
+    ) : (
+   <>
       <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA] relative">
         <nav className="py-4 px-8 bg-white flex justify-between items-center sticky top-0">
           <Image src={logo} alt="logo" />
@@ -202,7 +221,8 @@ const InvoiceGateway = () => {
           </Button>
         </footer>
       </div>
-      <InvoicePaymentModal open={isModalOpen} setOpen={setIsModalOpen} />
+      <InvoicePaymentModal open={isModalOpen} setOpen={setIsModalOpen} /></>
+    )}
     </>
   );
 };

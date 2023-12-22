@@ -23,9 +23,9 @@ const invoiceSlice = ApiSlice.enhanceEndpoints({
         url: `invoice/history?time=${body?.time}`,
       }),
     }),
-    verifyInvoice: builder.query({
-      query: () => ({
-        url: "invoice/history",
+    VerifyInvoice: builder.query({
+      query: (reference) => ({
+        url: `invoice/verify?reference=${reference}`,
       }),
     }),
   }),
@@ -34,7 +34,10 @@ const invoiceSlice = ApiSlice.enhanceEndpoints({
 export const {
   useCreateInvoiceMutation,
   useVerifyInvoiceQuery,
+  useLazyVerifyInvoiceQuery,
   useInvoiceHistoryMutation,
   useInvoiceStatusQuery,
   useLazyInvoiceStatusQuery,
+
+
 } = invoiceSlice;
