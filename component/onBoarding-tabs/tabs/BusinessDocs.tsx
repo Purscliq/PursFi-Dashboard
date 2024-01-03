@@ -37,15 +37,10 @@ const BusinessDocs = ({
   };
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    if (
-      formData?.certIncorporation &&
-      formData?.memorandumAssociation &&
-      formData?.cac &&
-      formData?.bills
-    ) {
+    if (formData?.cac && formData?.bills) {
       setActive("4");
     } else {
-      message.error("Please upload all documents");
+      message.error("cac and utitlity bills are required");
     }
   };
   const handleChange: ChangeEventHandler<

@@ -1,13 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
+import { message } from "antd";
 import {
   CustomButton as Button,
   CustomTable as Table,
 } from "@/lib/AntdComponents";
 import { ColumnsType } from "antd/es/table";
 import InvoicePaymentModal from "./InvoicePaymentModal";
+import { useSearchParams } from "next/navigation";
+import { useLazyVerifyInvoiceQuery } from "@/services/invoiceService";
 interface DataType {
   key: string;
   title: string;
@@ -47,7 +50,7 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
+const dataArr: DataType[] = [
   {
     key: "1",
     title: "Item 1",
@@ -92,7 +95,19 @@ const data: DataType[] = [
   },
 ];
 const InvoiceGateway = () => {
+  const params = useSearchParams();
+  const [fetchVerifyInvoice, { isLoading, data }] = useLazyVerifyInvoiceQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  useEffect(() => {
+    if (params.get("reference")) {
+      fetchVerifyInvoice(params.get("reference"))
+        .unwrap()
+        .then((res) => console.log(res))
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [params.get("reference")]);
   return (
     <>
       <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA] relative">
@@ -157,7 +172,7 @@ const InvoiceGateway = () => {
             <Table
               className="!w-full"
               columns={columns}
-              dataSource={data}
+              dataSource={dataArr}
               pagination={false}
               scroll={{ y: 200 }}
             />
@@ -192,7 +207,7 @@ const InvoiceGateway = () => {
           </div>
         </main>
         <footer className="py-4 px-8 bg-white flex justify-end items-center gap-1 sticky bottom-0">
-          <Button>Download Invoice</Button>
+          <Button onClick={() => window.print()}>Download Invoice</Button>
           <Button
             onClick={() => setIsModalOpen(true)}
             type="primary"
