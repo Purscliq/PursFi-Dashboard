@@ -98,7 +98,7 @@ const Request = () => {
       ),
       dataIndex: "status",
       render: (type) =>
-        type === "failed" ? (
+        type === "unpaid" ? (
           <span className="p-[4%] rounded-[80px] bg-[#FF39561A]/[10%] text-[#FF3956] text-center  text-[14px] font-[600]">
             {type}
           </span>

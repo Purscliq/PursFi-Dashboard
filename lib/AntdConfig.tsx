@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { StyleProvider, createCache, extractStyle } from "@ant-design/cssinjs";
 import { useServerInsertedHTML } from "next/navigation";
 

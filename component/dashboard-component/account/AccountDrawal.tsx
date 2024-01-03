@@ -99,7 +99,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
               <p className="text-slate-500 text-md">{`${data?.data?.domain} transaction`}</p>
             </span>
             <div className="my-6 space-y-4">
-              <Button
+              {/* <Button
                 type="primary"
                 className="!h-[3rem] !bg-[#000] w-full text-white hover:!text-white"
               >
@@ -107,7 +107,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
               </Button>
               <Button className="!h-[3rem] !bg-transparent w-full">
                 Report Transaction
-              </Button>
+              </Button> */}
             </div>
           </>
         )}

@@ -31,8 +31,8 @@ const AsideBar = () => {
             <span className="text-sm">
               <p>
                 {business?.businessName &&
-                  business.businessName.charAt(0).toUpperCase() +
-                    business.businessName.slice(1)}
+                  business?.businessName?.charAt(0).toUpperCase() +
+                    business?.businessName?.slice(1)}
               </p>
 
               <p>

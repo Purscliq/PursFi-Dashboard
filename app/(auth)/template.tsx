@@ -19,10 +19,10 @@ const Template = ({ children }: { children: React.ReactNode }) => {
   const { business, user } = useAppSelector((state) => state.user);
   useEffect(() => {
     if (user?.id) {
-      if (!user?.isPhoneValidated && user?.id) {
-        push("/signup-otp");
-        return;
-      }
+      // if (!user?.isPhoneValidated && user?.id) {
+      //   push("/signup-otp");
+      //   return;
+      // }
       if (!business?.id && isError) {
         push("/signup-business");
         return;

@@ -22,8 +22,8 @@ const SuccessfulPaymentModal = ({
         <SuccessModalLogo />
         <h4 className="text-[28px] font-[700]">Successful</h4>
         <p className="text-[#515B6F] text-[18px] font-[400] text-center">
-          We have sent a confirmation email to the address you provided. This
-          verification link is only good for 24 hours.
+          Transaction successfull and the payment is is currently being
+          processed .
         </p>
       </div>
     </Modal>
