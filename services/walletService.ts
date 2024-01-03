@@ -33,7 +33,12 @@ const walletSlice = ApiSlice.injectEndpoints({
         return arr;
       },
     }),
+    getWalletDetails: builder.query({
+      query:(id)=>({
+        url:`wallet/account/details?businessId=${id}`,
+      })
+    })
   }),
 });
 
-export const { useGetWalletQuery, useGetWalletHistoryQuery } = walletSlice;
+export const { useGetWalletQuery, useGetWalletHistoryQuery ,useGetWalletDetailsQuery,useLazyGetWalletDetailsQuery} = walletSlice;
