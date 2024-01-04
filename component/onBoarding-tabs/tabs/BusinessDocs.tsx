@@ -144,7 +144,7 @@ const BusinessDocs = ({
               A memorandum of association - a legal statement signed by all
               initial shareholders or guarantors agreeing to form the company.
               articles of association - written rules about running the company
-              agreed by the shareholders Note:(PDF,JPEG,PNG only) Limited 5mb
+              agreed by the shareholders Note:JPEG only Limited 5mb
             </p>
           </div>
           <div className=" w-2/4">
