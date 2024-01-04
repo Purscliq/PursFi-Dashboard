@@ -77,8 +77,7 @@ const MakePayment = () => {
             accountName: res?.data?.data,
           }));
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
   }, [acctdetails.accountNumber, acctdetails.bankCode]);
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -290,7 +289,10 @@ const MakePayment = () => {
                 defaultValue={dayjs("12:08", "HH:mm")}
                 format={"HH:mm"}
                 onChange={(value, date) => {
-                  setFormdata((prev) => ({ ...prev, hour: date }));
+                  setFormdata((prev) => ({
+                    ...prev,
+                    hour: date.split(":")[0],
+                  }));
                 }}
                 className="!w-full "
               />
