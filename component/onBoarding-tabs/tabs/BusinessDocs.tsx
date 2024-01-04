@@ -207,7 +207,7 @@ const BusinessDocs = ({
                       ...prev,
                       cac: file,
                     }));
-                  return;
+                  return false;
                 }}
                 className="border border-dashed h-[80px] p-4"
               >
@@ -243,7 +243,7 @@ const BusinessDocs = ({
                       ...prev,
                       bills: file,
                     }));
-                  return;
+                  return false;
                 }}
                 className="border border-dashed h-[80px] p-4"
               >

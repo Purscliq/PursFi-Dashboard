@@ -24,7 +24,7 @@ const Template = ({ children }: { children: React.ReactNode }) => {
       //   push("/signup-otp");
       //   return;
       // }
-      if (!business?.id && isError) {
+      if (!business?.id && isError && user?.id) {
         push("/signup-business");
         return;
       }
