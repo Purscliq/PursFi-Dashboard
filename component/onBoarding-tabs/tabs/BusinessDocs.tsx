@@ -37,7 +37,7 @@ const BusinessDocs = ({
   };
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    if (formData?.cac && formData?.bills) {
+    if (formData?.certIncorporation && formData?.bills) {
       setActive("4");
     } else {
       message.error("cac and utitlity bills are required");
@@ -194,7 +194,7 @@ const BusinessDocs = ({
           <div className=" w-2/4">
             <div className="grid grid-cols-1 gap-[0.1rem] items-stretch">
               <label className="block text-gray-700 text-sm font-semibold mb-2">
-                Attach your cooperate affairs commission{" "}
+                Attach your corperate affairs commission{" "}
               </label>
               <Upload
                 {...props}
