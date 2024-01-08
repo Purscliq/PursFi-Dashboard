@@ -274,7 +274,7 @@ const SignUp = () => {
               accept the{" "}
               <span className="">
                 <a
-                  href="https://purscliq.ng/terms/"
+                  href="https://pursfinance.com/terms/"
                   className="underline font-semibold text-black"
                 >
                   {" "}
@@ -282,7 +282,7 @@ const SignUp = () => {
                 </a>{" "}
                 and{" "}
                 <a
-                  href="https://purscliq.ng/privacy-policy/"
+                  href="https://pursfinance.com/privacy-policy/"
                   className="underline font-semibold text-black"
                 >
                   Privacy Policy
