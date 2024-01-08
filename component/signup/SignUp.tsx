@@ -18,6 +18,7 @@ import {
 } from "@/services/authService";
 import { passwordSchema } from "@/lib/validationSchema";
 import { useState, ChangeEventHandler, FormEventHandler } from "react";
+import { useLazyProfileQuery } from "@/services/authService";
 
 const initailState = {
   firstName: "",
@@ -31,6 +32,7 @@ const initailState = {
 const SignUp = () => {
   const { replace } = useRouter();
   const [register, { isLoading }] = useRegisterMutation();
+  const [getUser, { isLoading: isLoadingProfile }] = useLazyProfileQuery();
   const [generateOtp, { isLoading: isGenerating }] = useGenerateOtpMutation();
   const [formData, setFormData] = useState(initailState);
   const [cta, setCta] = useState(false);
@@ -43,13 +45,11 @@ const SignUp = () => {
       register({ ...formData, email: formData.email.toLowerCase() })
         .unwrap()
         .then((res) => {
-          replace("/signup-business");
-          // generateOtp({ username: formData.phoneNumber })
-          //   .unwrap()
-          //   .finally(() => {
-          //     setFormData(initailState);
-          //     replace("/signup-otp");
-          //   });
+          getUser({})
+            .unwrap()
+            .then(() => {
+              replace("/signup-business");
+            });
         })
         .catch((err) => {
           setAlert(
@@ -291,7 +291,7 @@ const SignUp = () => {
             </label>
           </div>
           <Button
-            loading={isLoading || isGenerating}
+            loading={isLoading || isGenerating || isLoadingProfile}
             htmlType="submit"
             type="primary"
             className="!h-[3rem] !bg-black w-full"

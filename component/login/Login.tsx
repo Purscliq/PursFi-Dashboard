@@ -11,6 +11,11 @@ import { Alert } from "antd";
 import { useLoginMutation } from "@/services/authService";
 import { useState, ChangeEventHandler, FormEventHandler } from "react";
 import { useRouter } from "next/navigation";
+import {
+  useLazyProfileQuery,
+  useLazyBusinessProfileQuery,
+} from "@/services/authService";
+import { useAppSelector } from "@/store/hooks";
 
 const initailState = {
   email: "",
@@ -21,12 +26,38 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation();
   const [formData, setFormData] = useState(initailState);
   const [alert, setAlert] = useState("");
+  const { business, user } = useAppSelector((state) => state.user);
+  const [getUserProfile, { isLoading: userProfileLoading }] =
+    useLazyProfileQuery();
+  const [getBusinessProfile, { isLoading: businessProfileLoading }] =
+    useLazyBusinessProfileQuery();
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     login({ ...formData, email: formData.email.toLowerCase() })
       .unwrap()
       .then((res) => {
-        replace("/dashboard");
+        getUserProfile({})
+          .unwrap()
+          .then((res) => {
+            console.log(res);
+            if (!res?.user?.businessId) {
+              replace("/signup-business");
+              return;
+            }
+            if (!res?.user?.isEmailValidated) {
+              replace("/verifyEmail");
+              return;
+            }
+            getBusinessProfile({})
+              .unwrap()
+              .then((res) => {
+                if (!res?.business?.isOnboardingCompleted) {
+                  replace("/onboarding");
+                  return;
+                }
+                replace("/dashboard");
+              });
+          });
       })
       .catch((err) => {
         setAlert(
@@ -94,7 +125,7 @@ const Login = () => {
             />
           </div>
           <Button
-            loading={isLoading}
+            loading={isLoading || userProfileLoading || businessProfileLoading}
             htmlType="submit"
             type="primary"
             className="!h-[3rem] !bg-black w-full"

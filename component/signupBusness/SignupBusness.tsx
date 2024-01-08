@@ -12,6 +12,7 @@ import { useFetchCountryQuery } from "@/services/country";
 import {
   useCreateBusinessMutation,
   useGenerateEmailOtpMutation,
+  useLazyBusinessProfileQuery,
 } from "@/services/authService";
 import { useState, ChangeEventHandler, FormEventHandler } from "react";
 import { useAppSelector } from "@/store/hooks";
@@ -27,6 +28,8 @@ const SignupBusness = () => {
   const { replace } = useRouter();
   const { data } = useFetchCountryQuery({});
   const [create, { isLoading }] = useCreateBusinessMutation();
+  const [getBusinessProfile, { isLoading: isBusinessProfileLoading }] =
+    useLazyBusinessProfileQuery();
   const [generateMail, {}] = useGenerateEmailOtpMutation();
   const profile = useAppSelector((store) => store.user.user);
   const [selectedCountry, setSelectedCountry] = useState(
@@ -39,7 +42,7 @@ const SignupBusness = () => {
     create(formData)
       .unwrap()
       .then((res) => {
-        message.success(res?.data?.responseDescription || "success");
+        getBusinessProfile({});
         generateMail({ username: profile?.email })
           .unwrap()
           .then(() => {
@@ -165,7 +168,7 @@ const SignupBusness = () => {
             />
           </div>
           <Button
-            loading={isLoading}
+            loading={isLoading || isBusinessProfileLoading}
             htmlType="submit"
             type="primary"
             className="!h-[3rem] !bg-black w-full"

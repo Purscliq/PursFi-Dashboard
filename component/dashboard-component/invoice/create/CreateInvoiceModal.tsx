@@ -1,3 +1,5 @@
+"use client";
+import { useRouter } from "next/navigation";
 import { Modal, message } from "antd";
 import { FormEventHandler, ChangeEventHandler } from "react";
 import {
@@ -10,19 +12,22 @@ import { dataType } from "./CreateInvoice";
 import { useCreateInvoiceMutation } from "@/services/invoiceService";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import ErrorList from "antd/es/form/ErrorList";
+import { initialState } from "./CreateInvoice";
 const CreateInvoiceModal = ({
   open,
   setOpen,
   formData,
   setFormData,
+  setDataSource,
 }: {
   open: boolean;
   setOpen: (value: boolean) => void;
   formData: dataType;
   setFormData: React.Dispatch<React.SetStateAction<dataType>>;
+  setDataSource: React.Dispatch<React.SetStateAction<any[]>>;
 }) => {
   const [createInvoice, { isLoading }] = useCreateInvoiceMutation();
+  const { replace } = useRouter();
   const onInputChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > = (e) => {
@@ -31,14 +36,32 @@ const CreateInvoiceModal = ({
   };
   const onFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    createInvoice({ ...formData })
+    if (!formData?.ClientPhone) {
+      message.error("please provide Client Phone");
+      return;
+    }
+    createInvoice(formData)
       .unwrap()
       .then((res) => {
-        console.log(res);
         message.success("invoice sent");
+        setFormData(initialState);
+        setOpen(false);
+        setDataSource([
+          {
+            key: 0,
+            itemName: "enter item name...",
+            itemPrice: 0,
+            itemQty: 0,
+          },
+        ]);
+        replace(`invoice-gateway?reference=${res?.data?.reference}`);
       })
       .catch((err) => {
-        console.log(ErrorList);
+        message.error(
+          err?.data?.responseDescription ||
+            err?.data?.title ||
+            "something went wrong"
+        );
       });
   };
   return (
@@ -146,7 +169,7 @@ const CreateInvoiceModal = ({
               htmlType="submit"
               className="!h-[3rem] !bg-black w-full text-white hover:!text-white"
             >
-              Send invite
+              Send invoice
             </Button>
             <Button
               onClick={() => setOpen(false)}
