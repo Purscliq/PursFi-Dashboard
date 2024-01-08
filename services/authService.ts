@@ -230,6 +230,8 @@ export const {
   useForgotPasswordMutation,
   useGenerateOtpMutation,
   useProfileQuery,
+  useLazyBusinessProfileQuery,
+  useLazyProfileQuery,
   useRefreshMutation,
   useResetPasswordMutation,
   useValidateOtpMutation,

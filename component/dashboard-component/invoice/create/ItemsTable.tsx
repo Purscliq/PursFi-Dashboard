@@ -221,7 +221,7 @@ const ItemsTable = ({
     setFormData((prev) => ({
       ...prev,
       amount: total,
-      tax: "",
+      tax: 0,
       taxPercent: 0,
       discount: 0,
       discountPercent: 0,
