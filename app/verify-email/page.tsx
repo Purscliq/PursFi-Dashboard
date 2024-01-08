@@ -21,7 +21,7 @@ const Page = () => {
         replace("/");
       })
       .catch((err) => {
-        message.success(
+        message.error(
           err?.data?.responseDescription ||
             err?.responseDescription ||
             "something went wrong"
