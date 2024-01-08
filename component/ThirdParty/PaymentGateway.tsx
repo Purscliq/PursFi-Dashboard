@@ -9,17 +9,23 @@ import {
 import { FaRegCopy } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
 import { useLazyGetWalletDetailsQuery } from "@/services/walletService";
+import { message } from "antd";
 const PaymentGateway = () => {
   const searchParams = useSearchParams();
-  const search = searchParams.get("businessId");
-  const [fetchWallet, { isLoading, data }] = useLazyGetWalletDetailsQuery();
+  const [fetchWallet, { isLoading, data, isUninitialized }] =
+    useLazyGetWalletDetailsQuery();
   useEffect(() => {
-    if (search) fetchWallet(search);
-  }, [search]);
+    if (searchParams.get("businessId"))
+      fetchWallet(searchParams.get("businessId"))
+        .unwrap()
+        .catch((err) => {
+          message.error("something went wrong");
+        });
+  }, []);
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || isUninitialized ? (
         <div className="relative h-screen flex items-center justify-center bg-[#FAFAFA]">
           <div className="fixed top-0 left-0 px-6 py-4">
             <Image src={logo} alt="logo" className="w-28 h-28" />
@@ -63,9 +69,7 @@ const PaymentGateway = () => {
                     <span className="space-y-3">
                       <p className="font-medium ">Bank Transfer</p>
                       <p>Bank Name - {data?.data?.bankName}</p>{" "}
-                      <p>
-                        Account Number - {data?.data?.accountNumber}
-                      </p>
+                      <p>Account Number - {data?.data?.accountNumber}</p>
                       <p>Account Name - {data?.data?.accountName}</p>
                     </span>{" "}
                     <Button

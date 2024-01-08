@@ -43,12 +43,13 @@ const SignUp = () => {
       register({ ...formData, email: formData.email.toLowerCase() })
         .unwrap()
         .then((res) => {
-          generateOtp({ username: formData.phoneNumber })
-            .unwrap()
-            .finally(() => {
-              setFormData(initailState);
-              replace("/signup-otp");
-            });
+          replace("/signup-business");
+          // generateOtp({ username: formData.phoneNumber })
+          //   .unwrap()
+          //   .finally(() => {
+          //     setFormData(initailState);
+          //     replace("/signup-otp");
+          //   });
         })
         .catch((err) => {
           setAlert(

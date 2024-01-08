@@ -1,7 +1,7 @@
-import SignIn from "@/component/signup/SignUp";
+import SignUp from "@/component/signup/SignUp";
 
 const page = () => {
-  return <SignIn />;
+  return <SignUp />;
 };
 
 export default page;

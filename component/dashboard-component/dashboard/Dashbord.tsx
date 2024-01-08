@@ -84,7 +84,6 @@ const Dashbord = () => {
                   "en-US"
                 )}
               </p>
-
             </div>
           </article>
           <div className="my-4 bg-white p-[2%]">
@@ -139,7 +138,7 @@ const Dashbord = () => {
                 <p>Schedule Payment</p>
                 <p>{status?.data?.schedulePaymentLength}</p>
               </span>
-              <Link href="" className="underline">
+              <Link href="/payment?activeKey=2" className="underline">
                 View
               </Link>
             </div>
@@ -148,7 +147,7 @@ const Dashbord = () => {
                 <p>Recurring Payment</p>
                 <p>{status?.data?.recurringPaymentLength}</p>
               </span>
-              <Link href="/payment" className="underline">
+              <Link href="/payment?activeKey=3" className="underline">
                 View
               </Link>
             </div>

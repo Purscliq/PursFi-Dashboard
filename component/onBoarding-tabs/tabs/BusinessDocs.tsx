@@ -37,15 +37,10 @@ const BusinessDocs = ({
   };
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    if (
-      formData?.certIncorporation &&
-      formData?.memorandumAssociation &&
-      formData?.cac &&
-      formData?.bills
-    ) {
+    if (formData?.certIncorporation && formData?.bills) {
       setActive("4");
     } else {
-      message.error("Please upload all documents");
+      message.error("cac and utitlity bills are required");
     }
   };
   const handleChange: ChangeEventHandler<
@@ -149,7 +144,7 @@ const BusinessDocs = ({
               A memorandum of association - a legal statement signed by all
               initial shareholders or guarantors agreeing to form the company.
               articles of association - written rules about running the company
-              agreed by the shareholders Note:(PDF,JPEG,PNG only) Limited 5mb
+              agreed by the shareholders Note:JPEG only Limited 5mb
             </p>
           </div>
           <div className=" w-2/4">
@@ -199,7 +194,7 @@ const BusinessDocs = ({
           <div className=" w-2/4">
             <div className="grid grid-cols-1 gap-[0.1rem] items-stretch">
               <label className="block text-gray-700 text-sm font-semibold mb-2">
-                Attach your cooperate affairs commission{" "}
+                Attach your corperate affairs commission{" "}
               </label>
               <Upload
                 {...props}
@@ -212,7 +207,7 @@ const BusinessDocs = ({
                       ...prev,
                       cac: file,
                     }));
-                  return;
+                  return false;
                 }}
                 className="border border-dashed h-[80px] p-4"
               >
@@ -248,7 +243,7 @@ const BusinessDocs = ({
                       ...prev,
                       bills: file,
                     }));
-                  return;
+                  return false;
                 }}
                 className="border border-dashed h-[80px] p-4"
               >

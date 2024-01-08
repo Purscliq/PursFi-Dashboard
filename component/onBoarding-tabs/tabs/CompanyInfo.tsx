@@ -232,7 +232,7 @@ const CompanyInfo = ({
                 className="block text-gray-700 text-sm font-semibold mb-2"
                 htmlFor="text"
               >
-                Company adress
+                Company address
               </label>
               <Input
                 name="Address"

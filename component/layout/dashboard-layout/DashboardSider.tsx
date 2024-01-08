@@ -74,7 +74,7 @@ const DashboardSider = () => {
                 size={60}
                 className="!text-sm text-black relative"
               >
-                {`${user?.firstName.charAt(0)}${user?.lastName.charAt(0)}`}{" "}
+                {`${user?.firstName?.charAt(0)}${user?.lastName?.charAt(0)}`}{" "}
               </Avatar>
             )}
             <span className="text-sm">
