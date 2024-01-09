@@ -23,7 +23,7 @@ const Dashbord = () => {
   const { data: stats } = useGetWalletHistoryQuery({});
   const { data: analysis } = useGetExpensesQuery({});
   const { data: status } = useGetTransactionStatusQuery("");
-  const wallet = useAppSelector((store) => store.user.wallet);
+  const wallet = useAppSelector((store) => store?.user?.wallet);
   const date = new Date();
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
@@ -80,6 +80,7 @@ const Dashbord = () => {
                 <ArrowRight />
               </div>
               <p className="text-2xl font-semibold">
+                N
                 {Number(analysis?.data?.todayBalance || 0).toLocaleString(
                   "en-US"
                 )}
@@ -171,7 +172,7 @@ const Dashbord = () => {
                   )}
                 </p>
               </div>
-              <Select
+              {/* <Select
                 style={{ width: "50%" }}
                 options={[
                   { value: "2 months", label: "2 months" },
@@ -179,7 +180,7 @@ const Dashbord = () => {
                   { value: "4-5 months", label: "4-5 months" },
                 ]}
                 placeholder="1 Months"
-              />{" "}
+              />{" "} */}
             </div>
             <p className="text-gray-400 text-sm text-center">
               you can check where your money come and go here
@@ -218,14 +219,14 @@ const Dashbord = () => {
                   )}
                 </p>
               </div>
-              <Select
+              {/* <Select
                 style={{ width: "50%" }}
                 options={[
                   { value: "jack", label: "Jack" },
                   { value: "lucy", label: "Lucy" },
                 ]}
                 placeholder="1 Months"
-              />{" "}
+              />{" "} */}
             </div>
             <p className="text-gray-400 text-sm text-center">
               you can check where your money come and go here

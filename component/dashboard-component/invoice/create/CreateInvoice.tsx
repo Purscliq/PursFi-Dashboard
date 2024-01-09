@@ -53,9 +53,9 @@ export const initialState = {
 };
 export type dataType = typeof initialState;
 const CreateInvoice = () => {
-  const business = useAppSelector((store) => store.user.business);
-  const profile = useAppSelector((store) => store.user.user);
-  const wallet = useAppSelector((store) => store.user.wallet);
+  const business = useAppSelector((store) => store?.user?.business);
+  const profile = useAppSelector((store) => store?.user?.user);
+  const wallet = useAppSelector((store) => store?.user?.wallet);
   const [formData, setFormData] = useState({
     ...initialState,
     SenderMail: profile?.email,

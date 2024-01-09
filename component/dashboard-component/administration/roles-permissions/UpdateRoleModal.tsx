@@ -81,7 +81,7 @@ const UpdateRoleModal = ({
         });
     }
   }, [id]);
-  const businessProfile = useAppSelector((state) => state.user.business);
+  const businessProfile = useAppSelector((state) => state?.user?.business);
   const { data } = useGetPermissionsQuery({});
   const [updateRole, { isLoading }] = useUpdateRoleMutation();
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {

@@ -18,7 +18,7 @@ export type docsData = {
   phone: string;
 };
 const OnBoardingTabs = () => {
-  const businessProfile = useAppSelector((state) => state.user.business);
+  const businessProfile = useAppSelector((state) => state?.user?.business);
   const [formData, setFormData] = useState<docsData>({
     Address: businessProfile?.business?.businessAddress,
     Description: businessProfile?.business?.businessDescription || "",

@@ -12,7 +12,7 @@ import { message, Alert } from "antd";
 import { updateUser } from "@/store/userSlice";
 const EditNum = () => {
   const dispatch = useAppDispatch();
-  const profile = useAppSelector((store) => store.user.user);
+  const profile = useAppSelector((store) => store?.user?.user);
   const { replace } = useRouter();
   const [requestOtp, { isLoading }] = useGenerateOtpMutation();
   const [username, setUserName] = useState("");

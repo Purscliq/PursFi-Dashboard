@@ -36,7 +36,7 @@ const initialState = {
 
 const TransactionTable = () => {
   const [fetchTransactions, { isLoading, data }] = useTransactionsMutation();
-  const profile = useAppSelector((store) => store.user.user);
+  const profile = useAppSelector((store) => store?.user?.user);
   // const [data, setData] = useState<DataType[]>();
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {

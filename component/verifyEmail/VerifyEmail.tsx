@@ -9,7 +9,7 @@ import { useGenerateEmailOtpMutation } from "@/services/authService";
 import { useAppSelector } from "@/store/hooks";
 const VerifyEmail = () => {
   const [generateMail, { isLoading }] = useGenerateEmailOtpMutation();
-  const data = useAppSelector((state) => state.user.user);
+  const data = useAppSelector((state) => state?.user?.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [alert, setAlert] = useState("");
   const Verify = () =>

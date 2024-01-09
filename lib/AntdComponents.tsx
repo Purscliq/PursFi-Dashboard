@@ -32,6 +32,8 @@ import {
   SpinProps,
   Tooltip,
   TooltipProps,
+  Modal,
+  ModalProps,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -245,5 +247,11 @@ export const CustomSpinner = ({ ...props }: SpinProps) => (
 export const CustomTooltip = ({ ...props }: TooltipProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <Tooltip {...props} />
+  </ConfigProvider>
+);
+
+export const CustomModal = ({ ...props }: ModalProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Modal {...props} />
   </ConfigProvider>
 );

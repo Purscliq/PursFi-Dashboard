@@ -23,7 +23,7 @@ const StatementModal = ({
 }) => {
   const [formData, setFormData] = useState(initialState);
   const [generateStatement, { isLoading }] = useGenerateStatementMutation();
-  const profile = useAppSelector((store) => store.user.user);
+  const profile = useAppSelector((store) => store?.user?.user);
   const onFormSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     if (formData.startDate && formData.endDate)

@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const CompanySeting = () => {
   const [updateBusinessLogo, { isLoading }] = useUpdateBusinessLogoMutation();
-  const business = useAppSelector((store) => store.user.business);
+  const business = useAppSelector((store) => store?.user?.business);
   return (
     <div className="flex flex-col py-4 w-full space-y-3">
       <span>

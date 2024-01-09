@@ -44,7 +44,7 @@ const InvoiceTable = ({ status }: { status: string }) => {
   //         (item) => item.status.toLowerCase() === status.toLowerCase()
   //       );
   const [getInvoice, { isLoading, data }] = useInvoiceHistoryMutation();
-  const profile = useAppSelector((store) => store.user.user);
+  const profile = useAppSelector((store) => store?.user?.user);
   const [filter, setFilter] = useState(false);
   const [tableFilter, setTableFilter] = useState(initialState);
   const [tableParams, setTableParams] = useState<TableParams>({

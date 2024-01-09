@@ -26,7 +26,7 @@ const RoleModal = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
-  const businessProfile = useAppSelector((state) => state.user.business);
+  const businessProfile = useAppSelector((state) => state?.user?.business);
   const [formData, setFormData] = useState(initialState);
   // const [roles, setRoles] = useState<DataType[]>([]);
   const { data } = useGetPermissionsQuery({});

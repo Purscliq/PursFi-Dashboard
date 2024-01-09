@@ -12,7 +12,7 @@ const PaymentLink = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
-  const wallet = useAppSelector((store) => store.user.wallet);
+  const wallet = useAppSelector((store) => store?.user?.wallet);
   return (
     <Modal
       open={open}
@@ -29,7 +29,7 @@ const PaymentLink = ({
         </p>
         <div className="w-full space-y-6 py-4 mt-4">
           <p className="font-semibold">
-            Share this link to get paid directly to your pursbusiness account
+            Share this link to get paid directly to your PursFinance account
           </p>
           <div className=" border rounded-md flex items-center space-x-2 p-2">
             <textarea

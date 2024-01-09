@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 const DashboardSider = () => {
   const pathName = usePathname();
   const dispatch = useAppDispatch();
-  const { user, business } = useAppSelector((store) => store.user);
+  const { user, business } = useAppSelector((store) => store?.user);
   const [activePath, setActivePath] = useState("");
   const { push } = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);

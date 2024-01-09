@@ -89,7 +89,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                 </div>
                 <div className="text-slate-500 pr-2">Source:</div>
                 <div className="leading-tight font-semibold">
-                  PurBusness main account{" "}
+                  PurFinance main account{" "}
                 </div>
               </div>
               <div className="border border-gray-200"></div>

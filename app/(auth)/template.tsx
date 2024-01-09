@@ -7,19 +7,21 @@ import {
 } from "@/services/authService";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
+import { updateUser, updateBusiness } from "@/store/userSlice";
 const Template = ({ children }: { children: React.ReactNode }) => {
   const { push } = useRouter();
+  const dispatch = useAppDispatch();
   const [getUser, { isLoading, isUninitialized }] = useLazyProfileQuery({});
   const [
     getBusiness,
     { isLoading: isFetchingBusiness, isUninitialized: isBusinessUninitialized },
   ] = useLazyBusinessProfileQuery({});
-  const { business, user } = useAppSelector((state) => state.user);
   useEffect(() => {
     getUser({})
       .unwrap()
       .then((res) => {
+        dispatch(updateUser(res?.user));
         if (!res?.user?.businessId) {
           push("/signup-business");
           return;
@@ -31,11 +33,12 @@ const Template = ({ children }: { children: React.ReactNode }) => {
         getBusiness({})
           .unwrap()
           .then((res) => {
+            dispatch(updateBusiness(res?.business));
             if (!res?.business?.isOnboardingCompleted) {
               push("/onboarding");
               return;
             }
-            push("/dashboard");
+            return;
           });
       });
     // if (!user?.isPhoneValidated && user?.id) {

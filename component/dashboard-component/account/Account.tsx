@@ -31,7 +31,7 @@ const Account = () => {
   const [isSubModalOpen, setIsSubModalOpen] = useState(false);
   const [ispaymentOpen, setIspaymentOpen] = useState(false);
 
-  const wallet = useAppSelector((store) => store.user.wallet);
+  const wallet = useAppSelector((store) => store?.user?.wallet);
   const date = new Date();
   useGetWalletQuery({});
   const { data: stats } = useGetWalletHistoryQuery({});
@@ -92,10 +92,7 @@ const Account = () => {
                   <Arrowleft />
                 </div>
                 <p className="text-2xl font-semibold">
-                  N
-                  {Number(wallet?.walletBalance || 0).toLocaleString(
-                    "en-US"
-                  )}
+                  N{Number(wallet?.walletBalance || 0).toLocaleString("en-US")}
                 </p>
               </div>
               <div className="bg-white p-[20px] text-black w-full border border-gray-300">
@@ -107,6 +104,7 @@ const Account = () => {
                   <ArrowRight />
                 </div>
                 <p className="text-2xl font-semibold">
+                  N
                   {Number(analysis?.data?.todayBalance || 0).toLocaleString(
                     "en-US"
                   )}
@@ -129,7 +127,9 @@ const Account = () => {
                 </p>
               </span>
               <div className="w-full p-[3%] bg-white">
-                <div className="flex items-center justify-between"><p>Burn </p>                  <ArrowRight /></div>
+                <div className="flex items-center justify-between">
+                  <p>Burn </p> <ArrowRight />
+                </div>
 
                 <p className="text-2xl font-semibold">
                   %{analysis?.data?.burn}

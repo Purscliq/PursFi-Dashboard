@@ -8,7 +8,7 @@ import Image from "next/image";
 import "react-phone-input-2/lib/style.css";
 
 const Persoanal = () => {
-  const profile = useAppSelector((store) => store.user.user);
+  const profile = useAppSelector((store) => store?.user?.user);
   const [updatePicture, { isLoading }] = useUpdateProfilePictureMutation();
   return (
     <div className="flex flex-col py-4 w-full space-y-3">

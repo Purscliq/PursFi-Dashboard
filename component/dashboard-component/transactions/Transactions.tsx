@@ -19,14 +19,14 @@ const Transactions = () => {
             </p>
           </span>
           <div className="flex justify-center items-center ">
-            <Select
+            {/* <Select
               className="!w-full"
               options={[
                 { value: "1 month", label: "1 month" },
                 { value: "2 month", label: "2 month" },
               ]}
               placeholder="Show stats Yearly"
-            />
+            /> */}
           </div>
         </div>
       </header>

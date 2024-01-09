@@ -15,7 +15,6 @@ import {
   useLazyProfileQuery,
   useLazyBusinessProfileQuery,
 } from "@/services/authService";
-import { useAppSelector } from "@/store/hooks";
 
 const initailState = {
   email: "",
@@ -26,7 +25,6 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation();
   const [formData, setFormData] = useState(initailState);
   const [alert, setAlert] = useState("");
-  const { business, user } = useAppSelector((state) => state.user);
   const [getUserProfile, { isLoading: userProfileLoading }] =
     useLazyProfileQuery();
   const [getBusinessProfile, { isLoading: businessProfileLoading }] =

@@ -56,7 +56,7 @@ const initAcctDetails = {
 };
 const MakePayment = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const profile = useAppSelector((store) => store.user?.user);
+  const profile = useAppSelector((store) => store?.user?.user);
   const [formdata, setFormdata] = useState(initialState);
   const { data } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
@@ -65,7 +65,7 @@ const MakePayment = () => {
     useRecurringExpenditureMutation();
   const [scheduled_transfer, { isLoading: isProcessing_scheduled }] =
     useScheduledExpenditureMutation();
-  const wallet = useAppSelector((store) => store.user.wallet);
+  const wallet = useAppSelector((store) => store?.user?.wallet);
   const [acctdetails, setAcctDetails] = useState(initAcctDetails);
   useEffect(() => {
     if (acctdetails.accountNumber.length === 10 && acctdetails.bankCode)

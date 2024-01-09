@@ -23,7 +23,7 @@ const Review = ({
   setActive: React.Dispatch<SetStateAction<string>>;
 }) => {
   const dispatch = useAppDispatch();
-  const { business } = useAppSelector((state) => state.user);
+  const { business } = useAppSelector((state) => state?.user);
   const { replace } = useRouter();
   const [checked, setChecked] = useState(false);
   const [create, { isLoading }] = useCompleteBusinessOnboardingMutation();

@@ -8,9 +8,7 @@ import DashboardModal from "./DashboardModal";
 
 const DashboardTable = () => {
   const [fetchTransactions, { isLoading, data }] = useTransactionsMutation();
-  console.log(data);
-  const profile = useAppSelector((store) => store.user.user);
-
+  const profile = useAppSelector((store) => store?.user?.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {

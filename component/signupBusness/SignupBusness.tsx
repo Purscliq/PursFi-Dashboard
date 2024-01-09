@@ -31,7 +31,7 @@ const SignupBusness = () => {
   const [getBusinessProfile, { isLoading: isBusinessProfileLoading }] =
     useLazyBusinessProfileQuery();
   const [generateMail, {}] = useGenerateEmailOtpMutation();
-  const profile = useAppSelector((store) => store.user.user);
+  const profile = useAppSelector((store) => store?.user?.user);
   const [selectedCountry, setSelectedCountry] = useState(
     "https://flagcdn.com/ng.svg"
   );

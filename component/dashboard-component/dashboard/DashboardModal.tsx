@@ -11,7 +11,7 @@ const DashboardModal = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
-  const wallet = useAppSelector((store) => store.user.wallet);
+  const wallet = useAppSelector((store) => store?.user?.wallet);
   return (
     <Modal centered open={open} onCancel={() => setOpen(false)} footer={null}>
       <div className=" flex flex-col">
@@ -28,7 +28,7 @@ const DashboardModal = ({
           <form className="w-full space-y-8 mt-4">
             <div className="mb-4">
               <label className="block text-black text-sm font-semibold mb-2">
-                PursBusiness main Account
+                PursFinance Main Account
               </label>
               <Input
                 required

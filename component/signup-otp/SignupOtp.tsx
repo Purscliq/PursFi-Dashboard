@@ -21,7 +21,7 @@ const SignupOtp = () => {
   const [alert, setAlert] = useState("");
   const [generateOtp, {}] = useGenerateOtpMutation();
   const [validateOtp, { isLoading: isValidating }] = useValidateOtpMutation();
-  const data = useAppSelector((state) => state.user.user);
+  const data = useAppSelector((state) => state?.user?.user);
 
   const requestOtp = () =>
     generateOtp({ username: data?.phoneNumber })

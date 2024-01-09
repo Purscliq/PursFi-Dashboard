@@ -37,7 +37,7 @@ const initialState = {
 const Request = () => {
   const [fetchTransactions, { isLoading, data }] =
     useDisbursementTransactionsMutation();
-  const profile = useAppSelector((store) => store.user.user);
+  const profile = useAppSelector((store) => store?.user?.user);
   // const [data, setData] = useState<DataType[]>();
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {

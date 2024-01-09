@@ -27,7 +27,7 @@ const PayrollStructure = ({
   initialState: dataType;
 }) => {
   const [createPayroll, { isLoading }] = useCreatePayrollMutation();
-  const businessId = useAppSelector((store) => store.user.user?.businessId);
+  const businessId = useAppSelector((store) => store?.user?.user?.businessId);
   const [dataSource, setDataSource] = useState<DataType[]>([
     {
       key: 0,

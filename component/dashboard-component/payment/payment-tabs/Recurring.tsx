@@ -37,7 +37,7 @@ const initialState = {
 const Recurring = () => {
   const [fetchTransactions, { isLoading, data }] =
     useDisbursementTransactionsMutation();
-  const profile = useAppSelector((store) => store.user.user);
+  const profile = useAppSelector((store) => store?.user?.user);
   // const [data, setData] = useState<DataType[]>();
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -235,11 +235,7 @@ const Recurring = () => {
           />
         </div>
       </section>
-      <AccountDrawal
-        Open={open}
-        onClose={() => setOpen(false)}
-        id={id}
-      />
+      <AccountDrawal Open={open} onClose={() => setOpen(false)} id={id} />
     </>
   );
 };

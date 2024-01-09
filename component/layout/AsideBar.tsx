@@ -9,7 +9,7 @@ import { logOut } from "@/store/userSlice";
 
 const AsideBar = () => {
   const dispatch = useAppDispatch();
-  const { user, business } = useAppSelector((store) => store.user);
+  const { user, business } = useAppSelector((store) => store?.user);
   return (
     <div className="drawer-side z-10 ">
       <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
