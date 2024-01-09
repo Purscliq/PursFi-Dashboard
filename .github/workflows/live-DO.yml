@@ -3,7 +3,7 @@ name: Deploy Pursfi Frontend
 on:
   push:
     branches:
-      - main
+      - production
 
 jobs:
   build:
@@ -35,10 +35,9 @@ jobs:
           host: ${{ secrets.DO_HOST }}
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /Pursfi-Dashboard
-            git pull origin main
+            git pull origin production
             npm install
             npm run build
-            pm2 restart pursfinance2 --update-env
+            pm2 restart frontend --update-env
