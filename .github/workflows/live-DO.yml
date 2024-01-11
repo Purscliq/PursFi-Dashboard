@@ -38,6 +38,7 @@ jobs:
           script: |
             cd /Pursfi-Dashboard
             git pull origin production
+            git commit -m "Save commit file 1"
             npm install
             npm run build
             pm2 restart frontend --update-env
