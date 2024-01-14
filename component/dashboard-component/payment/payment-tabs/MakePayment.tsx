@@ -36,6 +36,29 @@ const options = [
   { label: "Schedule Payment", value: "schedule_payment" },
   { label: "Recurring payment", value: "recurring_payment" },
 ];
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 const amount: any = "";
 const initialState = {
   amount: amount,
@@ -279,7 +302,7 @@ const MakePayment = () => {
                   setFormdata((prev) => ({
                     ...prev,
                     day: date.split("-")[2],
-                    month: date.split("-")[1],
+                    month: months[Number(date.split("-")[1]) - 1],
                   }));
                 }}
                 picker="date"

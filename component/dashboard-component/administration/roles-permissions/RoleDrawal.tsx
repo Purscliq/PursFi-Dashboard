@@ -20,7 +20,9 @@ const RoleDrawal: React.FC<AccountDetailsProps> = ({ Open, setOpen, id }) => {
       <Drawer onClose={onClose} maskClosable={false} open={Open}>
         <PreviewRole id={id} />
         <Button
-          onClick={() => setOpenModal(true)}
+          onClick={() => {
+            setOpenModal(true);
+          }}
           className="!w-full !mt-[2rem]"
         >
           Update

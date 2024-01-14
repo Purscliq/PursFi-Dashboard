@@ -1,7 +1,12 @@
 import { ApiSlice } from "./Api";
 
 const payrollSlice = ApiSlice.enhanceEndpoints({
-  addTagTypes: ["roles" as const, "permissions" as const, "employees" as const],
+  addTagTypes: [
+    "roles" as const,
+    "permissions" as const,
+    "employees" as const,
+    "employee" as const,
+  ],
 }).injectEndpoints({
   endpoints: (builder) => ({
     getRoles: builder.query({
@@ -14,6 +19,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       query: (id) => ({
         url: `roles/business/id?roleId=${id}`,
       }),
+      providesTags: ["employee"],
     }),
     getPermissions: builder.query({
       query: () => ({
@@ -61,6 +67,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["employee"],
     }),
   }),
 });

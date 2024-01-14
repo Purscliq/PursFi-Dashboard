@@ -50,6 +50,7 @@ const RoleModal = ({
     CreatePayroll: false,
     ModifyPayroll: false,
     ViewPayroll: false,
+    UpdateBusiness: false,
   });
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
@@ -230,7 +231,9 @@ const RoleModal = ({
               </span>
             </div>
             <div className="flex flex-col gap-[0.5rem]">
-              <h4 className="text-[#181336] text-[16px] font-[700 ] font-semibold mb-1">Account</h4>
+              <h4 className="text-[#181336] text-[16px] font-[700 ] font-semibold mb-1">
+                Account
+              </h4>
               <span className="flex items-center justify-between">
                 <p className="text-[#515B6F] text-[16px] font-[400]">
                   Can View Account
@@ -283,7 +286,7 @@ const RoleModal = ({
                 />
               </span>
             </div>
-            <div className="flex flex-col gap-[0.3rem]">                                           
+            <div className="flex flex-col gap-[0.3rem]">
               <h4 className="text-[#181336] text-[16px] font-[700]">Invoice</h4>
               <span className="flex items-center justify-between">
                 <p className="text-[#515B6F] text-[16px] font-[400]">
@@ -348,6 +351,28 @@ const RoleModal = ({
                     setRolePermission((prev) => ({
                       ...prev,
                       ViewPayroll: e.target.value,
+                    }))
+                  }
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+            </div>
+            <div className="flex flex-col gap-[0.3rem]">
+              <h4 className="text-[#181336] text-[16px] font-[700]">
+                Business Profile
+              </h4>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Can update Business
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      UpdateBusiness: e.target.value,
                     }))
                   }
                   options={[

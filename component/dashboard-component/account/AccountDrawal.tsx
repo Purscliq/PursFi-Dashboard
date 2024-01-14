@@ -23,7 +23,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
       return "text-green-500";
     }
   };
-  const [getTransaction, { isLoading, data }] =
+  const [getTransaction, { isLoading, data, isFetching }] =
     useLazyGetSingleTransactionQuery();
   useEffect(() => {
     if (id)
@@ -41,7 +41,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
       open={Open}
     >
       <>
-        {isLoading ? (
+        {isLoading || isFetching ? (
           <div className="flex items-center justify-center h-[80vh] w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
             <Spinner className="!m-auto !block" />
           </div>
@@ -62,7 +62,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
             </div>
             <h1 className="font-bold p-2">Transaction Information</h1>
             <div className="p-4 border border-gray-100 space-y-4 mt-5">
-              <div className="grid grid-cols-2 gap-4 ">
+              <div className="grid grid-cols-[40%_60%] gap-y-4 gap-x-[1%] p-x-[1%]">
                 <div className="text-slate-500 pr-2">Amount :</div>
                 <div className="leading-tight font-semibold">
                   {data?.data?.amount}
@@ -87,16 +87,22 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                 <div className="leading-tight font-semibold">
                   {data?.data?.accountNumber}
                 </div>
-                <div className="text-slate-500 pr-2">Source:</div>
+                <div className="text-slate-500 pr-2">Charges Fee:</div>
                 <div className="leading-tight font-semibold">
-                  PurFinance main account{" "}
+                  NGN{data?.data?.fee || 0}
+                </div>
+                <div className="text-slate-500 pr-2">Reference:</div>
+                <div className="leading-tight font-semibold">
+                  {data?.data?.reference}
                 </div>
               </div>
               <div className="border border-gray-200"></div>
             </div>
             <span className="mt-6">
               <p className="font-semibold">Transaction Memo</p>
-              <p className="text-slate-500 text-md">{`${data?.data?.domain} transaction`}</p>
+              <p className="text-slate-500 text-md">{`${
+                data?.data?.memo || data?.data?.notification || ""
+              }`}</p>
             </span>
             <div className="my-6 space-y-4">
               {/* <Button
