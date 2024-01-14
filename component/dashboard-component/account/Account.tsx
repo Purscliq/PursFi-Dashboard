@@ -164,7 +164,7 @@ const Account = () => {
               </span>
               <span className="flex justify-between items-center">
                 <p className="text-gray-500 ">Account allas</p>
-                <p>Purs main account</p>
+                <p>PursFinance main account</p>
               </span>
             </div>
             <div className="flex justify-end items-center">

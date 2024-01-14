@@ -1,6 +1,9 @@
 import Active from "@/assets/icon/Active";
 import Inactive from "@/assets/icon/Inactive";
-import { useLazyGetSingleRoleQuery } from "@/services/managementService";
+import {
+  useLazyGetSingleRoleQuery,
+  useGetPermissionsQuery,
+} from "@/services/managementService";
 import { useEffect } from "react";
 import { CustomSpinner as Spinner } from "@/lib/AntdComponents";
 
@@ -23,6 +26,7 @@ const permissions = [
   "CreatePayroll",
   "ModifyPayroll",
   "ViewPayroll",
+  "UpdateBusiness",
 ];
 const PreviewRole = ({ id }: { id: string }) => {
   const [getRole, { data, isLoading }] = useLazyGetSingleRoleQuery();
@@ -179,6 +183,21 @@ const PreviewRole = ({ id }: { id: string }) => {
                 Can view payroll
               </p>
               {data?.data?.permissions?.includes(permissions[17]) ? (
+                <Active />
+              ) : (
+                <Inactive />
+              )}
+            </span>
+          </div>
+          <div className="flex flex-col gap-[0.3rem]">
+            <h4 className="text-[#181336] text-[16px] font-[700]">
+              Business Profile
+            </h4>
+            <span className="flex items-center justify-between">
+              <p className="text-[#515B6F] text-[16px] font-[400]">
+                Can update business profile
+              </p>
+              {data?.data?.permissions?.includes(permissions[18]) ? (
                 <Active />
               ) : (
                 <Inactive />

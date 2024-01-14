@@ -8,7 +8,6 @@ import {
 import {
   useUpdateRoleMutation,
   useGetPermissionsQuery,
-  useGetSingleRoleQuery,
   useLazyGetSingleRoleQuery,
 } from "@/services/managementService";
 import {
@@ -38,6 +37,8 @@ const UpdateRoleModal = ({
 }) => {
   const [getRole, { data: role, isLoading: isFetchingRole }] =
     useLazyGetSingleRoleQuery();
+  const [getSingleRole, { isLoading: isUpdatingEmployee }] =
+    useLazyGetSingleRoleQuery();
   const [formData, setFormData] = useState(initialState);
   const [rolePermission, setRolePermission] = useState<Record<string, boolean>>(
     {
@@ -59,6 +60,7 @@ const UpdateRoleModal = ({
       CreatePayroll: false,
       ModifyPayroll: false,
       ViewPayroll: false,
+      UpdateBusiness: false,
     }
   );
   useEffect(() => {
@@ -73,6 +75,7 @@ const UpdateRoleModal = ({
             }
             return prev;
           });
+          console.log(res);
           setFormData((prev) => ({
             ...prev,
             roleName: res?.data?.roleName,
@@ -100,8 +103,12 @@ const UpdateRoleModal = ({
         .unwrap()
         .then((res) => {
           setFormData(initialState);
-          message.success("role updated successfully");
-          setOpen(false);
+          getSingleRole(id)
+            .unwrap()
+            .finally(() => {
+              setOpen(false);
+              message.success("role updated successfully");
+            });
         })
         .catch((err) => {
           message.error(
@@ -406,10 +413,32 @@ const UpdateRoleModal = ({
                 />
               </span>
             </div>
+            <div className="flex flex-col gap-[0.3rem]">
+              <h4 className="text-[#181336] text-[16px] font-[700]">
+                Business Profile
+              </h4>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Can update Business
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      UpdateBusiness: e.target.value,
+                    }))
+                  }
+                  value={rolePermission?.UpdateBusiness}
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+            </div>
           </div>
           <Button
             loading={isLoading}
-            disabled={role?.data?.roleName === "SuperAdmin"}
             type="primary"
             htmlType="submit"
             className="!h-[3rem] !bg-black w-full text-white hover:!textwhite"

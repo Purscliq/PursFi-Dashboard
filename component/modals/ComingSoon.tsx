@@ -32,7 +32,8 @@ const ComingSoon = ({
           This feature is not currently available
         </span>
         <Button
-          className="btn btn-md !bg-black hover:bg-black text-white text-sm normal-case !w-full"
+          className="!bg-black text-white text-sm normal-case !w-full"
+          type="primary"
           onClick={() => setOpen(false)}
         >
           Close
