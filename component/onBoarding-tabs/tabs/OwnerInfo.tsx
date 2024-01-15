@@ -99,7 +99,12 @@ const OwnerInfo = ({
   };
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    for (const [key, value] of Object.entries(formData)) {
+    for (const [key, value] of Object.entries({
+      ...formData,
+      Email: user?.email,
+      RoleId: user?.roleId,
+      BusinessId: business?.id,
+    })) {
       dataBody.append(key, value);
     }
     if (!bvnError && formData?.file)

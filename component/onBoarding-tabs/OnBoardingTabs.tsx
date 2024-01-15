@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import type { TabsProps } from "antd";
 import CompanyInfo from "./tabs/CompanyInfo";
@@ -28,6 +28,14 @@ const OnBoardingTabs = () => {
     state: "",
     phone: "",
   });
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      Address: businessProfile?.business?.businessAddress,
+      Description: businessProfile?.business?.businessDescription || "",
+      BusinessIndustry: businessProfile?.business?.businessIndustry,
+    }));
+  }, [businessProfile]);
   const [active, setActive] = useState("1");
   const items: TabsProps["items"] = [
     {

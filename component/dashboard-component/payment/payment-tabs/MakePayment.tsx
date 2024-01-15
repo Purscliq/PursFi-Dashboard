@@ -129,12 +129,19 @@ const MakePayment = () => {
     else if (
       formdata.accountName &&
       formdata.transactionCategory === options[1].value
-    )
+    ) {
+      if (!formdata?.day || !formdata?.hour) {
+        message.error("please provide day and time");
+        return;
+      }
       scheduled_transfer({
         ...formdata,
         ...acctdetails,
         amount: formdata?.amount.toString(),
         businessId: profile?.businessId,
+        hour: formdata?.hour?.split(":")[0],
+        day: formdata?.day?.split("-")[2],
+        month: months[Number(formdata?.month?.split("-")[1]) - 1],
       })
         .unwrap()
         .then((res) => {
@@ -148,10 +155,14 @@ const MakePayment = () => {
             err?.data?.responseDescription || "something went wrong"
           );
         });
-    else if (
+    } else if (
       formdata.accountName &&
       formdata.transactionCategory === options[2].value
-    )
+    ) {
+      if (!formdata?.day || !formdata?.hour) {
+        message.error("please provide day and time");
+        return;
+      }
       recurring_transfer({
         ...formdata,
         ...acctdetails,
@@ -159,6 +170,9 @@ const MakePayment = () => {
         businessId: profile?.businessId,
         active: true,
         automatic: true,
+        hour: formdata?.hour?.split(":")[0],
+        day: formdata?.day?.split("-")[2],
+        month: months[Number(formdata?.month?.split("-")[1]) - 1],
       })
         .unwrap()
         .then((res) => {
@@ -172,6 +186,7 @@ const MakePayment = () => {
             err?.data?.responseDescription || "something went wrong"
           );
         });
+    }
   };
   const onSearchChange = (value: string, option: any) => {
     console.log(option);
@@ -301,20 +316,23 @@ const MakePayment = () => {
                 onChange={(value, date) => {
                   setFormdata((prev) => ({
                     ...prev,
-                    day: date.split("-")[2],
-                    month: months[Number(date.split("-")[1]) - 1],
+                    day: date,
+                    month: date,
                   }));
                 }}
+                value={formdata?.day ? dayjs(formdata?.day) : undefined}
                 picker="date"
                 className="!w-full"
               />
               <TimePicker
-                defaultValue={dayjs("12:08", "HH:mm")}
                 format={"HH:mm"}
+                value={
+                  formdata?.hour ? dayjs(formdata?.hour, "HH:mm") : undefined
+                }
                 onChange={(value, date) => {
                   setFormdata((prev) => ({
                     ...prev,
-                    hour: date.split(":")[0],
+                    hour: date,
                   }));
                 }}
                 className="!w-full "
