@@ -64,6 +64,7 @@ const PayrollStructure = ({
       }));
       createPayroll({
         ...formData,
+        day: formData?.day?.split("-")[2],
         structure,
         businessId,
       })

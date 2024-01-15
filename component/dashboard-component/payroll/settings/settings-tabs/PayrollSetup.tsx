@@ -6,6 +6,7 @@ import {
 } from "@/lib/AntdComponents";
 import { dataType } from "./SettingsTabs";
 import { FormEventHandler } from "react";
+import dayjs from "dayjs";
 
 const payrollOptions = [
   { label: "Automatically run Payroll on selected date", value: true },
@@ -67,7 +68,7 @@ const PayrollSetup = ({
           </p>
         </label>
         <DatePicker
-          // value={new Date(formData?.day)}
+          value={formData?.day ? dayjs(formData?.day) : undefined}
           onChange={(value, date) =>
             setFormData((prev) => ({ ...prev, day: date }))
           }
