@@ -11,6 +11,7 @@ import {
 import TableIcon from "@/assets/icon/TableIcon";
 import { useInvoiceHistoryMutation } from "@/services/invoiceService";
 import { useAppSelector } from "@/store/hooks";
+import Link from "next/link";
 
 export interface DataType {
   name: string;
@@ -193,9 +194,18 @@ const InvoiceTable = ({ status }: { status: string }) => {
       },
     },
     {
-      dataIndex: "amount",
-      key: "amount",
-      render: (amount) => `N${amount}`,
+      dataIndex: "reference",
+      key: "reference",
+      render: (reference) => (
+        <a
+          className="text-black"
+          target="_blank"
+          href={`https://app.pursfinance.com/invoice-gateway?reference=${reference}`}
+        >
+          ...
+        </a>
+      ),
+      width: "10%",
     },
   ];
 
