@@ -275,7 +275,7 @@ const MakePayment = () => {
                 setFormdata((prev) => ({ ...prev, amount: value }))
               }
               className="!w-full"
-              prefix="N"
+              prefix="&#8358;"
               placeholder=""
               required
             />

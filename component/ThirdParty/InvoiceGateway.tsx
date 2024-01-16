@@ -152,7 +152,8 @@ const InvoiceGateway = () => {
                     {data?.data?.discountPercent || 0}%
                   </span>
                   <span className="justify-self-end">
-                    N{Number(data?.data?.discount || 0).toLocaleString("en-US")}
+                    &#8358;
+                    {Number(data?.data?.discount || 0).toLocaleString("en-US")}
                   </span>
                 </div>
                 <div className="grid grid-cols-3 justify-between w-full mt-4 text-[#181336] text-[16px] font-[600]">
@@ -161,14 +162,16 @@ const InvoiceGateway = () => {
                     {data?.data?.taxPercent || 0}%
                   </span>
                   <span className="justify-self-end">
-                    N{Number(data?.data?.tax || 0).toLocaleString("en-US")}
+                    &#8358;
+                    {Number(data?.data?.tax || 0).toLocaleString("en-US")}
                   </span>
                 </div>
                 <div className="grid grid-cols-3 justify-between w-full mt-4 text-[#181336] text-[16px] font-[600]">
                   <span className="">Shipping Fee</span>
                   <span className="justify-self-center">-</span>
                   <span className="justify-self-end">
-                    N{Number(data?.data?.shipping || 0).toLocaleString("en-US")}
+                    &#8358;
+                    {Number(data?.data?.shipping || 0).toLocaleString("en-US")}
                   </span>
                 </div>
                 <div className="flex justify-between py-[2%] w-full border-t border-[#B8C9C9] mt-[1%]">
@@ -176,7 +179,8 @@ const InvoiceGateway = () => {
                     Subtotal
                   </span>
                   <span className="text-[#181336] text-[20px] font-[600]">
-                    N{Number(data?.data?.amount || 0).toLocaleString("en-US")}
+                    &#8358;
+                    {Number(data?.data?.amount || 0).toLocaleString("en-US")}
                   </span>
                 </div>
               </div>

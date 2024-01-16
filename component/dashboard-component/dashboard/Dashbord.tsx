@@ -190,14 +190,14 @@ const Dashbord = () => {
                 <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
                 <p>Invoice</p>
                 <p className="text-2xl font-semibold">
-                  N{Number(status?.data?.invoice || 0).toLocaleString("en-US")}
+                &#8358;{Number(status?.data?.invoice || 0).toLocaleString("en-US")}
                 </p>
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
                 <p>Others</p>
                 <p className="text-2xl font-semibold">
-                  N
+                &#8358;
                   {Number(status?.data?.otherCollection || 0).toLocaleString(
                     "en-US"
                   )}
@@ -236,14 +236,14 @@ const Dashbord = () => {
                 <div className="bg-red-500 h-3 w-3 rounded-full" />
                 <p>Payroll</p>
                 <p className="text-2xl font-semibold">
-                  N{Number(status?.data?.payroll || 0).toLocaleString("en-US")}
+                &#8358;{Number(status?.data?.payroll || 0).toLocaleString("en-US")}
                 </p>
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-red-500 h-3 w-3 rounded-full" />
                 <p>Payment</p>
                 <p className="text-2xl font-semibold">
-                  N
+                &#8358;
                   {Number(status?.data?.otherDisbursment || 0).toLocaleString(
                     "en-US"
                   )}

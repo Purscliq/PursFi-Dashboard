@@ -65,14 +65,14 @@ const Account = () => {
               Share payment link
               <BiLinkAlt />
             </button>
-            <Select
+            {/* <Select
               className="!w-full !h-[3rem]"
               options={[
                 { value: "1 month", label: "1 month" },
                 { value: "2 month", label: "2 month" },
               ]}
               placeholder="Show stats Yearly"
-            />
+            /> */}
           </div>
         </div>
         {/* <div className="flex items-center justify-between">
@@ -92,7 +92,8 @@ const Account = () => {
                   <Arrowleft />
                 </div>
                 <p className="text-2xl font-semibold">
-                  N{Number(wallet?.walletBalance || 0).toLocaleString("en-US")}
+                  &#8358;
+                  {Number(wallet?.walletBalance || 0).toLocaleString("en-US")}
                 </p>
               </div>
               <div className="bg-white p-[20px] text-black w-full border border-gray-300">
@@ -104,7 +105,7 @@ const Account = () => {
                   <ArrowRight />
                 </div>
                 <p className="text-2xl font-semibold">
-                  N
+                  &#8358;
                   {Number(analysis?.data?.todayBalance || 0).toLocaleString(
                     "en-US"
                   )}
@@ -120,7 +121,7 @@ const Account = () => {
               <span className="w-full bg-white p-[3%]">
                 <p>Spend so far</p>{" "}
                 <p className="text-2xl font-semibold">
-                  N
+                  &#8358;
                   {Number(analysis?.data?.currentExpenses || 0).toLocaleString(
                     "en-US"
                   )}
@@ -154,9 +155,11 @@ const Account = () => {
                 <p className="text-gray-500 ">Bank Name</p>
                 <p>{wallet?.accountDetails?.bankName}</p>
               </span>
-              <span className="flex justify-between items-center">
+              <span className="flex gap-[0.2rem] justify-between items-center">
                 <p className="text-gray-500 ">Account Name</p>
-                <p>{wallet?.accountDetails?.accountName}</p>
+                <p className="text-left">
+                  {wallet?.accountDetails?.accountName}
+                </p>
               </span>
               <span className="flex justify-between items-center">
                 <p className="text-gray-500 ">Account Number</p>

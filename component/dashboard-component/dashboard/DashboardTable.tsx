@@ -50,7 +50,7 @@ const DashboardTable = () => {
                   <p>{e?.accountName}</p>
                 </span>
                 <p className="font-medium text-lg">
-                  N{Number(e?.amount || 0).toLocaleString("en-US")}
+                  &#8358;{Number(e?.amount || 0).toLocaleString("en-US")}
                 </p>
               </div>
             ))}

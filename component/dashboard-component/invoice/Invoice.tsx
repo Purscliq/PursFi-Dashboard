@@ -51,9 +51,10 @@ const Invoice = () => {
           <span className="bg-white flex flex-col justify-center py-2 px-[5%] rounded-md">
             <p className="text-[1rem]">Total Incoming</p>
             <p className="text-2xl font-medium">
+              &#8358;
               {isLoading
                 ? "..."
-                : `N${
+                : `${
                     Number(data?.data?.allInvoice || 0).toLocaleString(
                       "en-US"
                     ) || ""
@@ -63,9 +64,10 @@ const Invoice = () => {
           <span className="bg-white flex flex-col justify-center py-2 px-[5%] rounded-md">
             <p className="text-[1rem]">Total Paid</p>
             <p className="text-2xl font-medium">
+              &#8358;
               {isLoading
                 ? "..."
-                : `N${
+                : `${
                     Number(data?.data?.paid || 0).toLocaleString("en-US") || ""
                   }`}
             </p>
@@ -73,9 +75,10 @@ const Invoice = () => {
           <span className="bg-white flex flex-col justify-center py-2 px-[5%] rounded-md">
             <p className="text-[1rem]"> Overdue Invoice </p>
             <p className="text-2xl font-medium">
+              &#8358;
               {isLoading
                 ? "..."
-                : `N${
+                : `${
                     Number(data?.data?.overdue || 0).toLocaleString("en-US") ||
                     ""
                   }`}
@@ -84,9 +87,10 @@ const Invoice = () => {
           <span className="bg-white flex flex-col justify-center py-2 px-[5%] rounded-md">
             <p className="text-sm"> Unpaid</p>
             <p className="text-2xl font-medium">
+              &#8358;
               {isLoading
                 ? "..."
-                : `N${Number(data?.data?.unpaid || 0).toLocaleString("en-US")}`}
+                : `${Number(data?.data?.unpaid || 0).toLocaleString("en-US")}`}
             </p>
           </span>
         </div>

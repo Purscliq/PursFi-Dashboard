@@ -89,7 +89,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                 </div>
                 <div className="text-slate-500 pr-2">Charges Fee:</div>
                 <div className="leading-tight font-semibold">
-                  NGN{data?.data?.fee || 0}
+                  &#8358;{data?.data?.fee || 0}
                 </div>
                 <div className="text-slate-500 pr-2">Reference:</div>
                 <div className="leading-tight font-semibold">
