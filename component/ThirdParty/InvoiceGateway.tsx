@@ -82,7 +82,13 @@ const InvoiceGateway = () => {
           <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA] relative">
             <nav className="py-4 px-8 bg-white flex justify-between items-center sticky top-0">
               <Image src={logo} alt="logo" />
-              <Button>learn about us</Button>
+              <a
+                className="px-[10px] py-[5px] border border-[#000000] border-solid rounded-[8px]"
+                href="https://pursfinance.com"
+                target="_blank"
+              >
+                learn about us
+              </a>
             </nav>
             <main className=" flex flex-col items-center justify-center bg-white w-[90%] md:w-[60%] m-auto my-[2rem] py-6 px-[1%] overflow-scroll">
               <div className="flex items-stretch justify-between w-full pb-[2%] border-b border-[#B8C9C9]">

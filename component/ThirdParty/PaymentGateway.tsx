@@ -37,7 +37,13 @@ const PaymentGateway = () => {
         <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA]">
           <nav className="py-4 px-8 bg-white flex justify-between items-center">
             <Image src={logo} alt="logo" />
-            <Button>learn about us</Button>
+            <a
+              className="px-[10px] py-[5px] border border-[#000000] border-solid rounded-[8px]"
+              href="https://pursfinance.com"
+              target="_blank"
+            >
+              learn about us
+            </a>
           </nav>
           <main className=" flex flex-col items-center justify-center bg-white w-[95%] md:w-[35%] m-auto mt-[2rem] py-6 px-[1%]">
             <div className="flex flex-col w-full">
