@@ -10,25 +10,26 @@ const Page = () => {
   const { replace } = useRouter();
   const [validate, { isLoading }] = useValidateEmailOtpMutation();
   useEffect(() => {
-    validate({ username: params.get("email"), otp: params.get("token") })
-      .unwrap()
-      .then((res) => {
-        message.success(
-          res?.data?.responseDescription ||
-            res?.responseDescription ||
-            "verification successfull"
-        );
-        replace("/");
-      })
-      .catch((err) => {
-        message.error(
-          err?.data?.responseDescription ||
-            err?.responseDescription ||
-            "something went wrong"
-        );
-        replace("/");
-      });
-  }, []);
+    if (params.get("email") && params.get("token"))
+      validate({ username: params.get("email"), otp: params.get("token") })
+        .unwrap()
+        .then((res) => {
+          message.success(
+            res?.data?.responseDescription ||
+              res?.responseDescription ||
+              "verification successfull"
+          );
+          replace("/");
+        })
+        .catch((err) => {
+          message.error(
+            err?.data?.responseDescription ||
+              err?.responseDescription ||
+              "something went wrong"
+          );
+          replace("/");
+        });
+  }, [params]);
 
   return (
     <>
