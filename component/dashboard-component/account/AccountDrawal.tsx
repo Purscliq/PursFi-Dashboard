@@ -62,7 +62,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
             </div>
             <h1 className="font-bold p-2">Transaction Information</h1>
             <div className="p-4 border border-gray-100 space-y-4 mt-5">
-              <div className="grid grid-cols-[40%_60%] gap-y-4 gap-x-[1%] p-x-[1%]">
+              <div className="grid grid-cols-[40%_60%] gap-y-4 gap-x-[1%] px-[1%]">
                 <div className="text-slate-500 pr-2">Amount :</div>
                 <div className="leading-tight font-semibold">
                   {data?.data?.amount}
@@ -92,7 +92,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                   &#8358;{data?.data?.fee || 0}
                 </div>
                 <div className="text-slate-500 pr-2">Reference:</div>
-                <div className="leading-tight font-semibold">
+                <div className="leading-tight font-semibold break-words">
                   {data?.data?.reference}
                 </div>
               </div>
