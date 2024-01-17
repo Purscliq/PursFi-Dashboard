@@ -99,7 +99,10 @@ const DashboardSider = () => {
           </summary>
           <ul className="-mt-4  menu dropdown-content z-[1]  w[15rem] w-[98%] mx-auto">
             <li
-              onClick={() => dispatch(logOut())}
+              onClick={() => {
+                push("/");
+                dispatch(logOut());
+              }}
               className="w-full bg-[#EEF2F7] p-2 cursor-pointer text-center items-center rounded-box mx-auto block"
             >
               Log Out
