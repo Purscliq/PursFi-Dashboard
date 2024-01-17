@@ -21,7 +21,7 @@ const PaymentGateway = () => {
         .catch((err) => {
           message.error("something went wrong");
         });
-  }, []);
+  }, [searchParams]);
 
   return (
     <>

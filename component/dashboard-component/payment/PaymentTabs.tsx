@@ -4,12 +4,15 @@ import type { TabsProps } from "antd";
 import Request from "./payment-tabs/Request";
 import Recurring from "./payment-tabs/Recurring";
 import ALL from "./payment-tabs/All";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
 const PaymentTabs = () => {
   const params = useSearchParams();
   const [activeKey, setActiveKey] = useState(params?.get("activeKey") || "1");
+  useEffect(() => {
+    setActiveKey(params?.get("activeKey") || "1");
+  }, [params]);
   const items: TabsProps["items"] = useMemo(
     () => [
       {

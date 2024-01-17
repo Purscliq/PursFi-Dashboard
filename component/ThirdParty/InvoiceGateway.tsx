@@ -66,7 +66,7 @@ const InvoiceGateway = () => {
           );
         });
     }
-  }, []);
+  }, [params]);
   return (
     <>
       {isLoading || isUninitialized ? (
