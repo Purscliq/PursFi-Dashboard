@@ -28,14 +28,14 @@ const OnBoardingTabs = () => {
     state: "",
     phone: "",
   });
-  useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      Address: businessProfile?.business?.businessAddress,
-      Description: businessProfile?.business?.businessDescription || "",
-      BusinessIndustry: businessProfile?.business?.businessIndustry,
-    }));
-  }, [businessProfile]);
+  // useEffect(() => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     Address: businessProfile?.business?.businessAddress,
+  //     Description: businessProfile?.business?.businessDescription || "",
+  //     BusinessIndustry: businessProfile?.business?.businessIndustry,
+  //   }));
+  // }, [businessProfile]);
   const [active, setActive] = useState("1");
   const items: TabsProps["items"] = [
     {

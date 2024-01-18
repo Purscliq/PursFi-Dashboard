@@ -124,7 +124,6 @@ const DashboardSider = () => {
           </a>
         </Dropdown>
         <div className=" border border-gray-200" />
-
         <Menu
           selectedKeys={[activePath]}
           items={sidebarData}

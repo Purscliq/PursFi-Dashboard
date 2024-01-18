@@ -29,7 +29,7 @@ const BusinessDocs = ({
   const props: UploadProps = {
     name: "file",
     multiple: false,
-    accept: ".jpg",
+    accept: "image/jpeg",
     onDrop(e) {
       // console.log("Dropped files", e.dataTransfer.files);
     },
