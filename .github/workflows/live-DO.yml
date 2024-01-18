@@ -35,11 +35,13 @@ jobs:
           host: ${{ secrets.DO_HOST }}
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+        env:
+          COMMIT_MESSAGE: "Deploy from GitHub Actions on $(date +'%Y-%m-%d %H:%M:%S')"
           script: |
-            cd /Pursfi-Dashboard
-            git pull origin production
+            cd Pursfi-Dashboard
+            git pull
             git merge --no-ff
-            git commit -m "Save commit file 1"
+            git commit -m "$COMMIT_MESSAGE"
             npm install
             npm run build
             pm2 restart frontend --update-env
