@@ -67,6 +67,11 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         url: "payroll/business/beneficiaries",
       }),
     }),
+    getSingleBeneficiary: builder.query({
+      query: (id) => ({
+        url: `payroll/single/beneficiary?memberId=${id}`,
+      }),
+    }),
   }),
 });
 
@@ -82,4 +87,6 @@ export const {
   useLazyGetPayrollBeneficiariesQuery,
   useGetBusinessBeneficiariesQuery,
   useLazyGetBusinessBeneficiariesQuery,
+  useGetSingleBeneficiaryQuery,
+  useLazyGetSingleBeneficiaryQuery,
 } = payrollSlice;

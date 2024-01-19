@@ -7,8 +7,7 @@ import {
 import TableIcon from "@/assets/icon/TableIcon";
 import FilterIcon from "@/assets/icon/FilterIcon";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
-import { useDisbursementTransactionsMutation } from "@/services/transactionService";
-import { useAppSelector } from "@/store/hooks";
+import PayrollDrawal from "../PayrollDrawal";
 import {
   useGetPayrollQuery,
   useGetBeneficiariesQuery,
@@ -59,6 +58,8 @@ const OverviewTable = () => {
   //   },
   // });
   const [id, setId] = useState("");
+  const [beneficiaryId, setBeneficiaryId] = useState("");
+  const [open, setOpen] = useState(false);
   const [payrollList, setPayrollList] = useState<listType[]>([
     { label: "All", value: "" },
   ]);
@@ -116,13 +117,13 @@ const OverviewTable = () => {
           <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "reference",
+      dataIndex: "memberId",
       render: (id: any, record: DataType) => {
         return (
           <span
             onClick={() => {
-              // setId(id);
-              // setOpen(true);
+              setBeneficiaryId(id);
+              setOpen(true);
             }}
             className="cursor-pointer"
           >
@@ -181,12 +182,11 @@ const OverviewTable = () => {
           />
         </div>
       </section>
-      {/* <AccountDrawal
+      <PayrollDrawal
         Open={open}
         onClose={() => setOpen(false)}
-        account={selectedAccount}
-        id={id}
-      /> */}
+        id={beneficiaryId}
+      />
     </>
   );
 };
