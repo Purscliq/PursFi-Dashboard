@@ -101,7 +101,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
             <span className="mt-6">
               <p className="font-semibold">Transaction Memo</p>
               <p className="text-slate-500 text-md">{`${
-                data?.data?.memo || data?.data?.notification || ""
+                data?.data?.narration || ""
               }`}</p>
             </span>
             <div className="my-6 space-y-4">
