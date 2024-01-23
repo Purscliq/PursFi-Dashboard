@@ -1,6 +1,6 @@
 "use client";
 import logo from "@/assets/logo.svg";
-import verifyImage from "@/assets/Group 5.png";
+import SuccessIcon from "@/assets/icon/SuccessIcon";
 import Image from "next/image";
 import { useState } from "react";
 import { Modal, message, Alert } from "antd";
@@ -32,7 +32,7 @@ const VerifyEmail = () => {
       </nav>
       <main className=" flex flex-col space-y-5 items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6">
         {alert && <Alert type="error" closable message={alert} />}
-        <Image src={verifyImage} alt="verify-image" />
+        <SuccessIcon />
         <h1 className="font-semibold text-3xl text-Primary">
           Verify your Email{" "}
         </h1>

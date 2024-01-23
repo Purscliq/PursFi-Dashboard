@@ -22,7 +22,7 @@ const ForgetPass = () => {
       .unwrap()
       .then((res) => {
         message.success(res?.data?.responseDescription || "reset link sent");
-        replace("reset-password");
+        replace(`/forget-password-2?email=${email}`);
       })
       .catch((err) => {
         setAlert(
@@ -39,9 +39,7 @@ const ForgetPass = () => {
       </nav>
       <main className=" flex flex-col items-center justify-center bg-white w-full md:w-[500px] mx-auto mt-4 p-6 ">
         {alert && <Alert type="error" closable message={alert} />}
-        <h1 className="font-bold text-2xl mb-2 text-balck">
-          Reset Password
-        </h1>
+        <h1 className="font-bold text-2xl mb-2 text-balck">Reset Password</h1>
         <p className=" text-gray-700 text-lg text-center">
           Enter the email associated with your account and we’ll send an email
           with instruction to reset your Password
