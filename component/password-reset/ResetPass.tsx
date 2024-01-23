@@ -53,7 +53,7 @@ const ResetPass = () => {
       setConfirmValidationError("password must match");
     else if (
       e.target.name === "confirmPassword" &&
-      e.target.value == formData.confirmPassword
+      e.target.value === formData.newPassword
     )
       setConfirmValidationError("");
     setFormData((prevState) => ({
