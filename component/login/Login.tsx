@@ -21,7 +21,7 @@ import {
   useLazyBusinessProfileQuery,
 } from "@/services/authService";
 import { useAppDispatch } from "@/store/hooks";
-import { logOut } from "@/store/userSlice";
+import { logOutAction } from "@/store/userSlice";
 
 const initailState = {
   email: "",
@@ -30,7 +30,7 @@ const initailState = {
 const Login = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(logOut());
+    dispatch(logOutAction());
   }, []);
   const { replace } = useRouter();
   const [login, { isLoading }] = useLoginMutation();

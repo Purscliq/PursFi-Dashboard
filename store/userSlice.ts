@@ -17,7 +17,7 @@ const userSlice = createSlice({
       state = action.payload;
     },
     logOutAction: (state, action) => {
-      state.logOutAction = action.payload;
+      return { ...initialState };
     },
     logOut: (state) => {
       localStorage.removeItem("token");
