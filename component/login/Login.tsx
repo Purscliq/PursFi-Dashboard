@@ -9,18 +9,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { Alert } from "antd";
 import { useLoginMutation } from "@/services/authService";
-import { useState, ChangeEventHandler, FormEventHandler } from "react";
+import {
+  useState,
+  useEffect,
+  ChangeEventHandler,
+  FormEventHandler,
+} from "react";
 import { useRouter } from "next/navigation";
 import {
   useLazyProfileQuery,
   useLazyBusinessProfileQuery,
 } from "@/services/authService";
+import { useAppDispatch } from "@/store/hooks";
+import { logOut } from "@/store/userSlice";
 
 const initailState = {
   email: "",
   password: "",
 };
 const Login = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(logOut());
+  }, []);
   const { replace } = useRouter();
   const [login, { isLoading }] = useLoginMutation();
   const [formData, setFormData] = useState(initailState);

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import { Avatar } from "antd";
@@ -6,8 +8,10 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { BsCameraVideo } from "react-icons/bs";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { logOut } from "@/store/userSlice";
+import { useRouter } from "next/navigation";
 
 const AsideBar = () => {
+  const { push } = useRouter();
   const dispatch = useAppDispatch();
   const { user, business } = useAppSelector((store) => store?.user);
   return (
@@ -50,7 +54,7 @@ const AsideBar = () => {
           </summary>
           <ul className="-mt-4  menu dropdown-content z-[1]  w[15rem] w-[98%] mx-auto">
             <li
-              onClick={() => dispatch(logOut())}
+              onClick={() => push("/")}
               className="w-full bg-[#EEF2F7] p-2 cursor-pointer text-center items-center rounded-box mx-auto block"
             >
               Log Out

@@ -101,7 +101,7 @@ const DashboardSider = () => {
             <li
               onClick={() => {
                 push("/");
-                dispatch(logOut());
+                // dispatch(logOut());
               }}
               className="w-full bg-[#EEF2F7] p-2 cursor-pointer text-center items-center rounded-box mx-auto block"
             >
