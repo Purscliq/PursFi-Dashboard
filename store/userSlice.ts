@@ -16,7 +16,8 @@ const userSlice = createSlice({
     networkTimeOut: (state, action) => {
       state = action.payload;
     },
-    logOutAction: (state, action) => {
+    logOutAction: (state) => {
+      localStorage.removeItem("token");
       return { ...initialState };
     },
     logOut: (state) => {
