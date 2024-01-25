@@ -11,15 +11,13 @@ import { MdAccountBalance } from "react-icons/md";
 import { CustomMenu as Menu } from "@/lib/AntdComponents";
 import DashboardModal from "@/component/dashboard-component/dashboard/DashboardModal";
 import { useState, useLayoutEffect } from "react";
-import { logOut } from "@/store/userSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const DashboardSider = () => {
   const pathName = usePathname();
-  const dispatch = useAppDispatch();
   const { user, business } = useAppSelector((store) => store?.user);
   const [activePath, setActivePath] = useState("");
-  const { push } = useRouter();
+  const { replace, push } = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   useLayoutEffect(() => {
     setActivePath(activeKeys.filter((value) => pathName.includes(value))[0]);
@@ -100,7 +98,7 @@ const DashboardSider = () => {
           <ul className="-mt-4  menu dropdown-content z-[1]  w[15rem] w-[98%] mx-auto">
             <li
               onClick={() => {
-                push("/");
+                replace("/");
                 // dispatch(logOut());
               }}
               className="w-full bg-[#EEF2F7] p-2 cursor-pointer text-center items-center rounded-box mx-auto block"

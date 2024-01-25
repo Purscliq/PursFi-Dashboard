@@ -118,6 +118,7 @@ const OverviewTable = () => {
         </span>
       ),
       dataIndex: "memberId",
+      width: "10%",
       render: (id: any, record: DataType) => {
         return (
           <span
