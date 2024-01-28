@@ -69,9 +69,9 @@ const PayrollSetup = ({
         </label>
         <DatePicker
           value={formData?.day ? dayjs(formData?.day) : undefined}
-          onChange={(value, date) =>
-            setFormData((prev) => ({ ...prev, day: date }))
-          }
+          onChange={(value, date) => {
+            setFormData((prev) => ({ ...prev, day: date }));
+          }}
           className="w-full"
           picker="date"
         />
