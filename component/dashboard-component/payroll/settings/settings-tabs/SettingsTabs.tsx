@@ -12,7 +12,7 @@ const initialState = {
   businessId: "",
   structure: [],
   currency: "NGN",
-  hour: "6",
+  hour: "06",
 };
 export type dataType = typeof initialState;
 const SettingsTabs = () => {
