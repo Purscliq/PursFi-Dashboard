@@ -314,6 +314,8 @@ const AddMember = () => {
             </label>
             <PhoneInput
               country={"ng"}
+              disableDropdown
+              disableCountryCode
               containerClass="!w-full"
               inputClass="phone-input-input !w-full"
               value={formData.phone}
