@@ -9,6 +9,7 @@ import { FaRegUser } from "react-icons/fa";
 import { GrTransaction, GrDocumentUser } from "react-icons/gr";
 import { FiSettings } from "react-icons/fi";
 import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
+import ContactIcon from "@/assets/icon/ContactIcon";
 import { MenuProps } from "antd";
 import Link from "next/link";
 import { CgTranscript } from "react-icons/cg";
@@ -55,16 +56,6 @@ export const sidebarData: MenuProps["items"] = [
     icon: <MdOutlineAdminPanelSettings className=" font-bold" />,
     key: "invoice",
   },
-  // {
-  //   label: <Link href="/contact">Contact</Link>,
-  //   icon: <GrDocumentUser className=" font-bold" />,
-  //   key: "contact",
-  // },
-  // {
-  //   label: <Link href="/administration">Administration</Link>,
-  //   icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
-  //   key: "administration",
-  // },
   {
     label: "Administration",
     icon: <FaRegUser className=" font-bold" />,
@@ -87,15 +78,15 @@ export const sidebarData: MenuProps["items"] = [
     icon: <CgTranscript className=" font-bold" />,
     key: "remita",
   },
-  // {
-  //   label: <Link href="/administration">Administration</Link>,
-  //   icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
-  //   key: "administration",
-  // },
   {
     label: <Link href="/setting">Settings</Link>,
     icon: <FiSettings className=" font-bold" />,
     key: "setting",
+  },
+  {
+    label: <Link href="/tickets">Ticket and Support</Link>,
+    icon: <ContactIcon />,
+    key: "ticket",
   },
 ];
 
@@ -109,4 +100,5 @@ export const activeKeys = [
   "contact",
   "administration",
   "setting",
+  "ticket",
 ];
