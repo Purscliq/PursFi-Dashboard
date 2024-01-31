@@ -1,7 +1,7 @@
 import { ApiSlice } from "./Api";
 
 const payrollSlice = ApiSlice.enhanceEndpoints({
-  addTagTypes: ["payroll" as const],
+  addTagTypes: ["payroll" as const, "beneficiaries" as const],
 }).injectEndpoints({
   endpoints: (builder) => ({
     createPayroll: builder.mutation({
@@ -17,6 +17,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["beneficiaries"],
     }),
     updatePayroll: builder.mutation({
       query: (body) => ({
@@ -43,6 +44,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       query: () => ({
         url: "payroll/beneficiaries",
       }),
+      providesTags: ["beneficiaries"],
     }),
     getPayroll: builder.query({
       query: () => ({
@@ -61,16 +63,19 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       query: (payrollId) => ({
         url: `payroll/beneficiaries?payrollId=${payrollId}`,
       }),
+      providesTags: ["beneficiaries"],
     }),
     getBusinessBeneficiaries: builder.query({
       query: () => ({
         url: "payroll/business/beneficiaries",
       }),
+      providesTags: ["beneficiaries"],
     }),
     getSingleBeneficiary: builder.query({
       query: (id) => ({
         url: `payroll/single/beneficiary?memberId=${id}`,
       }),
+      providesTags: ["beneficiaries"],
     }),
     updateBeneficiary: builder.mutation({
       query: (body) => ({
@@ -78,6 +83,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         body,
         method: "PUT",
       }),
+      invalidatesTags: ["beneficiaries"],
     }),
     deleteBeneficiary: builder.mutation({
       query: (id) => ({
@@ -87,6 +93,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
           memberId: id,
         },
       }),
+      invalidatesTags: ["beneficiaries"],
     }),
   }),
 });

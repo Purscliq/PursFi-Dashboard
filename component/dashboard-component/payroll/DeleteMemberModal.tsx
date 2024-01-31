@@ -2,14 +2,21 @@ import {
   CustomModal as Modal,
   CustomButton as Button,
 } from "@/lib/AntdComponents";
+import { useDeleteBeneficiaryMutation } from "@/services/payrollService";
+import { message } from "antd";
 
 const DeleteMemberModal = ({
   open,
   setOpen,
+  id,
+  closeDrawal,
 }: {
   open: boolean;
   setOpen: (value: boolean) => void;
+  id: string;
+  closeDrawal: () => void;
 }) => {
+  const [deleteMember, { isLoading }] = useDeleteBeneficiaryMutation();
   return (
     <Modal
       open={open}
@@ -25,13 +32,32 @@ const DeleteMemberModal = ({
           permanently delete this member from payroll beneficiary.
         </p>
         <Button
+          onClick={() =>
+            deleteMember(id)
+              .unwrap()
+              .then((res) => {
+                message.success("beneficiary deleted successfully");
+                closeDrawal();
+                setOpen(false);
+              })
+              .catch((err) => {
+                message.error(
+                  err?.data?.responseDescription || "something went wrong"
+                );
+              })
+          }
+          loading={isLoading}
           danger
           type="primary"
           className="!h-[3rem] !bg-[#F6513B] w-full text-white hover:!text-white"
         >
           Yes
         </Button>
-        <Button className="!h-[3rem] w-full" onClick={() => setOpen(false)}>
+        <Button
+          disabled={isLoading}
+          className="!h-[3rem] w-full"
+          onClick={() => setOpen(false)}
+        >
           No
         </Button>
       </div>

@@ -118,7 +118,7 @@ const PayrollDrawal: React.FC<PayrollDetailsProps> = ({
                   Delete Member
                 </Button>
                 <Link
-                  href="/add-payroll"
+                  href={`/add-payroll/${id}`}
                   className="h-[3rem] bg-transparent w-full rounded-[5px] border border-solid border-[#000000] py-[12px] px-[24px] block text-center text-[16px] font-[500] text-[#000000] hover:text-[#000000]"
                 >
                   Edit Details
@@ -128,7 +128,12 @@ const PayrollDrawal: React.FC<PayrollDetailsProps> = ({
           )}
         </>
       </Drawer>
-      <DeleteMemberModal open={openDeleteModal} setOpen={setOpenDeleteModal} />
+      <DeleteMemberModal
+        id={id}
+        open={openDeleteModal}
+        setOpen={setOpenDeleteModal}
+        closeDrawal={onClose}
+      />
     </>
   );
 };
