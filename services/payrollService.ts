@@ -72,6 +72,22 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         url: `payroll/single/beneficiary?memberId=${id}`,
       }),
     }),
+    updateBeneficiary: builder.mutation({
+      query: (body) => ({
+        url: "payroll/update/beneficiaries",
+        body,
+        method: "PUT",
+      }),
+    }),
+    deleteBeneficiary: builder.mutation({
+      query: (id) => ({
+        url: `payroll/delete/beneficiary`,
+        method: "DELETE",
+        params: {
+          memberId: id,
+        },
+      }),
+    }),
   }),
 });
 
@@ -89,4 +105,6 @@ export const {
   useLazyGetBusinessBeneficiariesQuery,
   useGetSingleBeneficiaryQuery,
   useLazyGetSingleBeneficiaryQuery,
+  useUpdateBeneficiaryMutation,
+  useDeleteBeneficiaryMutation,
 } = payrollSlice;
