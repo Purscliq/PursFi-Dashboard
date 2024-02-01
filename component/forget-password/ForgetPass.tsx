@@ -66,7 +66,7 @@ const ForgetPass = () => {
             loading={isLoading}
             htmlType="submit"
             type="primary"
-            className="!h-[3rem] !bg-Primary w-full"
+            className="!h-[3rem] !bg-[#000] w-full"
           >
             Send reset link
           </Button>
