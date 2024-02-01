@@ -171,7 +171,7 @@ const SignUp = () => {
               Create your Password
             </label>
             <div className="flex justify-between">
-              <div className="flex-1 ">
+              <div className="flex-1">
                 {" "}
                 <label
                   className="block text-gray-600 text-sm font-semibold mb-2"

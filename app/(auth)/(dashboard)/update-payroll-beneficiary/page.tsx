@@ -1,7 +1,7 @@
 import UpdateMember from "@/component/dashboard-component/payroll/UpdateMember";
 
-const page = ({ params }: { params: { id: string } }) => {
-  return <UpdateMember id={params.id} />;
+const page = () => {
+  return <UpdateMember />;
 };
 
 export default page;

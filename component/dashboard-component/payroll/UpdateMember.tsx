@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   CustomInput as Input,
   CustomRadioGroup as RadioGroup,
@@ -57,8 +57,9 @@ const initialState = {
   reference: "",
   phone: "",
 };
-const UpdateMember = ({ id }: { id: string }) => {
+const UpdateMember = () => {
   const { back } = useRouter();
+  const params = useSearchParams();
   const { data } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
   const { data: payroll } = useGetPayrollQuery({});
@@ -67,8 +68,8 @@ const UpdateMember = ({ id }: { id: string }) => {
   const [updateBeneficiary, { isLoading }] = useUpdateBeneficiaryMutation();
   const [formData, setFormData] = useState(initialState);
   useEffect(() => {
-    if (id) {
-      getBeneficiary(id)
+    if (params.get("id")) {
+      getBeneficiary(params.get("id") as string)
         .then((res) => {
           setFormData({
             ...res.data.data,
@@ -82,7 +83,7 @@ const UpdateMember = ({ id }: { id: string }) => {
           back();
         });
     }
-  }, []);
+  }, [params]);
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -106,7 +107,7 @@ const UpdateMember = ({ id }: { id: string }) => {
     }
   };
   useEffect(() => {
-    if (formData.accountNumber?.length === 10 && formData.bankCode)
+    if (formData?.accountNumber?.length === 10 && formData?.bankCode)
       verify({
         accountNumber: formData.accountNumber,
         bankCode: formData.bankCode,
@@ -122,8 +123,8 @@ const UpdateMember = ({ id }: { id: string }) => {
           );
         });
   }, [
-    JSON.stringify(formData.accountNumber),
-    JSON.stringify(formData.bankCode),
+    JSON.stringify(formData?.accountNumber),
+    JSON.stringify(formData?.bankCode),
   ]);
   return (
     <div className="relative flex flex-col px-[2%] w-[95%] mx-auto">
@@ -161,7 +162,7 @@ const UpdateMember = ({ id }: { id: string }) => {
           <RadioGroup
             className="!flex !flex-col gap-[0.5rem]"
             options={employeeOptions}
-            value={formData.employmentType}
+            value={formData?.employmentType}
             onChange={(e: RadioChangeEvent) => {
               setFormData((prev) => ({
                 ...prev,
@@ -184,7 +185,7 @@ const UpdateMember = ({ id }: { id: string }) => {
               </label>
               <Input
                 name="firstName"
-                value={formData.firstName}
+                value={formData?.firstName}
                 className="!w-full"
                 placeholder="Enter your name"
                 required
@@ -199,7 +200,7 @@ const UpdateMember = ({ id }: { id: string }) => {
                 name="lastName"
                 required
                 onChange={onInputChange}
-                value={formData.lastName}
+                value={formData?.lastName}
                 className="!w-full"
                 placeholder="Enter your name"
               />
@@ -222,7 +223,7 @@ const UpdateMember = ({ id }: { id: string }) => {
             <Input
               type="email"
               name="email"
-              value={formData.email}
+              value={formData?.email}
               onChange={onInputChange}
               required
               className="!w-full"
@@ -256,12 +257,12 @@ const UpdateMember = ({ id }: { id: string }) => {
                     }))
                   }
                   value={
-                    data.find(
+                    data?.find(
                       (e: Record<string, any>) => e.value === formData?.bankCode
-                    )?.label
+                    )?.label || ""
                   }
                   id="bank"
-                  options={data}
+                  options={Array.isArray(data) ? data : []}
                 />
               </span>
               <span className="flex flex-col gap-2 w-full">
@@ -273,7 +274,7 @@ const UpdateMember = ({ id }: { id: string }) => {
                   name="accountNumber"
                   maxLength={10}
                   minLength={10}
-                  value={formData.accountNumber}
+                  value={formData?.accountNumber}
                   required
                   type="number"
                   className="!w-full"
@@ -281,7 +282,7 @@ const UpdateMember = ({ id }: { id: string }) => {
                 />
               </span>
             </span>
-            <Input disabled value={formData.bankName} />
+            <Input disabled value={formData?.bankName} />
           </span>
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
@@ -318,11 +319,11 @@ const UpdateMember = ({ id }: { id: string }) => {
               Payroll
             </label>
             <Select
-              value={formData.reference}
+              value={formData?.reference}
               onSelect={(value) =>
                 setFormData((prev) => ({ ...prev, reference: value }))
               }
-              options={payroll || []}
+              options={Array.isArray(payroll) ? payroll : []}
             />
           </span>
         </span>
@@ -345,7 +346,7 @@ const UpdateMember = ({ id }: { id: string }) => {
               disableCountryCode
               containerClass="!w-full"
               inputClass="phone-input-input !w-full"
-              value={formData.phone}
+              value={formData?.phone}
               onChange={(value) =>
                 setFormData((prev) => ({ ...prev, phone: value }))
               }
@@ -367,7 +368,7 @@ const UpdateMember = ({ id }: { id: string }) => {
             </label>
             <InputNumber
               controls={false}
-              value={formData.salary}
+              value={formData?.salary}
               className="!w-full"
               placeholder="salary"
               required
@@ -392,7 +393,7 @@ const UpdateMember = ({ id }: { id: string }) => {
                 Address
               </label>
               <Input
-                value={formData.address}
+                value={formData?.address}
                 name="address"
                 onChange={onInputChange}
                 required
@@ -407,7 +408,7 @@ const UpdateMember = ({ id }: { id: string }) => {
                 </label>
                 <Input
                   name="lga"
-                  value={formData.lga}
+                  value={formData?.lga}
                   onChange={onInputChange}
                   className="!w-full"
                   placeholder="Enter your name"
@@ -419,7 +420,7 @@ const UpdateMember = ({ id }: { id: string }) => {
                 </label>
                 <Input
                   name="state"
-                  value={formData.state}
+                  value={formData?.state}
                   onChange={onInputChange}
                   className="!w-full"
                   placeholder="Enter state"

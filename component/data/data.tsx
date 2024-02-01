@@ -83,11 +83,11 @@ export const sidebarData: MenuProps["items"] = [
     icon: <FiSettings className=" font-bold" />,
     key: "setting",
   },
-  {
-    label: <Link href="/tickets">Ticket and Support</Link>,
-    icon: <ContactIcon />,
-    key: "ticket",
-  },
+  // {
+  //   label: <Link href="/tickets">Ticket and Support</Link>,
+  //   icon: <ContactIcon />,
+  //   key: "ticket",
+  // },
 ];
 
 export const activeKeys = [
