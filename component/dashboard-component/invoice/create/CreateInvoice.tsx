@@ -194,7 +194,7 @@ const CreateInvoice = () => {
           <div className="flex flex-col space-y-3">
             <div className="flex flex-col space-y-1 w-full">
               <label htmlFor="account" className="font-medium text-sm">
-                Pursfibusnnes Account
+                PursFi Account
               </label>
               <input
                 value={wallet?.accountDetails?.accountName}
