@@ -137,7 +137,7 @@ const CompanyInfo = ({
                 className="block text-gray-700 text-sm font-semibold mb-2"
                 htmlFor="text"
               >
-                Enter your Business name
+                Enter your Business name (without industry)
               </label>
               <Input
                 name="businessName"
@@ -152,15 +152,15 @@ const CompanyInfo = ({
             </div>
           </div>
         </article>
-        <article className="flex flex-col md:flex-row space-x-14 p-2 border-b ">
+        <article className="flex flex-col md:flex-row space-x-14 p-2 border-b">
           <div className="w-[28%]">
             <h2 className="text-black font-semibold mb-1">
-              Select your industry{" "}
+              Select your industry
             </h2>
             <p className="text-sm">
               Choose the industry closest to where your business operates.
             </p>
-          </div>{" "}
+          </div>
           <div className="w-2/4">
             <div className="">
               <label
