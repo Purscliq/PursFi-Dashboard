@@ -1,4 +1,5 @@
 "use client";
+import { useLayoutEffect } from "react";
 import DashboardLayout from "@/component/layout/dashboard-layout/DashboardLayout";
 import {
   useGetTransactionStatusQuery,
@@ -11,6 +12,11 @@ import {
 import logo from "@/assets/logo.svg";
 import Image from "next/image";
 const Template = ({ children }: { children: React.ReactNode }) => {
+  useLayoutEffect(() => {
+    if (!localStorage.getItem("token")) {
+      window.location.href = "/";
+    }
+  }, []);
   const { isLoading } = useGetWalletHistoryQuery({});
   const { isLoading: isFetchingWallet } = useGetWalletQuery({});
   const { isLoading: isFetchingTransactionStatus } =
