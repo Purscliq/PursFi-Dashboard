@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   useLazyProfileQuery,
@@ -10,6 +10,11 @@ import logo from "@/assets/logo.svg";
 import { useAppDispatch } from "@/store/hooks";
 import { updateUser, updateBusiness } from "@/store/userSlice";
 const Template = ({ children }: { children: React.ReactNode }) => {
+  useLayoutEffect(() => {
+    if (!localStorage.getItem("token")) {
+      window.location.href = "/";
+    }
+  }, []);
   const { push } = useRouter();
   const dispatch = useAppDispatch();
   const [getUser, { isLoading, isUninitialized }] = useLazyProfileQuery({});
