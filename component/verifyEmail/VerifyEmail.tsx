@@ -2,17 +2,35 @@
 import logo from "@/assets/logo.svg";
 import SuccessIcon from "@/assets/icon/SuccessIcon";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Modal, message, Alert } from "antd";
 import { CustomButton as Button } from "@/lib/AntdComponents";
 import { useGenerateEmailOtpMutation } from "@/services/authService";
 import { useAppSelector } from "@/store/hooks";
 const VerifyEmail = () => {
-  const [generateMail, { isLoading }] = useGenerateEmailOtpMutation();
   const data = useAppSelector((state) => state?.user?.user);
+  const { replace } = useRouter();
+  useEffect(() => {
+    if (localStorage.getItem(`verify-${data?.email}`) === "true") {
+      replace("/");
+      localStorage.removeItem(`verify-${data?.email}`);
+    }
+  }, [data]);
+  const [minutes, setMinutes] = useState(59);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (minutes < 1) {
+        clearInterval(interval);
+      }
+      setMinutes((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  const [generateMail, { isLoading }] = useGenerateEmailOtpMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [alert, setAlert] = useState("");
-  const Verify = () =>
+  const resendLink = () =>
     generateMail({ username: data?.email })
       .unwrap()
       .then((res) =>
@@ -47,11 +65,12 @@ const VerifyEmail = () => {
           View Requirement
         </button>
         <Button
-          onClick={Verify}
+          onClick={resendLink}
           loading={isLoading}
+          disabled={minutes > 0 || isLoading}
           className="!h-[3rem] w-full"
         >
-          Resend Link
+          {`${minutes < 1 ? "Resend Link" : `${minutes}`}`}
         </Button>
         <Modal
           open={isModalOpen}

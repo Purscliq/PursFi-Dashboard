@@ -19,6 +19,7 @@ const Page = () => {
               res?.responseDescription ||
               "verification successfull"
           );
+          localStorage.setItem(`verify-${params.get("email")}`, "true");
           replace("/");
         })
         .catch((err) => {
