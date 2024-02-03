@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Avatar from "../../../../assets/png/People.png";
+import Avatar from "@/assets/people.png";
 import Link from "next/link";
 
 const ticketData = [
