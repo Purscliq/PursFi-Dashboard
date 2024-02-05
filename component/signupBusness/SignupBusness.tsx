@@ -48,7 +48,7 @@ const SignupBusness = () => {
           .then(() => {
             setFormData(initailState);
             replace("/verifyEmail");
-            localStorage.setItem(`verify-${profile?.email}`, "true");
+            localStorage.setItem(`verify-${profile?.email}`, "false");
           })
           .catch(() => {
             setFormData(initailState);
