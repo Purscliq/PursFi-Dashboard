@@ -172,7 +172,7 @@ const BusinessDocs = ({
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
-                  <p className="text-sm font-semibold">Note: Limited 2mb</p>
+                  <p className="text-sm font-semibold">Attach Document</p>
                 </span>
               </Upload>
             </div>
@@ -185,7 +185,7 @@ const BusinessDocs = ({
               The Corporate Affairs Commission (CAC) is the statutory body
               charged with the administration of the Companies and Allied
               Matters Act (the Act) which includes the regulation and
-              supervision of the formation
+              supervision of the formation Note: Limited 2mb
             </p>
           </div>
           <div className=" w-2/4">
@@ -210,9 +210,7 @@ const BusinessDocs = ({
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
-                  <p className="text-sm font-semibold">
-                    Attach Doc Note: Limited 2mb
-                  </p>
+                  <p className="text-sm font-semibold">Attach Document</p>
                 </span>
               </Upload>
             </div>
@@ -223,7 +221,8 @@ const BusinessDocs = ({
             <h2 className="text-black font-semibold mb-1">Utility Bills </h2>
             <p className="text-sm">
               A utility bill is a monthly statement of the amount a household or
-              business owes for essential services or utilities
+              business owes for essential services or utilities Note: Limited
+              2mb
             </p>
           </div>{" "}
           <div className=" w-2/4">
@@ -248,9 +247,7 @@ const BusinessDocs = ({
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
-                  <p className="text-sm font-semibold">
-                    Attach Doc Note: Limited 2mb
-                  </p>
+                  <p className="text-sm font-semibold">Attach Document</p>
                 </span>
               </Upload>
             </div>
