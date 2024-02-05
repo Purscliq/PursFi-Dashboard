@@ -77,7 +77,7 @@ const OwnerInfo = ({
   const props: UploadProps = {
     name: "file",
     multiple: false,
-    accept: ".jpg",
+    accept: ".jpg,.jpeg,.png,application/pdf",
     onDrop(e) {
       // console.log("Dropped files", e.dataTransfer.files);
     },

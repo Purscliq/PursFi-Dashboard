@@ -29,7 +29,7 @@ const BusinessDocs = ({
   const props: UploadProps = {
     name: "file",
     multiple: false,
-    accept: "image/jpeg",
+    accept: ".jpg,.jpeg,.png,application/pdf",
     onDrop(e) {
       // console.log("Dropped files", e.dataTransfer.files);
     },
@@ -100,8 +100,7 @@ const BusinessDocs = ({
             </h2>
             <p className="text-sm">
               A certificate of incorporation is a document given by the
-              companies regulation agency of a country Note:JPEG only. Limited
-              5mb
+              companies regulation agency of a country. Note: Limited 2mb
             </p>
           </div>
           <div className="w-2/4">
@@ -144,7 +143,7 @@ const BusinessDocs = ({
               A memorandum of association - a legal statement signed by all
               initial shareholders or guarantors agreeing to form the company.
               articles of association - written rules about running the company
-              agreed by the shareholders Note:JPEG only Limited 5mb
+              agreed by the shareholders Note: Limited 2mb
             </p>
           </div>
           <div className=" w-2/4">
@@ -173,9 +172,7 @@ const BusinessDocs = ({
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
-                  <p className="text-sm font-semibold">
-                    Attach Jpeg only, Limited 5mb
-                  </p>
+                  <p className="text-sm font-semibold">Note: Limited 2mb</p>
                 </span>
               </Upload>
             </div>
@@ -213,7 +210,9 @@ const BusinessDocs = ({
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
-                  <p className="text-sm font-semibold">Attach Doc</p>
+                  <p className="text-sm font-semibold">
+                    Attach Doc Note: Limited 2mb
+                  </p>
                 </span>
               </Upload>
             </div>
@@ -249,7 +248,9 @@ const BusinessDocs = ({
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
-                  <p className="text-sm font-semibold">Attach Doc</p>
+                  <p className="text-sm font-semibold">
+                    Attach Doc Note: Limited 2mb
+                  </p>
                 </span>
               </Upload>
             </div>
