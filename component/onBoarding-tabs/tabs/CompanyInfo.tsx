@@ -17,9 +17,9 @@ import "react-phone-input-2/lib/style.css";
 import { useBusinessProfileQuery } from "@/services/authService";
 import { docsData } from "../OnBoardingTabs";
 const filter = [
-  { label: "Individual", value: "inidividual" },
+  // { label: "Individual", value: "inidividual" },
   { label: "Business", value: "business" },
-  { label: "Enterprise", value: "enterprise" },
+  // { label: "Enterprise", value: "enterprise" },
   { label: "Limited Liability", value: "limited liability" },
 ];
 const industry = [

@@ -48,7 +48,7 @@ const SignupBusness = () => {
           .then(() => {
             setFormData(initailState);
             replace("/verifyEmail");
-            localStorage.setItem(`verify-${profile?.email}`, "true");
+            localStorage.setItem(`verify-${profile?.email}`, "false");
           })
           .catch(() => {
             setFormData(initailState);
@@ -144,9 +144,9 @@ const SignupBusness = () => {
               value={formData.merchantType}
               className="!w-full"
               options={[
-                { value: "individual", label: "Individual" },
+                // { value: "individual", label: "Individual" },
                 { value: "business", label: "Business" },
-                { value: "enterprise", label: "Enterprise" },
+                // { value: "enterprise", label: "Enterprise" },
                 { value: "limited liability", label: "Limited Liability" },
               ]}
             />

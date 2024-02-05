@@ -16,7 +16,7 @@ const VerifyEmail = () => {
       replace("/");
       localStorage.removeItem(`verify-${data?.email}`);
     }
-  }, [data]);
+  }, [data, localStorage.getItem(`verify-${data?.email}`)]);
   const [minutes, setMinutes] = useState(59);
   useEffect(() => {
     const interval = setInterval(() => {

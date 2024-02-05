@@ -29,7 +29,7 @@ const BusinessDocs = ({
   const props: UploadProps = {
     name: "file",
     multiple: false,
-    accept: "image/jpeg",
+    accept: ".jpg,.jpeg,.png,application/pdf",
     onDrop(e) {
       // console.log("Dropped files", e.dataTransfer.files);
     },
@@ -100,8 +100,7 @@ const BusinessDocs = ({
             </h2>
             <p className="text-sm">
               A certificate of incorporation is a document given by the
-              companies regulation agency of a country Note:JPEG only. Limited
-              5mb
+              companies regulation agency of a country. Note: Limited 2mb
             </p>
           </div>
           <div className="w-2/4">
@@ -144,7 +143,7 @@ const BusinessDocs = ({
               A memorandum of association - a legal statement signed by all
               initial shareholders or guarantors agreeing to form the company.
               articles of association - written rules about running the company
-              agreed by the shareholders Note:JPEG only Limited 5mb
+              agreed by the shareholders Note: Limited 2mb
             </p>
           </div>
           <div className=" w-2/4">
@@ -173,9 +172,7 @@ const BusinessDocs = ({
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
-                  <p className="text-sm font-semibold">
-                    Attach Jpeg only, Limited 5mb
-                  </p>
+                  <p className="text-sm font-semibold">Attach Document</p>
                 </span>
               </Upload>
             </div>
@@ -188,7 +185,7 @@ const BusinessDocs = ({
               The Corporate Affairs Commission (CAC) is the statutory body
               charged with the administration of the Companies and Allied
               Matters Act (the Act) which includes the regulation and
-              supervision of the formation
+              supervision of the formation Note: Limited 2mb
             </p>
           </div>
           <div className=" w-2/4">
@@ -213,7 +210,7 @@ const BusinessDocs = ({
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
-                  <p className="text-sm font-semibold">Attach Doc</p>
+                  <p className="text-sm font-semibold">Attach Document</p>
                 </span>
               </Upload>
             </div>
@@ -224,7 +221,8 @@ const BusinessDocs = ({
             <h2 className="text-black font-semibold mb-1">Utility Bills </h2>
             <p className="text-sm">
               A utility bill is a monthly statement of the amount a household or
-              business owes for essential services or utilities
+              business owes for essential services or utilities Note: Limited
+              2mb
             </p>
           </div>{" "}
           <div className=" w-2/4">
@@ -249,7 +247,7 @@ const BusinessDocs = ({
               >
                 <span className="flex items-center gap-[0.2rem] justify-center stroke-[#515B6F] hover:stroke-[#000000]">
                   <LinkIcon className="stroke-inherit" />
-                  <p className="text-sm font-semibold">Attach Doc</p>
+                  <p className="text-sm font-semibold">Attach Document</p>
                 </span>
               </Upload>
             </div>

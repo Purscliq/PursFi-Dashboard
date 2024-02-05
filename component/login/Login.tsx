@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import {
   useLazyProfileQuery,
   useLazyBusinessProfileQuery,
+  useGenerateEmailOtpMutation,
 } from "@/services/authService";
 import { useAppDispatch } from "@/store/hooks";
 import { logOutAction } from "@/store/userSlice";
@@ -29,6 +30,7 @@ const initailState = {
 };
 const Login = () => {
   const dispatch = useAppDispatch();
+  const [generateEmailOtp] = useGenerateEmailOtpMutation();
   useEffect(() => {
     dispatch(logOutAction());
   }, []);
@@ -54,7 +56,9 @@ const Login = () => {
               return;
             }
             if (!res?.user?.isEmailValidated) {
-              replace("/verifyEmail");
+              generateEmailOtp({ username: res?.user?.email })
+                .unwrap()
+                .finally(() => replace("/verifyEmail"));
               return;
             }
             getBusinessProfile({})
