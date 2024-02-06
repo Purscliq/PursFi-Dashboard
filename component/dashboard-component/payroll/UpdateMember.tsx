@@ -26,7 +26,7 @@ import {
 import { GrFormPreviousLink } from "react-icons/gr";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 const employeeOptions = [
   {
@@ -63,7 +63,7 @@ const UpdateMember = () => {
   const { data } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
   const { data: payroll } = useGetPayrollQuery({});
-  const [getBeneficiary, { isLoading: isLoadingBenficiary }] =
+  const [getBeneficiary, { isLoading: isLoadingBeneficiary }] =
     useLazyGetSingleBeneficiaryQuery();
   const [updateBeneficiary, { isLoading }] = useUpdateBeneficiaryMutation();
   const [formData, setFormData] = useState(initialState);
@@ -145,11 +145,12 @@ const UpdateMember = () => {
         onSubmit={onFormSubmit}
         className="bg-white rounded-[10px] flex flex-col p-[2%] gap-[1rem] w[90%] mxauto relative overflow-x-hidden"
       >
-        {isVerifying && (
-          <div className="flex items-center justify-center h-full w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
-            <Spinner className="!m-auto !block" />
-          </div>
-        )}
+        {isVerifying ||
+          (isLoadingBeneficiary && (
+            <div className="flex items-center justify-center h-full w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
+              <Spinner className="!m-auto !block" />
+            </div>
+          ))}
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
@@ -302,6 +303,7 @@ const UpdateMember = () => {
               }}
               className="!w-full"
               placeholder="Hire Date"
+              value={dayjs(formData?.hireDate)}
             />
           </span>
         </span>
