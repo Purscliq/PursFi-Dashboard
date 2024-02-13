@@ -12,12 +12,14 @@ interface PayrollDetailsProps {
   Open: boolean;
   onClose: () => void;
   id: string;
+  invalidateAction: () => void;
 }
 
 const PayrollDrawal: React.FC<PayrollDetailsProps> = ({
   Open,
   onClose,
   id,
+  invalidateAction,
 }) => {
   const [getBeneficiary, { isLoading, data, isFetching }] =
     useLazyGetSingleBeneficiaryQuery();
@@ -133,6 +135,7 @@ const PayrollDrawal: React.FC<PayrollDetailsProps> = ({
         open={openDeleteModal}
         setOpen={setOpenDeleteModal}
         closeDrawal={onClose}
+        invalidateAction={invalidateAction}
       />
     </>
   );
