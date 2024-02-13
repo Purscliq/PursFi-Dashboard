@@ -187,6 +187,9 @@ const OverviewTable = () => {
         Open={open}
         onClose={() => setOpen(false)}
         id={beneficiaryId}
+        invalidateAction={() => {
+          setId((prev) => prev);
+        }}
       />
     </>
   );
