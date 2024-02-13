@@ -30,7 +30,6 @@ const StatementModal = ({
       generateStatement({
         ...formData,
         businessId: profile.businessId,
-        userId: profile?.id,
       })
         .unwrap()
         .then((res) => {

@@ -10,11 +10,13 @@ const DeleteMemberModal = ({
   setOpen,
   id,
   closeDrawal,
+  invalidateAction,
 }: {
   open: boolean;
   setOpen: (value: boolean) => void;
   id: string;
   closeDrawal: () => void;
+  invalidateAction: () => void;
 }) => {
   const [deleteMember, { isLoading }] = useDeleteBeneficiaryMutation();
   return (
@@ -36,6 +38,7 @@ const DeleteMemberModal = ({
             deleteMember(id)
               .unwrap()
               .then((res) => {
+                invalidateAction();
                 message.success("beneficiary deleted successfully");
                 closeDrawal();
                 setOpen(false);
