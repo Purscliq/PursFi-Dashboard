@@ -22,8 +22,15 @@ import DashboardChart from "../dashboard/DashboardChart";
 import { useGetExpensesQuery } from "@/services/transactionService";
 import Arrowleft from "@/assets/icon/Arrowleft";
 import ArrowRight from "@/assets/icon/ArrowRight";
+enum tooltipOptions {
+  open = "tooltip-open",
+  close = "tooltip-close",
+}
 const Account = () => {
   const { data: analysis } = useGetExpensesQuery({});
+  const [toogleTooltip, setToogleTooltip] = useState<tooltipOptions>(
+    tooltipOptions.close
+  );
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
   const [isMoveFundModalOpen, setIsMoveFundModalOpen] = useState(false);
   const [isStatementModalOpen, setIsStatementModalOpen] = useState(false);
@@ -129,16 +136,26 @@ const Account = () => {
             </div>
             <div className="flex flex-col space-y-3 bg-white p-[2%]">
               <div className="flex justify-end items-end mb-3">
-                <Button
-                  onClick={() =>
-                    navigator.clipboard.writeText(
-                      `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
-                    )
-                  }
-                  className="text-lg font-semibold !border-none"
+                <span
+                  className={`tooltip ${toogleTooltip} tooltip-top w-fit`}
+                  data-tip="hello"
                 >
-                  + copy
-                </Button>
+                  <Button
+                    onClick={() => {
+                      setToogleTooltip(tooltipOptions.open);
+                      navigator.clipboard
+                        .writeText(
+                          `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
+                        )
+                        .finally(() => {
+                          setToogleTooltip(tooltipOptions.close);
+                        });
+                    }}
+                    className="text-lg font-semibold !border-none"
+                  >
+                    + copy
+                  </Button>
+                </span>
               </div>{" "}
               <span className="flex justify-between items-center">
                 <p className="text-gray-500 ">Bank Name</p>
