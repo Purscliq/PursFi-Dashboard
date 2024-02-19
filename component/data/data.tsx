@@ -25,10 +25,21 @@ export const sidebarData: MenuProps["items"] = [
     key: "account",
   },
   {
-    label: <Link href="/payment">Payment</Link>,
+    label: "Payment",
     icon: <AiOutlineIdcard className=" font-bold" />,
     key: "payment",
+    children: [
+      {
+        label: <Link href="/payment">Payment</Link>,
+        key: "payment",
+      },
+      {
+        label: <Link href="/bill-payment">Bill Payment</Link>,
+        key: "bill-payment",
+      },
+    ],
   },
+
   {
     label: "Payroll",
     icon: <FaRegUser className=" font-bold" />,
@@ -51,6 +62,7 @@ export const sidebarData: MenuProps["items"] = [
     icon: <GrTransaction className=" font-bold" />,
     key: "transactions",
   },
+
   {
     label: <Link href="/invoice">Invoice</Link>,
     icon: <MdOutlineAdminPanelSettings className=" font-bold" />,
@@ -94,6 +106,7 @@ export const activeKeys = [
   "dashboard",
   "account",
   "payment",
+  "bill-payment",
   "payroll",
   "transactions",
   "invoice",
