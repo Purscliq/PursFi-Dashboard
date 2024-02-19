@@ -19,18 +19,14 @@ import {
 } from "@/services/walletService";
 import PaymentLink from "./modal/PaymentLink";
 import DashboardChart from "../dashboard/DashboardChart";
+import { CustomTooltip as Tooltip } from "@/lib/AntdComponents";
 import { useGetExpensesQuery } from "@/services/transactionService";
 import Arrowleft from "@/assets/icon/Arrowleft";
 import ArrowRight from "@/assets/icon/ArrowRight";
-enum tooltipOptions {
-  open = "tooltip-open",
-  close = "tooltip-close",
-}
+
 const Account = () => {
   const { data: analysis } = useGetExpensesQuery({});
-  const [toogleTooltip, setToogleTooltip] = useState<tooltipOptions>(
-    tooltipOptions.close
-  );
+  const [toogleTooltip, setToogleTooltip] = useState(false);
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
   const [isMoveFundModalOpen, setIsMoveFundModalOpen] = useState(false);
   const [isStatementModalOpen, setIsStatementModalOpen] = useState(false);
@@ -136,26 +132,25 @@ const Account = () => {
             </div>
             <div className="flex flex-col space-y-3 bg-white p-[2%]">
               <div className="flex justify-end items-end mb-3">
-                <span
-                  className={`tooltip ${toogleTooltip} tooltip-top w-fit`}
-                  data-tip="hello"
-                >
+                <Tooltip title="copied!" trigger={"click"} open={toogleTooltip}>
                   <Button
                     onClick={() => {
-                      setToogleTooltip(tooltipOptions.open);
+                      setToogleTooltip(true);
                       navigator.clipboard
                         .writeText(
                           `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
                         )
                         .finally(() => {
-                          setToogleTooltip(tooltipOptions.close);
+                          setTimeout(() => {
+                            setToogleTooltip(false);
+                          }, 2000);
                         });
                     }}
                     className="text-lg font-semibold !border-none"
                   >
                     + copy
                   </Button>
-                </span>
+                </Tooltip>
               </div>{" "}
               <span className="flex justify-between items-center">
                 <p className="text-gray-500 ">Bank Name</p>
