@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import Done from "@/assets/icon/Done";
@@ -36,7 +36,7 @@ const TransactionReceipt = () => {
         </div>
       ) : (
         <>
-          <div className="min-h-screen flex flex-col bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA] relative">
+          <div className="min-h-screen flex flex-col justify-between bg-BgImage mx-auto max-w-[1640px] bg-[#FAFAFA] relative">
             <nav className="py-4 px-8 bg-white flex justify-between items-center sticky top-0">
               <Image src={logo} alt="logo" />
               <a
@@ -47,63 +47,88 @@ const TransactionReceipt = () => {
                 learn about us
               </a>
             </nav>
-            <main className=" flex flex-col items-center justify-center bg-white w-[90%] md:w-[60%] m-auto my-[2rem] py-6 px-[10%] rounded-[20px]">
-              <Done className="translate-y-[-20%]" />
+            <main className="flex flex-col items-center justify-center bg-white max-w-[600px] w-[90%] md:w-[40%] m-auto my-[2rem] py-4 px-[2%] rounded-[20px]">
+              <Done className="translate-y-[-50%]" />
               <span className="border-b border-[#E9EBEB] pt-[1.5rem]">
-                <h1 className="text-[25px] font-[700] text-[#0AB71B]">
+                <h1 className="text-[25px] font-[700] text-[#0AB71B] text-center">
                   Payment successful !
                 </h1>
                 <p className="text-[19px] font-[500] text-[#515B6F]">
                   Your payment has been successfully done
                 </p>
               </span>
-              <div className="flex flex-col gap-[1rem]">
+              <div className="flex flex-col items-center justify-center gap-[1rem]">
                 <span>
-                  <h3 className="text-[#515B6F] text-[16px] font-[400]">
+                  <h3 className="text-[#515B6F] text-[16px] font-[400] text-center">
                     Total Payment
                   </h3>
-                  <h2 className="text-[25px] font-[700] text-[#000000]">
-                    NGN 5,000,000
+                  <h2 className="text-[25px] font-[700] text-[#000000] text-center">
+                    NGN{" "}
+                    {Number(data?.data?.amount || 0).toLocaleString("en-US")}
                   </h2>
                 </span>
-                <span className="grid grid-cols-2 justify-between items-center">
-                  <span className="rounded-[8px] border border-[#E9EBEB] p-[1rem] flex flex-col">
+                <span className="grid grid-cols-2 gap-[0.5rem] justify-between items-stretch">
+                  <span className="rounded-[8px] border border-[#E9EBEB] p-[0.5rem] flex flex-col">
                     <h6 className="text-[#515B6F] text-[16px] font-[400]">
                       Ref Number
                     </h6>
                     <p className="text-[#000000] text-[16px] font-[400]">
-                      004567484738
+                      {data?.data?.reference}
                     </p>
                   </span>
-                  <span className="rounded-[8px] border border-[#E9EBEB] p-[1rem] flex flex-col">
+                  <span className="rounded-[8px] border border-[#E9EBEB] p-[0.5rem] flex flex-col">
                     <h6 className="text-[#515B6F] text-[16px] font-[400]">
                       Payment Time
                     </h6>
                     <p className="text-[#000000] text-[16px] font-[400]">
-                      25 Feb 2023, 13:32
+                      {`${new Date(
+                        data?.data?.createdAt
+                      ).getDate()} ${new Intl.DateTimeFormat("en", {
+                        month: "short",
+                      }).format(new Date(data?.data?.createdAt))} ${new Date(
+                        data?.data?.createdAt
+                      ).getFullYear()}, ${new Date(
+                        data?.data?.createdAt
+                      ).getHours()}:${new Date(data?.data?.createdAt)
+                        .getMinutes()
+                        .toString()
+                        .padStart(2, "0")}`}
                     </p>
                   </span>
-                  <span className="rounded-[8px] border border-[#E9EBEB] p-[1rem] flex flex-col">
+                  <span className="rounded-[8px] border border-[#E9EBEB] p-[0.5rem] flex flex-col">
                     <h6 className="text-[#515B6F] text-[16px] font-[400]">
                       Payment Method
                     </h6>
                     <p className="text-[#000000] text-[16px] font-[400]">
-                      Bank Transfer
+                      {data?.data?.type === "banktransfer"
+                        ? "Bank Transfer"
+                        : "Bank Transfer"}
                     </p>
                   </span>
-                  <span className="rounded-[8px] border border-[#E9EBEB] p-[1rem] flex flex-col">
+                  <span className="rounded-[8px] border border-[#E9EBEB] p-[0.5rem] flex flex-col">
                     <h6 className="text-[#515B6F] text-[16px] font-[400]">
-                      Sender Name
+                      {data?.data?.transactionType === "credit"
+                        ? "Sender Name"
+                        : "Recipient Name"}
                     </h6>
                     <p className="text-[#000000] text-[16px] font-[400]">
-                      John Doe
+                      {data?.data?.accountName}
                     </p>
                   </span>
                 </span>
               </div>
             </main>
-            <footer className="py-4 px-8 bg-white flex justify-end items-center gap-1 sticky bottom-0">
-              <Button onClick={() => window.print()}>Download Receipt</Button>
+            <footer
+              className={`py-4 px-8 bg-white flex justify-end items-center gap-1 sticky bottom-0`}
+            >
+              <Button
+                className="no-print"
+                onClick={() => {
+                  window.print();
+                }}
+              >
+                Download Receipt
+              </Button>
             </footer>
           </div>
         </>
