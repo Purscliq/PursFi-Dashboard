@@ -18,6 +18,12 @@ const AirtimeBundle = () => {
             >
               + Quick Service
             </button>
+            <button
+              onClick={() => push("/sell-service")}
+              className="btn btn-md border flex items-center bg-[#000] text-sm normal-case text-white hover:bg-[#000]"
+            >
+              + Sell Service
+            </button>
             <Select
               className="!w-full !h-[3rem]"
               options={[

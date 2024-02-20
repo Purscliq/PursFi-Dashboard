@@ -10,7 +10,9 @@ import { RadioChangeEvent } from "antd";
 import { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import LinkIcon from "@/assets/icon/LinkIcon";
-const QuickSell = () => {
+import Image from "next/image";
+import Mtn from "@/assets/icon/Mtn";
+const MakePayment = () => {
   const options = [
     { label: "specific account ", value: "specific account " },
     { label: "phone book", value: "phone book" },
@@ -32,15 +34,11 @@ const QuickSell = () => {
     setActiveTab(tab);
   };
   return (
-    <form className="grid grid-cols-1 gap-[1.5rem] px-[3%] relative">
-      <span className="flex flex-col w-full">
-        <label htmlFor="service">Select Service</label>
-        <Select
-          showSearch
-          placeholder="select service"
-          optionFilterProp="label"
-        />
-      </span>
+    <form className="grid grid-cols-1 gap-[1.5rem] px-[3%] relative mx-auto w-[70%]">
+      <div className="flex items-center space-x-4">
+        <Mtn />
+        <p className="font-semibold text-[22px]">MTN Service </p>
+      </div>
       <span className="flex flex-col w-full">
         <label htmlFor="product">Select product</label>
         <Select id="product" placeholder="select product" />
@@ -169,7 +167,7 @@ const QuickSell = () => {
                   </>
                 </>
               )}
-              {activeTab === "contact" && "Contact"}
+              {activeTab === "contact" && ""}
               {activeTab === "both" && (
                 <>
                   <p>
@@ -182,16 +180,12 @@ const QuickSell = () => {
                   </p>
                   <div className="flex items-center space-x-5 mt-4">
                     <span className="flex flex-col w-full">
-                      <label htmlFor="service">Select Service</label>
-                      <Select
-                        showSearch
-                        placeholder="select service"
-                        optionFilterProp="label"
-                      />
+                      <label htmlFor="service">Employee list</label>
+                      <Select showSearch optionFilterProp="label" />
                     </span>
                     <span className="flex flex-col w-full">
-                      <label htmlFor="product">Select product</label>
-                      <Select id="product" placeholder="select product" />
+                      <label htmlFor="product">Contact list</label>
+                      <Select id="product" optionFilterProp="label" />
                     </span>
                   </div>
                 </>
@@ -208,7 +202,7 @@ const QuickSell = () => {
       )}
       <Button
         htmlType="submit"
-        className="!bg-gray-300 !text-white !h-[45px] !border-none"
+        className="!bg-gray-200 !text-white !h-[45px] !border-none"
       >
         Make Payment
       </Button>
@@ -219,4 +213,4 @@ const QuickSell = () => {
   );
 };
 
-export default QuickSell;
+export default MakePayment;

@@ -67,9 +67,9 @@ const QuickBuy = () => {
             required
           />
 
-          <p>
+          <small>
             If a Payment is not Approval after 1 hour it will automatic cancel
-          </p>
+          </small>
         </span>
         {(selectedOption === options[1].value ||
           selectedOption === options[2].value) && (
