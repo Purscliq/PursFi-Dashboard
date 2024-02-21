@@ -6,8 +6,9 @@ import NineMobile from "@/assets/icon/NineMobile";
 import { CustomSelect as Select } from "@/lib/AntdComponents";
 import { useRouter } from "next/navigation";
 import TransactionHistoryTable from "./TransactionHistoryTable";
-import AirtimeTopupModal from "./AirtimeTopupModal";
-import DataTopupModal from "./DataTopupModal";
+import AirtimeTopupModal from "./modals/AirtimeTopupModal";
+import DataTopupModal from "./modals/DataTopupModal";
+import MoreDetailsDrawer from "./MoreDetailsDrawer";
 
 const data = [
   {
@@ -37,14 +38,12 @@ const bundle = [
   },
   {
     provider: { icon: <Airtel /> },
-
     product: "Airtel Airtime and Data bundle",
     totalAirtimeRemaining: "450,000.00",
     totalDataBundleRemaining: "450,000.00",
   },
   {
     provider: { icon: <Glo /> },
-
     product: "Glo Airtime and Data bundle",
     totalAirtimeRemaining: "450,000.00",
     totalDataBundleRemaining: "450,000.00",
@@ -91,7 +90,7 @@ const AirtimeBundle = () => {
             >
               + Quick Service
             </button>
-          
+
             <Select
               className="!w-full !h-[3rem]"
               options={[
@@ -161,12 +160,10 @@ const AirtimeBundle = () => {
               </span>
             </div>
             <span className="flex justify-center">
-              <button
-                title="View More Details"
-                className="underline text-[#515B6F] text-[14px] hover:text-black"
-              >
-                View More Details
-              </button>
+              <MoreDetailsDrawer
+                provider={item.provider}
+                product={item.product}
+              />
             </span>
           </div>
         ))}
