@@ -6,6 +6,8 @@ import NineMobile from "@/assets/icon/NineMobile";
 import { CustomSelect as Select } from "@/lib/AntdComponents";
 import { useRouter } from "next/navigation";
 import TransactionHistoryTable from "./TransactionHistoryTable";
+import AirtimeTopupModal from "./AirtimeTopupModal";
+import DataTopupModal from "./DataTopupModal";
 
 const data = [
   {
@@ -28,25 +30,27 @@ const data = [
 
 const bundle = [
   {
-    provider: <Mtn />,
+    provider: { icon: <Mtn /> },
     product: "MTN Airtime and Data bundle",
     totalAirtimeRemaining: "450,000.00",
     totalDataBundleRemaining: "450,000.00",
   },
   {
-    provider: <Airtel />,
+    provider: { icon: <Airtel /> },
+
     product: "Airtel Airtime and Data bundle",
     totalAirtimeRemaining: "450,000.00",
     totalDataBundleRemaining: "450,000.00",
   },
   {
-    provider: <Glo />,
+    provider: { icon: <Glo /> },
+
     product: "Glo Airtime and Data bundle",
     totalAirtimeRemaining: "450,000.00",
     totalDataBundleRemaining: "450,000.00",
   },
   {
-    provider: <NineMobile />,
+    provider: { icon: <NineMobile /> },
     product: "9Mobile Airtime and Data bundle",
     totalAirtimeRemaining: "450,000.00",
     totalDataBundleRemaining: "450,000.00",
@@ -123,7 +127,7 @@ const AirtimeBundle = () => {
           >
             <div className="md:flex justify-between gap-4 space-y-4 md:space-y-0">
               <span className="flex gap-4">
-                {item.provider}
+                {item.provider.icon}
                 <p className="text-[18px] pt-4 md:pt-2">{item.product}</p>
               </span>
               <button
@@ -144,12 +148,8 @@ const AirtimeBundle = () => {
                   <p className="text-black font-semibold text-[16px]">
                     {item.totalAirtimeRemaining}
                   </p>
-                  <button
-                    title="Top up"
-                    className="text-[#0D24F1] font-medium text-[12px]"
-                  >
-                    + Top up
-                  </button>
+                  {/* <AirtimeTopupModal /> */}
+                  <AirtimeTopupModal provider={item.provider} />
                 </span>
               </span>
               <span className="bg-[#FAFAFA] rounded-[4px] py-4 px-6 flex flex-col justify-between gap-3">
@@ -160,12 +160,8 @@ const AirtimeBundle = () => {
                   <p className="text-black font-semibold text-[16px]">
                     {item.totalDataBundleRemaining}
                   </p>
-                  <button
-                    title="Top up"
-                    className="text-[#0D24F1] font-medium text-[12px]"
-                  >
-                    + Top up
-                  </button>
+                  {/* <DataTopupModal /> */}
+                  <DataTopupModal provider={item.provider} />
                 </span>
               </span>
             </div>
