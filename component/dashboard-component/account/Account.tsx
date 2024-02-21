@@ -19,11 +19,14 @@ import {
 } from "@/services/walletService";
 import PaymentLink from "./modal/PaymentLink";
 import DashboardChart from "../dashboard/DashboardChart";
+import { CustomTooltip as Tooltip } from "@/lib/AntdComponents";
 import { useGetExpensesQuery } from "@/services/transactionService";
 import Arrowleft from "@/assets/icon/Arrowleft";
 import ArrowRight from "@/assets/icon/ArrowRight";
+
 const Account = () => {
   const { data: analysis } = useGetExpensesQuery({});
+  const [toogleTooltip, setToogleTooltip] = useState(false);
   const [isFundModalOpen, setIsFundModalOpen] = useState(false);
   const [isMoveFundModalOpen, setIsMoveFundModalOpen] = useState(false);
   const [isStatementModalOpen, setIsStatementModalOpen] = useState(false);
@@ -38,18 +41,7 @@ const Account = () => {
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
       <header className="flex flex-col space-y-6">
-        <div className="flex items-center justify-between ">
-          <span>
-            <h2 className="text-3xl font-bold mb-1"> Account </h2>
-            <p className="text-sm text-gray-600">
-              Showing your Account metrics for{" "}
-              {date.toLocaleString("en-US", {
-                month: "long",
-                day: "2-digit",
-                year: "numeric",
-              })}
-            </p>
-          </span>
+        <div className="flex items-center justify-end">
           <div className="flex justify-end items-center space-x-5">
             {/* <button
               onClick={() => setIsSubModalOpen(true)}
@@ -140,16 +132,25 @@ const Account = () => {
             </div>
             <div className="flex flex-col space-y-3 bg-white p-[2%]">
               <div className="flex justify-end items-end mb-3">
-                <Button
-                  onClick={() =>
-                    navigator.clipboard.writeText(
-                      `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
-                    )
-                  }
-                  className="text-lg font-semibold !border-none"
-                >
-                  + copy
-                </Button>
+                <Tooltip title="copied!" trigger={"click"} open={toogleTooltip}>
+                  <Button
+                    onClick={() => {
+                      setToogleTooltip(true);
+                      navigator.clipboard
+                        .writeText(
+                          `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
+                        )
+                        .finally(() => {
+                          setTimeout(() => {
+                            setToogleTooltip(false);
+                          }, 2000);
+                        });
+                    }}
+                    className="text-lg font-semibold !border-none"
+                  >
+                    + copy
+                  </Button>
+                </Tooltip>
               </div>{" "}
               <span className="flex justify-between items-center">
                 <p className="text-gray-500 ">Bank Name</p>

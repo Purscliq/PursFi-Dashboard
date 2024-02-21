@@ -6,6 +6,17 @@
 ::-webkit-scrollbar {
   display: none;
 }
+@media print {
+  /* Hide elements not to be printed */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Show elements to be printed */
+  .print-only {
+    display: block;
+  }
+}
 body {
   font-family: "Archivo", sans-serif;
   background-color: white;
@@ -37,6 +48,6 @@ input[type="number"]::-webkit-outer-spin-button {
   background-position: left;
   background-repeat: no-repeat;
 }
-.ant-picker-ok .ant-btn{
+.ant-picker-ok .ant-btn {
   background-color: black;
 }
