@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   CustomTable as Table,
   CustomSelect as Select,
 } from "@/lib/AntdComponents";
 import MoreIcon from "@/assets/icon/MoreIcon";
 import FilterIcon from "@/assets/icon/FilterIcon";
+import TransactionModal from "./TransactionModal";
 
 interface DataType {
   key: string;
@@ -44,6 +45,7 @@ const data: DataType[] = [
 ];
 
 const TransactionHistoryTable = () => {
+  const [open, setOpen] = useState(false);
   const columns = [
     {
       title: "Date",
@@ -88,8 +90,13 @@ const TransactionHistoryTable = () => {
       title: "Action",
       render: () => {
         return (
-          <span className="cursor-pointer">
-            <MoreIcon />
+          <span
+            onClick={() => {
+              setOpen(true);
+            }}
+            className="cursor-pointer"
+          >
+            ...
           </span>
         );
       },
@@ -129,6 +136,7 @@ const TransactionHistoryTable = () => {
       <div className="relative overflow-x-auto  sm:rounded-lg w-full">
         <Table columns={columns} dataSource={data} />
       </div>
+      <TransactionModal open={open} setOpen={setOpen} />
     </div>
   );
 };
