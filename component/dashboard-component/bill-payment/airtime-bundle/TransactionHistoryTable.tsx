@@ -7,26 +7,80 @@ import {
 import MoreIcon from "@/assets/icon/MoreIcon";
 import FilterIcon from "@/assets/icon/FilterIcon";
 
+interface DataType {
+  key: string;
+  date: string;
+  serviceType: string;
+  product: string;
+  status: string;
+  amount: string;
+}
+
+const data: DataType[] = [
+  {
+    key: "1",
+    date: "13 July, 2021",
+    serviceType: "MTN",
+    product: "Airtime",
+    status: "Successful",
+    amount: "N44,345.00",
+  },
+  {
+    key: "2",
+    date: "13 July, 2021",
+    serviceType: "GLO",
+    product: "Data bundle",
+    status: "Failed",
+    amount: "N44,345.00",
+  },
+  {
+    key: "3",
+    date: "13 July, 2021",
+    serviceType: "MTN",
+    product: "Airtime",
+    status: "Successful",
+    amount: "N44,345.00",
+  },
+];
+
 const TransactionHistoryTable = () => {
   const columns = [
     {
       title: "Date",
+      dataIndex: "date",
       sorter: true,
     },
     {
       title: "Type of service",
+      dataIndex: "serviceType",
       sorter: true,
     },
     {
       title: "Product",
+      dataIndex: "product",
       sorter: true,
     },
     {
       title: "Status",
+      dataIndex: "status",
       sorter: true,
+      render: (status: string) => {
+        let colorClass = "";
+        if (status === "Successful") {
+          colorClass = "text-[#1AD48D] bg-[#1AD48D1A]"; // Green color for successful status
+        } else if (status === "Failed") {
+          colorClass = "text-red-600 bg-red-600/10"; // Red color for failed status
+        }
+        return (
+          <span className={`font-semibold px-2 py-1 rounded-md ${colorClass}`}>
+            {status}
+          </span>
+        );
+      },
     },
     {
       title: "Amount",
+      dataIndex: "amount",
       sorter: true,
     },
 
@@ -73,7 +127,7 @@ const TransactionHistoryTable = () => {
       </div>
 
       <div className="relative overflow-x-auto  sm:rounded-lg w-full">
-        <Table columns={columns} dataSource={[]} />
+        <Table columns={columns} dataSource={data} />
       </div>
     </div>
   );
