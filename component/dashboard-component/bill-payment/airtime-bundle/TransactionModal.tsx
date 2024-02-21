@@ -34,15 +34,15 @@ const TransactionModal = ({
         </span>
         <span className="flex justify-between items-center">
           <p className="text-slate-500">Bank Name:</p>
-          <p className="text-slate-500">First Bank</p>
+          <p className="leading-tight font-semibold">First Bank</p>
         </span>
         <span className="flex justify-between items-center">
           <p className="text-slate-500">Account Number:</p>
-          <p className="text-slate-500">232432134</p>
+          <p className="leading-tight font-semibold">232432134</p>
         </span>
         <span className="flex justify-between items-center">
           <p className="text-slate-500">Source:</p>
-          <p className="text-slate-500">Pursliq main account</p>
+          <p className="leading-tight font-semibold">Pursliq main account</p>
         </span>
         <div className="border border-gray-200"></div>
         <Button className="!h-[3rem] !bg-black w-full text-white hover:!text-white">
