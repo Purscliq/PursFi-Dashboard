@@ -61,14 +61,6 @@ const Remita = () => {
               Remita -{" "}
               <span className="text-2xl text-gray-400 font-medium">Biller</span>
             </h2>
-            <p className="text-sm text-gray-600">
-              Showing your Account metrics for{" "}
-              {date.toLocaleString("en-US", {
-                month: "long",
-                day: "2-digit",
-                year: "numeric",
-              })}
-            </p>
           </span>
           <div className="flex justify-center items-center space-x-5">
             <button className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case">

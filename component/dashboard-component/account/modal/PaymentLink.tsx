@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import React from "react";
+import { useState } from "react";
 import {
   CustomButton as Button,
   CustomTooltip as Tooltip,
@@ -12,6 +12,7 @@ const PaymentLink = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
+  const [toogleTooltip, setToogleTooltip] = useState(false);
   const wallet = useAppSelector((store) => store?.user?.wallet);
   return (
     <Modal
@@ -38,9 +39,16 @@ const PaymentLink = ({
             >
               {wallet?.link}
             </textarea>
-            <Tooltip title="copied" trigger={"focus"}>
+            <Tooltip title="copied!" trigger={"click"} open={toogleTooltip}>
               <Button
-                onClick={() => navigator.clipboard.writeText(wallet?.link)}
+                onClick={() => {
+                  setToogleTooltip(true);
+                  navigator.clipboard.writeText(wallet?.link).finally(() => {
+                    setTimeout(() => {
+                      setToogleTooltip(false);
+                    }, 2000);
+                  });
+                }}
                 className="bg-black text-white px-4 py-1 rounded-md hover:bg-black focus:outline-none"
                 type="primary"
               >
