@@ -1,12 +1,29 @@
 "use client";
+import { TabsProps } from "antd";
 import AddIcon from "@/assets/icon/AddIcon";
-import { CustomButton as Button } from "@/lib/AntdComponents";
+import {
+  CustomButton as Button,
+  CustomTabs as Tabs,
+} from "@/lib/AntdComponents";
 import OverviewTable from "./OverviewTable";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import PayrollTable from "./PayrollTable";
 
 const Overview = () => {
   const { push } = useRouter();
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: <h2>Total Members</h2>,
+      children: <OverviewTable />,
+    },
+    {
+      key: "2",
+      label: <h2>Payroll</h2>,
+      children: <PayrollTable />,
+    },
+  ];
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA]">
       <header className="flex justify-between items-start ">
@@ -35,7 +52,7 @@ const Overview = () => {
           + Run Payroll
         </button> */}
       </header>
-      <OverviewTable />
+      <Tabs items={items} defaultActiveKey="1" />
     </div>
   );
 };

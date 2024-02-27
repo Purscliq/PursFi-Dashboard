@@ -77,8 +77,10 @@ const AddMember = () => {
           back();
         })
         .catch((err) => {
+          console.log(err);
+          const errors = Object.keys(err?.errors).join(", ");
           message.error(
-            err?.data?.responseDescription || "something went wrong"
+            `please provide ${errors} field(s)` || "something went wrong"
           );
         });
     }
@@ -254,7 +256,7 @@ const AddMember = () => {
                 />
               </span>
             </span>
-            <Input disabled value={formData.bankName} />
+            <Input required disabled value={formData.bankName} />
           </span>
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">

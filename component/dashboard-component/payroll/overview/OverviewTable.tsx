@@ -87,17 +87,6 @@ const OverviewTable = () => {
       render: (email) => `${email}`,
       width: "30%",
     },
-    // {
-    //   title: (
-    //     <span className="flex items-center uppercase space-x-2">
-    //       <p>Purpose</p>
-    //       <TableIcon />
-    //     </span>
-    //   ),
-    //   dataIndex: "purpose",
-    //   render: (purpose) => `${purpose}`,
-    //   width: "20%",
-    // },
     {
       title: (
         <span className="flex items-center uppercase space-x-2">
@@ -163,7 +152,7 @@ const OverviewTable = () => {
     <>
       <section className="">
         <div className="flex flex-col gap-[2rem] bg-white p-[1%]">
-          <h4 className="text-[18px] font-[600] text-black">Team Members</h4>
+          {/* <h4 className="text-[18px] font-[600] text-black">Team Members</h4> */}
           <span className="flex items-baseline gap-1">
             <label htmlFor="select">Filter By:</label>
             <Select

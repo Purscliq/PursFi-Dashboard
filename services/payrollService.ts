@@ -51,10 +51,10 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         url: "payroll",
       }),
       transformResponse: (res: Record<string, any>) => {
-        console.log(res);
         const arrList = res?.data?.map((e: Record<string, string>) => ({
           label: e?.title,
           value: e?.reference,
+          ...e,
         }));
         return arrList;
       },
