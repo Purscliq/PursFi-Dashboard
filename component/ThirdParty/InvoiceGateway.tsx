@@ -213,7 +213,7 @@ const InvoiceGateway = () => {
                   setIsModalOpen(true);
                 }}
                 type="primary"
-                className="!bg-black"
+                className="!bg-black no-print"
               >
                 Pay now
               </Button>
