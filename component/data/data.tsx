@@ -50,7 +50,7 @@ export const sidebarData: MenuProps["items"] = [
         key: "payroll/overview",
       },
       {
-        label: <Link href="/payroll">Settings</Link>,
+        label: <Link href="/payroll-settings">Settings</Link>,
         key: "payroll/settings",
       },
     ],
