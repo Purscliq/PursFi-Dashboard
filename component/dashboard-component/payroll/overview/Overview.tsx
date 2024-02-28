@@ -29,10 +29,10 @@ const Overview = () => {
           />
         </span>
       </span>
-      <div className="grid grid-cols-7 gap-6">
+      <div className="grid md:grid-cols-7 grid-cols-1 gap-6">
         {/* chart */}
         <div className="bg-white rounded-md p-4 md:col-span-5">
-          <div className="flex justify-between gap-4 space-y-3 md:space-y-0">
+          <div className="md:flex justify-between gap-4 space-y-3 md:space-y-0">
             <div className="flex flex-col gap-4 justify-between">
               <span className="space-y-0.5">
                 <p className="text-base text-[#181336] font-bold">
