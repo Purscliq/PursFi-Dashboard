@@ -1,10 +1,10 @@
 import { Select } from "antd";
 import React from "react";
-import DetailsTab from "./tab/DetailsTab";
+import DetailsTab from "./DetailsTab";
 
 const Details = () => {
   return (
-    <section className="max-w-[1640px] flex flex-col p-4 h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA]">
+    <section className="max-w-[1640px] flex flex-col p-4 h-screen overflow-y-scroll space-y-4 bg-[#FAFAFA]">
       <header className="flex justify-between items-center">
         <span>
           <p className="text-[32px] text-[#061A14] font-bold">
