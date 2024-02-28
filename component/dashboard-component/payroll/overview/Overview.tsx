@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { CustomSelect as Select } from "@/lib/AntdComponents";
 import OverviewTable from "./OverviewTable";
+import OverviewChart from "./OverviewChart";
 
 const Overview = () => {
   const { push } = useRouter();
@@ -31,7 +32,7 @@ const Overview = () => {
       </span>
       <div className="grid md:grid-cols-7 grid-cols-1 gap-6">
         {/* chart */}
-        <div className="bg-white rounded-md p-4 md:col-span-5">
+        <div className="bg-white rounded-md p-4 md:col-span-5 flex flex-col gap-4">
           <div className="md:flex justify-between gap-4 space-y-3 md:space-y-0">
             <div className="flex flex-col gap-4 justify-between">
               <span className="space-y-0.5">
@@ -60,7 +61,9 @@ const Overview = () => {
               </p>
             </div>
           </div>
-          <div>{/* chart */}</div>
+          <div>
+            <OverviewChart />
+          </div>
         </div>
         {/* upcoming */}
         <div className="md:col-span-2 flex flex-col gap-4 bg-white rounded-md p-4">
