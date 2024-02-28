@@ -1,4 +1,4 @@
-import Details from "@/component/dashboard-component/payroll/details/Details";
+import Details from "@/component/dashboard-component/payroll/overview/details/Details";
 import React from "react";
 
 const page = () => {

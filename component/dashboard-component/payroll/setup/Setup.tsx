@@ -16,7 +16,6 @@ interface WelcomeProps {
 const Welcome: React.FC<WelcomeProps> = ({ onContinue }) => {
   return (
     <section className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA] text-black">
-      {/* <Image src={Pattern} className="" alt="Bg Pattern" /> */}
       <div className="px-4 py-6 bg-payroll-pattern bg-white grid grid-cols-8 gap-4">
         <div className="col-span-3 space-y-8">
           <p className="text-[35px] font-bold max-w-sm">
@@ -58,7 +57,6 @@ const Welcome: React.FC<WelcomeProps> = ({ onContinue }) => {
             >
               <span className="flex gap-4">
                 <p className="text-[16px] p-1.5 flex justify-center items-center w-[24px] h-[24px] rounded-full border border-[#181336] font-medium text-[#181336]">
-                  {/* bg-[#2EB57E] text-white */} 1
                 </p>
                 <p className="text-[16px] font-medium text-[#181336]">
                   Set up payroll date
