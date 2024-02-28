@@ -90,6 +90,10 @@ const UpdateMember = () => {
   };
   const onFormSubmit: FormEventHandler = (e) => {
     e.preventDefault();
+    if (!formData?.phone) {
+      message.error("please provide phone field");
+      return;
+    }
     if (formData.employmentType && formData.hireDate) {
       updateBeneficiary({ ...formData, salary: formData.salary.toString() })
         .unwrap()
@@ -100,8 +104,9 @@ const UpdateMember = () => {
           back();
         })
         .catch((err) => {
+          const errors = Object.keys(err?.data?.errors).join(", ");
           message.error(
-            err?.data?.responseDescription || "something went wrong"
+            `please provide ${errors} field` || "something went wrong"
           );
         });
     }
