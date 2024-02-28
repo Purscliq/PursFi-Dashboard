@@ -1,7 +1,8 @@
 import React from "react";
+import ContractorTable from "./ContractorTable";
 
 const ContractorTab = () => {
-  return <div>ContractorTab</div>;
+  return <ContractorTable />;
 };
 
 export default ContractorTab;

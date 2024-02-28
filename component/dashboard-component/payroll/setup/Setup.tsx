@@ -124,18 +124,6 @@ const Setup = () => {
       {step === 0 && <Welcome onContinue={handleContinue} />}
       {/* {(step === 1 || step === 2) && <DateAndStructureTabs />} */}
       {step === 1 && <EmployeesAndContractors />}
-
-      {/* {step === 1 && <DateAndStructureTabs />}
-      {step === 2 && <DateAndStructureTabs />} */}
-      {/* Render other steps/components as needed */}
-      {/* <Welcome onContinue={handleContinue} />
-      {step === 1 && <DateAndStructureTabs />}
-      {step === 2 && <DateAndStructureTabs />} */}
-      {/* <Welcome />
-      {step === 1 && <DateAndStructureTabs onContinue={handleContinue} />}
-      {step === 2 && <TabsComponent onContinue={handleContinue} />}
-      {step === 3 && <AdditionalFormComponent onContinue={handleContinue} />}
-      {step === 4 && <FinalStepComponent />} */}
     </section>
   );
 };

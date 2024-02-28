@@ -2,11 +2,7 @@ import React from "react";
 import EmployeeTable from "./EmployeeTable";
 
 const EmployeeTab = () => {
-  return (
-    <div>
-      <EmployeeTable />
-    </div>
-  );
+  return <EmployeeTable />;
 };
 
 export default EmployeeTab;
