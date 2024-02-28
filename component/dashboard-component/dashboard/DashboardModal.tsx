@@ -1,7 +1,10 @@
 import { Modal } from "antd";
-import React from "react";
-import { CustomButton as Button } from "@/lib/AntdComponents";
-import { CustomInput as Input } from "@/lib/AntdComponents";
+import { useState } from "react";
+import {
+  CustomButton as Button,
+  CustomInput as Input,
+  CustomTooltip as Tooltip,
+} from "@/lib/AntdComponents";
 import { FaRegCopy } from "react-icons/fa";
 import { useAppSelector } from "@/store/hooks";
 const DashboardModal = ({
@@ -11,6 +14,7 @@ const DashboardModal = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
+  const [toogleTooltip, setToogleTooltip] = useState(false);
   const wallet = useAppSelector((store) => store?.user?.wallet);
   return (
     <Modal centered open={open} onCancel={() => setOpen(false)} footer={null}>
@@ -46,17 +50,26 @@ const DashboardModal = ({
                 <p>Account Number - {wallet?.accountDetails?.accountNumber}</p>
                 <p>Account Name - {wallet?.accountDetails?.accountName}</p>
               </span>{" "}
-              <Button
-                onClick={() =>
-                  navigator.clipboard.writeText(
-                    `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
-                  )
-                }
-                icon={<FaRegCopy />}
-                className="border !items-center !flex space-x-3 p-2 rounded-md"
-              >
-                copy
-              </Button>
+              <Tooltip title="copied!" trigger={"click"} open={toogleTooltip}>
+                <Button
+                  onClick={() => {
+                    setToogleTooltip(true);
+                    navigator.clipboard
+                      .writeText(
+                        `Bank Name:${wallet?.accountDetails?.bankName} \n Account Name:${wallet?.accountDetails?.accountName} \n Account Number:${wallet?.accountDetails?.accountNumber}`
+                      )
+                      .finally(() => {
+                        setTimeout(() => {
+                          setToogleTooltip(false);
+                        }, 2000);
+                      });
+                  }}
+                  icon={<FaRegCopy />}
+                  className="border !items-center !flex space-x-3 p-2 rounded-md"
+                >
+                  copy
+                </Button>
+              </Tooltip>
             </div>
           </form>{" "}
         </div>{" "}

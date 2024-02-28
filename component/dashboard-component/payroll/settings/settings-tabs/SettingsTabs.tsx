@@ -3,6 +3,7 @@ import { TabsProps } from "antd";
 import { useState } from "react";
 import PayrollSetup from "./PayrollSetup";
 import PayrollStructure from "./PayrollStructure";
+import PayrollNotification from "./PayrollNotification";
 const day: any = "";
 const initialState = {
   automatic: true,
@@ -41,6 +42,11 @@ const SettingsTabs = () => {
           initialState={initialState}
         />
       ),
+    },
+    {
+      key: "3",
+      label: "Payroll Notications",
+      children: <PayrollNotification />,
     },
   ];
   return <Tabs activeKey={activeKey.toString()} items={items} />;

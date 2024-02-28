@@ -1,4 +1,4 @@
-import { CustomSelect as Select } from "@/lib/AntdComponents";
+"use client";
 import TransactionTable from "./TransactionTable";
 
 const Transactions = () => {

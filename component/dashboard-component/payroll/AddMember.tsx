@@ -72,9 +72,9 @@ const AddMember = () => {
       createBeneficiary({ ...formData, salary: formData.salary.toString() })
         .unwrap()
         .then((res) => {
-          console.log(res);
           message.success("beneficiary created successfully");
           setFormData(initialState);
+          back();
         })
         .catch((err) => {
           message.error(
