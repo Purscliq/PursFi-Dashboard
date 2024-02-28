@@ -30,6 +30,7 @@ const initailState = {
 };
 const Login = () => {
   const dispatch = useAppDispatch();
+  const [loading, setIsLoading] = useState(false);
   const [generateEmailOtp] = useGenerateEmailOtpMutation();
   useEffect(() => {
     dispatch(logOutAction());
@@ -44,6 +45,7 @@ const Login = () => {
     useLazyBusinessProfileQuery();
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     login({ ...formData, email: formData.email.toLowerCase() })
       .unwrap()
       .then((res) => {
@@ -79,6 +81,9 @@ const Login = () => {
             err?.data?.title ||
             "something went wrong"
         );
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -139,7 +144,7 @@ const Login = () => {
             />
           </div>
           <Button
-            loading={isLoading || userProfileLoading || businessProfileLoading}
+            loading={loading}
             htmlType="submit"
             type="primary"
             className="!h-[3rem] !bg-black w-full"
