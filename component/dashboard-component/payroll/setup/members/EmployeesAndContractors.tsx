@@ -1,4 +1,5 @@
 "use client";
+
 import AddIcon from "@/assets/icon/AddIcon";
 import { CustomButton as Button } from "@/lib/AntdComponents";
 import { useRouter } from "next/navigation";
@@ -44,7 +45,7 @@ const EmployeesAndContractors = () => {
                 <Button
                   className="!flex !m-auto !items-center !border-0"
                   icon={<AddIcon />}
-                  onClick={() => push("/add-payroll")}
+                  onClick={() => push("/add-payroll/many")}
                 />
               </span>
             </span>
