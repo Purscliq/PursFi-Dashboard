@@ -8,6 +8,7 @@ const initialState = {
   automatic: true,
   day: day,
   title: "",
+  single: true,
   businessId: "",
   structure: [],
   currency: "NGN",

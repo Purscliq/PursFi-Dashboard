@@ -50,7 +50,6 @@ const initialState = {
   accountNumber: "",
   bankCode: "",
   bankName: "",
-  single: true,
   businessId: "",
   reference: "",
   phone: "",
@@ -77,10 +76,16 @@ const AddMember = () => {
           back();
         })
         .catch((err) => {
-          console.log(err);
-          const errors = Object.keys(err?.errors).join(", ");
+          const errors = Object?.keys(err?.errors || {}).join(", ");
+          const errorsShape2 = `${
+            JSON.parse(err?.data?.responseDescription)[0]?.message
+          }`;
           message.error(
-            `please provide ${errors} field(s)` || "something went wrong"
+            err?.errors
+              ? `please provide ${errors} field(s)`
+              : errorsShape2
+              ? errorsShape2.toString()
+              : "something went wrong"
           );
         });
     }
