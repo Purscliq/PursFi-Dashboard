@@ -45,7 +45,7 @@ const data: DataType[] = [
   },
 ];
 
-const EmployeeTable = () => {
+const ContractorTable = () => {
   const columns = [
     {
       title: "Full Name",
@@ -91,4 +91,4 @@ const EmployeeTable = () => {
   );
 };
 
-export default EmployeeTable;
+export default ContractorTable;

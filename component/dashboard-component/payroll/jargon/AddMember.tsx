@@ -72,9 +72,9 @@ const AddMember = () => {
       createBeneficiary({ ...formData, salary: formData.salary.toString() })
         .unwrap()
         .then((res) => {
+          console.log(res);
           message.success("beneficiary created successfully");
           setFormData(initialState);
-          back();
         })
         .catch((err) => {
           message.error(
@@ -104,9 +104,9 @@ const AddMember = () => {
     JSON.stringify(formData.bankCode),
   ]);
   return (
-    <div className="relative flex flex-col gap-4 px-[2%] w-[95%] mx-auto">
+    <div className="relative flex flex-col px-[2%] w-[95%] mx-auto">
       <header className="flex flex-col space-y-3 my-1 border-b border-[#D6DDEB] py-[2%]">
-        <div className="md:flex items-center justify-between space-y-2 md:space-y-0">
+        <div className="flex items-center justify-between ">
           <span className="text-2xl font-medium flex gap-1 items-center">
             <GrFormPreviousLink className="cursor-pointer" onClick={back} />
             <span>
@@ -118,55 +118,46 @@ const AddMember = () => {
           </span>
         </div>
       </header>
-      <div>
-        <h2 className="text-[18px] text-[#061A14] font-semibold">
-          Employee Onboarding
-        </h2>
-        <p className="font-normal text-base text-[#5A5C5C]">
-          This is Company information that you can update anytime.
-        </p>
-      </div>
-      {/* form */}
-      <form onSubmit={onFormSubmit} className="bg-white p-4 space-y-4">
+      <form
+        onSubmit={onFormSubmit}
+        className="bg-white rounded-[10px] flex flex-col p-[2%] gap-[1rem] w[90%] mxauto relative overflow-x-hidden"
+      >
         {isVerifying && (
           <div className="flex items-center justify-center h-full w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
             <Spinner className="!m-auto !block" />
           </div>
         )}
-
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm">
-            <p className="font-semibold text-base">Employment Status</p>
-            <p className="font-normal text-base text-[#515B6F]">
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Employment Status
+            </h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
               Indicate whether an Employee or Contractor{" "}
             </p>
-          </div>
-          <div className="flex flex-col gap-2 w-full">
-            <RadioGroup
-              className="!flex !flex-col gap-[0.5rem]"
-              options={employeeOptions}
-              value={formData.employmentType}
-              onChange={(e: RadioChangeEvent) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  employmentType: e.target.value,
-                }));
-              }}
-            />
-          </div>
-        </div>
-        <hr />
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm">
-            <p className="font-semibold text-base">Full Name </p>
-            <p className="font-normal text-base text-[#515B6F]">
+          </span>
+          <RadioGroup
+            className="!flex !flex-col gap-[0.5rem]"
+            options={employeeOptions}
+            value={formData.employmentType}
+            onChange={(e: RadioChangeEvent) => {
+              setFormData((prev) => ({
+                ...prev,
+                employmentType: e.target.value,
+              }));
+            }}
+          />
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">Full Name</h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
               Please Enter Employee Full Name for Payroll Processing
             </p>
-          </div>
-          {/* <div className="flex flex-col gap-2 w-full"> */}
-          <div className="flex items-start justify-between gap-2">
+          </span>
+          <span className="flex items-start justify-between gap-2">
             <span className="flex flex-col gap-2 w-full">
-              <label className="font-semibold text-[#24272C] text-base">
+              <label className="text-[#24272C] text-[16px] font-[700]">
                 First Name
               </label>
               <Input
@@ -179,7 +170,7 @@ const AddMember = () => {
               />
             </span>
             <span className="flex flex-col gap-2 w-full">
-              <label className="font-semibold text-[#24272C] text-base">
+              <label className="text-[#24272C] text-[16px] font-[700]">
                 Last Name
               </label>
               <Input
@@ -191,18 +182,19 @@ const AddMember = () => {
                 placeholder="Enter your name"
               />
             </span>
-          </div>
-        </div>
-        <hr />
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm">
-            <p className="font-semibold text-base">Email Address </p>
-            <p className="font-normal text-base text-[#515B6F]">
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Email Address
+            </h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
               Provide a Valid Email for Payroll Notifications and Updates.
             </p>
-          </div>
-          <div className="flex flex-col gap-2 w-full">
-            <label className="text-[#24272C] font-semibold text-base">
+          </span>
+          <span className="flex flex-col gap-2">
+            <label className="text-[#24272C] text-[16px] font-[700]">
               Email
             </label>
             <Input
@@ -212,45 +204,21 @@ const AddMember = () => {
               onChange={onInputChange}
               required
               className="!w-full"
-              placeholder="Enter your email"
+              placeholder="Enter your name"
             />
-          </div>
-        </div>
-        <hr />
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm">
-            <p className="font-semibold text-base">Phone Number </p>
-            <p className="font-normal text-base text-[#515B6F]">
-              Enter Employee Contact Number for Communication and Updates
-            </p>
-          </div>
-          <div className="flex flex-col gap-2 w-full">
-            <label className="text-[#24272C] text-[16px] font-[700]">
-              Phone
-            </label>
-            <PhoneInput
-              country={"ng"}
-              disableDropdown
-              disableCountryCode
-              containerClass="!w-full"
-              inputClass="phone-input-input !w-full"
-              value={formData.phone}
-              onChange={(value) =>
-                setFormData((prev) => ({ ...prev, phone: value }))
-              }
-            />
-          </div>
-        </div>
-        <hr />
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm">
-            <p className="font-semibold text-base">Account Details</p>
-            <p className="font-normal text-base text-[#515B6F]">
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Account Details
+            </h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
               Securely Enter Employees Necessary Bank Account Information
             </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-start justify-between gap-3">
+          </span>
+          <span className="flex flex-col gap-4">
+            <span className="flex items-start justify-between gap-3">
               <span className="flex flex-col gap-2 w-full">
                 <label className="text-[#24272C] text-[16px] font-[700]">
                   Select Bank
@@ -285,20 +253,18 @@ const AddMember = () => {
                   placeholder=""
                 />
               </span>
-            </div>
-            {/* disabled input */}
+            </span>
             <Input disabled value={formData.bankName} />
-          </div>
-        </div>
-        <hr />
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm">
-            <p className="font-semibold text-base">Hire Date</p>
-            <p className="font-normal text-base text-[#515B6F]">
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">Hire Date</h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
               Please Specify Employee Joining Date with the Company.
             </p>
-          </div>
-          <div className="flex flex-col gap-2 w-full">
+          </span>
+          <span className="flex flex-col gap-2">
             <label className="text-[#24272C] text-[16px] font-[700]">
               Hire Date
             </label>
@@ -309,17 +275,18 @@ const AddMember = () => {
               className="!w-full"
               placeholder="Hire Date"
             />
-          </div>
-        </div>
-        <hr />
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm">
-            <p className="font-semibold text-base">Select Payroll</p>
-            <p className="font-normal text-base text-[#515B6F]">
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Select Payroll
+            </h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
               Choose Payroll Preferences for Customized Payments
             </p>
-          </div>
-          <div className="flex flex-col gap-2 w-full">
+          </span>
+          <span className="flex flex-col gap-2">
             <label className="text-[#24272C] text-[16px] font-[700]">
               Payroll
             </label>
@@ -330,17 +297,44 @@ const AddMember = () => {
               }
               options={payroll || []}
             />
-          </div>
-        </div>
-        <hr />
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm">
-            <p className="font-semibold text-base">Salary Information</p>
-            <p className="font-normal text-base text-[#515B6F]">
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Phone Number
+            </h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
+              Enter Employee Contact Number for Communication and Updates
+            </p>
+          </span>
+          <span className="flex flex-col gap-2">
+            <label className="text-[#24272C] text-[16px] font-[700]">
+              Phone
+            </label>
+            <PhoneInput
+              country={"ng"}
+              disableDropdown
+              disableCountryCode
+              containerClass="!w-full"
+              inputClass="phone-input-input !w-full"
+              value={formData.phone}
+              onChange={(value) =>
+                setFormData((prev) => ({ ...prev, phone: value }))
+              }
+            />
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Salary Information
+            </h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
               Please Provide Details of Your Compensation
             </p>
-          </div>
-          <div className="flex flex-col gap-2 w-full">
+          </span>
+          <span className="flex flex-col gap-2">
             <label className="text-[#24272C] text-[16px] font-[700]">
               Enter Salary
             </label>
@@ -354,17 +348,18 @@ const AddMember = () => {
                 setFormData((prev) => ({ ...prev, salary: e }));
               }}
             />
-          </div>
-        </div>
-        <hr />
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm">
-            <p className="font-semibold text-base">Address Details</p>
-            <p className="font-normal text-base text-[#515B6F]">
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">
+              Address Details
+            </h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
               Enter Employee Current Residence Information
             </p>
-          </div>
-          <div className="flex flex-col gap-2 w-full">
+          </span>
+          <span className="flex flex-col gap-2">
             <span className="flex flex-col gap-2">
               <label className="text-[#24272C] text-[16px] font-[700]">
                 Address
@@ -404,25 +399,17 @@ const AddMember = () => {
                 />
               </span>
             </span>
-          </div>
-        </div>
-        <hr />
-        {/* submit button */}
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-          <div className="space-y-2 w-full md:max-w-sm" />
-          <div>
-            <Button
-              htmlType="submit"
-              loading={isLoading}
-              type="primary"
-              className="!bg-black text-white !h-[45px] font-semibold w-full text-base"
-            >
-              Save and Continue
-            </Button>
-          </div>
-        </div>
+          </span>
+        </span>
+        <Button
+          htmlType="submit"
+          loading={isLoading}
+          type="primary"
+          className="!bg-black !w-[50%] self-end"
+        >
+          save
+        </Button>
       </form>
-      {/* end */}
     </div>
   );
 };

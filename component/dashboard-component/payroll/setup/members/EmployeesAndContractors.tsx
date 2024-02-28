@@ -13,7 +13,7 @@ const EmployeesAndContractors = () => {
       <header className="flex justify-between items-start ">
         <div className="flex flex-col items-start space-y-4 ">
           <span>
-            <h2 className="text-[18px] text-[#061A14] font-medium">
+            <h2 className="text-[18px] text-[#061A14] font-semibold">
               Add employees and contractors
             </h2>
             <p className="font-normal text-base text-[#5A5C5C]">
