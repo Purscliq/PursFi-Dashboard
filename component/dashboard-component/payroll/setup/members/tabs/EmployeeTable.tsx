@@ -4,42 +4,48 @@ import { CustomTable as Table } from "@/lib/AntdComponents";
 import type { TableColumnsType, TableProps } from "antd";
 import Sarah from "@/assets/sarah-brown.png";
 import Image from "next/image";
-
+import type { StaticImageData } from "next/image";
 interface DataType {
   key: React.Key;
   name: string;
   email: string;
   role: string;
+  image: StaticImageData;
 }
 
 const data: DataType[] = [
   {
     key: "1",
     name: "Samuel woodfree",
+    image: Sarah,
     email: "yourmail.com",
     role: "operation manager",
   },
   {
     key: "2",
     name: "Samuel woodfree",
+    image: Sarah,
     email: "yourmail.com",
     role: "operation manager",
   },
   {
     key: "3",
     name: "Samuel woodfree",
+    image: Sarah,
     email: "yourmail.com",
     role: "operation manager",
   },
   {
     key: "4",
     name: "Samuel woodfree",
+    image: Sarah,
     email: "yourmail.com",
     role: "operation manager",
   },
   {
     key: "5",
     name: "Samuel woodfree",
+    image: Sarah,
     email: "yourmail.com",
     role: "operation manager",
   },
@@ -51,10 +57,10 @@ const EmployeeTable = () => {
       title: "Full Name",
       dataIndex: "name",
       sorter: true,
-      render: (name: string, image: Image) => {
+      render: (name: string, image: StaticImageData) => {
         return (
           <span className="flex gap-4">
-            <Image src={Sarah} alt="Avatar" className="rounded-full" />
+            <Image src={image} alt="Avatar" className="rounded-full" />
             <span className="text-[#181336] font-medium py-3">{name}</span>
           </span>
         );
