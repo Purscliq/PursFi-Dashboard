@@ -10,14 +10,17 @@ import { message } from "antd";
 import { RcFile } from "antd/es/upload";
 import { docsData } from "../OnBoardingTabs";
 import { SetStateAction, FormEventHandler, ChangeEventHandler } from "react";
+import { useBusinessProfileQuery } from "@/services/authService";
 const BusinessDocs = ({
   formData,
   setFormData,
   setActive,
+  businessProfile: business,
 }: {
   formData: Record<string, any>;
   setFormData: React.Dispatch<SetStateAction<docsData>>;
   setActive: React.Dispatch<SetStateAction<string>>;
+  businessProfile: any;
 }) => {
   const checkFileSize = (file: RcFile) => {
     const isLt2M = file.size / 1024 / 1024 < 5;
@@ -29,7 +32,7 @@ const BusinessDocs = ({
   const props: UploadProps = {
     name: "file",
     multiple: false,
-    accept: ".jpg,.jpeg,.png,application/pdf",
+    accept: ".jpg,.jpeg,.png,application/pdf,application/doc",
     onDrop(e) {
       // console.log("Dropped files", e.dataTransfer.files);
     },
@@ -37,7 +40,14 @@ const BusinessDocs = ({
   };
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    if (formData?.certIncorporation && formData?.bills) {
+    if (!formData?.bills) {
+      message.error("utitlity bill is required");
+    }
+    if (
+      (formData?.certIncorporation ||
+        business?.merchantType === "individual") &&
+      formData?.bills
+    ) {
       setActive("4");
     } else {
       message.error("cac and utitlity bills are required");

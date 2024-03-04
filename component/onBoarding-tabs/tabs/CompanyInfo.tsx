@@ -14,10 +14,9 @@ import {
 } from "@/lib/AntdComponents";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { useBusinessProfileQuery } from "@/services/authService";
 import { docsData } from "../OnBoardingTabs";
-const filter = [
-  // { label: "Individual", value: "inidividual" },
+const filterArray = [
+  { label: "Individual", value: "individual" },
   { label: "Business", value: "business" },
   // { label: "Enterprise", value: "enterprise" },
   { label: "Limited Liability", value: "limited liability" },
@@ -44,12 +43,13 @@ const CompanyInfo = ({
   formData,
   setFormData,
   setActive,
+  businessProfile: business,
 }: {
   formData: Record<string, any>;
   setFormData: React.Dispatch<SetStateAction<docsData>>;
   setActive: React.Dispatch<SetStateAction<string>>;
+  businessProfile: any;
 }) => {
-  const { data: businessDetails } = useBusinessProfileQuery({});
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (formData.phone) setActive("2");
@@ -87,7 +87,7 @@ const CompanyInfo = ({
             <h2 className="py-2">Merchant type</h2>
             <RadioGroup
               optionType="button"
-              defaultValue={businessDetails?.business?.merchantType}
+              defaultValue={business?.merchantType}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
@@ -96,22 +96,27 @@ const CompanyInfo = ({
               }
             >
               <div className="flex w-full md:grid grid-cols-2 justify-start items-center gap-[0.5rem]">
-                {filter.map((e, i) => (
-                  <div key={i}>
-                    <RadioButton
-                      style={{
-                        color:
-                          formData.merchantType === e.value ? "#FFF" : "#000",
-                      }}
-                      disabled
-                      value={e.value}
-                      key={i}
-                      className="!border-[#000]/[10%]"
-                    >
-                      {e.label}
-                    </RadioButton>
-                  </div>
-                ))}
+                {filterArray
+                  .filter((e) => e.value === business?.merchantType)
+                  .map((e, i) => (
+                    <div key={i}>
+                      <RadioButton
+                        style={{
+                          borderWidth: "1px",
+                          border:
+                            business?.merchantType === "individual"
+                              ? "#000"
+                              : "#FFF",
+                        }}
+                        disabled
+                        value={e.value}
+                        key={i}
+                        className="!border-[#000]/[10%]"
+                      >
+                        {e.label}
+                      </RadioButton>
+                    </div>
+                  ))}
               </div>
             </RadioGroup>
             <p className="text-sm py-2 underline">
@@ -141,7 +146,7 @@ const CompanyInfo = ({
               </label>
               <Input
                 name="businessName"
-                value={businessDetails?.business?.businessName}
+                value={business?.businessName}
                 onChange={handleChange}
                 disabled
                 required
