@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import type { TabsProps } from "antd";
 import CompanyInfo from "./tabs/CompanyInfo";
@@ -37,46 +37,51 @@ const OnBoardingTabs = () => {
   //   }));
   // }, [businessProfile]);
   const [active, setActive] = useState("1");
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: <span className="text-inherit">Company Information</span>,
-      children: (
-        <CompanyInfo
-          setActive={setActive}
-          setFormData={setFormData}
-          formData={formData}
-        />
-      ),
-    },
-    {
-      key: "2",
-      label: <span className="text-inherit">Owner Information</span>,
-      children: <OwnerInfo setActive={setActive} />,
-    },
-    {
-      key: "3",
-      label: <span className="text-inherit">Business Documentation</span>,
-      children: (
-        <BusinessDocs
-          setActive={setActive}
-          setFormData={setFormData}
-          formData={formData}
-        />
-      ),
-    },
-    {
-      key: "4",
-      label: <span className="text-inherit">Review</span>,
-      children: (
-        <Review
-          setActive={setActive}
-          setFormData={setFormData}
-          formData={formData}
-        />
-      ),
-    },
-  ];
+  const items: TabsProps["items"] = useMemo(
+    () => [
+      {
+        key: "1",
+        label: <span className="text-inherit">Company Information</span>,
+        children: (
+          <CompanyInfo
+            setActive={setActive}
+            setFormData={setFormData}
+            formData={formData}
+            businessProfile={businessProfile}
+          />
+        ),
+      },
+      {
+        key: "2",
+        label: <span className="text-inherit">Owner Information</span>,
+        children: <OwnerInfo setActive={setActive} />,
+      },
+      {
+        key: "3",
+        label: <span className="text-inherit">Business Documentation</span>,
+        children: (
+          <BusinessDocs
+            setActive={setActive}
+            setFormData={setFormData}
+            formData={formData}
+            businessProfile={businessProfile}
+          />
+        ),
+      },
+      {
+        key: "4",
+        label: <span className="text-inherit">Review</span>,
+        children: (
+          <Review
+            setActive={setActive}
+            setFormData={setFormData}
+            formData={formData}
+          />
+        ),
+      },
+    ],
+    [businessProfile, active, formData]
+  );
 
   return <Tabs items={items} defaultActiveKey="1" activeKey={active} />;
 };
