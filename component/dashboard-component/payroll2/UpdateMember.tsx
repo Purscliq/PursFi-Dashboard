@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   CustomInput as Input,
   CustomRadioGroup as RadioGroup,
@@ -10,8 +10,9 @@ import {
   CustomSpinner as Spinner,
 } from "@/lib/AntdComponents";
 import {
-  useCreateBeneficiariesMutation,
   useGetPayrollQuery,
+  useUpdateBeneficiaryMutation,
+  useLazyGetSingleBeneficiaryQuery,
 } from "@/services/payrollService";
 import { useGetBanksQuery } from "@/services/disbursementService";
 import { useVerifyAccountMutation } from "@/services/disbursementService";
@@ -25,6 +26,7 @@ import {
 import { GrFormPreviousLink } from "react-icons/gr";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import dayjs from "dayjs";
 
 const employeeOptions = [
   {
@@ -50,48 +52,67 @@ const initialState = {
   accountNumber: "",
   bankCode: "",
   bankName: "",
+  single: true,
   businessId: "",
   reference: "",
   phone: "",
 };
-const AddMember = () => {
+const UpdateMember = () => {
   const { back } = useRouter();
+  const params = useSearchParams();
   const { data } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
   const { data: payroll } = useGetPayrollQuery({});
-  const [createBeneficiary, { isLoading }] = useCreateBeneficiariesMutation();
+  const [getBeneficiary, { isLoading: isLoadingBeneficiary }] =
+    useLazyGetSingleBeneficiaryQuery();
+  const [updateBeneficiary, { isLoading }] = useUpdateBeneficiaryMutation();
   const [formData, setFormData] = useState(initialState);
+  useEffect(() => {
+    if (params.get("id")) {
+      getBeneficiary(params.get("id") as string)
+        .then((res) => {
+          setFormData({
+            ...res.data.data,
+          });
+        })
+        .catch((err) => {
+          message.error(
+            err?.data?.responseDescription ||
+              "error getting beneficiary details"
+          );
+          back();
+        });
+    }
+  }, [params]);
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   const onFormSubmit: FormEventHandler = (e) => {
     e.preventDefault();
+    if (!formData?.phone) {
+      message.error("please provide phone field");
+      return;
+    }
     if (formData.employmentType && formData.hireDate) {
-      createBeneficiary({ ...formData, salary: formData.salary.toString() })
+      updateBeneficiary({ ...formData, salary: formData.salary.toString() })
         .unwrap()
         .then((res) => {
+          console.log(res);
           message.success("beneficiary created successfully");
           setFormData(initialState);
           back();
         })
         .catch((err) => {
-          const errors = Object?.keys(err?.errors || {}).join(", ");
-          const errorsShape2 = `${
-            JSON.parse(err?.data?.responseDescription)[0]?.message
-          }`;
+          const errors = Object.keys(err?.data?.errors).join(", ");
           message.error(
-            err?.errors
-              ? `please provide ${errors} field(s)`
-              : errorsShape2
-              ? errorsShape2.toString()
-              : "something went wrong"
+            `please provide ${errors} field` || "something went wrong"
           );
         });
     }
   };
   useEffect(() => {
-    if (formData.accountNumber.length === 10 && formData.bankCode)
+    if (formData?.accountNumber?.length === 10 && formData?.bankCode)
       verify({
         accountNumber: formData.accountNumber,
         bankCode: formData.bankCode,
@@ -107,8 +128,8 @@ const AddMember = () => {
           );
         });
   }, [
-    JSON.stringify(formData.accountNumber),
-    JSON.stringify(formData.bankCode),
+    JSON.stringify(formData?.accountNumber),
+    JSON.stringify(formData?.bankCode),
   ]);
   return (
     <div className="relative flex flex-col px-[2%] w-[95%] mx-auto">
@@ -118,7 +139,7 @@ const AddMember = () => {
             <GrFormPreviousLink className="cursor-pointer" onClick={back} />
             <span>
               <h2 className="text-2xl font-medium">
-                Add employees and contractors |{" "}
+                Update employee details{" "}
                 <span className="text-gray-400">Add one</span>
               </h2>
             </span>
@@ -129,11 +150,12 @@ const AddMember = () => {
         onSubmit={onFormSubmit}
         className="bg-white rounded-[10px] flex flex-col p-[2%] gap-[1rem] w[90%] mxauto relative overflow-x-hidden"
       >
-        {isVerifying && (
-          <div className="flex items-center justify-center h-full w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
-            <Spinner className="!m-auto !block" />
-          </div>
-        )}
+        {isVerifying ||
+          (isLoadingBeneficiary && (
+            <div className="flex items-center justify-center h-full w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
+              <Spinner className="!m-auto !block" />
+            </div>
+          ))}
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
@@ -146,7 +168,7 @@ const AddMember = () => {
           <RadioGroup
             className="!flex !flex-col gap-[0.5rem]"
             options={employeeOptions}
-            value={formData.employmentType}
+            value={formData?.employmentType}
             onChange={(e: RadioChangeEvent) => {
               setFormData((prev) => ({
                 ...prev,
@@ -169,7 +191,7 @@ const AddMember = () => {
               </label>
               <Input
                 name="firstName"
-                value={formData.firstName}
+                value={formData?.firstName}
                 className="!w-full"
                 placeholder="Enter your name"
                 required
@@ -184,7 +206,7 @@ const AddMember = () => {
                 name="lastName"
                 required
                 onChange={onInputChange}
-                value={formData.lastName}
+                value={formData?.lastName}
                 className="!w-full"
                 placeholder="Enter your name"
               />
@@ -207,7 +229,7 @@ const AddMember = () => {
             <Input
               type="email"
               name="email"
-              value={formData.email}
+              value={formData?.email}
               onChange={onInputChange}
               required
               className="!w-full"
@@ -240,8 +262,13 @@ const AddMember = () => {
                       bankCode: value,
                     }))
                   }
+                  value={
+                    data?.find(
+                      (e: Record<string, any>) => e.value === formData?.bankCode
+                    )?.label || ""
+                  }
                   id="bank"
-                  options={data}
+                  options={Array.isArray(data) ? data : []}
                 />
               </span>
               <span className="flex flex-col gap-2 w-full">
@@ -253,7 +280,7 @@ const AddMember = () => {
                   name="accountNumber"
                   maxLength={10}
                   minLength={10}
-                  value={formData.accountNumber}
+                  value={formData?.accountNumber}
                   required
                   type="number"
                   className="!w-full"
@@ -261,7 +288,7 @@ const AddMember = () => {
                 />
               </span>
             </span>
-            <Input required disabled value={formData.bankName} />
+            <Input disabled value={formData?.bankName} />
           </span>
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
@@ -281,6 +308,7 @@ const AddMember = () => {
               }}
               className="!w-full"
               placeholder="Hire Date"
+              value={dayjs(formData?.hireDate)}
             />
           </span>
         </span>
@@ -298,11 +326,11 @@ const AddMember = () => {
               Payroll
             </label>
             <Select
-              value={formData.reference}
+              value={formData?.reference}
               onSelect={(value) =>
                 setFormData((prev) => ({ ...prev, reference: value }))
               }
-              options={payroll || []}
+              options={Array.isArray(payroll) ? payroll : []}
             />
           </span>
         </span>
@@ -325,7 +353,7 @@ const AddMember = () => {
               disableCountryCode
               containerClass="!w-full"
               inputClass="phone-input-input !w-full"
-              value={formData.phone}
+              value={formData?.phone}
               onChange={(value) =>
                 setFormData((prev) => ({ ...prev, phone: value }))
               }
@@ -347,7 +375,7 @@ const AddMember = () => {
             </label>
             <InputNumber
               controls={false}
-              value={formData.salary}
+              value={formData?.salary}
               className="!w-full"
               placeholder="salary"
               required
@@ -372,7 +400,7 @@ const AddMember = () => {
                 Address
               </label>
               <Input
-                value={formData.address}
+                value={formData?.address}
                 name="address"
                 onChange={onInputChange}
                 required
@@ -387,7 +415,7 @@ const AddMember = () => {
                 </label>
                 <Input
                   name="lga"
-                  value={formData.lga}
+                  value={formData?.lga}
                   onChange={onInputChange}
                   className="!w-full"
                   placeholder="Enter your name"
@@ -399,7 +427,7 @@ const AddMember = () => {
                 </label>
                 <Input
                   name="state"
-                  value={formData.state}
+                  value={formData?.state}
                   onChange={onInputChange}
                   className="!w-full"
                   placeholder="Enter state"
@@ -421,4 +449,4 @@ const AddMember = () => {
   );
 };
 
-export default AddMember;
+export default UpdateMember;
