@@ -1,9 +1,8 @@
-import React from 'react'
+import AddMany from "@/component/dashboard-component/payroll/AddMany";
+import React from "react";
 
 const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+  return <AddMany />;
+};
 
-export default page
+export default page;

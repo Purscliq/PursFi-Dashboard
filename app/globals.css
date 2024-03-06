@@ -51,3 +51,8 @@ input[type="number"]::-webkit-outer-spin-button {
 .ant-picker-ok .ant-btn {
   background-color: black;
 }
+
+.bg-payroll-pattern {
+  background-image: url("/path/to/your/image.png");
+}
+
