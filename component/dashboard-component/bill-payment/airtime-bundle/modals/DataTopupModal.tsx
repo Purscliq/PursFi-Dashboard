@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
 import { CustomSelect as Select } from "@/lib/AntdComponents";
+import { useGetBillPaymentDataPlansQuery } from "@/services/bill-payment";
 
 interface Props {
   provider: {
-    icon: JSX.Element;
+    title: string;
+    network: number;
   };
 }
 
 const DataTopupModal: React.FC<Props> = ({ provider }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { data: plans, isLoading: isLoadingPlans } =
+    useGetBillPaymentDataPlansQuery({});
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -39,7 +42,7 @@ const DataTopupModal: React.FC<Props> = ({ provider }) => {
         footer={false}
       >
         <span className="flex gap-4">
-          {provider.icon}
+          {/* {provider.icon} */}
           <p className="text-[24px] font-bold py-2">Data bundle Top up</p>
         </span>
         <form className="mt-12">

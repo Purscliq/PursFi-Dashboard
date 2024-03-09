@@ -12,7 +12,19 @@ import PhoneInput from "react-phone-input-2";
 import LinkIcon from "@/assets/icon/LinkIcon";
 import Image from "next/image";
 import Mtn from "@/assets/icon/Mtn";
-const MakePayment = () => {
+import { useLazyGetBillPaymentDataPlansQuery } from "@/services/bill-payment";
+const initialState = {
+  product: "",
+  provider: 0,
+  amount: 0,
+  paymentType: "",
+  type: 0,
+  recipient: "",
+  businessId: "",
+  plan: "",
+};
+const MakePayment = ({ id }: { id: number }) => {
+  const [getDataPlans, { data }] = useLazyGetBillPaymentDataPlansQuery({});
   const options = [
     { label: "specific account ", value: "specific account " },
     { label: "phone book", value: "phone book" },
@@ -24,6 +36,7 @@ const MakePayment = () => {
     { label: "Recurring payment", value: "recurring_payment" },
   ];
   const [selectedOption, setSelectedOption] = useState("");
+  const [productType, setProductType] = useState("");
 
   const handleRadioChange = (e: RadioChangeEvent) => {
     setSelectedOption(e.target.value);
@@ -41,7 +54,20 @@ const MakePayment = () => {
       </div>
       <span className="flex flex-col w-full">
         <label htmlFor="product">Select product</label>
-        <Select id="product" placeholder="select product" />
+        <Select
+          options={[
+            { label: "data plan", value: "data" },
+            { label: "airtime", value: "airtime" },
+          ]}
+          onChange={(value) => {
+            setProductType(value);
+            if (value === "data") {
+              getDataPlans({ id });
+            }
+          }}
+          id="product"
+          placeholder="select product type"
+        />
       </span>
 
       <span className="flex flex-col w-full">

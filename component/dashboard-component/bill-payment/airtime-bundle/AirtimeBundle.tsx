@@ -9,25 +9,11 @@ import TransactionHistoryTable from "./TransactionHistoryTable";
 import AirtimeTopupModal from "./modals/AirtimeTopupModal";
 import DataTopupModal from "./modals/DataTopupModal";
 import MoreDetailsDrawer from "./MoreDetailsDrawer";
-
-const data = [
-  {
-    title: "Total airtime sent",
-    amount: "N5,000,000.00",
-  },
-  {
-    title: "Total data sent",
-    amount: "N600,434.00",
-  },
-  {
-    title: "Total amount",
-    amount: "N5,600,434.00",
-  },
-  {
-    title: "Total profit",
-    amount: "N700,000.00",
-  },
-];
+import {
+  useGetBillPaymentAnalyticsQuery,
+  useGetBillPaymentWalletQuery,
+  useGetBillPaymentNetworksQuery,
+} from "@/services/bill-payment";
 
 const bundle = [
   {
@@ -55,10 +41,12 @@ const bundle = [
     totalDataBundleRemaining: "450,000.00",
   },
 ];
-
 const AirtimeBundle = () => {
   const { push } = useRouter();
   const date = new Date();
+  const { data: analytics, isLoading } = useGetBillPaymentAnalyticsQuery({});
+  const { data: wallet, isLoading: isLoadingWallet } =
+    useGetBillPaymentWalletQuery({});
 
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
@@ -103,70 +91,107 @@ const AirtimeBundle = () => {
         </div>
       </header>
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-[#181336]">
-        {data.map((item, index) => (
-          <span
-            key={index}
-            className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6"
-          >
-            <p className="text-base">{item.title}</p>
-            <p className="text-[30px] font-semibold">{item.amount}</p>
-          </span>
-        ))}
+        <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
+          <p className="text-base">Total airtime sent</p>
+          {isLoadingWallet ? (
+            <span className="loading loading-dots loading-xs"></span>
+          ) : (
+            <p className="text-[30px] font-semibold">
+              {wallet?.data?.analytic?.totalAirtime}
+            </p>
+          )}
+        </span>
+        <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
+          <p className="text-base">Total data sent</p>
+          {isLoadingWallet ? (
+            <span className="loading loading-dots loading-xs"></span>
+          ) : (
+            <p className="text-[30px] font-semibold">
+              {wallet?.data?.analytic?.totalData}
+            </p>
+          )}
+        </span>
+        <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
+          <p className="text-base">Total amount</p>
+          {isLoadingWallet ? (
+            <span className="loading loading-dots loading-xs"></span>
+          ) : (
+            <p className="text-[30px] font-semibold">
+              {wallet?.data?.analytic?.total}
+            </p>
+          )}
+        </span>
+        <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
+          <p className="text-base">Total Profit</p>
+          {isLoadingWallet ? (
+            <span className="loading loading-dots loading-xs"></span>
+          ) : (
+            <p className="text-[30px] font-semibold">
+              {wallet?.data?.analytic?.totalProfit}
+            </p>
+          )}
+        </span>
       </div>
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {bundle.map((item, index) => (
-          <div
-            key={index}
-            className="text-black bg-white rounded-[4px] py-4 px-6 space-y-2"
-          >
-            <div className="md:flex justify-between gap-4 space-y-4 md:space-y-0">
-              <span className="flex gap-4">
-                {item.provider.icon}
-                <p className="text-[18px] pt-4 md:pt-2">{item.product}</p>
-              </span>
-              <button
-                onClick={() => push("/sell-service")}
-                className="btn btn-md border-[#E9EBEB] flex items-center bg-white text-[14px] font-medium normal-case text-black hover:bg-[#f2f2f2]"
-              >
-                + Sell Service
-              </button>
-            </div>
-            <hr />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* <div className="flex gap-4"> */}
-              <span className="bg-[#FAFAFA] rounded-[4px] py-4 px-6 flex flex-col justify-between gap-3">
-                <p className="text-[#515B6F] text-[14px]">
-                  Total Airtime Remaining
-                </p>
-                <span className="flex  justify-between gap-4">
-                  <p className="text-black font-semibold text-[16px]">
-                    {item.totalAirtimeRemaining}
-                  </p>
-                  {/* <AirtimeTopupModal /> */}
-                  <AirtimeTopupModal provider={item.provider} />
+        {analytics?.data?.networks?.map(
+          (item: Record<string, any>, index: number) => (
+            <div
+              key={index}
+              className="text-black bg-white rounded-[4px] py-4 px-6 space-y-2"
+            >
+              <div className="md:flex justify-between gap-4 space-y-4 md:space-y-0">
+                <span className="flex gap-4">
+                  {bundle[index].provider.icon}
+                  <p className="text-[18px] pt-4 md:pt-2">{item.description}</p>
                 </span>
-              </span>
-              <span className="bg-[#FAFAFA] rounded-[4px] py-4 px-6 flex flex-col justify-between gap-3">
-                <p className="text-[#515B6F] text-[14px]">
-                  Total Data Bundle Remaining
-                </p>
-                <span className="flex  justify-between gap-4">
-                  <p className="text-black font-semibold text-[16px]">
-                    {item.totalDataBundleRemaining}
+                <button
+                  onClick={() => push(`/sell-service?id=${index + 1}`)}
+                  className="btn btn-md border-[#E9EBEB] flex items-center bg-white text-[14px] font-medium normal-case text-black hover:bg-[#f2f2f2]"
+                >
+                  + Sell Service
+                </button>
+              </div>
+              <hr />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* <div className="flex gap-4"> */}
+                <span className="bg-[#FAFAFA] rounded-[4px] py-4 px-6 flex flex-col justify-between gap-3">
+                  <p className="text-[#515B6F] text-[14px]">
+                    Total Airtime Remaining
                   </p>
-                  {/* <DataTopupModal /> */}
-                  <DataTopupModal provider={item.provider} />
+                  <span className="flex  justify-between gap-4">
+                    <p className="text-black font-semibold text-[16px]">
+                      {item?.airtime?.totalData}
+                    </p>
+                    {/* <AirtimeTopupModal /> */}
+                    <AirtimeTopupModal
+                      provider={{ title: item?.title, network: index }}
+                    />
+                  </span>
                 </span>
+                <span className="bg-[#FAFAFA] rounded-[4px] py-4 px-6 flex flex-col justify-between gap-3">
+                  <p className="text-[#515B6F] text-[14px]">
+                    Total Data Bundle Remaining
+                  </p>
+                  <span className="flex justify-between gap-4">
+                    <p className="text-black font-semibold text-[16px]">
+                      {item?.airtime?.totalData}
+                    </p>
+                    {/* <DataTopupModal /> */}
+                    <DataTopupModal
+                      provider={{ title: item?.title, network: index }}
+                    />
+                  </span>
+                </span>
+              </div>
+              <span className="flex justify-center">
+                <MoreDetailsDrawer
+                  provider={item.provider}
+                  product={item.product}
+                />
               </span>
             </div>
-            <span className="flex justify-center">
-              <MoreDetailsDrawer
-                provider={item.provider}
-                product={item.product}
-              />
-            </span>
-          </div>
-        ))}
+          )
+        )}
       </div>
       <div className="mt-8">
         <TransactionHistoryTable />

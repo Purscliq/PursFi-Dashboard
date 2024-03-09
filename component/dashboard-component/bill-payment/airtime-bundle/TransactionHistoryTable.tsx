@@ -7,6 +7,10 @@ import {
 import MoreIcon from "@/assets/icon/MoreIcon";
 import FilterIcon from "@/assets/icon/FilterIcon";
 import TransactionModal from "./TransactionModal";
+import {
+  useLazyGetBillPaymentTransactionsQuery,
+  useGetBillPaymentTransactionsQuery,
+} from "@/services/bill-payment";
 
 interface DataType {
   key: string;
@@ -45,22 +49,26 @@ const data: DataType[] = [
 ];
 
 const TransactionHistoryTable = () => {
+  const { data, isLoading } = useGetBillPaymentTransactionsQuery({});
   const [open, setOpen] = useState(false);
   const columns = [
     {
       title: "Date",
-      dataIndex: "date",
+      dataIndex: "createdAt",
       sorter: true,
+      render: (text: string) => new Date(text).toDateString(),
     },
     {
       title: "Type of service",
-      dataIndex: "serviceType",
+      dataIndex: "model",
       sorter: true,
+      render: (model: Record<string, any>) => <p>{model?.product}</p>,
     },
     {
       title: "Product",
-      dataIndex: "product",
+      dataIndex: "model",
       sorter: true,
+      render: (model: Record<string, any>) => <p>{model?.network}</p>,
     },
     {
       title: "Status",
@@ -134,7 +142,11 @@ const TransactionHistoryTable = () => {
       </div>
 
       <div className="relative overflow-x-auto  sm:rounded-lg w-full">
-        <Table columns={columns} dataSource={data} />
+        <Table
+          loading={isLoading}
+          columns={columns}
+          dataSource={data?.data?.data || []}
+        />
       </div>
       <TransactionModal open={open} setOpen={setOpen} />
     </div>

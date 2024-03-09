@@ -82,7 +82,7 @@ const MoreDetailsDrawer: React.FC<Props> = ({ provider, product }) => {
       <Drawer onClose={onClose} open={open} width={840}>
         <div className="md:flex justify-between gap-4 space-y-4 md:space-y-0">
           <span className="flex gap-4">
-            {provider.icon}
+            {/* {provider.icon} */}
             <p className="text-[18px] pt-4 md:pt-2">{product}</p>
           </span>
           <button

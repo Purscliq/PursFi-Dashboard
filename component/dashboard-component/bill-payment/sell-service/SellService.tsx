@@ -5,7 +5,7 @@ import { TabsProps } from "antd";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import MakePayment from "./sellService-tab/MakePayment";
 
-const SellService = () => {
+const SellService = ({ id }: { id: number }) => {
   const { back } = useRouter();
   const items: TabsProps["items"] = [
     {
@@ -20,21 +20,7 @@ const SellService = () => {
           </p>
         </span>
       ),
-      children: <MakePayment />,
-    },
-    {
-      key: "2",
-      label: (
-        <span className="flex items-center gap-[0.2rem]">
-          <span className="text-[12px] font-[400] text-white py[1%] px-[5%] rounded-full bg-black">
-            2
-          </span>
-          <p className="text-inherit text[#181336] text-[14px] font-[400]">
-            Payment Approval
-          </p>
-        </span>
-      ),
-      children: "ok",
+      children: <MakePayment id={id} />,
     },
   ];
   return (
