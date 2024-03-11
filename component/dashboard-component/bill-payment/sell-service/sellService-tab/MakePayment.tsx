@@ -6,17 +6,24 @@ import {
   CustomUpload as Upload,
 } from "@/lib/AntdComponents";
 import "react-phone-input-2/lib/style.css";
-import { RadioChangeEvent } from "antd";
-import { useState } from "react";
+import { RadioChangeEvent, message } from "antd";
+import { FormEventHandler, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import LinkIcon from "@/assets/icon/LinkIcon";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Mtn from "@/assets/icon/Mtn";
-import { useLazyGetBillPaymentDataPlansQuery } from "@/services/bill-payment";
+import {
+  useLazyGetBillPaymentDataPlansQuery,
+  useSellAirtimeMutation,
+  useSellDataPlanMutation,
+} from "@/services/bill-payment";
+import { useAppSelector } from "@/store/hooks";
+const amount: any = 0;
 const initialState = {
   product: "",
   provider: 0,
-  amount: 0,
+  amount,
   paymentType: "",
   type: 0,
   recipient: "",
@@ -24,18 +31,28 @@ const initialState = {
   plan: "",
 };
 const MakePayment = ({ id }: { id: number }) => {
+  const profile = useAppSelector((store) => store.user.business);
+  const { back } = useRouter();
+  const [formdata, setFormdata] = useState({
+    ...initialState,
+    provider: id,
+    businessId: profile?.id,
+  });
   const [getDataPlans, { data }] = useLazyGetBillPaymentDataPlansQuery({});
+  const [sellData, { isLoading: isLoadingData }] = useSellDataPlanMutation();
+  const [sellAirtime, { isLoading: isLoadingAirtime }] =
+    useSellAirtimeMutation();
   const options = [
     { label: "specific account ", value: "specific account " },
-    { label: "phone book", value: "phone book" },
-    { label: "upload number", value: "upload number" },
+    { label: "phone book", value: "phone book", disabled: true },
+    { label: "upload number", value: "upload number", disabled: true },
   ];
   const options1 = [
-    { label: "instant payment", value: "instant_payment" },
-    { label: "Schedule Payment", value: "schedule_payment" },
-    { label: "Recurring payment", value: "recurring_payment" },
+    { label: "instant payment", value: "instant" },
+    { label: "Schedule Payment", value: "schedule" },
+    { label: "Recurring payment", value: "recurring" },
   ];
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState(options[0].value);
   const [productType, setProductType] = useState("");
 
   const handleRadioChange = (e: RadioChangeEvent) => {
@@ -46,8 +63,51 @@ const MakePayment = ({ id }: { id: number }) => {
   const handleTabClick = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
   };
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (!productType) {
+      message?.error("select product type");
+    }
+    if (!formdata?.recipient) {
+      message?.error("please provide recipient information");
+    }
+    if (!formdata?.paymentType) {
+      message.error("select payment type");
+    }
+    if (productType === "data") {
+      if (!formdata?.plan) {
+        message.error("please select plan");
+      }
+      sellData({ ...formdata, product: productType })
+        .unwrap()
+        .then((res) => {
+          message.success("Transaction successful");
+          setFormdata(initialState);
+        })
+        .catch((err) => {
+          message.error(err?.data?.responseDescription || "Transaction failed");
+        });
+    }
+    if (productType === "airtime") {
+      if (!formdata?.amount) {
+        message.error("please input amount");
+      }
+      sellAirtime({ ...formdata, product: productType })
+        .unwrap()
+        .then((res) => {
+          message.success("Transaction successful");
+          setFormdata(initialState);
+        })
+        .catch((err) => {
+          message.error(err?.data?.responseDescription || "Transaction failed");
+        });
+    }
+  };
   return (
-    <form className="grid grid-cols-1 gap-[1.5rem] px-[3%] relative mx-auto w-[70%]">
+    <form
+      onSubmit={handleSubmit}
+      className="grid grid-cols-1 gap-[1.5rem] px-[3%] relative mx-auto w-[70%]"
+    >
       <div className="flex items-center space-x-4">
         <Mtn />
         <p className="font-semibold text-[22px]">MTN Service </p>
@@ -56,8 +116,8 @@ const MakePayment = ({ id }: { id: number }) => {
         <label htmlFor="product">Select product</label>
         <Select
           options={[
-            { label: "data plan", value: "data" },
             { label: "airtime", value: "airtime" },
+            { label: "data plan", value: "data" },
           ]}
           onChange={(value) => {
             setProductType(value);
@@ -69,7 +129,23 @@ const MakePayment = ({ id }: { id: number }) => {
           placeholder="select product type"
         />
       </span>
-
+      {productType === "data" && (
+        <span className="flex flex-col w-full">
+          <label htmlFor="product">Select data plan</label>
+          <Select
+            options={data || []}
+            onChange={(value, obj: Record<string, any>) => {
+              setFormdata((prev) => ({
+                ...prev,
+                amount: Number(obj?.amount),
+                plan: value,
+              }));
+            }}
+            id="product"
+            placeholder="select product type"
+          />
+        </span>
+      )}
       <span className="flex flex-col w-full">
         <label htmlFor="bank">Amount</label>
         <InputNumber
@@ -78,6 +154,12 @@ const MakePayment = ({ id }: { id: number }) => {
           prefix="&#8358;"
           placeholder=""
           required
+          disabled={productType === "data"}
+          value={formdata?.amount}
+          onChange={(value) =>
+            setFormdata((prev) => ({ ...prev, amount: value }))
+          }
+          min={100}
         />
       </span>
       <RadioGroup
@@ -86,6 +168,7 @@ const MakePayment = ({ id }: { id: number }) => {
         options={options}
         className="!flex !justify-start !gap-[4rem]"
         onChange={handleRadioChange}
+        defaultValue={options[0].value}
       />
 
       {selectedOption === options[0].value && (
@@ -96,17 +179,22 @@ const MakePayment = ({ id }: { id: number }) => {
               country={"ng"}
               containerClass="!w-full"
               inputClass="phone-input-input !w-full !py-[6px] !border !border-gray-400 !rounded-md"
-              disabled
+              onChange={(value) => {
+                setFormdata((prev) => ({ ...prev, recipient: value }));
+              }}
             />
           </span>
-          <div className=" flex justify-end items-end">
+          {/* <div className=" flex justify-end items-end">
             <span className="border w-fit p-1">+ Add Number</span>
-          </div>
+          </div> */}
           <RadioGroup
             id="tag"
             name="transactionCategory"
             options={options1}
             className="!flex !justify-start !gap-[2rem]"
+            onChange={(e) => {
+              setFormdata((prev) => ({ ...prev, paymentType: e.target.value }));
+            }}
           />
         </>
       )}
@@ -228,11 +316,16 @@ const MakePayment = ({ id }: { id: number }) => {
       )}
       <Button
         htmlType="submit"
-        className="!bg-gray-200 !text-white !h-[45px] !border-none"
+        className="!bg-[#000000] !text-white !h-[45px] !border-none"
+        loading={isLoadingAirtime || isLoadingData}
       >
         Make Payment
       </Button>
-      <Button htmlType="submit" className="!bg-transparent !h-[45px]">
+      <Button
+        onClick={back}
+        htmlType="reset"
+        className="!bg-transparent !h-[45px]"
+      >
         Cancel
       </Button>
     </form>

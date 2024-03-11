@@ -183,12 +183,12 @@ const AirtimeBundle = () => {
                   </span>
                 </span>
               </div>
-              <span className="flex justify-center">
+              {/* <span className="flex justify-center">
                 <MoreDetailsDrawer
                   provider={item.provider}
                   product={item.product}
                 />
-              </span>
+              </span> */}
             </div>
           )
         )}

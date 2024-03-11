@@ -51,6 +51,7 @@ const data: DataType[] = [
 const TransactionHistoryTable = () => {
   const { data, isLoading } = useGetBillPaymentTransactionsQuery({});
   const [open, setOpen] = useState(false);
+  const [id, setId] = useState("");
   const columns = [
     {
       title: "Date",
@@ -96,10 +97,12 @@ const TransactionHistoryTable = () => {
 
     {
       title: "Action",
-      render: () => {
+      dataIndex: "id",
+      render: (id: string) => {
         return (
           <span
             onClick={() => {
+              setId(id);
               setOpen(true);
             }}
             className="cursor-pointer"
@@ -148,7 +151,7 @@ const TransactionHistoryTable = () => {
           dataSource={data?.data?.data || []}
         />
       </div>
-      <TransactionModal open={open} setOpen={setOpen} />
+      <TransactionModal id={id} open={open} setOpen={setOpen} />
     </div>
   );
 };

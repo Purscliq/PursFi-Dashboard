@@ -145,7 +145,7 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
                 setFormdata((prev) => ({ ...prev, amount: value }))
               }
               required
-              min={50}
+              min={100}
             />
           </span>
           <span className="flex flex-col">

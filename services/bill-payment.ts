@@ -22,16 +22,6 @@ const billPaymentSlice = ApiSlice.injectEndpoints({
       query: () => ({
         url: "billpayment/transactions/all",
       }),
-      //   transformResponse: (res: Record<string, any>) => {
-      //     const arr = res?.wallet?.map((e: Record<string, any>) => {
-      //       const formattedDate = new Date(e?.date).toLocaleString("en-US", {
-      //         month: "short",
-      //         day: "2-digit",
-      //       });
-      //       return { balance: e?.balance, date: formattedDate };
-      //     });
-      //     return arr;
-      //   },
     }),
     getBillPaymentRecurringTransactions: builder.query({
       query: () => ({
@@ -39,8 +29,11 @@ const billPaymentSlice = ApiSlice.injectEndpoints({
       }),
     }),
     getBillPaymentTransactionDetails: builder.query({
-      query: () => ({
+      query: ({ id }) => ({
         url: "billpayment/transactions/details",
+        params: {
+          transactionId: id,
+        },
       }),
     }),
     getBillPaymentAnalytics: builder.query({
@@ -52,9 +45,19 @@ const billPaymentSlice = ApiSlice.injectEndpoints({
       query: (body) => ({
         url: "billpayment/dataplans",
         params: {
-          networkId:body?.id,
+          networkId: body?.id,
         },
       }),
+      transformResponse: (res: Record<string, any>) => {
+        const arr = res?.data?.map((e: Record<string, any>) => {
+          return {
+            ...e,
+            value: e?.planDescription,
+            label: e?.planDescription,
+          };
+        });
+        return arr;
+      },
     }),
     getBillPaymentNetworks: builder.query({
       query: () => ({
