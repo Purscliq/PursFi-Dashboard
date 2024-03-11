@@ -4,11 +4,13 @@ import AddIcon from "@/assets/icon/AddIcon";
 import {
   CustomButton as Button,
   CustomTabs as Tabs,
+  CustomSelect as Select,
 } from "@/lib/AntdComponents";
 import OverviewTable from "./OverviewTable";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import PayrollTable from "./PayrollTable";
+import OverviewChart from "./OverviewChart";
 
 const Overview = () => {
   const { push } = useRouter();
@@ -120,9 +122,9 @@ const Overview = () => {
         >
           + Run Payroll
         </button> */}
-      </header>
+      </div>
       <Tabs items={items} defaultActiveKey="1" />
-    </div>
+    </section>
   );
 };
 

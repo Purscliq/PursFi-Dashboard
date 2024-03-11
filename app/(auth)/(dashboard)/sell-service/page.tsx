@@ -3,9 +3,9 @@ import SellService from "@/component/dashboard-component/bill-payment/sell-servi
 import React from "react";
 import { useSearchParams } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const params = useSearchParams();
   return <SellService id={Number(params.get("id")!)} />;
 };
 
-export default page;
+export default Page;
