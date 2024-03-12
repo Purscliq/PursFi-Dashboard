@@ -9,7 +9,7 @@ const PayrollSettings = () => {
         <div className="flex items-center justify-between ">
           <span>
             <h2 className="text-2xl font-medium">
-              Payroll - <span className="text-gray-400">Setting</span>{" "}
+              Payroll - <span className="text-[#515B6F]">Setting</span>{" "}
             </h2>
             <p className="text-sm text-[#84818A]">
               Showing your Account metrics for July 19, 2021 - July 25, 2021

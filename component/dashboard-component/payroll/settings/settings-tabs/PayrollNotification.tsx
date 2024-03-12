@@ -27,9 +27,12 @@ const PayrollNotification = () => {
             </p>
           </span>
           <span className="flex flex-col gap-[0.5rem]">
-            <Checkbox checked>
+            {/* <Checkbox checked>
               Send email if employees have missing information
-            </Checkbox>
+            </Checkbox> */}
+            <Checkbox checked>Send email for payroll execution</Checkbox>
+            <Checkbox>Send email for failed execution</Checkbox>
+            <Checkbox>Send email for failed transaction</Checkbox>
           </span>
         </span>
         <hr />
@@ -55,7 +58,7 @@ const PayrollNotification = () => {
           type="primary"
           className="!bg-black !ml-auto !w-[55%] !h-[3rem] self-end"
         >
-          save
+          Save
         </Button>
       </form>
     </div>

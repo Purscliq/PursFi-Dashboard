@@ -4,6 +4,8 @@ import { useState } from "react";
 import PayrollSetup from "./PayrollSetup";
 import PayrollStructure from "./PayrollStructure";
 import PayrollNotification from "./PayrollNotification";
+import PayrollTab from "./PayrollTab";
+
 const day: any = "";
 const initialState = {
   automatic: true,
@@ -15,38 +17,51 @@ const initialState = {
   currency: "NGN",
   hour: "06",
 };
+
 export type dataType = typeof initialState;
+
 const SettingsTabs = () => {
   const [activeKey, setActiveKey] = useState(1);
   const [formData, setFormData] = useState(initialState);
+
   const items: TabsProps["items"] = [
+    // {
+    //   key: "1",
+    //   label: "Payroll Setup",
+    //   children: (
+    //     <PayrollSetup
+    //       formData={formData}
+    //       setFormData={setFormData}
+    //       setActiveKey={setActiveKey}
+    //     />
+    //   ),
+    // },
+    // {
+    //   key: "2",
+    //   label: "Salary Structure",
+    //   children: (
+    //     <PayrollStructure
+    //       formData={formData}
+    //       setFormData={setFormData}
+    //       setActiveKey={setActiveKey}
+    //       initialState={initialState}
+    //     />
+    //   ),
+    // },
+    // {
+    //   key: "3",
+    //   label: "Payroll Notications",
+    //   children: <PayrollNotification />,
+    // },
+    // {
+    //   key: "4",
+    //   label: "Payroll",
+    //   children: <PayrollTab />,
+    // },
     {
       key: "1",
-      label: "Payroll Setup",
-      children: (
-        <PayrollSetup
-          formData={formData}
-          setFormData={setFormData}
-          setActiveKey={setActiveKey}
-        />
-      ),
-    },
-    {
-      key: "2",
-      label: "Salary Structure",
-      children: (
-        <PayrollStructure
-          formData={formData}
-          setFormData={setFormData}
-          setActiveKey={setActiveKey}
-          initialState={initialState}
-        />
-      ),
-    },
-    {
-      key: "3",
-      label: "Payroll Notications",
-      children: <PayrollNotification />,
+      label: "Payroll",
+      children: <PayrollTab />,
     },
   ];
   return <Tabs activeKey={activeKey.toString()} items={items} />;
