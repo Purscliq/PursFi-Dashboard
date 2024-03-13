@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import {
   CustomRadioGroup as RadioGroup,
   CustomSelect as Select,
+  CustomInput as Input,
   CustomButton as Button,
 } from "@/lib/AntdComponents";
 
@@ -32,7 +35,7 @@ const PayrollDate = () => {
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="date" className="font-semibold text-base">
-              Payroll date
+              Payroll Date
             </label>
             <Select
               id="date"
@@ -44,6 +47,24 @@ const PayrollDate = () => {
                 { value: "3", label: "3" },
               ]}
             />
+          </div>
+        </div>
+        <hr />
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+          <div className="space-y-2 w-full md:max-w-sm">
+            <p className="font-semibold text-base">Select your payroll time</p>
+            <p className="font-normal text-base text-[#515B6F]">
+              You can decide when to pay your employees. For example, if you
+              choose January 31, your employees will be paid on January 31st. If
+              you choose option 1, your employees will be paid for January on
+              February 1st.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 w-full">
+            <label htmlFor="date" className="font-semibold text-base">
+              Payroll Time
+            </label>
+            <Input id="time" className="w-full" />
           </div>
         </div>
         <hr />

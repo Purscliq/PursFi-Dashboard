@@ -16,7 +16,7 @@ const DetailsTab = () => {
       label: "Contractor List (0)",
       children: <Contractor />,
     },
-    
+
     // {
     //   key: "3",
     //   label: "Payroll Notications",

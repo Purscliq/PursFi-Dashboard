@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { CustomTable as Table } from "@/lib/AntdComponents";
 import type { MenuProps } from "antd";
-import { Button, Dropdown } from "antd";
+import { Dropdown } from "antd";
+
+import DeletePayrollModal from "./DeletePayrollModal";
 
 interface DataType {
   key: string;
@@ -13,33 +15,6 @@ interface DataType {
   status: string;
   amount: string;
 }
-
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: (
-      <Link href="#" className="font-medium">
-        View Payroll
-      </Link>
-    ),
-  },
-  {
-    key: "2",
-    label: (
-      <Link href="#" className="font-medium">
-        View Members
-      </Link>
-    ),
-  },
-  {
-    key: "3",
-    label: (
-      <Link href="#" className="font-medium">
-        Delete Payroll
-      </Link>
-    ),
-  },
-];
 
 const data: DataType[] = [
   {
@@ -73,7 +48,39 @@ const data: DataType[] = [
 ];
 
 const PayrollTable = () => {
-  const [open, setOpen] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <Link href="/payroll-settings/payroll-details" className="font-medium">
+          View Payroll
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <Link href="#" className="font-medium">
+          View Members
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <button
+          type="button"
+          onClick={() => setOpenDeleteModal(true)}
+          className="font-medium"
+        >
+          Delete Payroll
+        </button>
+      ),
+    },
+  ];
+
   const columns = [
     {
       title: "Payroll Title",
@@ -137,6 +144,7 @@ const PayrollTable = () => {
       <div className="relative overflow-x-auto  sm:rounded-lg w-full">
         <Table columns={columns} dataSource={data} />
       </div>
+      <DeletePayrollModal open={openDeleteModal} setOpen={setOpenDeleteModal} />
     </div>
   );
 };
