@@ -30,7 +30,7 @@ const options = [
 ];
 const amount: any = 0;
 const initialState = {
-  product: "airtime",
+  product: "data",
   provider: "",
   paymentType: "",
   amount,
@@ -125,7 +125,7 @@ const DataTopupModal: React.FC<Props> = ({ provider }) => {
         <span className="flex gap-4">
           {/* {provider.icon} */}
           <Mtn />
-          <p className="text-[24px] font-bold py-2">Airtime Top up</p>
+          <p className="text-[24px] font-bold py-2">Data Top up</p>
         </span>
         <form onSubmit={handleSubmit} className="mt-12 flex flex-col gap-3">
           <span className="flex flex-col gap-2">
