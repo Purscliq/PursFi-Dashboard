@@ -22,7 +22,7 @@ const DashboardChart = ({ data }: { data: Record<string, any>[] }) => {
         <Tooltip />
         <Area
           type="monotone"
-          dataKey="balance"
+          dataKey="balance(₦)"
           stroke="#000"
           fillOpacity={1}
           fill="rgb(0, 0, 0,0.05)"

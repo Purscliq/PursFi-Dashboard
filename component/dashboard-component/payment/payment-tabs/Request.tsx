@@ -122,7 +122,7 @@ const Request = () => {
         </span>
       ),
       dataIndex: "amount",
-      render: (amount) => `${amount}`,
+      render: (amount) => `&#8358;${amount}`,
       width: "20%",
     },
     {
