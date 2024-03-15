@@ -121,7 +121,7 @@ const Recurring = () => {
         </span>
       ),
       dataIndex: "amount",
-      render: (amount) => `&#8358;${amount}`,
+      render: (amount) => `₦${amount}`,
       width: "20%",
     },
     {

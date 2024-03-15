@@ -156,7 +156,7 @@ const InvoiceTable = ({ status }: { status: string }) => {
       ),
       dataIndex: "amount",
       key: "amount",
-      render: (amount) => `N${amount}`,
+      render: (amount) => `₦${amount}`,
     },
     {
       title: (
