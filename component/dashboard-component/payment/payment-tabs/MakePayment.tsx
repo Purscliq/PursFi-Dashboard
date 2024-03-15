@@ -60,15 +60,18 @@ const days = [
   "Sunday",
 ];
 const amount: any = "";
+const hour: any = "";
+const day: any = "";
+const month: any = "";
 const initialState = {
   amount: amount,
   bankName: "",
   narration: "",
   businessId: "",
   transactionCategory: "",
-  day: "",
-  hour: "",
-  month: "",
+  day,
+  hour,
+  month,
   fee: "0",
   accountName: "",
 };

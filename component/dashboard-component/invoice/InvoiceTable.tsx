@@ -24,12 +24,14 @@ export interface DataType {
 export interface TableParams {
   pagination?: TablePaginationConfig;
 }
+const startDate: any = "";
+const endDate: any = "";
 const initialState = {
   userId: "",
   businessId: "",
-  startDate: "",
+  startDate,
   filterBy: "",
-  endDate: "",
+  endDate,
   amount: "",
   status: "",
   page: 1,
