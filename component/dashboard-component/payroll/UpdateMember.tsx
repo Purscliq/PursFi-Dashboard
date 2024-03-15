@@ -39,12 +39,13 @@ const employeeOptions = [
   },
 ];
 const salary: any = "";
+const hireDate: any = "";
 const initialState = {
   email: "",
   employmentType: "",
   firstName: "",
   lastName: "",
-  hireDate: "",
+  hireDate,
   salary,
   address: "",
   lga: "",
