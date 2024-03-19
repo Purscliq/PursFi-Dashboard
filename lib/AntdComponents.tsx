@@ -34,6 +34,9 @@ import {
   TooltipProps,
   Modal,
   ModalProps,
+  Collapse,
+  CollapseProps,
+  CollapsePanelProps,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -253,5 +256,17 @@ export const CustomTooltip = ({ ...props }: TooltipProps) => (
 export const CustomModal = ({ ...props }: ModalProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <Modal {...props} />
+  </ConfigProvider>
+);
+
+export const CustomCollapse = ({ ...props }: CollapseProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Collapse {...props} />
+  </ConfigProvider>
+);
+
+export const CustomCollapsePanel = ({ ...props }: CollapsePanelProps) => (
+  <ConfigProvider theme={{ token: { ...primaryConfig } }}>
+    <Collapse.Panel {...props} />
   </ConfigProvider>
 );
