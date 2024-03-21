@@ -163,9 +163,9 @@ const MakePayment = ({ id }: { id: number }) => {
       className="grid grid-cols-1 gap-[1.5rem] px-[3%] relative mx-auto w-[70%]"
     >
       <div className="flex items-center space-x-4">
-        {bundle[id].image}
+        {bundle[id - 1].image}
         <p className="font-semibold text-[22px]">
-          {bundle[id].provider} Service{" "}
+          {bundle[id - 1].provider} Service{" "}
         </p>
       </div>
       <span className="flex flex-col w-full">
