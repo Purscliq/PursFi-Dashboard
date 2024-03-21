@@ -117,7 +117,32 @@ const DataTopupModal: React.FC<Props> = ({ provider }) => {
         .catch((err) => {});
     }
   };
-
+  const bundle = [
+    <Image
+      alt="airtel"
+      src={
+        "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021232/vrejcpyjqsu3nyv3mfho.png"
+      }
+    />,
+    <Image
+      alt="mtn"
+      src={
+        "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021274/kkkrbecmzjbhiap2bpv7.png"
+      }
+    />,
+    <Image
+      alt="9mobile"
+      src={
+        "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021218/c5gkpfnkfgzadu8w7uza.png"
+      }
+    />,
+    <Image
+      alt="glo"
+      src={
+        "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021243/rm86mmai6swrmsgfkdfp.png"
+      }
+    />,
+  ];
   return (
     <>
       <button
