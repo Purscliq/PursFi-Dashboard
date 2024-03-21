@@ -30,6 +30,60 @@ const initialState = {
   businessId: "",
   plan: "",
 };
+const bundle = [
+  {
+    image: (
+      <Image
+        width={44}
+        height={44}
+        alt="airtel"
+        src={
+          "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021232/vrejcpyjqsu3nyv3mfho.png"
+        }
+      />
+    ),
+    provider: "Airtel",
+  },
+  {
+    image: (
+      <Image
+        width={44}
+        height={44}
+        alt="mtn"
+        src={
+          "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021274/kkkrbecmzjbhiap2bpv7.png"
+        }
+      />
+    ),
+    provider: "MTN",
+  },
+  {
+    image: (
+      <Image
+        width={44}
+        height={44}
+        alt="9mobile"
+        src={
+          "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021218/c5gkpfnkfgzadu8w7uza.png"
+        }
+      />
+    ),
+    provider: "9mobile",
+  },
+  {
+    image: (
+      <Image
+        width={44}
+        height={44}
+        alt="glo"
+        src={
+          "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021243/rm86mmai6swrmsgfkdfp.png"
+        }
+      />
+    ),
+    provider: "GLO",
+  },
+];
 const MakePayment = ({ id }: { id: number }) => {
   const profile = useAppSelector((store) => store.user.business);
   const { back } = useRouter();
@@ -109,8 +163,10 @@ const MakePayment = ({ id }: { id: number }) => {
       className="grid grid-cols-1 gap-[1.5rem] px-[3%] relative mx-auto w-[70%]"
     >
       <div className="flex items-center space-x-4">
-        <Mtn />
-        <p className="font-semibold text-[22px]">MTN Service </p>
+        {bundle[id].image}
+        <p className="font-semibold text-[22px]">
+          {bundle[id].provider} Service{" "}
+        </p>
       </div>
       <span className="flex flex-col w-full">
         <label htmlFor="product">Select product</label>
