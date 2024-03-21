@@ -8,10 +8,12 @@ import {
   CustomDatePicker as DatePicker,
 } from "@/lib/AntdComponents";
 import { message } from "antd";
+const startDate: any = "";
+const endDate: any = "";
 const initialState = {
   businessId: "",
-  startDate: "",
-  endDate: "",
+  startDate,
+  endDate,
 };
 import { useAppSelector } from "@/store/hooks";
 const StatementModal = ({
