@@ -1,6 +1,10 @@
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { Modal, message } from "antd";
-import Mtn from "@/assets/icon/Mtn";
+import Airtel from "@/assets/airtel.png";
+import Glo from "@/assets/glo.png";
+import Mtn from "@/assets/mtn.png";
+import NineMobile from "@/assets/9mobile.png";
+import Image from "next/image";
 import {
   CustomDatePicker as DatePicker,
   CustomTimePicker as TimePicker,
@@ -23,20 +27,28 @@ interface Props {
     network: number;
   };
 }
+const bundle = [
+  <Image alt="airtel" src={Airtel} />,
+  <Image alt="mtn" src={Mtn} />,
+  <Image alt="9mobile" src={NineMobile} />,
+  <Image alt="glo" src={Glo} />,
+];
 const options = [
   { label: "Instant", value: "instant" },
   { label: "Schedule", value: "schedule" },
   { label: "Recurring", value: "recurring" },
 ];
 const amount: any = 0;
+const scheduleDate: any = "";
+const scheduleTime: any = "";
 const initialState = {
   product: "airtime",
   provider: "",
   paymentType: "",
   amount,
   businessId: "",
-  scheduleDate: "",
-  scheduleTime: "",
+  scheduleDate,
+  scheduleTime,
   name: "",
   pattern: "",
   frequency: "",
@@ -124,7 +136,7 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
       >
         <span className="flex gap-4">
           {/* {provider.icon} */}
-          <Mtn />
+          {bundle[provider.network]}
           <p className="text-[24px] font-bold py-2">Airtime Top up</p>
         </span>
         <form onSubmit={handleSubmit} className="mt-12 flex flex-col gap-3">

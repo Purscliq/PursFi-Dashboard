@@ -1,8 +1,9 @@
 "use client";
-import Airtel from "@/assets/icon/Airtel";
-import Glo from "@/assets/icon/Glo";
-import Mtn from "@/assets/icon/Mtn";
-import NineMobile from "@/assets/icon/NineMobile";
+import Airtel from "@/assets/airtel.png";
+import Glo from "@/assets/glo.png";
+import Mtn from "@/assets/mtn.png";
+import NineMobile from "@/assets/9mobile.png";
+import Image from "next/image";
 import { CustomSelect as Select } from "@/lib/AntdComponents";
 import { useRouter } from "next/navigation";
 import TransactionHistoryTable from "./TransactionHistoryTable";
@@ -16,30 +17,10 @@ import {
 } from "@/services/bill-payment";
 
 const bundle = [
-  {
-    provider: { icon: <Mtn /> },
-    product: "MTN Airtime and Data bundle",
-    totalAirtimeRemaining: "450,000.00",
-    totalDataBundleRemaining: "450,000.00",
-  },
-  {
-    provider: { icon: <Airtel /> },
-    product: "Airtel Airtime and Data bundle",
-    totalAirtimeRemaining: "450,000.00",
-    totalDataBundleRemaining: "450,000.00",
-  },
-  {
-    provider: { icon: <Glo /> },
-    product: "Glo Airtime and Data bundle",
-    totalAirtimeRemaining: "450,000.00",
-    totalDataBundleRemaining: "450,000.00",
-  },
-  {
-    provider: { icon: <NineMobile /> },
-    product: "9Mobile Airtime and Data bundle",
-    totalAirtimeRemaining: "450,000.00",
-    totalDataBundleRemaining: "450,000.00",
-  },
+  <Image alt="airtel" src={Airtel} />,
+  <Image alt="mtn" src={Mtn} />,
+  <Image alt="9mobile" src={NineMobile} />,
+  <Image alt="glo" src={Glo} />,
 ];
 const AirtimeBundle = () => {
   const { push } = useRouter();
@@ -141,7 +122,7 @@ const AirtimeBundle = () => {
             >
               <div className="md:flex justify-between gap-4 space-y-4 md:space-y-0">
                 <span className="flex gap-4">
-                  {bundle[index].provider.icon}
+                  {bundle[index]}
                   <p className="text-[18px] pt-4 md:pt-2">{item.description}</p>
                 </span>
                 <button
@@ -160,7 +141,7 @@ const AirtimeBundle = () => {
                   </p>
                   <span className="flex  justify-between gap-4">
                     <p className="text-black font-semibold text-[16px]">
-                      {item?.airtime?.totalData}
+                      {item?.airtime?.totalAirtime}
                     </p>
                     {/* <AirtimeTopupModal /> */}
                     <AirtimeTopupModal
@@ -174,7 +155,7 @@ const AirtimeBundle = () => {
                   </p>
                   <span className="flex justify-between gap-4">
                     <p className="text-black font-semibold text-[16px]">
-                      {item?.airtime?.totalData}
+                      {item?.data?.totalData}
                     </p>
                     {/* <DataTopupModal /> */}
                     <DataTopupModal

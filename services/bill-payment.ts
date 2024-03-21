@@ -1,27 +1,20 @@
 import { ApiSlice } from "./Api";
-import { updateWallet } from "@/store/userSlice";
-import { logOut } from "@/store/userSlice";
 
-const billPaymentSlice = ApiSlice.injectEndpoints({
+const billPaymentSlice = ApiSlice.enhanceEndpoints({
+  addTagTypes: ["transaction" as const],
+}).injectEndpoints({
   endpoints: (builder) => ({
     getBillPaymentWallet: builder.query({
       query: () => ({
         url: "billpayment/wallet",
       }),
-      //   onQueryStarted(id, { dispatch, queryFulfilled }) {
-      //     queryFulfilled
-      //       .then((apiResponse) => {
-      //         dispatch(updateWallet(apiResponse?.data?.wallet));
-      //       })
-      //       .catch(() => {
-      //         // dispatch(logOut());
-      //       });
-      //   },
+      providesTags: ["transaction"],
     }),
     getBillPaymentTransactions: builder.query({
       query: () => ({
         url: "billpayment/transactions/all",
       }),
+      providesTags: ["transaction"],
     }),
     getBillPaymentRecurringTransactions: builder.query({
       query: () => ({
@@ -40,6 +33,7 @@ const billPaymentSlice = ApiSlice.injectEndpoints({
       query: () => ({
         url: "billpayment/analytics",
       }),
+      providesTags: ["transaction"],
     }),
     getBillPaymentDataPlans: builder.query({
       query: (body) => ({
@@ -70,6 +64,7 @@ const billPaymentSlice = ApiSlice.injectEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["transaction"],
     }),
     fundWalletScheduled: builder.mutation({
       query: (body) => ({
@@ -77,6 +72,7 @@ const billPaymentSlice = ApiSlice.injectEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["transaction"],
     }),
     fundWalletRecurring: builder.mutation({
       query: (body) => ({
@@ -84,6 +80,7 @@ const billPaymentSlice = ApiSlice.injectEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["transaction"],
     }),
     sellAirtime: builder.mutation({
       query: (body) => ({
@@ -91,6 +88,7 @@ const billPaymentSlice = ApiSlice.injectEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["transaction"],
     }),
     sellDataPlan: builder.mutation({
       query: (body) => ({
@@ -98,6 +96,7 @@ const billPaymentSlice = ApiSlice.injectEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["transaction"],
     }),
   }),
 });
