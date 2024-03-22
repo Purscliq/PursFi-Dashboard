@@ -53,7 +53,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                   data?.data?.transactionType
                 )}`}
               >
-                {data?.data?.transactionType === "debit" ? "-" : "+"}
+                &#8358;{data?.data?.transactionType === "debit" ? "-" : "+"}
                 {data?.data?.amount}
               </h1>
               <p className="text-slate-700 mt-3 uppercase">
