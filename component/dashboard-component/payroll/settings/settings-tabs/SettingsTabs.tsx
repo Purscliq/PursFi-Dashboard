@@ -4,15 +4,24 @@ import { useState } from "react";
 import PayrollSetup from "./PayrollSetup";
 import PayrollStructure from "./PayrollStructure";
 const day: any = "";
+// const initialState = {
+//   automatic: true,
+//   day: day,
+//   title: "",
+//   single: true,
+//   businessId: "",
+//   structure: [],
+//   currency: "NGN",
+//   hour: "06",
+// };
 const initialState = {
+  name: "",
+  isBusiness: true,
   automatic: true,
-  day: day,
-  title: "",
-  single: true,
+  payoutDate: "",
+  payoutTime: "",
+  salaryStructure: [],
   businessId: "",
-  structure: [],
-  currency: "NGN",
-  hour: "06",
 };
 export type dataType = typeof initialState;
 const SettingsTabs = () => {

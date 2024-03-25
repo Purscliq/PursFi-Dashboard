@@ -1,8 +1,7 @@
-// import Setup from "@/component/dashboard-component/payroll/setup/Setup";
-import React from "react";
+import Setup from "@/component/dashboard-component/payroll2/setup/Setup";
 
 const page = () => {
-  return <></>;
+  return <Setup />;
 };
 
 export default page;

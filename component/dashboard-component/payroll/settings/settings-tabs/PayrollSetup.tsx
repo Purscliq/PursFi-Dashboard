@@ -3,6 +3,7 @@ import {
   CustomDatePicker as DatePicker,
   CustomButton as Button,
   CustomInput as Input,
+  CustomTimePicker as TimePicker,
 } from "@/lib/AntdComponents";
 import { dataType } from "./SettingsTabs";
 import { FormEventHandler } from "react";
@@ -74,6 +75,10 @@ const PayrollSetup = ({
           }}
           className="w-full"
           picker="date"
+        />
+        <TimePicker
+          value={dayjs(formData?.payoutTime, "HH:mm")}
+          format={"HH:mm"}
         />
       </span>
       <span className="w-full grid grid-cols-[40%_55%] gap-[5%] items-start justify-between">

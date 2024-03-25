@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DateAndStructureTabs from "./basic-details/DateAndStructureTabs";
 import EmployeesAndContractors from "./members/EmployeesAndContractors";
+import PayrollSettings from "../../payroll/settings/PayrollSettings";
 
 interface WelcomeProps {
   onContinue: () => void; // Define the type of the onContinue prop
@@ -56,8 +57,7 @@ const Welcome: React.FC<WelcomeProps> = ({ onContinue }) => {
               onClick={onContinue}
             >
               <span className="flex gap-4">
-                <p className="text-[16px] p-1.5 flex justify-center items-center w-[24px] h-[24px] rounded-full border border-[#181336] font-medium text-[#181336]">
-                </p>
+                <p className="text-[16px] p-1.5 flex justify-center items-center w-[24px] h-[24px] rounded-full border border-[#181336] font-medium text-[#181336]"></p>
                 <p className="text-[16px] font-medium text-[#181336]">
                   Set up payroll date
                 </p>
@@ -118,10 +118,10 @@ const Setup = () => {
 
   return (
     <section className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA] text-black">
-      {/* {step < 1 && <Welcome onContinue={handleContinue} />} */}
-      {step === 0 && <Welcome onContinue={handleContinue} />}
-      {/* {(step === 1 || step === 2) && <DateAndStructureTabs />} */}
-      {step === 1 && <EmployeesAndContractors />}
+      {step < 1 && <Welcome onContinue={handleContinue} />}
+      {/* {step === 0 && <Welcome onContinue={handleContinue} />} */}
+      {(step === 1 || step === 2) && <PayrollSettings />}
+      {/* {step === 1 && <EmployeesAndContractors />} */}
     </section>
   );
 };
