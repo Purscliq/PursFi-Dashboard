@@ -46,6 +46,13 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       }),
       providesTags: ["beneficiaries"],
     }),
+    togglePayroll: builder.mutation({
+      query: (body) => ({
+        url: "payroll/toggle",
+        body,
+        method: "POST",
+      }),
+    }),
     getPayroll: builder.query({
       query: () => ({
         url: "payroll",
@@ -58,6 +65,14 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         }));
         return arrList;
       },
+    }),
+    getSinglePayroll: builder.query({
+      query: (id) => ({
+        url: "payroll/single",
+        params: {
+          payrollId: id,
+        },
+      }),
     }),
     getPayrollBeneficiaries: builder.query({
       query: (payrollId) => ({
@@ -72,8 +87,12 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       providesTags: ["beneficiaries"],
     }),
     getSingleBeneficiary: builder.query({
-      query: (id) => ({
-        url: `payroll/single/beneficiary?memberId=${id}`,
+      query: (body) => ({
+        url: `payroll/single/beneficiary`,
+        params: {
+          payrollId: body?.payrollId,
+          beneficiaryId: body?.beneficiaryId,
+        },
       }),
       providesTags: ["beneficiaries"],
     }),
@@ -86,11 +105,22 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       invalidatesTags: ["beneficiaries"],
     }),
     deleteBeneficiary: builder.mutation({
-      query: (id) => ({
+      query: (body) => ({
         url: `payroll/delete/beneficiary`,
         method: "DELETE",
         params: {
-          memberId: id,
+          payrollId: body?.payrollId,
+          beneficiaryId: body?.beneficiaryId,
+        },
+      }),
+      invalidatesTags: ["beneficiaries"],
+    }),
+    deletePayroll: builder.mutation({
+      query: (body) => ({
+        url: `payroll/delete`,
+        method: "DELETE",
+        params: {
+          payrollId: body?.payrollId,
         },
       }),
       invalidatesTags: ["beneficiaries"],
@@ -114,4 +144,5 @@ export const {
   useLazyGetSingleBeneficiaryQuery,
   useUpdateBeneficiaryMutation,
   useDeleteBeneficiaryMutation,
+  useDeletePayrollMutation,
 } = payrollSlice;
