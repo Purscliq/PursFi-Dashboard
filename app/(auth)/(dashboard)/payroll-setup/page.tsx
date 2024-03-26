@@ -1,4 +1,4 @@
-import Setup from "@/component/dashboard-component/payroll2/setup/Setup";
+import Setup from "@/component/dashboard-component/payroll/setup/Setup";
 
 const page = () => {
   return <Setup />;

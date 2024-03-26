@@ -8,13 +8,14 @@ import Image from "next/image";
 import Link from "next/link";
 import DateAndStructureTabs from "./basic-details/DateAndStructureTabs";
 import EmployeesAndContractors from "./members/EmployeesAndContractors";
-import PayrollSettings from "../../payroll/settings/PayrollSettings";
+import PayrollSettings from "../settings/PayrollSettings";
 
 interface WelcomeProps {
-  onContinue: () => void; // Define the type of the onContinue prop
+  onContinue: () => void;
+  step: any; // Define the type of the onContinue prop
 }
 
-const Welcome: React.FC<WelcomeProps> = ({ onContinue }) => {
+const Welcome: React.FC<WelcomeProps> = ({ onContinue, step }) => {
   return (
     <section className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA] text-black">
       <div className="px-4 py-6 bg-payroll-pattern bg-white grid grid-cols-8 gap-4">
@@ -110,7 +111,7 @@ const Welcome: React.FC<WelcomeProps> = ({ onContinue }) => {
 };
 
 const Setup = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState<any>(0);
 
   const handleContinue = () => {
     setStep(step + 1);
@@ -118,9 +119,13 @@ const Setup = () => {
 
   return (
     <section className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA] text-black">
-      {step < 1 && <Welcome onContinue={handleContinue} />}
+      {(step < 1 || step == "done") && (
+        <Welcome onContinue={handleContinue} step={step} />
+      )}
       {/* {step === 0 && <Welcome onContinue={handleContinue} />} */}
-      {(step === 1 || step === 2) && <PayrollSettings />}
+      {(step === 1 || step === 2) && step !== "done" && (
+        <PayrollSettings setStep={setStep} />
+      )}
       {/* {step === 1 && <EmployeesAndContractors />} */}
     </section>
   );

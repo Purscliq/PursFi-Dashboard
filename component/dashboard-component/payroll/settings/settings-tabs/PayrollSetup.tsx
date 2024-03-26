@@ -24,7 +24,7 @@ const PayrollSetup = ({
 }) => {
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    if (formData.day) {
+    if (formData.payoutDate && formData?.payoutTime) {
       setActiveKey(2);
     }
   };
@@ -46,10 +46,10 @@ const PayrollSetup = ({
           </p>
         </label>
         <Input
-          name="title"
-          value={formData.title}
+          name="name"
+          value={formData.name}
           onChange={(e) =>
-            setFormData((prev) => ({ ...prev, title: e.target.value }))
+            setFormData((prev) => ({ ...prev, name: e.target.value }))
           }
           required
           className="!w-full"
@@ -68,18 +68,25 @@ const PayrollSetup = ({
             1st.
           </p>
         </label>
-        <DatePicker
-          value={formData?.day ? dayjs(formData?.day) : undefined}
-          onChange={(value, date) => {
-            setFormData((prev) => ({ ...prev, day: date }));
-          }}
-          className="w-full"
-          picker="date"
-        />
-        <TimePicker
-          value={dayjs(formData?.payoutTime, "HH:mm")}
-          format={"HH:mm"}
-        />
+        <span className="flex flex-col items-stretch gap-4">
+          <DatePicker
+            value={
+              formData?.payoutDate ? dayjs(formData?.payoutDate) : undefined
+            }
+            onChange={(value, date) => {
+              setFormData((prev) => ({ ...prev, payoutDate: date }));
+            }}
+            className="w-full"
+            picker="date"
+          />
+          <TimePicker
+            value={dayjs(formData?.payoutTime, "HH:mm")}
+            format={"HH:mm"}
+            onChange={(value, time) => {
+              setFormData((prev) => ({ ...prev, payoutTime: time }));
+            }}
+          />
+        </span>
       </span>
       <span className="w-full grid grid-cols-[40%_55%] gap-[5%] items-start justify-between">
         <label>

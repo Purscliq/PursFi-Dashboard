@@ -3,7 +3,8 @@ import { TabsProps } from "antd";
 import { useState } from "react";
 import PayrollSetup from "./PayrollSetup";
 import PayrollStructure from "./PayrollStructure";
-const day: any = "";
+const payoutDate: any = "";
+const payoutTime: any = "";
 // const initialState = {
 //   automatic: true,
 //   day: day,
@@ -18,13 +19,17 @@ const initialState = {
   name: "",
   isBusiness: true,
   automatic: true,
-  payoutDate: "",
-  payoutTime: "",
+  payoutDate,
+  payoutTime,
   salaryStructure: [],
   businessId: "",
 };
 export type dataType = typeof initialState;
-const SettingsTabs = () => {
+const SettingsTabs = ({
+  setStep,
+}: {
+  setStep: React.Dispatch<React.SetStateAction<any>>;
+}) => {
   const [activeKey, setActiveKey] = useState(1);
   const [formData, setFormData] = useState(initialState);
   const items: TabsProps["items"] = [
@@ -48,6 +53,7 @@ const SettingsTabs = () => {
           setFormData={setFormData}
           setActiveKey={setActiveKey}
           initialState={initialState}
+          setStep={setStep}
         />
       ),
     },
