@@ -2,7 +2,7 @@ import { Select } from "antd";
 import React from "react";
 import DetailsTab from "./DetailsTab";
 
-const Details = () => {
+const Details = ({ id }: { id: string }) => {
   return (
     <section className="max-w-[1640px] flex flex-col p-4 h-screen overflow-y-scroll space-y-4 bg-[#FAFAFA]">
       <header className="flex justify-between items-center">
@@ -43,7 +43,7 @@ const Details = () => {
           </span>
         </div>
         <div>
-          <DetailsTab />
+          <DetailsTab id={id} />
         </div>
       </div>
     </section>

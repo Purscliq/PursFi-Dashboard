@@ -123,7 +123,8 @@ const Overview = () => {
           + Run Payroll
         </button> */}
       </div>
-      <Tabs items={items} defaultActiveKey="1" />
+      {/* <Tabs items={items} defaultActiveKey="1" /> */}
+      <PayrollTable />
     </section>
   );
 };

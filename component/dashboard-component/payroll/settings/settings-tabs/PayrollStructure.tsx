@@ -20,13 +20,11 @@ const PayrollStructure = ({
   setFormData,
   setActiveKey,
   initialState,
-  setStep,
 }: {
   setFormData: React.Dispatch<React.SetStateAction<dataType>>;
   setActiveKey: React.Dispatch<React.SetStateAction<number>>;
   formData: Record<string, any>;
   initialState: dataType;
-  setStep: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const [createPayroll, { isLoading }] = useCreatePayrollMutation();
   const businessId = useAppSelector((store) => store?.user?.user?.businessId);
@@ -74,7 +72,6 @@ const PayrollStructure = ({
           console.log(res);
           message.success("Payroll created successfully");
           setFormData(initialState);
-          setStep("done");
         })
         .catch((err) => {
           console.log(err);

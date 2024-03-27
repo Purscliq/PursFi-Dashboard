@@ -68,7 +68,7 @@ const data: EmployeeData[] = [
   },
 ];
 
-const Contractor = () => {
+const Contractor = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
   const [open, setOpen] = useState(false);
   const columns: ColumnsType<EmployeeData> = [
     {
@@ -185,7 +185,7 @@ const Contractor = () => {
           </span>
         </div>
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} loading={isLoading} />
       <DeatilsDrawe Open={open} onClose={() => setOpen(false)} />
     </div>
   );

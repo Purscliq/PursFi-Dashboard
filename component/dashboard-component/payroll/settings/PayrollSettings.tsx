@@ -2,11 +2,7 @@
 import { useState } from "react";
 import SettingsTabs from "./settings-tabs/SettingsTabs";
 
-const PayrollSettings = ({
-  setStep,
-}: {
-  setStep: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+const PayrollSettings = () => {
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8">
       <header className="flex flex-col space-y-3 my-1">
@@ -20,7 +16,7 @@ const PayrollSettings = ({
       </header>
       <div className="bg-white p-2 rounded-md">
         {" "}
-        <SettingsTabs setStep={setStep} />
+        <SettingsTabs />
       </div>
     </div>
   );

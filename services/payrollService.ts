@@ -41,8 +41,13 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       }),
     }),
     getBeneficiaries: builder.query({
-      query: () => ({
-        url: "payroll/beneficiaries",
+      query: ({ id, count, type }) => ({
+        url: "payroll/employees/contractor",
+        params: {
+          payrollId: id,
+          count: count,
+          beneficiaryType: type,
+        },
       }),
       providesTags: ["beneficiaries"],
     }),
@@ -54,17 +59,20 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       }),
     }),
     getPayroll: builder.query({
-      query: () => ({
+      query: (body) => ({
         url: "payroll",
+        params: {
+          count: body?.count,
+        },
       }),
-      transformResponse: (res: Record<string, any>) => {
-        const arrList = res?.data?.map((e: Record<string, string>) => ({
-          label: e?.title,
-          value: e?.reference,
-          ...e,
-        }));
-        return arrList;
-      },
+      // transformResponse: (res: Record<string, any>) => {
+      //   const arrList = res?.data?.map((e: Record<string, string>) => ({
+      //     label: e?.title,
+      //     value: e?.reference,
+      //     ...e,
+      //   }));
+      //   return arrList;
+      // },
     }),
     getSinglePayroll: builder.query({
       query: (id) => ({
@@ -135,6 +143,7 @@ export const {
   useUpdatePayrollMutation,
   useCreateBeneficiariesMutation,
   useGetBeneficiariesQuery,
+  useLazyGetBeneficiariesQuery,
   useGetPayrollQuery,
   useGetPayrollBeneficiariesQuery,
   useLazyGetPayrollBeneficiariesQuery,

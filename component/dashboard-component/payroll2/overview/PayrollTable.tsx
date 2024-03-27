@@ -47,7 +47,7 @@ const PayrollTable = () => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <Link href={`/payroll?id=${id}`}>update</Link>,
+      label: <Link href={`/payroll/${id}`}>update</Link>,
     },
     {
       key: "2",
@@ -64,7 +64,7 @@ const PayrollTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "title",
+      dataIndex: "name",
       render: (title) => `${title}`,
       width: "20%",
     },
@@ -98,7 +98,7 @@ const PayrollTable = () => {
           <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "reference",
+      dataIndex: "id",
       width: "10%",
       render: (id: any, record: DataType) => {
         return (
@@ -119,7 +119,7 @@ const PayrollTable = () => {
           <Table
             columns={columns}
             //   rowKey={(record) => record.login.uuid}
-            dataSource={payroll || []}
+            dataSource={payroll?.data?.data || []}
             loading={isLoading}
             // onChange={handleTableChange}
           />

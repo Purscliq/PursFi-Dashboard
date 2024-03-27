@@ -25,11 +25,7 @@ const initialState = {
   businessId: "",
 };
 export type dataType = typeof initialState;
-const SettingsTabs = ({
-  setStep,
-}: {
-  setStep: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+const SettingsTabs = () => {
   const [activeKey, setActiveKey] = useState(1);
   const [formData, setFormData] = useState(initialState);
   const items: TabsProps["items"] = [
@@ -53,7 +49,6 @@ const SettingsTabs = ({
           setFormData={setFormData}
           setActiveKey={setActiveKey}
           initialState={initialState}
-          setStep={setStep}
         />
       ),
     },
