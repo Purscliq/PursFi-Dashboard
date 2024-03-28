@@ -123,9 +123,7 @@ const Setup = () => {
         <Welcome onContinue={handleContinue} step={step} />
       )}
       {/* {step === 0 && <Welcome onContinue={handleContinue} />} */}
-      {(step === 1 || step === 2) && step !== "done" && (
-        <PayrollSettings setStep={setStep} />
-      )}
+      {(step === 1 || step === 2) && step !== "done" && <PayrollSettings />}
       {/* {step === 1 && <EmployeesAndContractors />} */}
     </section>
   );

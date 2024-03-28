@@ -9,6 +9,7 @@ import { ColumnsType } from "antd/es/table";
 import React, { useState } from "react";
 import { BsSquare } from "react-icons/bs";
 import DeatilsDrawe from "../DetailsDrawe";
+import { useRouter } from "next/navigation";
 interface EmployeeData {
   key: string;
   firstName: string;
@@ -69,17 +70,9 @@ const data: EmployeeData[] = [
 ];
 
 const Contractor = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
+  const { push } = useRouter();
   const [open, setOpen] = useState(false);
   const columns: ColumnsType<EmployeeData> = [
-    {
-      title: (
-        <span className="flex items-center  space-x-2">
-          <BsSquare />
-        </span>
-      ),
-      dataIndex: "",
-      render: () => <BsSquare />,
-    },
     {
       title: (
         <span className="flex items-center  space-x-2">
@@ -176,7 +169,10 @@ const Contractor = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
       <div className="flex items-center justify-between w-full">
         <Select placeholder="Status" id="select" className="!w-[10rem]" />
         <div className="flex justify-end w-full cursor-pointer space-x-5">
-          <button className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case">
+          <button
+            onClick={() => push("/add-payroll?type=contractor")}
+            className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
+          >
             + Add Member
           </button>
           <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">

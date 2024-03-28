@@ -38,22 +38,41 @@ const employeeOptions = [
 ];
 const salary: any = "";
 const hireDate: any = "";
+// const initialState = {
+//   email: "",
+//   employmentType: "",
+//   firstName: "",
+//   lastName: "",
+//   hireDate,
+//   salary,
+//   address: "",
+//   lga: "",
+//   state: "",
+//   accountNumber: "",
+//   bankCode: "",
+//   bankName: "",
+//   businessId: "",
+//   reference: "",
+//   phone: "",
+// };
 const initialState = {
-  email: "",
-  employmentType: "",
-  firstName: "",
-  lastName: "",
-  hireDate,
-  salary,
-  address: "",
-  lga: "",
-  state: "",
-  accountNumber: "",
-  bankCode: "",
-  bankName: "",
-  businessId: "",
-  reference: "",
-  phone: "",
+  payrollId: 0,
+  type: "string",
+  firstName: "string",
+  lastName: "string",
+  email: "string",
+  phone: "string",
+  bankName: "string",
+  bankCode: "string",
+  accountNumber: "string",
+  accountName: "string",
+  hiredDate: "string",
+  jobRole: "string",
+  salary: 0,
+  address: "string",
+  lga: "string",
+  state: "string",
+  businessId: "string",
 };
 const AddMember = () => {
   const { back } = useRouter();
@@ -68,7 +87,7 @@ const AddMember = () => {
   };
   const onFormSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    if (formData.employmentType && formData.hireDate) {
+    if (formData.type && formData.hiredDate) {
       createBeneficiary({ ...formData, salary: formData.salary.toString() })
         .unwrap()
         .then((res) => {
@@ -100,7 +119,7 @@ const AddMember = () => {
       })
         .unwrap()
         .then((res) => {
-          setFormData((prev) => ({ ...prev, bankName: res?.data?.data }));
+          setFormData((prev) => ({ ...prev, accountName: res?.data?.data }));
         })
         .catch((err) => {
           message.error(
@@ -147,11 +166,11 @@ const AddMember = () => {
           <RadioGroup
             className="!flex !flex-col gap-[0.5rem]"
             options={employeeOptions}
-            value={formData.employmentType}
+            value={formData.type}
             onChange={(e: RadioChangeEvent) => {
               setFormData((prev) => ({
                 ...prev,
-                employmentType: e.target.value,
+                type: e.target.value,
               }));
             }}
           />
@@ -235,10 +254,11 @@ const AddMember = () => {
                   showSearch
                   placeholder="select bank"
                   optionFilterProp="label"
-                  onSelect={(value) =>
+                  onSelect={(value, option: any) =>
                     setFormData((prev) => ({
                       ...prev,
                       bankCode: value,
+                      bankName: option?.label,
                     }))
                   }
                   id="bank"
@@ -262,7 +282,7 @@ const AddMember = () => {
                 />
               </span>
             </span>
-            <Input required disabled value={formData.bankName} />
+            <Input required disabled value={formData.accountName} />
           </span>
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
@@ -278,14 +298,14 @@ const AddMember = () => {
             </label>
             <DatePicker
               onChange={(_, date) => {
-                setFormData((prev) => ({ ...prev, hireDate: date }));
+                setFormData((prev) => ({ ...prev, hiredDate: date as string }));
               }}
               className="!w-full"
               placeholder="Hire Date"
             />
           </span>
         </span>
-        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+        {/* <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
               Select Payroll
@@ -306,7 +326,7 @@ const AddMember = () => {
               options={payroll || []}
             />
           </span>
-        </span>
+        </span> */}
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
@@ -353,7 +373,7 @@ const AddMember = () => {
               placeholder="salary"
               required
               onChange={(e) => {
-                setFormData((prev) => ({ ...prev, salary: e }));
+                setFormData((prev) => ({ ...prev, salary: e as number }));
               }}
             />
           </span>

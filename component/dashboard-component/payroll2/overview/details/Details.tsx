@@ -1,8 +1,13 @@
+"use client";
 import { Select } from "antd";
 import React from "react";
 import DetailsTab from "./DetailsTab";
+import { useRouter } from "next/navigation";
+import { CustomButton as Button } from "@/lib/AntdComponents";
+import AddIcon from "@/assets/icon/AddIcon";
 
 const Details = ({ id }: { id: string }) => {
+  const { push } = useRouter();
   return (
     <section className="max-w-[1640px] flex flex-col p-4 h-screen overflow-y-scroll space-y-4 bg-[#FAFAFA]">
       <header className="flex justify-between items-center">
@@ -24,7 +29,33 @@ const Details = ({ id }: { id: string }) => {
         />
       </header>
       <div className="space-y-4">
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-[#181336]">
+        <div className="flex justify-between items-start ">
+          <div className="flex flex-col items-start space-y-4 ">
+            <h2 className="text-[18px] text-[#061A14] font-medium">
+              Add employees and contractors
+            </h2>
+            <span className="bg-white rounded-[5px] px-[20px] py-[18px] flex flex-col gap-2">
+              <h6 className="text-[#181336] text-[16px] font-[700]">Add One</h6>
+              <span className="flex items-center gap-2">
+                <p className="text-[] text-[14px] font-[400]">
+                  Add Single Employee or a Contractor in Second
+                </p>
+                <Button
+                  className="!flex !m-auto !items-center !border-0"
+                  icon={<AddIcon />}
+                  onClick={() => push("/add-payroll")}
+                />
+              </span>
+            </span>
+          </div>
+          {/* <button
+          // onClick={() => setIsModalOpen(true)}
+          className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
+        >
+          + Run Payroll
+        </button> */}
+        </div>
+        {/* <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-[#181336]">
           <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
             <p className="text-base">Total Member</p>
             <p className="text-[30px] font-semibold">62</p>
@@ -41,7 +72,7 @@ const Details = ({ id }: { id: string }) => {
             <p className="text-base">Total net paid</p>
             <p className="text-[30px] font-semibold">N5,300,434.00</p>
           </span>
-        </div>
+        </div> */}
         <div>
           <DetailsTab id={id} />
         </div>

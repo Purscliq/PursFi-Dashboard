@@ -1,3 +1,4 @@
+"use client";
 import CheckIcon from "@/assets/icon/CheckIcon";
 import {
   CustomRadioGroup as RadioGroup,
@@ -9,6 +10,7 @@ import { dataType } from "./SettingsTabs";
 import { useCreatePayrollMutation } from "@/services/payrollService";
 import { useAppSelector } from "@/store/hooks";
 import { message } from "antd";
+import { useRouter } from "next/navigation";
 interface DataType {
   key: React.Key;
   name: string;
@@ -27,6 +29,7 @@ const PayrollStructure = ({
   initialState: dataType;
 }) => {
   const [createPayroll, { isLoading }] = useCreatePayrollMutation();
+  const { push } = useRouter();
   const businessId = useAppSelector((store) => store?.user?.user?.businessId);
   const [dataSource, setDataSource] = useState<DataType[]>([
     {
@@ -70,6 +73,7 @@ const PayrollStructure = ({
         .unwrap()
         .then((res) => {
           console.log(res);
+          push(`/payroll/${res?.data?.id}`);
           message.success("Payroll created successfully");
           setFormData(initialState);
         })
