@@ -7,7 +7,10 @@ import {
 import { FormEventHandler, useState } from "react";
 import StructureTable from "./StructureTable";
 import { dataType } from "./SettingsTabs";
-import { useCreatePayrollMutation } from "@/services/payrollService";
+import {
+  useCreatePayrollMutation,
+  useUpdatePayrollMutation,
+} from "@/services/payrollService";
 import { useAppSelector } from "@/store/hooks";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
@@ -29,34 +32,44 @@ const PayrollStructure = ({
   initialState: dataType;
 }) => {
   const [createPayroll, { isLoading }] = useCreatePayrollMutation();
+  const [updatePayroll, { isLoading: isUpdating }] = useUpdatePayrollMutation();
   const { push } = useRouter();
   const businessId = useAppSelector((store) => store?.user?.user?.businessId);
-  const [dataSource, setDataSource] = useState<DataType[]>([
-    {
-      key: 0,
-      name: "Base Salary",
-      percentage: 50,
-      tax: "Yes",
-    },
-    {
-      key: 1,
-      name: "HRA",
-      percentage: 25,
-      tax: "Yes",
-    },
-    {
-      key: 2,
-      name: "LTA",
-      percentage: 15,
-      tax: "Yes",
-    },
-    {
-      key: 3,
-      name: "Special Allowance",
-      percentage: 10,
-      tax: "Yes",
-    },
-  ]);
+  const [dataSource, setDataSource] = useState<DataType[]>(
+    formData?.salaryStructures?.structure?.length > 0
+      ? formData?.salaryStructures?.structure?.map((e: any, i: any) => ({
+          key: i,
+          name: e?.name,
+          percentage: e?.percentage,
+          tax: "Yes",
+        }))
+      : [
+          {
+            key: 0,
+            name: "Base Salary",
+            percentage: 50,
+            tax: "Yes",
+          },
+          {
+            key: 1,
+            name: "HRA",
+            percentage: 25,
+            tax: "Yes",
+          },
+          {
+            key: 2,
+            name: "LTA",
+            percentage: 15,
+            tax: "Yes",
+          },
+          {
+            key: 3,
+            name: "Special Allowance",
+            percentage: 10,
+            tax: "Yes",
+          },
+        ]
+  );
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     if (dataSource.length > 0) {
@@ -65,21 +78,35 @@ const PayrollStructure = ({
         percentage: e.percentage,
         tax: e.tax === "Yes" ? true : false,
       }));
-      createPayroll({
-        ...formData,
-        salaryStructure: structure,
-        businessId,
-      })
-        .unwrap()
-        .then((res) => {
-          console.log(res);
-          push(`/payroll/${res?.data?.id}`);
-          message.success("Payroll created successfully");
-          setFormData(initialState);
+      if (formData?.payrollId) {
+        updatePayroll({
+          ...formData,
+          salaryStructure: structure,
+          businessId,
         })
-        .catch((err) => {
-          console.log(err);
-        });
+          .unwrap()
+          .then((res) => {
+            push(`/payroll/${res?.data?.id}`);
+            message.success("Payroll updated successfully");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else
+        createPayroll({
+          ...formData,
+          salaryStructure: structure,
+          businessId,
+        })
+          .unwrap()
+          .then((res) => {
+            push(`/payroll/${res?.data?.id}`);
+            message.success("Payroll created successfully");
+            setFormData(initialState);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     }
   };
   return (
@@ -131,7 +158,7 @@ const PayrollStructure = ({
       <Button
         htmlType="submit"
         type="primary"
-        loading={isLoading}
+        loading={isLoading || isUpdating}
         className="!bg-black !ml-auto !w-[55%] self-end"
       >
         save

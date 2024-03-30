@@ -9,10 +9,7 @@ import {
   CustomSelect as Select,
   CustomSpinner as Spinner,
 } from "@/lib/AntdComponents";
-import {
-  useCreateBeneficiariesMutation,
-  useGetPayrollQuery,
-} from "@/services/payrollService";
+import { useCreateBeneficiariesMutation } from "@/services/payrollService";
 import { useGetBanksQuery } from "@/services/disbursementService";
 import { useVerifyAccountMutation } from "@/services/disbursementService";
 import { RadioChangeEvent, message } from "antd";
@@ -24,7 +21,9 @@ import {
 } from "react";
 import { GrFormPreviousLink } from "react-icons/gr";
 import PhoneInput from "react-phone-input-2";
+import { useAppSelector } from "@/store/hooks";
 import "react-phone-input-2/lib/style.css";
+import dayjs, { Dayjs } from "dayjs";
 
 const employeeOptions = [
   {
@@ -57,30 +56,34 @@ const hireDate: any = "";
 // };
 const initialState = {
   payrollId: 0,
-  type: "string",
-  firstName: "string",
-  lastName: "string",
-  email: "string",
-  phone: "string",
-  bankName: "string",
-  bankCode: "string",
-  accountNumber: "string",
-  accountName: "string",
-  hiredDate: "string",
-  jobRole: "string",
+  type: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  bankName: "",
+  bankCode: "",
+  accountNumber: "",
+  accountName: "",
+  hiredDate: "",
+  jobRole: "",
   salary: 0,
-  address: "string",
-  lga: "string",
-  state: "string",
-  businessId: "string",
+  address: "",
+  lga: "",
+  state: "",
+  businessId: "",
 };
-const AddMember = () => {
+const AddMember = ({ id }: { id: number }) => {
   const { back } = useRouter();
+  const profile = useAppSelector((store) => store?.user?.user);
   const { data } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
-  const { data: payroll } = useGetPayrollQuery({});
   const [createBeneficiary, { isLoading }] = useCreateBeneficiariesMutation();
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState({
+    ...initialState,
+    payrollId: id,
+    businessId: profile?.businessId,
+  });
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -126,10 +129,7 @@ const AddMember = () => {
             err?.data?.responseDescription || "something went wrong"
           );
         });
-  }, [
-    JSON.stringify(formData.accountNumber),
-    JSON.stringify(formData.bankCode),
-  ]);
+  }, [formData.accountNumber, formData.bankCode]);
   return (
     <div className="relative flex flex-col px-[2%] w-[95%] mx-auto">
       <header className="flex flex-col space-y-3 my-1 border-b border-[#D6DDEB] py-[2%]">
@@ -300,6 +300,7 @@ const AddMember = () => {
               onChange={(_, date) => {
                 setFormData((prev) => ({ ...prev, hiredDate: date as string }));
               }}
+              value={dayjs(formData?.hiredDate) as Dayjs}
               className="!w-full"
               placeholder="Hire Date"
             />
@@ -355,6 +356,26 @@ const AddMember = () => {
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">Job Role</h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
+              Please Provide Member Job Role
+            </p>
+          </span>
+          <span className="flex flex-col gap-2">
+            <label className="text-[#24272C] text-[16px] font-[700]">
+              Job Role
+            </label>
+            <Input
+              value={formData.jobRole}
+              className="!w-full"
+              placeholder="job role"
+              name="jobRole"
+              onChange={onInputChange}
+            />
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
               Salary Information
             </h6>
@@ -396,7 +417,6 @@ const AddMember = () => {
                 value={formData.address}
                 name="address"
                 onChange={onInputChange}
-                required
                 className="!w-full"
                 placeholder="Enter your address"
               />

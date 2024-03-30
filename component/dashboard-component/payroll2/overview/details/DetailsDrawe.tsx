@@ -1,27 +1,63 @@
-import { Drawer } from "antd";
+import { Drawer, message } from "antd";
 import {
   CustomButton as Button,
   CustomInputNumber,
   CustomSelect as Select,
   CustomTimePicker as TimePicker,
   CustomInput as Input,
+  CustomSwitch as Switch,
 } from "@/lib/AntdComponents";
 import Link from "next/link";
 import { HiOutlineUserCircle } from "react-icons/hi2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeleteMemberModal from "./DeleteMemberModal";
 import dayjs from "dayjs";
+import {
+  useLazyGetSingleBeneficiaryQuery,
+  useDeleteBeneficiaryMutation,
+} from "@/services/payrollService";
+
 interface PayrollDetailsProps {
   Open: boolean;
   onClose: () => void;
+  id: string;
+  benId: string;
 }
 
-const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({ Open, onClose }) => {
+const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({
+  Open,
+  onClose,
+  id,
+  benId,
+}) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [activeTab, setActiveTab] = useState("payroll-details");
+  const [getBeneficiary, { data, isFetching }] =
+    useLazyGetSingleBeneficiaryQuery();
+  const [deleteMember, { isLoading: isDeleting }] =
+    useDeleteBeneficiaryMutation();
+  useEffect(() => {
+    if (benId && id)
+      getBeneficiary({
+        payrollId: id,
+        beneficiaryId: benId,
+      });
+  }, [benId, id]);
 
   const handleTabClick = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
+  };
+  const handleDelete = () => {
+    deleteMember({
+      payrollId: id,
+      beneficiaryId: benId,
+    })
+      .unwrap()
+      .then((res) => {
+        message.success("member deleted successfully");
+        onClose();
+      })
+      .finally(() => setOpenDeleteModal(false));
   };
   return (
     <>
@@ -37,23 +73,7 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({ Open, onClose }) => {
             type="button"
             className="btn btn-ghost hover:bg-transparent p-0"
           >
-            <label
-              htmlFor="DeactivateAccount"
-              title="Deactivate Account"
-              className="relative h-8 w-14 cursor-pointer [-webkit-tap-highlight-color:_transparent]"
-            >
-              <input
-                title="Checked"
-                type="checkbox"
-                id="DeactivateAccount"
-                // defaultChecked
-                className="peer sr-only [&:checked_+_span_svg[data-checked-icon]]:block [&:checked_+_span_svg[data-unchecked-icon]]:hidden"
-              />
-
-              <span className="absolute inset-y-0 start-0 z-10 m-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-gray-400 transition-all peer-checked:start-6 peer-checked:text-green-600"></span>
-
-              <span className="absolute inset-0 rounded-full peer-checked:bg-[#E93C3C] transition bg-green-500"></span>
-            </label>
+            <Switch />
           </button>
           <div className="flex flex-col justify-center items-center  h-[120px]">
             <div className="mx-auto flex items-center justify-center">
@@ -61,10 +81,10 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({ Open, onClose }) => {
             </div>
 
             <p className="text-[#181336] text-[20px] font-[600] capitalize">
-              John David Doe
+              {data?.data?.firstName} {data?.data?.lastName}
             </p>
             <p className="text-[#515B6F] text-[12px] font-[400] mt3 uppercase">
-              Admin{" "}
+              {data?.data?.jobRole}
             </p>
           </div>
           <div>
@@ -112,7 +132,8 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({ Open, onClose }) => {
                           className="!w-full"
                           prefix="&#8358;"
                           placeholder=""
-                          required
+                          disabled
+                          value={data?.data?.salary}
                         />
                         <p>total hours spend working</p>
                       </span>
@@ -227,7 +248,7 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({ Open, onClose }) => {
                       Delete Member
                     </Button>
                     <Link
-                      href={`/update-payroll-beneficiary`}
+                      href={`/update-member/${id}?member=${benId}`}
                       className="h-[3rem] bg-transparent w-full rounded-[5px] border border-solid border-[#000000] py-[12px] px-[24px] block text-center text-[16px] font-[500] text-[#000000] hover:text-[#000000]"
                     >
                       Edit Details
@@ -239,7 +260,12 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({ Open, onClose }) => {
           </div>
         </>
       </Drawer>
-      <DeleteMemberModal open={openDeleteModal} setOpen={setOpenDeleteModal} />
+      <DeleteMemberModal
+        deleteMember={handleDelete}
+        open={openDeleteModal}
+        setOpen={setOpenDeleteModal}
+        loading={isDeleting}
+      />
     </>
   );
 };

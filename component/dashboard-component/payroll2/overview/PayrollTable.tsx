@@ -51,6 +51,10 @@ const PayrollTable = () => {
     },
     {
       key: "2",
+      label: <Link href={`/payroll/${id}/update`}>update</Link>,
+    },
+    {
+      key: "3",
       label: <span>delete</span>,
       danger: true,
       onClick: () => setOpen(true),

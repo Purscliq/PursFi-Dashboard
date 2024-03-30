@@ -16,13 +16,19 @@ const DetailsTab = ({ id }: { id: string }) => {
         key: "employee",
         label: "Employee List",
         children: (
-          <EmployeeList isLoading={isFetching} data={data?.data?.data} />
+          <EmployeeList
+            id={id}
+            isLoading={isFetching}
+            data={data?.data?.data}
+          />
         ),
       },
       {
         key: "contractor",
         label: "Contractor List",
-        children: <Contractor isLoading={isFetching} data={data?.data?.data} />,
+        children: (
+          <Contractor id={id} isLoading={isFetching} data={data?.data?.data} />
+        ),
       },
     ],
     [data]

@@ -69,9 +69,18 @@ const data: EmployeeData[] = [
   },
 ];
 
-const Contractor = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
+const Contractor = ({
+  data,
+  isLoading,
+  id,
+}: {
+  data: any;
+  isLoading: boolean;
+  id: string;
+}) => {
   const { push } = useRouter();
   const [open, setOpen] = useState(false);
+  const [benId, setBenId] = useState("");
   const columns: ColumnsType<EmployeeData> = [
     {
       title: (
@@ -140,19 +149,19 @@ const Contractor = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
           <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "memberId",
-      render: () => {
+      dataIndex: "id",
+      render: (id) => {
         const menu: React.ReactElement<MenuProps> = (
           <Menu>
             <Menu.Item
               key="show-details"
               onClick={() => {
+                setBenId(id);
                 setOpen(true);
               }}
             >
               View details{" "}
             </Menu.Item>
-            <Menu.Item key="download-receipt">download reciept</Menu.Item>
           </Menu>
         );
         return (
@@ -182,7 +191,12 @@ const Contractor = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
         </div>
       </div>
       <Table columns={columns} dataSource={data} loading={isLoading} />
-      <DeatilsDrawe Open={open} onClose={() => setOpen(false)} />
+      <DeatilsDrawe
+        benId={benId}
+        id={id}
+        Open={open}
+        onClose={() => setOpen(false)}
+      />
     </div>
   );
 };

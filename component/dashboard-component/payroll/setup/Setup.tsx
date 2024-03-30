@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 
 import { BiChevronRight } from "react-icons/bi";
 import Pattern from "@/assets/circles-bg.png";
@@ -9,13 +9,9 @@ import Link from "next/link";
 import DateAndStructureTabs from "./basic-details/DateAndStructureTabs";
 import EmployeesAndContractors from "./members/EmployeesAndContractors";
 import PayrollSettings from "../settings/PayrollSettings";
+import { useSearchParams } from "next/navigation";
 
-interface WelcomeProps {
-  onContinue: () => void;
-  step: any; // Define the type of the onContinue prop
-}
-
-const Welcome: React.FC<WelcomeProps> = ({ onContinue, step }) => {
+const Welcome = () => {
   return (
     <section className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA] text-black">
       <div className="px-4 py-6 bg-payroll-pattern bg-white grid grid-cols-8 gap-4">
@@ -35,7 +31,7 @@ const Welcome: React.FC<WelcomeProps> = ({ onContinue, step }) => {
               ?
             </p>
             <Link
-              href="#"
+              href="/payroll-setup?step=2"
               className="text-[16px] font-bold underline py-1 text-[#181336]"
             >
               Need help with the Setup?
@@ -53,9 +49,8 @@ const Welcome: React.FC<WelcomeProps> = ({ onContinue, step }) => {
               </p>
             </span>
             <Link
-              href="#"
+              href="/payroll-setup?step=2"
               className="flex justify-between gap-4"
-              onClick={onContinue}
             >
               <span className="flex gap-4">
                 <p className="text-[16px] p-1.5 flex justify-center items-center w-[24px] h-[24px] rounded-full border border-[#181336] font-medium text-[#181336]"></p>
@@ -66,9 +61,8 @@ const Welcome: React.FC<WelcomeProps> = ({ onContinue, step }) => {
               <BiChevronRight className="text-[#181336] w-6 h-6" />
             </Link>
             <Link
-              href="#"
+              href="/payroll-setup?step=2"
               className="flex justify-between gap-4"
-              onClick={onContinue}
             >
               <span className="flex gap-4">
                 <p className="text-[16px] p-1.5 flex justify-center items-center w-[24px] h-[24px] rounded-full border border-[#181336] font-medium text-[#181336]">
@@ -89,9 +83,8 @@ const Welcome: React.FC<WelcomeProps> = ({ onContinue, step }) => {
               </p>
             </span>
             <Link
-              href="#"
+              href="/payroll-setup?step=2"
               className="flex justify-between gap-4"
-              onClick={onContinue}
             >
               <span className="flex gap-4">
                 <p className="text-[16px] p-1.5 flex justify-center items-center w-[24px] h-[24px] rounded-full border border-[#181336] font-medium text-[#181336]">
@@ -111,22 +104,21 @@ const Welcome: React.FC<WelcomeProps> = ({ onContinue, step }) => {
 };
 
 const Setup = () => {
-  const [step, setStep] = useState<any>(0);
-
-  const handleContinue = () => {
-    setStep(step + 1);
-  };
-
+  const params = useSearchParams();
   return (
     <section className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA] text-black">
-      {(step < 1 || step == "done") && (
-        <Welcome onContinue={handleContinue} step={step} />
-      )}
-      {/* {step === 0 && <Welcome onContinue={handleContinue} />} */}
-      {(step === 1 || step === 2) && step !== "done" && <PayrollSettings />}
-      {/* {step === 1 && <EmployeesAndContractors />} */}
+      {params.get("step") === "1" && <Welcome />}
+      {params.get("step") === "2" && <PayrollSettings />}
     </section>
   );
 };
 
-export default Setup;
+const PayrollSetup = () => {
+  return (
+    <Suspense fallback={<></>}>
+      <Setup />
+    </Suspense>
+  );
+};
+
+export default PayrollSetup;

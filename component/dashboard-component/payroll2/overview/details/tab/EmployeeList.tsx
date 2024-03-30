@@ -71,11 +71,14 @@ const data: EmployeeData[] = [
 const EmployeeList = ({
   data,
   isLoading,
+  id,
 }: {
   data: any;
   isLoading: boolean;
+  id: string;
 }) => {
   const [open, setOpen] = useState(false);
+  const [benId, setBenId] = useState("");
   const { push } = useRouter();
   const columns: ColumnsType<EmployeeData> = [
     {
@@ -145,19 +148,20 @@ const EmployeeList = ({
           <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "memberId",
-      render: () => {
+      dataIndex: "id",
+      render: (id) => {
         const menu: React.ReactElement<MenuProps> = (
           <Menu>
             <Menu.Item
               key="show-details"
               onClick={() => {
+                setBenId(id);
                 setOpen(true);
+                
               }}
             >
               View details{" "}
             </Menu.Item>
-            <Menu.Item key="download-receipt">download reciept</Menu.Item>
           </Menu>
         );
         return (
@@ -187,7 +191,12 @@ const EmployeeList = ({
         </div>
       </div>
       <Table columns={columns} dataSource={data} loading={isLoading} />
-      <DeatilsDrawe Open={open} onClose={() => setOpen(false)} />
+      <DeatilsDrawe
+        benId={benId}
+        id={id}
+        Open={open}
+        onClose={() => setOpen(false)}
+      />
     </div>
   );
 };

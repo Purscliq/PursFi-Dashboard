@@ -6,9 +6,13 @@ import {
 const DeleteMemberModal = ({
   open,
   setOpen,
+  deleteMember,
+  loading,
 }: {
   open: boolean;
   setOpen: (value: boolean) => void;
+  deleteMember: () => void;
+  loading: boolean;
 }) => {
   return (
     <Modal
@@ -24,11 +28,15 @@ const DeleteMemberModal = ({
         <p className="text-[#515B6F] text-[18px] font-[400] text-center">
           permanently delete this member from payroll beneficiary.
         </p>
-        <Button className="!h-[3rem] !bg-[#F6513B] w-full text-white hover:!text-white">
+        <Button
+          loading={loading}
+          onClick={() => deleteMember()}
+          className="!h-[3rem] !bg-[#F6513B] w-full text-white hover:!text-white"
+        >
           Yes
         </Button>
         <Button
-        //   disabled={isLoading}
+          disabled={loading}
           className="!h-[3rem] w-full"
           onClick={() => setOpen(false)}
         >

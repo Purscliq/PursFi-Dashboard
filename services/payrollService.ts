@@ -1,7 +1,12 @@
 import { ApiSlice } from "./Api";
 
 const payrollSlice = ApiSlice.enhanceEndpoints({
-  addTagTypes: ["payroll" as const, "beneficiaries" as const],
+  addTagTypes: [
+    "payroll" as const,
+    "beneficiaries" as const,
+    "single-payroll" as const,
+    "single-beneficiary" as const,
+  ],
 }).injectEndpoints({
   endpoints: (builder) => ({
     createPayroll: builder.mutation({
@@ -57,6 +62,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         body,
         method: "POST",
       }),
+      invalidatesTags: ["single-payroll"],
     }),
     getPayroll: builder.query({
       query: (body) => ({
@@ -65,14 +71,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
           count: body?.count,
         },
       }),
-      // transformResponse: (res: Record<string, any>) => {
-      //   const arrList = res?.data?.map((e: Record<string, string>) => ({
-      //     label: e?.title,
-      //     value: e?.reference,
-      //     ...e,
-      //   }));
-      //   return arrList;
-      // },
+      providesTags: ["payroll"],
     }),
     getSinglePayroll: builder.query({
       query: (id) => ({
@@ -81,6 +80,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
           payrollId: id,
         },
       }),
+      providesTags: ["single-payroll"],
     }),
     getPayrollBeneficiaries: builder.query({
       query: (payrollId) => ({
@@ -102,7 +102,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
           beneficiaryId: body?.beneficiaryId,
         },
       }),
-      providesTags: ["beneficiaries"],
+      providesTags: ["single-beneficiary"],
     }),
     updateBeneficiary: builder.mutation({
       query: (body) => ({
@@ -110,7 +110,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         body,
         method: "PUT",
       }),
-      invalidatesTags: ["beneficiaries"],
+      invalidatesTags: ["beneficiaries", "single-beneficiary"],
     }),
     deleteBeneficiary: builder.mutation({
       query: (body) => ({
@@ -131,7 +131,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
           payrollId: body?.payrollId,
         },
       }),
-      invalidatesTags: ["beneficiaries"],
+      invalidatesTags: ["payroll"],
     }),
   }),
 });
@@ -154,4 +154,7 @@ export const {
   useUpdateBeneficiaryMutation,
   useDeleteBeneficiaryMutation,
   useDeletePayrollMutation,
+  useGetSinglePayrollQuery,
+  useLazyGetSinglePayrollQuery,
+  useTogglePayrollMutation,
 } = payrollSlice;

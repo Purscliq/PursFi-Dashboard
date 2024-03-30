@@ -3,11 +3,23 @@ import { Select } from "antd";
 import React from "react";
 import DetailsTab from "./DetailsTab";
 import { useRouter } from "next/navigation";
-import { CustomButton as Button } from "@/lib/AntdComponents";
+import {
+  CustomButton as Button,
+  CustomSwitch as Switch,
+} from "@/lib/AntdComponents";
 import AddIcon from "@/assets/icon/AddIcon";
+import {
+  useGetSinglePayrollQuery,
+  useTogglePayrollMutation,
+} from "@/services/payrollService";
+import { useAppSelector } from "@/store/hooks";
 
 const Details = ({ id }: { id: string }) => {
   const { push } = useRouter();
+  const { data, isLoading } = useGetSinglePayrollQuery(id);
+  const [togglePayroll, { isLoading: isTogglingPayroll }] =
+    useTogglePayrollMutation();
+  const profile = useAppSelector((store) => store?.user?.user);
   return (
     <section className="max-w-[1640px] flex flex-col p-4 h-screen overflow-y-scroll space-y-4 bg-[#FAFAFA]">
       <header className="flex justify-between items-center">
@@ -19,14 +31,26 @@ const Details = ({ id }: { id: string }) => {
             Showing your Account metrics for July 19, 2021 - July 25, 2021
           </p>
         </span>
-        <Select
+        {/* <Select
           className="!w-fit !h-[3rem]"
           options={[
             { value: "1 month", label: "1 month" },
             { value: "2 month", label: "2 month" },
           ]}
           placeholder="Show stats Yearly"
-        />
+        /> */}
+        <span>
+          <Switch
+            loading={isTogglingPayroll}
+            onChange={() => {
+              togglePayroll({
+                payrollId: id,
+                businessId: profile?.businessId,
+              });
+            }}
+            value={data?.data?.status === "active"}
+          />
+        </span>
       </header>
       <div className="space-y-4">
         <div className="flex justify-between items-start ">
@@ -43,7 +67,7 @@ const Details = ({ id }: { id: string }) => {
                 <Button
                   className="!flex !m-auto !items-center !border-0"
                   icon={<AddIcon />}
-                  onClick={() => push("/add-payroll")}
+                  onClick={() => push(`/add-payroll/${id}`)}
                 />
               </span>
             </span>

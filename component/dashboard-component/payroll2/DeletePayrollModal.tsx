@@ -2,7 +2,7 @@ import {
   CustomModal as Modal,
   CustomButton as Button,
 } from "@/lib/AntdComponents";
-import { useDeleteBeneficiaryMutation } from "@/services/payrollService";
+import { useDeletePayrollMutation } from "@/services/payrollService";
 import { message } from "antd";
 
 const DeletePayrollModal = ({
@@ -16,7 +16,7 @@ const DeletePayrollModal = ({
   id: string;
   closeDrawal: () => void;
 }) => {
-  const [deleteMember, { isLoading }] = useDeleteBeneficiaryMutation();
+  const [deleteMember, { isLoading }] = useDeletePayrollMutation();
   return (
     <Modal
       open={open}
@@ -33,10 +33,10 @@ const DeletePayrollModal = ({
         </p>
         <Button
           onClick={() =>
-            deleteMember(id)
+            deleteMember({ payrollId: id })
               .unwrap()
               .then((res) => {
-                message.success("beneficiary deleted successfully");
+                message.success("payroll deleted successfully");
                 closeDrawal();
                 setOpen(false);
               })
