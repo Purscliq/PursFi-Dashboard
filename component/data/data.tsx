@@ -27,7 +27,7 @@ export const sidebarData: MenuProps["items"] = [
   {
     label: "Payment",
     icon: <AiOutlineIdcard className=" font-bold" />,
-    key: "payment",
+    key: "payment-group",
     children: [
       {
         label: <Link href="/payment">Payment</Link>,
@@ -43,10 +43,14 @@ export const sidebarData: MenuProps["items"] = [
   {
     label: "Payroll",
     icon: <FaRegUser className=" font-bold" />,
-    key: "payroll",
+    key: "payroll-group",
     children: [
       {
-        label: <Link href="/payroll">Overview</Link>,
+        label: (
+          <Link prefetch={false} href="/payroll">
+            Overview
+          </Link>
+        ),
         key: "payroll",
       },
       {
