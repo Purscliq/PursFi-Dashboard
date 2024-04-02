@@ -104,7 +104,9 @@ const DataTopupModal: React.FC<Props> = ({ provider }) => {
           handleCancel();
           message.success("airtime wallet funded succesfully");
         })
-        .catch((err) => {});
+        .catch((err) => {
+          message.error(err?.data?.responseDescription || "an error occured");
+        });
     }
     if (formdata?.paymentType === options[2]?.value) {
       fundWalletRecurring(formdata)
@@ -114,7 +116,9 @@ const DataTopupModal: React.FC<Props> = ({ provider }) => {
           handleCancel();
           message.success("airtime wallet funded succesfully");
         })
-        .catch((err) => {});
+        .catch((err) => {
+          message.error(err?.data?.responseDescription || "an error occured");
+        });
     }
   };
   const bundle = [

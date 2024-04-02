@@ -102,41 +102,47 @@ const AirtimeBundle = () => {
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-[#181336]">
         <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
           <p className="text-base">Total airtime sent</p>
-          {isLoadingWallet ? (
+          {isLoading ? (
             <span className="loading loading-dots loading-xs"></span>
           ) : (
             <p className="text-[30px] font-semibold">
-              {wallet?.data?.analytic?.totalAirtime}
+              {Number(
+                analytics?.data?.analytics?.sold?.airtime || 0
+              ).toLocaleString()}
             </p>
           )}
         </span>
         <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
           <p className="text-base">Total data sent</p>
-          {isLoadingWallet ? (
+          {isLoading ? (
             <span className="loading loading-dots loading-xs"></span>
           ) : (
             <p className="text-[30px] font-semibold">
-              {wallet?.data?.analytic?.totalData}
+              {Number(
+                analytics?.data?.analytics?.sold?.data || 0
+              ).toLocaleString()}
             </p>
           )}
         </span>
         <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
           <p className="text-base">Total amount</p>
-          {isLoadingWallet ? (
+          {isLoading ? (
             <span className="loading loading-dots loading-xs"></span>
           ) : (
             <p className="text-[30px] font-semibold">
-              {wallet?.data?.analytic?.total}
+              {Number(
+                analytics?.data?.analytics?.bought?.total || 0
+              ).toLocaleString()}
             </p>
           )}
         </span>
         <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
           <p className="text-base">Total Profit</p>
-          {isLoadingWallet ? (
+          {isLoading ? (
             <span className="loading loading-dots loading-xs"></span>
           ) : (
             <p className="text-[30px] font-semibold">
-              {wallet?.data?.analytic?.totalProfit}
+              {Number(analytics?.data?.analytics?.profit || 0).toLocaleString()}
             </p>
           )}
         </span>

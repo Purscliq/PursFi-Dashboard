@@ -20,13 +20,18 @@ import {
 } from "@/services/bill-payment";
 import { useAppSelector } from "@/store/hooks";
 const amount: any = 0;
+const options1 = [
+  { label: "instant payment", value: "instant" },
+  { label: "Schedule Payment", value: "schedule" },
+  { label: "Recurring payment", value: "recurring" },
+];
 const initialState = {
   product: "",
   provider: 0,
   amount,
-  paymentType: "",
+  paymentType: options1[0].value,
   type: 0,
-  recipient: "",
+  recipient: "+234",
   businessId: "",
   plan: "",
 };
@@ -86,6 +91,7 @@ const bundle = [
 ];
 const MakePayment = ({ id }: { id: number }) => {
   const profile = useAppSelector((store) => store.user.business);
+
   const { back } = useRouter();
   const [formdata, setFormdata] = useState({
     ...initialState,
@@ -100,11 +106,6 @@ const MakePayment = ({ id }: { id: number }) => {
     { label: "specific account ", value: "specific account " },
     { label: "phone book", value: "phone book", disabled: true },
     { label: "upload number", value: "upload number", disabled: true },
-  ];
-  const options1 = [
-    { label: "instant payment", value: "instant" },
-    { label: "Schedule Payment", value: "schedule" },
-    { label: "Recurring payment", value: "recurring" },
   ];
   const [selectedOption, setSelectedOption] = useState(options[0].value);
   const [productType, setProductType] = useState("");
@@ -136,10 +137,13 @@ const MakePayment = ({ id }: { id: number }) => {
         .unwrap()
         .then((res) => {
           message.success("Transaction successful");
-          setFormdata(initialState);
+          setFormdata({ ...initialState });
+          setSelectedOption(options[0].value);
         })
         .catch((err) => {
           message.error(err?.data?.responseDescription || "Transaction failed");
+          setFormdata({ ...initialState });
+          setSelectedOption(options[0].value);
         });
     }
     if (productType === "airtime") {
@@ -150,10 +154,13 @@ const MakePayment = ({ id }: { id: number }) => {
         .unwrap()
         .then((res) => {
           message.success("Transaction successful");
-          setFormdata(initialState);
+          setFormdata({ ...initialState });
+          setSelectedOption(options[0].value);
         })
         .catch((err) => {
           message.error(err?.data?.responseDescription || "Transaction failed");
+          setFormdata({ ...initialState });
+          setSelectedOption(options[0].value);
         });
     }
   };
@@ -182,6 +189,7 @@ const MakePayment = ({ id }: { id: number }) => {
             }
           }}
           id="product"
+          value={productType}
           placeholder="select product type"
         />
       </span>
@@ -198,6 +206,7 @@ const MakePayment = ({ id }: { id: number }) => {
               }));
             }}
             id="product"
+            value={formdata?.plan}
             placeholder="select product type"
           />
         </span>
@@ -215,7 +224,7 @@ const MakePayment = ({ id }: { id: number }) => {
           onChange={(value) =>
             setFormdata((prev) => ({ ...prev, amount: value }))
           }
-          min={100}
+          min={50}
         />
       </span>
       <RadioGroup
@@ -225,6 +234,7 @@ const MakePayment = ({ id }: { id: number }) => {
         className="!flex !justify-start !gap-[4rem]"
         onChange={handleRadioChange}
         defaultValue={options[0].value}
+        value={selectedOption}
       />
 
       {selectedOption === options[0].value && (
@@ -233,16 +243,16 @@ const MakePayment = ({ id }: { id: number }) => {
             <label htmlFor="bank">phone number</label>
             <PhoneInput
               country={"ng"}
+              disableCountryGuess
+              disableDropdown
               containerClass="!w-full"
               inputClass="phone-input-input !w-full !py-[6px] !border !border-gray-400 !rounded-md"
               onChange={(value) => {
                 setFormdata((prev) => ({ ...prev, recipient: value }));
               }}
+              value={formdata?.recipient}
             />
           </span>
-          {/* <div className=" flex justify-end items-end">
-            <span className="border w-fit p-1">+ Add Number</span>
-          </div> */}
           <RadioGroup
             id="tag"
             name="transactionCategory"
@@ -251,6 +261,7 @@ const MakePayment = ({ id }: { id: number }) => {
             onChange={(e) => {
               setFormdata((prev) => ({ ...prev, paymentType: e.target.value }));
             }}
+            value={formdata?.paymentType}
           />
         </>
       )}

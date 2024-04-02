@@ -29,32 +29,32 @@ interface Props {
 }
 const bundle = [
   <Image
-  width={44}
-  height={44}
+    width={44}
+    height={44}
     alt="airtel"
     src={
       "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021232/vrejcpyjqsu3nyv3mfho.png"
     }
   />,
   <Image
-  width={44}
-  height={44}
+    width={44}
+    height={44}
     alt="mtn"
     src={
       "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021274/kkkrbecmzjbhiap2bpv7.png"
     }
   />,
   <Image
-  width={44}
-  height={44}
+    width={44}
+    height={44}
     alt="9mobile"
     src={
       "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021218/c5gkpfnkfgzadu8w7uza.png"
     }
   />,
   <Image
-  width={44}
-  height={44}
+    width={44}
+    height={44}
     alt="glo"
     src={
       "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021243/rm86mmai6swrmsgfkdfp.png"
@@ -122,7 +122,9 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
           handleCancel();
           message.success("airtime wallet funded succesfully");
         })
-        .catch((err) => {});
+        .catch((err) => {
+          message.error(err?.data?.responseDescription || "an error occured");
+        });
     }
     if (formdata?.paymentType === options[1]?.value) {
       fundWalletScheduled(formdata)

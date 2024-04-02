@@ -90,11 +90,15 @@ const TransactionHistoryTable = () => {
       },
     },
     {
+      title: "Type",
+      dataIndex: "type",
+      sorter: true,
+    },
+    {
       title: "Amount",
       dataIndex: "amount",
       sorter: true,
     },
-
     {
       title: "Action",
       dataIndex: "id",
