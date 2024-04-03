@@ -92,7 +92,7 @@ const DataTopupModal: React.FC<Props> = ({ provider }) => {
         .then((res) => {
           setFormdata(initialState);
           handleCancel();
-          message.success("airtime wallet funded succesfully");
+          message.success("data wallet funded succesfully");
         })
         .catch((err) => {});
     }

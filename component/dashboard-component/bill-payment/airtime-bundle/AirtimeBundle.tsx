@@ -131,7 +131,7 @@ const AirtimeBundle = () => {
           ) : (
             <p className="text-[30px] font-semibold">
               {Number(
-                analytics?.data?.analytics?.sent?.total || 0
+                analytics?.data?.analytics?.sold?.total || 0
               ).toLocaleString()}
             </p>
           )}
