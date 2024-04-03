@@ -47,11 +47,11 @@ const PayrollTable = () => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <Link href={`/payroll/${id}`}>preview</Link>,
+      label: <Link href={`/payroll/preview?id=${id}`}>preview</Link>,
     },
     {
       key: "2",
-      label: <Link href={`/payroll/${id}/update`}>update</Link>,
+      label: <Link href={`/payroll/update?id=${id}`}>update</Link>,
     },
     {
       key: "3",

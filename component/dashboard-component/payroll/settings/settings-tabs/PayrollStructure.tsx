@@ -86,7 +86,7 @@ const PayrollStructure = ({
         })
           .unwrap()
           .then((res) => {
-            push(`/payroll/${res?.data?.id}`);
+            push(`/payroll/preview?id=${res?.data?.id}`);
             message.success("Payroll updated successfully");
           })
           .catch((err) => {
@@ -100,7 +100,7 @@ const PayrollStructure = ({
         })
           .unwrap()
           .then((res) => {
-            push(`/payroll/${res?.data?.id}`);
+            push(`/payroll/preview?id=${res?.data?.id}`);
             message.success("Payroll created successfully");
             setFormData(initialState);
           })

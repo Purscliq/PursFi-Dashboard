@@ -80,7 +80,11 @@ const PayrollSetup = ({
             picker="date"
           />
           <TimePicker
-            value={dayjs(formData?.payoutTime, "HH:mm")}
+            value={
+              formData?.payoutTime
+                ? dayjs(formData?.payoutTime, "HH:mm")
+                : undefined
+            }
             format={"HH:mm"}
             onChange={(value, time) => {
               setFormData((prev) => ({ ...prev, payoutTime: time }));

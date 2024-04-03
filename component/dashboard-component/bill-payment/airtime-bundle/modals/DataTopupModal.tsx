@@ -42,7 +42,7 @@ const amount: any = 0;
 const scheduleDate: any = "";
 const scheduleTime: any = "";
 const initialState = {
-  product: "airtime",
+  product: "data",
   provider: "",
   paymentType: "",
   amount,

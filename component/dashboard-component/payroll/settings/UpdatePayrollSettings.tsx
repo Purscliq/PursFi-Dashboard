@@ -1,6 +1,9 @@
+"use client";
 import UpdateSettingsTabs from "./settings-tabs/UpdateSettingsTabs";
+import { useSearchParams } from "next/navigation";
 
-const UpdatePayrollSettings = ({ id }: { id: string }) => {
+const UpdatePayrollSettings = () => {
+  const params = useSearchParams();
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8">
       <header className="flex flex-col space-y-3 my-1">
@@ -14,7 +17,7 @@ const UpdatePayrollSettings = ({ id }: { id: string }) => {
       </header>
       <div className="bg-white p-2 rounded-md">
         {" "}
-        <UpdateSettingsTabs id={id} />
+        <UpdateSettingsTabs id={params.get("id")!} />
       </div>
     </div>
   );

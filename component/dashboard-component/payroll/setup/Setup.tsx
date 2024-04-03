@@ -10,8 +10,10 @@ import DateAndStructureTabs from "./basic-details/DateAndStructureTabs";
 import EmployeesAndContractors from "./members/EmployeesAndContractors";
 import PayrollSettings from "../settings/PayrollSettings";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Welcome = () => {
+  const { push } = useRouter();
   return (
     <section className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA] text-black">
       <div className="px-4 py-6 bg-payroll-pattern bg-white grid grid-cols-8 gap-4">
@@ -31,7 +33,7 @@ const Welcome = () => {
               ?
             </p>
             <Link
-              href="/payroll-setup?step=2"
+              href="/payroll-settings"
               className="text-[16px] font-bold underline py-1 text-[#181336]"
             >
               Need help with the Setup?
@@ -49,7 +51,7 @@ const Welcome = () => {
               </p>
             </span>
             <Link
-              href="/payroll-setup?step=2"
+              href="/payroll-settings"
               className="flex justify-between gap-4"
             >
               <span className="flex gap-4">
@@ -61,7 +63,7 @@ const Welcome = () => {
               <BiChevronRight className="text-[#181336] w-6 h-6" />
             </Link>
             <Link
-              href="/payroll-setup?step=2"
+              href="/payroll-settings"
               className="flex justify-between gap-4"
             >
               <span className="flex gap-4">
@@ -83,7 +85,7 @@ const Welcome = () => {
               </p>
             </span>
             <Link
-              href="/payroll-setup?step=2"
+              href="/payroll-settings"
               className="flex justify-between gap-4"
             >
               <span className="flex gap-4">
@@ -107,8 +109,7 @@ const Setup = () => {
   const params = useSearchParams();
   return (
     <section className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA] text-black">
-      {params.get("step") === "1" && <Welcome />}
-      {params.get("step") === "2" && <PayrollSettings />}
+      <Welcome />
     </section>
   );
 };

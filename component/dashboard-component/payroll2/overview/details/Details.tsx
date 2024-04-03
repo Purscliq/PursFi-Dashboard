@@ -13,10 +13,12 @@ import {
   useTogglePayrollMutation,
 } from "@/services/payrollService";
 import { useAppSelector } from "@/store/hooks";
+import { useSearchParams } from "next/navigation";
 
-const Details = ({ id }: { id: string }) => {
+const Details = () => {
+  const params = useSearchParams();
   const { push } = useRouter();
-  const { data, isLoading } = useGetSinglePayrollQuery(id);
+  const { data, isLoading } = useGetSinglePayrollQuery(params.get("id"));
   const [togglePayroll, { isLoading: isTogglingPayroll }] =
     useTogglePayrollMutation();
   const profile = useAppSelector((store) => store?.user?.user);
@@ -44,7 +46,7 @@ const Details = ({ id }: { id: string }) => {
             loading={isTogglingPayroll}
             onChange={() => {
               togglePayroll({
-                payrollId: id,
+                payrollId: params.get("id"),
                 businessId: profile?.businessId,
               });
             }}
@@ -67,7 +69,7 @@ const Details = ({ id }: { id: string }) => {
                 <Button
                   className="!flex !m-auto !items-center !border-0"
                   icon={<AddIcon />}
-                  onClick={() => push(`/add-payroll/${id}`)}
+                  onClick={() => push(`/add-member/${params.get("id")}`)}
                 />
               </span>
             </span>
@@ -98,7 +100,7 @@ const Details = ({ id }: { id: string }) => {
           </span>
         </div> */}
         <div>
-          <DetailsTab id={id} />
+          <DetailsTab id={params.get("id")!} />
         </div>
       </div>
     </section>

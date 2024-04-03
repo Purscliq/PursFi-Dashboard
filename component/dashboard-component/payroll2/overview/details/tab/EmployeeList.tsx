@@ -157,7 +157,6 @@ const EmployeeList = ({
               onClick={() => {
                 setBenId(id);
                 setOpen(true);
-                
               }}
             >
               View details{" "}
@@ -179,7 +178,7 @@ const EmployeeList = ({
         <Select placeholder="Status" id="select" className="!w-[10rem]" />
         <div className="flex justify-end w-full cursor-pointer space-x-5">
           <button
-            onClick={() => push("/add-payroll?type=employee")}
+            onClick={() => push(`/add-member?type=employee&id=${id}`)}
             className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
           >
             + Add Member

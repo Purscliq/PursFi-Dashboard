@@ -179,7 +179,7 @@ const Contractor = ({
         <Select placeholder="Status" id="select" className="!w-[10rem]" />
         <div className="flex justify-end w-full cursor-pointer space-x-5">
           <button
-            onClick={() => push("/add-payroll?type=contractor")}
+            onClick={() => push(`/add-member?type=contractor&id=${id}`)}
             className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
           >
             + Add Member
