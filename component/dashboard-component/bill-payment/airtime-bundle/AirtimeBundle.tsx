@@ -81,12 +81,12 @@ const AirtimeBundle = () => {
             </p>
           </span>
           <div className="flex justify-end items-center space-x-5">
-            <button
+            {/* <button
               onClick={() => push("/quick-service")}
               className="btn btn-md border flex items-center bg-[#000] text-sm normal-case text-white hover:bg-[#000]"
             >
               + Quick Service
-            </button>
+            </button> */}
 
             <Select
               className="!w-full !h-[3rem]"
