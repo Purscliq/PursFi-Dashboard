@@ -133,7 +133,12 @@ const MakePayment = ({ id }: { id: number }) => {
       if (!formdata?.plan) {
         message.error("please select plan");
       }
-      sellData({ ...formdata, product: productType })
+      sellData({
+        ...formdata,
+        product: productType,
+        businessId: profile?.id,
+        provider: id,
+      })
         .unwrap()
         .then((res) => {
           message.success("Transaction successful");
@@ -142,15 +147,18 @@ const MakePayment = ({ id }: { id: number }) => {
         })
         .catch((err) => {
           message.error(err?.data?.responseDescription || "Transaction failed");
-          setFormdata({ ...initialState });
-          setSelectedOption(options[0].value);
         });
     }
     if (productType === "airtime") {
       if (!formdata?.amount) {
         message.error("please input amount");
       }
-      sellAirtime({ ...formdata, product: productType })
+      sellAirtime({
+        ...formdata,
+        product: productType,
+        businessId: profile?.id,
+        provider: id,
+      })
         .unwrap()
         .then((res) => {
           message.success("Transaction successful");
@@ -159,8 +167,6 @@ const MakePayment = ({ id }: { id: number }) => {
         })
         .catch((err) => {
           message.error(err?.data?.responseDescription || "Transaction failed");
-          setFormdata({ ...initialState });
-          setSelectedOption(options[0].value);
         });
     }
   };

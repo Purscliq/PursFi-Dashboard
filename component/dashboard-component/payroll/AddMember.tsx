@@ -24,6 +24,7 @@ import PhoneInput from "react-phone-input-2";
 import { useAppSelector } from "@/store/hooks";
 import "react-phone-input-2/lib/style.css";
 import dayjs, { Dayjs } from "dayjs";
+import { useSearchParams } from "next/navigation";
 
 const employeeOptions = [
   {
@@ -73,7 +74,8 @@ const initialState = {
   state: "",
   businessId: "",
 };
-const AddMember = ({ id }: { id: number }) => {
+const AddMember = () => {
+  const params = useSearchParams();
   const { back } = useRouter();
   const profile = useAppSelector((store) => store?.user?.user);
   const { data } = useGetBanksQuery({});
@@ -81,7 +83,6 @@ const AddMember = ({ id }: { id: number }) => {
   const [createBeneficiary, { isLoading }] = useCreateBeneficiariesMutation();
   const [formData, setFormData] = useState({
     ...initialState,
-    payrollId: id,
     businessId: profile?.businessId,
   });
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -91,7 +92,11 @@ const AddMember = ({ id }: { id: number }) => {
   const onFormSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     if (formData.type && formData.hiredDate) {
-      createBeneficiary({ ...formData, salary: formData.salary.toString() })
+      createBeneficiary({
+        ...formData,
+        salary: formData.salary.toString(),
+        payrollId: params.get("id"),
+      })
         .unwrap()
         .then((res) => {
           message.success("beneficiary created successfully");
