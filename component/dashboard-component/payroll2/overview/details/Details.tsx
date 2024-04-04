@@ -69,7 +69,7 @@ const Details = () => {
                 <Button
                   className="!flex !m-auto !items-center !border-0"
                   icon={<AddIcon />}
-                  onClick={() => push(`/add-member/${params.get("id")}`)}
+                  onClick={() => push(`/add-member?id=${params.get("id")}`)}
                 />
               </span>
             </span>

@@ -305,7 +305,11 @@ const AddMember = () => {
               onChange={(_, date) => {
                 setFormData((prev) => ({ ...prev, hiredDate: date as string }));
               }}
-              value={dayjs(formData?.hiredDate) as Dayjs}
+              value={
+                formData?.hiredDate
+                  ? (dayjs(formData?.hiredDate) as Dayjs)
+                  : undefined
+              }
               className="!w-full"
               placeholder="Hire Date"
             />
