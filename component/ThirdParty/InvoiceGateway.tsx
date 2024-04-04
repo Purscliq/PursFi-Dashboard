@@ -203,7 +203,9 @@ const InvoiceGateway = () => {
           </div> */}
             </main>
             <footer className="py-4 px-8 bg-white flex justify-end items-center gap-1 sticky bottom-0">
-              <Button onClick={() => window.print()}>Download Invoice</Button>
+              <Button className="no-print" onClick={() => window.print()}>
+                Download Invoice
+              </Button>
               <Button
                 onClick={() => {
                   if (data?.data?.status === "overdue") {
