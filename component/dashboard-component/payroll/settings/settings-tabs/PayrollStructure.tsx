@@ -91,6 +91,7 @@ const PayrollStructure = ({
           })
           .catch((err) => {
             console.log(err);
+            message.error(err?.data?.responseDescription || "an error occured");
           });
       } else
         createPayroll({
@@ -105,7 +106,7 @@ const PayrollStructure = ({
             setFormData(initialState);
           })
           .catch((err) => {
-            console.log(err);
+            message.error(err?.data?.responseDescription || "an error occured");
           });
     }
   };

@@ -32,7 +32,7 @@ const SettingsTabs = () => {
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: "Payroll Setup",
+      label: <div onClick={() => setActiveKey(1)}>Payroll Setup</div>,
       children: (
         <PayrollSetup
           formData={formData}
@@ -43,7 +43,7 @@ const SettingsTabs = () => {
     },
     {
       key: "2",
-      label: "Salary Structure",
+      label: <div onClick={() => setActiveKey(2)}>Salary Structure</div>,
       children: (
         <PayrollStructure
           formData={formData}

@@ -8,6 +8,7 @@ import {
 import { dataType } from "./SettingsTabs";
 import { FormEventHandler } from "react";
 import dayjs from "dayjs";
+import { message } from "antd";
 
 const payrollOptions = [
   { label: "Automatically run Payroll on selected date", value: true },
@@ -24,8 +25,10 @@ const PayrollSetup = ({
 }) => {
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    if (formData.payoutDate && formData?.payoutTime) {
+    if (formData.payoutDate) {
       setActiveKey(2);
+    } else {
+      message.error("provide payout date");
     }
   };
   return (
