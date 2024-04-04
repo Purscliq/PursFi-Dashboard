@@ -106,10 +106,30 @@ const PayrollTable = () => {
       width: "10%",
       render: (id: any, record: DataType) => {
         return (
-          <Dropdown menu={{ items }} trigger={["click"]}>
-            <span onClick={() => setId(id)} className="cursor-pointer">
-              ...
-            </span>
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  key: "1",
+                  label: (
+                    <Link href={`/payroll-preview?id=${id}`}>preview</Link>
+                  ),
+                },
+                {
+                  key: "2",
+                  label: <Link href={`/payroll-update?id=${id}`}>update</Link>,
+                },
+                {
+                  key: "3",
+                  label: <span>delete</span>,
+                  danger: true,
+                  onClick: () => setOpen(true),
+                },
+              ],
+            }}
+            trigger={["click"]}
+          >
+            <span className="cursor-pointer">...</span>
           </Dropdown>
         );
       },
