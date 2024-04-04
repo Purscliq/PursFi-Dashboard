@@ -53,7 +53,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                   data?.data?.transactionType
                 )}`}
               >
-                {data?.data?.transactionType === "debit" ? "-" : "+"}
+                &#8358;{data?.data?.transactionType === "debit" ? "-" : "+"}
                 {data?.data?.amount}
               </h1>
               <p className="text-slate-700 mt-3 uppercase">
@@ -65,7 +65,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
               <div className="grid grid-cols-[40%_60%] gap-y-4 gap-x-[1%] px-[1%]">
                 <div className="text-slate-500 pr-2">Amount :</div>
                 <div className="leading-tight font-semibold">
-                  {data?.data?.amount}
+                  &#8358;{data?.data?.amount}
                 </div>
                 <div className="text-slate-500 pr-2">Date:</div>
                 <div className="leading-tight font-semibold">

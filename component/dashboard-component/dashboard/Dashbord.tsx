@@ -65,7 +65,7 @@ const Dashbord = () => {
                 <Arrowleft />
               </div>
               <p className="text-2xl font-semibold">
-                N
+              &#8358;
                 {Number(data?.wallet?.walletBalance || 0).toLocaleString(
                   "en-US"
                 )}
@@ -80,7 +80,7 @@ const Dashbord = () => {
                 <ArrowRight />
               </div>
               <p className="text-2xl font-semibold">
-                N
+              &#8358;
                 {Number(analysis?.data?.todayBalance || 0).toLocaleString(
                   "en-US"
                 )}
@@ -127,7 +127,7 @@ const Dashbord = () => {
                   {status?.data?.upcomingPaymentCount}
                 </p>
                 <p className="text-2xl font-semibold">
-                  N
+                &#8358;
                   {Number(
                     status?.data?.totalUpcomingPayment || 0
                   ).toLocaleString("en-US")}
@@ -166,7 +166,7 @@ const Dashbord = () => {
                   <p>Cash Inflow</p>
                 </span>
                 <p className="text-xl font-semibold">
-                  N
+                &#8358;
                   {Number(status?.data?.cashInflow || 0).toLocaleString(
                     "en-US"
                   )}
@@ -213,7 +213,7 @@ const Dashbord = () => {
                   <p>Cash Outflow</p>
                 </span>
                 <p className="text-xl font-semibold">
-                  N
+                &#8358;
                   {Number(status?.data?.cashOutflow || 0).toLocaleString(
                     "en-US"
                   )}

@@ -72,7 +72,7 @@ const TransactionReceipt = () => {
                     <h6 className="text-[#515B6F] text-[16px] font-[400]">
                       Ref Number
                     </h6>
-                    <p className="text-[#000000] text-[16px] font-[400]">
+                    <p className="text-[#000000] text-[16px] font-[400] break-words">
                       {data?.data?.reference}
                     </p>
                   </span>
@@ -111,7 +111,7 @@ const TransactionReceipt = () => {
                         ? "Sender Name"
                         : "Recipient Name"}
                     </h6>
-                    <p className="text-[#000000] text-[16px] font-[400]">
+                    <p className="text-[#000000] text-[16px] font-[400] break-words">
                       {data?.data?.accountName}
                     </p>
                   </span>

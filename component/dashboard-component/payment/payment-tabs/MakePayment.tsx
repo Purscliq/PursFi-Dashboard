@@ -60,9 +60,9 @@ const days = [
   "Sunday",
 ];
 const amount: any = "";
+const hour: any = "";
 const day: any = "";
 const month: any = "";
-const hour: any = "";
 const initialState = {
   amount: amount,
   bankName: "",
