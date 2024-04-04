@@ -98,6 +98,9 @@ const TransactionHistoryTable = () => {
       title: "Amount",
       dataIndex: "amount",
       sorter: true,
+      render: (amount: string) => (
+        <p>&#8358;{Number(amount || 0).toLocaleString()}</p>
+      ),
     },
     {
       title: "Action",

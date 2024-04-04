@@ -106,6 +106,7 @@ const AirtimeBundle = () => {
             <span className="loading loading-dots loading-xs"></span>
           ) : (
             <p className="text-[30px] font-semibold">
+              &#8358;
               {Number(
                 analytics?.data?.analytics?.sold?.airtime || 0
               ).toLocaleString()}
@@ -118,6 +119,7 @@ const AirtimeBundle = () => {
             <span className="loading loading-dots loading-xs"></span>
           ) : (
             <p className="text-[30px] font-semibold">
+              &#8358;
               {Number(
                 analytics?.data?.analytics?.sold?.data || 0
               ).toLocaleString()}
@@ -130,6 +132,7 @@ const AirtimeBundle = () => {
             <span className="loading loading-dots loading-xs"></span>
           ) : (
             <p className="text-[30px] font-semibold">
+              &#8358;
               {Number(
                 analytics?.data?.analytics?.sold?.total || 0
               ).toLocaleString()}
@@ -142,6 +145,7 @@ const AirtimeBundle = () => {
             <span className="loading loading-dots loading-xs"></span>
           ) : (
             <p className="text-[30px] font-semibold">
+              &#8358;
               {Number(analytics?.data?.analytics?.profit || 0).toLocaleString()}
             </p>
           )}
@@ -175,7 +179,10 @@ const AirtimeBundle = () => {
                   </p>
                   <span className="flex  justify-between gap-4">
                     <p className="text-black font-semibold text-[16px]">
-                      {item?.airtime?.totalAirtime}
+                      &#8358;
+                      {Number(
+                        item?.airtime?.totalAirtime || 0
+                      ).toLocaleString()}
                     </p>
                     {/* <AirtimeTopupModal /> */}
                     <AirtimeTopupModal
@@ -189,7 +196,8 @@ const AirtimeBundle = () => {
                   </p>
                   <span className="flex justify-between gap-4">
                     <p className="text-black font-semibold text-[16px]">
-                      {item?.data?.totalData}
+                      &#8358;
+                      {Number(item?.data?.totalData || 0).toLocaleString()}
                     </p>
                     {/* <DataTopupModal /> */}
                     <DataTopupModal

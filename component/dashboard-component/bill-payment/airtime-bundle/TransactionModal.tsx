@@ -35,7 +35,7 @@ const TransactionModal = ({
             <p className="text-slate-500 ">Amount :</p>
             <p className="leading-tight font-semibold">
               {data?.data[0]?.type === "buy" ? "+" : "-"}
-              {data?.data[0]?.amount}
+              &#8358;{Number(data?.data[0]?.amount || 0).toLocaleString()}
             </p>
           </span>
           <span className="flex justify-between items-center">
