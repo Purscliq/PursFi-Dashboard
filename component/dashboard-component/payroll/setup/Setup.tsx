@@ -23,9 +23,7 @@ const Welcome = () => {
           </p>
           <div className="p-4 pt-16 bg-white shadow-md rounded-md w-max mt-6">
             <p className="max-w-sm">
-              Lorem ipsum dolor sit amet consectetur. Purus odio molestie nunc
-              donec nisl sit. Vitae ante consequat magna suspendisse a vel
-              porttitor. Nisl sit et non nulla. Ridiculus diam enim placerat.
+            Payroll Precision: Balancing Compliance and Compassion for Your Team,  Charting the Course for Employee Financial Success and Find How Payroll Fuels Organizational Success.
             </p>
           </div>
           <span className="flex gap-4">
