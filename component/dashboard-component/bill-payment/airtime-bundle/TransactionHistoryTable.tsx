@@ -77,7 +77,7 @@ const TransactionHistoryTable = () => {
       sorter: true,
       render: (status: string) => {
         let colorClass = "";
-        if (status === "Successful") {
+        if (status === "Success") {
           colorClass = "text-[#1AD48D] bg-[#1AD48D1A]"; // Green color for successful status
         } else if (status === "Failed") {
           colorClass = "text-red-600 bg-red-600/10"; // Red color for failed status

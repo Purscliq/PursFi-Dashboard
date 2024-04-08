@@ -133,8 +133,8 @@ const UpdateRoleModal = ({
           Edit Roles and Permission
         </h2>
         <p className="text-sm text-gray-500 text-center">
-          Lorem ipsum dolor sit amet consectetur. Sollicitudin mauris sit
-          egestas gravida nisl nunc diam libero amet. Aliquam nunc.
+          Customize the permissions and access levels for this role and save to
+          apply.
         </p>
         <form
           onSubmit={onFormSubmit}

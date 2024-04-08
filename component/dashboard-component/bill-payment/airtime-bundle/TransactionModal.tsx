@@ -69,12 +69,17 @@ const TransactionModal = ({
             </p>
           </span>
           <div className="border border-gray-200"></div>
-          <Button className="!h-[3rem] !bg-black w-full text-white hover:!text-white">
+          <Button
+            onClick={() => {
+              window.open(`/receipt?bill=${id}`, "_blank");
+            }}
+            className="!h-[3rem] !bg-black w-full !text-white hover:!text-white"
+          >
             Download Reciept
           </Button>
-          <Button className="!h-[3rem] !bg-transparent w-full">
+          {/* <Button className="!h-[3rem] !bg-transparent w-full">
             Report Transaction
-          </Button>
+          </Button> */}
         </div>
       )}
     </Modal>

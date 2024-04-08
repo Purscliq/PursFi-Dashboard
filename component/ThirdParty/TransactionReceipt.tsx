@@ -7,13 +7,31 @@ import { message } from "antd";
 import { CustomButton as Button } from "@/lib/AntdComponents";
 import { useSearchParams } from "next/navigation";
 import { useLazyGetSingleTransactionQuery } from "@/services/transactionService";
+import { useLazyGetBillPaymentTransactionDetailsQuery } from "@/services/bill-payment";
 
 const TransactionReceipt = () => {
   const params = useSearchParams();
   const [fetchTransaction, { isLoading, data, isUninitialized }] =
     useLazyGetSingleTransactionQuery();
+  const [
+    fetchBillPaymentTransaction,
+    {
+      data: bill,
+      isLoading: isLoadingBill,
+      isUninitialized: billUninitialized,
+    },
+  ] = useLazyGetBillPaymentTransactionDetailsQuery();
   useEffect(() => {
-    if (params.get("reference")) {
+    if (params.get("bill")) {
+      fetchBillPaymentTransaction({ id: params.get("bill") })
+        .unwrap()
+        .catch((err) => {
+          message.error(
+            JSON.parse(err?.data?.responseDescription)?.message ||
+              "something went wrong"
+          );
+        });
+    } else if (params.get("reference")) {
       fetchTransaction(params.get("reference"))
         .unwrap()
         .catch((err) => {
@@ -23,10 +41,11 @@ const TransactionReceipt = () => {
           );
         });
     }
-  }, [params]);
+  }, [params.get("reference"), params.get("bill")]);
   return (
     <>
-      {isLoading || isUninitialized ? (
+      {(isLoading || isUninitialized) &&
+      (isLoadingBill || billUninitialized) ? (
         <div className="relative h-screen flex items-center justify-center bg-[#FAFAFA]">
           <div className="fixed top-0 left-0 px-6 py-4">
             <Image src={logo} alt="logo" className="w-28 h-28" />
@@ -64,7 +83,11 @@ const TransactionReceipt = () => {
                   </h3>
                   <h2 className="text-[25px] font-[700] text-[#000000] text-center">
                     NGN{" "}
-                    {Number(data?.data?.amount || 0).toLocaleString("en-US")}
+                    {params.get("bill")
+                      ? Number(bill?.data[0]?.amount || 0).toLocaleString(
+                          "en-US"
+                        )
+                      : Number(data?.data?.amount || 0).toLocaleString("en-US")}
                   </h2>
                 </span>
                 <span className="grid grid-cols-2 gap-[0.5rem] justify-between items-stretch">
@@ -73,7 +96,9 @@ const TransactionReceipt = () => {
                       Ref Number
                     </h6>
                     <p className="text-[#000000] text-[16px] font-[400] break-words">
-                      {data?.data?.reference}
+                      {params.get("bill")
+                        ? bill?.data[0]?.reference
+                        : data?.data?.reference}
                     </p>
                   </span>
                   <span className="rounded-[8px] border border-[#E9EBEB] p-[0.5rem] flex flex-col">
@@ -81,18 +106,35 @@ const TransactionReceipt = () => {
                       Payment Time
                     </h6>
                     <p className="text-[#000000] text-[16px] font-[400]">
-                      {`${new Date(
-                        data?.data?.createdAt
-                      ).getDate()} ${new Intl.DateTimeFormat("en", {
-                        month: "short",
-                      }).format(new Date(data?.data?.createdAt))} ${new Date(
-                        data?.data?.createdAt
-                      ).getFullYear()}, ${new Date(
-                        data?.data?.createdAt
-                      ).getHours()}:${new Date(data?.data?.createdAt)
-                        .getMinutes()
-                        .toString()
-                        .padStart(2, "0")}`}
+                      {params.get("bill")
+                        ? `${new Date(
+                            bill?.data[0]?.createdAt
+                          ).getDate()} ${new Intl.DateTimeFormat("en", {
+                            month: "short",
+                          }).format(
+                            new Date(bill?.data[0]?.createdAt)
+                          )} ${new Date(
+                            bill?.data[0]?.createdAt
+                          ).getFullYear()}, ${new Date(
+                            bill?.data[0]?.createdAt
+                          ).getHours()}:${new Date(bill?.data[0]?.createdAt)
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}`
+                        : `${new Date(
+                            data?.data?.createdAt
+                          ).getDate()} ${new Intl.DateTimeFormat("en", {
+                            month: "short",
+                          }).format(
+                            new Date(data?.data?.createdAt)
+                          )} ${new Date(
+                            data?.data?.createdAt
+                          ).getFullYear()}, ${new Date(
+                            data?.data?.createdAt
+                          ).getHours()}:${new Date(data?.data?.createdAt)
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}`}
                     </p>
                   </span>
                   <span className="rounded-[8px] border border-[#E9EBEB] p-[0.5rem] flex flex-col">
@@ -100,19 +142,28 @@ const TransactionReceipt = () => {
                       Payment Method
                     </h6>
                     <p className="text-[#000000] text-[16px] font-[400]">
-                      {data?.data?.type === "banktransfer"
+                      {params.get("bill")
+                        ? bill?.data[0]?.type === "sell"
+                          ? `${bill?.data[0]?.model?.product} Purchase`
+                          : `${bill?.data[0]?.model?.product} Wallet Funding`
+                        : data?.data?.type === "banktransfer"
                         ? "Bank Transfer"
                         : "Bank Transfer"}
                     </p>
                   </span>
                   <span className="rounded-[8px] border border-[#E9EBEB] p-[0.5rem] flex flex-col">
                     <h6 className="text-[#515B6F] text-[16px] font-[400]">
-                      {data?.data?.transactionType === "credit"
+                      {params.get("bill")
+                        ? `${bill?.data[0]?.model?.product} Wallet`
+                        : data?.data?.transactionType === "credit"
                         ? "Sender Name"
                         : "Recipient Name"}
                     </h6>
                     <p className="text-[#000000] text-[16px] font-[400] break-words">
-                      {data?.data?.accountName}
+                      {params.get("bill")
+                        ? bill?.data[0]?.model?.phone ||
+                          `${bill?.data[0]?.model?.product}Wallet`
+                        : data?.data?.accountName}
                     </p>
                   </span>
                 </span>

@@ -107,7 +107,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
             <div className="my-6 space-y-4">
               <Button
                 type="primary"
-                className="!h-[3rem] !bg-[#000] w-full text-white hover:!text-white"
+                className="!h-[3rem] !bg-[#000] w-full !text-white hover:!text-white"
                 onClick={() => {
                   window.open(
                     `/receipt?reference=${data?.data?.reference}`,
