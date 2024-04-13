@@ -51,22 +51,9 @@ const PayrollStructure = ({
             tax: "Yes",
           },
           {
-            key: 1,
-            name: "HRA",
-            percentage: 25,
-            tax: "Yes",
-          },
-          {
-            key: 2,
-            name: "LTA",
-            percentage: 15,
-            tax: "Yes",
-          },
-          {
             key: 3,
             name: "Special Allowance",
             percentage: 10,
-            tax: "Yes",
           },
         ]
   );

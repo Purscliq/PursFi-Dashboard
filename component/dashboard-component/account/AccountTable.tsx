@@ -182,7 +182,7 @@ const AccountTable = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [JSON.stringify(tableParams)]);
+  }, [tableParams.pagination?.current]);
   useEffect(() => {
     fetchTransactions({
       ...tableFilter,
@@ -210,9 +210,6 @@ const AccountTable = () => {
       ...prev,
       pagination,
     }));
-    // if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-    //   setData([]);
-    // }
   };
 
   return (

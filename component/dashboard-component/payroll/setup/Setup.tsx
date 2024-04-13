@@ -23,7 +23,9 @@ const Welcome = () => {
           </p>
           <div className="p-4 pt-16 bg-white shadow-md rounded-md w-max mt-6">
             <p className="max-w-sm">
-            Payroll Precision: Balancing Compliance and Compassion for Your Team,  Charting the Course for Employee Financial Success and Find How Payroll Fuels Organizational Success.
+              Payroll Precision: Balancing Compliance and Compassion for Your
+              Team, Charting the Course for Employee Financial Success and Find
+              How Payroll Fuels Organizational Success.
             </p>
           </div>
           <span className="flex gap-4">
@@ -53,7 +55,9 @@ const Welcome = () => {
               className="flex justify-between gap-4"
             >
               <span className="flex gap-4">
-                <p className="text-[16px] p-1.5 flex justify-center items-center w-[24px] h-[24px] rounded-full border border-[#181336] font-medium text-[#181336]"></p>
+                <p className="text-[16px] p-1.5 flex justify-center items-center w-[24px] h-[24px] rounded-full border border-[#181336] font-medium text-[#181336]">
+                  1
+                </p>
                 <p className="text-[16px] font-medium text-[#181336]">
                   Set up payroll date
                 </p>

@@ -176,6 +176,7 @@ const MakePayment = () => {
         businessId: profile?.businessId,
         active: true,
         automatic: true,
+        min: formdata?.hour?.split(":")[1],
         hour: formdata?.hour?.split(":")[0],
         day: formdata?.day?.split("-")[2],
         month: months[Number(formdata?.month?.split("-")[1]) - 1],

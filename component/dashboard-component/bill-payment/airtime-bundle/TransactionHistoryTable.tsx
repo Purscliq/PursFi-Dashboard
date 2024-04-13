@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   CustomTable as Table,
   CustomSelect as Select,
@@ -11,6 +11,7 @@ import {
   useLazyGetBillPaymentTransactionsQuery,
   useGetBillPaymentTransactionsQuery,
 } from "@/services/bill-payment";
+import { TablePaginationConfig } from "antd";
 
 interface DataType {
   key: string;
@@ -20,38 +21,47 @@ interface DataType {
   status: string;
   amount: string;
 }
-
-const data: DataType[] = [
-  {
-    key: "1",
-    date: "13 July, 2021",
-    serviceType: "MTN",
-    product: "Airtime",
-    status: "Successful",
-    amount: "N44,345.00",
-  },
-  {
-    key: "2",
-    date: "13 July, 2021",
-    serviceType: "GLO",
-    product: "Data bundle",
-    status: "Failed",
-    amount: "N44,345.00",
-  },
-  {
-    key: "3",
-    date: "13 July, 2021",
-    serviceType: "MTN",
-    product: "Airtime",
-    status: "Successful",
-    amount: "N44,345.00",
-  },
-];
+export interface TableParams {
+  pagination?: TablePaginationConfig;
+}
 
 const TransactionHistoryTable = () => {
-  const { data, isLoading } = useGetBillPaymentTransactionsQuery({});
+  const [fetchTransactions, { isLoading, data }] =
+    useLazyGetBillPaymentTransactionsQuery();
   const [open, setOpen] = useState(false);
   const [id, setId] = useState("");
+  const [tableParams, setTableParams] = useState<TableParams>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  });
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    setTableParams((prev) => ({
+      ...prev,
+      pagination,
+    }));
+  };
+  useEffect(() => {
+    fetchTransactions({
+      page: tableParams?.pagination?.current,
+    })
+      .unwrap()
+      .then((res) => {
+        console.log(res?.data.total);
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams?.pagination,
+            total: res?.data.total,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [tableParams.pagination?.current]);
+
   const columns = [
     {
       title: "Date",
@@ -156,6 +166,8 @@ const TransactionHistoryTable = () => {
           loading={isLoading}
           columns={columns}
           dataSource={data?.data?.data || []}
+          pagination={tableParams.pagination}
+          onChange={handleTableChange}
         />
       </div>
       <TransactionModal id={id} open={open} setOpen={setOpen} />

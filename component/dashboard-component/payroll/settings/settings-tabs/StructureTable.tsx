@@ -163,7 +163,6 @@ const StructureTable = ({
 
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
-    console.log(dataSource);
     setDataSource(newData);
   };
 
@@ -187,7 +186,7 @@ const StructureTable = ({
     {
       title: "Taxable",
       dataIndex: "tax",
-      editable: true,
+      editable: false,
       dataType: "select",
     },
     {
@@ -208,13 +207,12 @@ const StructureTable = ({
       key: count,
       name: "Enter Structure Title",
       percentage: 0,
-      tax: "Yes",
+      tax: "No",
     };
     const percentage = dataSource.reduce(
       (acc, curr) => acc + curr.percentage,
       0
     );
-    console.log(percentage);
     if (percentage + newData.percentage >= 100) {
       message.error("Total percentage cannot exceed 100%");
       return;

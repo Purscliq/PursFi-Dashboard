@@ -11,14 +11,28 @@ const billPaymentSlice = ApiSlice.enhanceEndpoints({
       providesTags: ["transaction"],
     }),
     getBillPaymentTransactions: builder.query({
-      query: () => ({
+      query: ({ product, paymentMethod, type, status, page }) => ({
         url: "billpayment/transactions/all",
+        params: {
+          paymentMethod,
+          type,
+          status,
+          product,
+          page,
+        },
       }),
       providesTags: ["transaction"],
     }),
     getBillPaymentRecurringTransactions: builder.query({
-      query: () => ({
+      query: ({ product, paymentMethod, type, status, page }) => ({
         url: "billpayment/transactions/recurring",
+        params: {
+          paymentMethod,
+          type,
+          status,
+          product,
+          page,
+        },
       }),
     }),
     getBillPaymentTransactionDetails: builder.query({
