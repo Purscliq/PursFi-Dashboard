@@ -9,11 +9,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import RemitaTable from "./RemitaTable";
 import ComingSoon from "@/component/modals/ComingSoon";
+import { useGetCategoriesQuery } from "@/services/remitaService";
 
 const Remita = () => {
   const [open, setOpen] = useState(false);
   const date = new Date();
   const route = useRouter();
+  const { data: category, isLoading } = useGetCategoriesQuery({});
   const data = [
     {
       title: "Buy Electricity",
@@ -77,14 +79,19 @@ const Remita = () => {
           </div>
         </header>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-[1.5em] items-center mt-8">
-          {data.map((item, index) => (
+          {category?.data?.map((item: Record<string, any>, index: number) => (
             <div
               key={index}
-              onClick={() => setOpen(true)}
-              className="p-4 bg-white flex items-center space-x-6 justify-center cursor-pointer"
+              onClick={() =>
+                route.push(`/remita-biller?id=${item?.categoryId}`)
+              }
+              className="p-4 bg-white grid grid-cols-[15%_75%] items-center space-x-6 justify-center cursor-pointer justifyaround"
             >
-              {item.icon}
-              <p className="text-[18px]">{item.title}</p>
+              {/* {item.icon} */}
+              <span>
+                <RemitaIcon />
+              </span>
+              <span className="text-[16px] w-full">{item?.categoryName}</span>
             </div>
           ))}
         </div>

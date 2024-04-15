@@ -13,10 +13,17 @@ import {
 import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
 import RemitaCable from "@/assets/icon/RemitaCable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { useSearchParams } from "next/navigation";
+import { useLazyGetBillersByCategoryQuery } from "@/services/remitaService";
 const Cable = () => {
   const { back } = useRouter();
+  const params = useSearchParams();
+  const [getBiller, { isLoading }] = useLazyGetBillersByCategoryQuery();
+  useEffect(() => {
+    if (params.get("id")) getBiller({ categoryId: params.get("id") });
+  }, [params.get("id")]);
   const [selectedOption, setSelectedOption] = useState("");
 
   const options = [
@@ -141,7 +148,6 @@ const Cable = () => {
               name="transactionCategory"
               options={options}
               onChange={(e) => setSelectedOption(e.target.value)}
-
               className="!flex !justify-start !gap-[1rem]"
             />
             {(selectedOption === options[2].value ||
