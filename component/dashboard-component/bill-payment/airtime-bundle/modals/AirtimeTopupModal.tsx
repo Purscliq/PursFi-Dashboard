@@ -72,7 +72,7 @@ const scheduleTime: any = "";
 const initialState = {
   product: "airtime",
   provider: "",
-  paymentType: "",
+  paymentType: options[0]?.value,
   amount,
   businessId: "",
   scheduleDate,
@@ -192,7 +192,7 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
           </span>
           <span className="flex flex-col">
             <label htmlFor="tag">Payment Tag</label>
-            <RadioGroup
+            {/* <RadioGroup
               id="tag"
               name="paymentType"
               onChange={(e) =>
@@ -204,7 +204,7 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
               options={options}
               value={formdata.paymentType}
               className="!flex !justify-between !gap-[4rem]"
-            />
+            /> */}
           </span>
           {(formdata.paymentType === options[2].value ||
             formdata.paymentType === options[1].value) && (
