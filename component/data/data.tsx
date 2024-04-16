@@ -58,6 +58,7 @@ export const sidebarData: MenuProps["items"] = [
         key: "payroll-setup",
       },
     ],
+    disabled: true,
   },
   {
     label: <Link href="/transactions">Transaction</Link>,

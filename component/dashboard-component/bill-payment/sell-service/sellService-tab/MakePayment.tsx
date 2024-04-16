@@ -233,7 +233,7 @@ const MakePayment = ({ id }: { id: number }) => {
           min={50}
         />
       </span>
-      <RadioGroup
+      {/* <RadioGroup
         id="tag"
         name="transactionCategory"
         options={options}
@@ -241,7 +241,7 @@ const MakePayment = ({ id }: { id: number }) => {
         onChange={handleRadioChange}
         defaultValue={options[0].value}
         value={selectedOption}
-      />
+      /> */}
 
       {selectedOption === options[0].value && (
         <>
