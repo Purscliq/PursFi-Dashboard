@@ -1,5 +1,6 @@
 "use client";
 import RemitaIcon from "@/assets/icon/RemitaIcon";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { GrFormPreviousLink } from "react-icons/gr";
 import {
@@ -9,21 +10,67 @@ import {
   CustomRadioGroup as RadioGroup,
   CustomDatePicker as DatePicker,
   CustomTimePicker as TimePicker,
+  CustomInputNumber as InputNumber,
 } from "@/lib/AntdComponents";
 import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
 import RemitaCable from "@/assets/icon/RemitaCable";
-import { useEffect, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
-import { useLazyGetBillersByCategoryQuery } from "@/services/remitaService";
+import {
+  useLazyGetBillersByCategoryQuery,
+  useLazyGetBillerProductsQuery,
+  useMakePaymentMutation,
+} from "@/services/remitaService";
+import { message } from "antd";
+const currentDate = new Date();
+const initialState = {
+  amount: 0,
+  product_id: "",
+  product_name: "",
+  biller_id: "",
+  category_id: "",
+  category_name: "",
+  is_instant: true,
+  is_scheduled: false,
+  is_recurring: false,
+  date: {
+    year: currentDate.getFullYear(),
+    month: currentDate.getMonth() + 1,
+    day: currentDate.getDate(),
+    hour: currentDate.getHours(),
+    minute: currentDate.getMinutes(),
+  },
+  metadata: {
+    customFields: [] as Record<string, any>[],
+  },
+};
 const Cable = () => {
   const { back } = useRouter();
   const params = useSearchParams();
-  const [getBiller, { isLoading }] = useLazyGetBillersByCategoryQuery();
+  const [makePayment, { isLoading: isPaying }] = useMakePaymentMutation();
+  const [formdata, setFormdata] = useState(initialState);
+  const [productFields, setProductFields] = useState<any[]>([]);
+  const [logo, setLogo] = useState("");
+  const [getBiller, { isLoading, data }] = useLazyGetBillersByCategoryQuery();
+  const [getProduct, { isLoading: isLoadingProducts, data: products }] =
+    useLazyGetBillerProductsQuery();
   useEffect(() => {
-    if (params.get("id")) getBiller({ categoryId: params.get("id") });
+    if (params.get("id")) {
+      getBiller({ categoryId: params.get("id") });
+      setFormdata((prev) => ({
+        ...prev,
+        category_id: params.get("id") as string,
+        category_name: params.get("name") as string,
+      }));
+    }
   }, [params.get("id")]);
+  useEffect(() => {
+    if (formdata?.biller_id) {
+      getProduct({ billerId: formdata?.biller_id });
+    }
+  }, [formdata?.biller_id]);
   const [selectedOption, setSelectedOption] = useState("");
 
   const options = [
@@ -31,13 +78,35 @@ const Cable = () => {
     { label: "Schedule Payment", value: "schedule_payment" },
     { label: "Recurring payment", value: "recurring_payment" },
   ];
+  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    makePayment({
+      ...formdata,
+      date: {
+        year: new Date().getFullYear().toString(),
+        month: (new Date().getMonth() + 1).toString(),
+        day: new Date().getDate().toString(),
+        hour: new Date().getHours().toString(),
+        minute: new Date().getMinutes().toString(),
+      },
+    })
+      .unwrap()
+      .then((res) => {
+        message.success(res?.data?.message || "successful");
+        back();
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error(err?.data?.responseDescription || "an error occured");
+      });
+  };
   return (
     <div className="mx-auto flex flex-col py-2 px-6 h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center my-6">
         <span>
           <span className="text-2xl font-medium flex gap-3 items-center mb-2">
             <GrFormPreviousLink className="cursor-pointer" onClick={back} />
-            <h2 className="text-[18px] font-bold">Buy Cable Tv</h2>
+            <h2 className="text-[18px] font-bold">{params.get("desc")}</h2>
           </span>
           <p className="text-[16px] text-gray-600">
             you can create one time payment, recurring or Schedule payment
@@ -59,29 +128,35 @@ const Cable = () => {
             1
           </span>
           <p className="text-inherit text[#181336] text-[16px] font-[600]">
-            Select Cable Provider
+            Select Provider
           </p>
         </div>
         <div className="flex flex-col space-y-4 w-full ">
           <span className="flex space-x-3">
-            <RemitaCable />
-            <p className="text-[24px] font-bold">Buy Cable Tv</p>
+            {logo ? (
+              <Image width={50} height={50} alt="logo" src={logo} />
+            ) : (
+              <RemitaCable />
+            )}
+            <p className="text-[24px] font-bold">{params.get("name")}</p>
           </span>
-          <form className="w-full space-y-4 mt-4">
+          <form onSubmit={onSubmit} className="w-full space-y-4 mt-4">
             <div>
               <label
                 className="block text-gray-700 text-sm font-medium mb-2"
                 htmlFor="product"
               >
-                Select Product
+                Select Biller
               </label>
               <Select
                 className="!w-full !h-[2.5rem]"
-                options={[
-                  { value: "1 month", label: "1 month" },
-                  { value: "2 month", label: "2 month" },
-                ]}
-                placeholder="Select product"
+                options={data}
+                placeholder="Select biller"
+                onChange={(value, obj: Record<string, any>) => {
+                  setFormdata((prev) => ({ ...prev, biller_id: value }));
+                  setLogo(obj?.billerLogoUrl);
+                }}
+                showSearch
               />
             </div>
             <div>
@@ -89,17 +164,92 @@ const Cable = () => {
                 className="block text-gray-700 text-sm font-medium mb-2"
                 htmlFor="bouquet"
               >
-                Select Bouquet
+                Select Product
               </label>
               <Select
                 className="!w-full !h-[2.5rem]"
-                options={[
-                  { value: "1 month", label: "1 month" },
-                  { value: "2 month", label: "2 month" },
-                ]}
-                placeholder="Select bouquet"
+                options={products?.products}
+                placeholder="Select product"
+                showSearch
+                disabled={!formdata?.biller_id}
+                onChange={(value, obj: Record<string, any>) => {
+                  setProductFields(obj?.metadata?.customFields);
+                  setFormdata((prev) => ({
+                    ...prev,
+                    product_id: obj?.billPaymentProductId as string,
+                    product_name: obj?.billPaymentProductName as string,
+                    metadata: {
+                      customFields: obj?.metadata?.customFields.map(
+                        (e: Record<string, any>) => ({
+                          variable_name: e?.variableName,
+                          value: "",
+                        })
+                      ),
+                    },
+                  }));
+                }}
               />
             </div>
+            {productFields.map((e, i) => (
+              <div key={`${i}fields`}>
+                <label
+                  className="block text-gray-700 text-sm font-medium mb-2"
+                  htmlFor={e?.variableName}
+                >
+                  {e?.displayName}
+                </label>
+                {e?.selectOptions.length > 1 ? (
+                  <Select
+                    className="!w-full !h-[2.5rem]"
+                    options={e?.selectOptions.map((e: any) => ({
+                      value: e,
+                      label: e,
+                    }))}
+                    onChange={(value) => {
+                      setFormdata((prev) => ({
+                        ...prev,
+                        metadata: {
+                          customFields: prev.metadata.customFields.map(
+                            (item, i) => {
+                              if (item.variable_name === e?.variableName)
+                                return { ...item, value: value };
+                              else return item;
+                            }
+                          ),
+                        },
+                      }));
+                    }}
+                    placeholder={`select ${e?.variableName}`}
+                  />
+                ) : (
+                  <Input
+                    name={e?.variableName}
+                    id={e?.variableName}
+                    placeholder={`Enter ${e?.variableName}`}
+                    required={e?.required}
+                    value={
+                      formdata?.metadata?.customFields.find(
+                        (item) => item.variable_name === e?.variableName
+                      )?.value
+                    }
+                    onChange={(j) => {
+                      setFormdata((prev) => ({
+                        ...prev,
+                        metadata: {
+                          customFields: prev.metadata.customFields.map(
+                            (item, i) => {
+                              if (item.variable_name === e?.variableName)
+                                return { ...item, value: j.target.value };
+                              else return item;
+                            }
+                          ),
+                        },
+                      }));
+                    }}
+                  />
+                )}
+              </div>
+            ))}
             <div>
               <label
                 className="block text-gray-700 text-sm font-medium mb-2"
@@ -107,14 +257,19 @@ const Cable = () => {
               >
                 Amount
               </label>
-              <Input
+              <InputNumber
                 name="amount"
                 id="amount"
                 type="number"
                 placeholder="Enter amount"
+                className="!w-full"
+                value={formdata?.amount}
+                onChange={(value) => {
+                  setFormdata((prev) => ({ ...prev, amount: value as number }));
+                }}
               />
             </div>
-            <div>
+            {/* <div>
               <label
                 className="block text-gray-700 text-sm font-medium mb-2"
                 htmlFor="phone"
@@ -126,8 +281,8 @@ const Cable = () => {
                 containerClass="!w-full"
                 inputClass="phone-input-input !w-full"
               />
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
               <label
                 className="block text-gray-700 text-sm font-medium mb-2"
                 htmlFor="email"
@@ -141,15 +296,15 @@ const Cable = () => {
                 type="email"
                 placeholder="your recipient address"
               />
-            </div>
+            </div> */}
 
-            <RadioGroup
+            {/* <RadioGroup
               id="tag"
               name="transactionCategory"
               options={options}
               onChange={(e) => setSelectedOption(e.target.value)}
               className="!flex !justify-start !gap-[1rem]"
-            />
+            /> */}
             {(selectedOption === options[2].value ||
               selectedOption === options[1].value) && (
               <span className="flex flex-col gap-1">
@@ -168,11 +323,15 @@ const Cable = () => {
             <div className="mt-4 space-y-3">
               <Button
                 htmlType="submit"
-                className="!h-[3rem] !bg-gray-200 w-full  text-white hover:!text-white"
+                className="!h-[3rem] !bg-black w-full  text-white hover:!text-white"
+                loading={isPaying}
               >
                 Make Payment
               </Button>
-              <Button className="!h-[3rem] w-full text-black hover:!text-black">
+              <Button
+                onClick={() => back()}
+                className="!h-[3rem] w-full text-black hover:!text-black"
+              >
                 Cancel
               </Button>
             </div>

@@ -51,6 +51,12 @@ const RoleModal = ({
     ModifyPayroll: false,
     ViewPayroll: false,
     UpdateBusiness: false,
+    ViewBillPayment: false,
+    ModifyBillPayment: false,
+    CreateBillPaymentTransaction: false,
+    ViewBillPaymentTransaction: false,
+    ViewRemitaPaymentTransaction: false,
+    CreateRemitaPaymentTransaction: false,
   });
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
@@ -375,6 +381,124 @@ const RoleModal = ({
                       UpdateBusiness: e.target.value,
                     }))
                   }
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+            </div>
+            <div className="flex flex-col gap-[0.3rem]">
+              <h4 className="text-[#181336] text-[16px] font-[700]">
+                Bill Payments
+              </h4>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Can view bill payments
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      ViewBillPayment: e.target.value,
+                    }))
+                  }
+                  value={rolePermission?.ViewBillPayment}
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Can update bill payments
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      ModifyBillPayment: e.target.value,
+                    }))
+                  }
+                  value={rolePermission?.ModifyBillPayment}
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Create bill payment transactions
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      CreateBillPaymentTransaction: e.target.value,
+                    }))
+                  }
+                  value={rolePermission?.CreateBillPaymentTransaction}
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Can view bill payments transactions
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      ViewBillPaymentTransaction: e.target.value,
+                    }))
+                  }
+                  value={rolePermission?.ViewBillPaymentTransaction}
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+            </div>
+            <div className="flex flex-col gap-[0.3rem]">
+              <h4 className="text-[#181336] text-[16px] font-[700]">
+                Remita Transaction
+              </h4>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Can view remita transactions
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      ViewRemitaPaymentTransaction: e.target.value,
+                    }))
+                  }
+                  value={rolePermission?.ViewRemitaPaymentTransaction}
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Can create remita transactions
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      CreateRemitaPaymentTransaction: e.target.value,
+                    }))
+                  }
+                  value={rolePermission?.CreateRemitaPaymentTransaction}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },

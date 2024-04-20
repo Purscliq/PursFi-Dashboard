@@ -65,6 +65,8 @@ const UpdateRoleModal = ({
       ModifyBillPayment: false,
       CreateBillPaymentTransaction: false,
       ViewBillPaymentTransaction: false,
+      ViewRemitaPaymentTransaction: false,
+      CreateRemitaPaymentTransaction: false,
     }
   );
   useEffect(() => {
@@ -510,6 +512,47 @@ const UpdateRoleModal = ({
                     }))
                   }
                   value={rolePermission?.ViewBillPaymentTransaction}
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+            </div>
+            <div className="flex flex-col gap-[0.3rem]">
+              <h4 className="text-[#181336] text-[16px] font-[700]">
+                Remita Transaction
+              </h4>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Can view remita transactions
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      ViewRemitaPaymentTransaction: e.target.value,
+                    }))
+                  }
+                  value={rolePermission?.ViewRemitaPaymentTransaction}
+                  options={[
+                    { label: "Yes", value: true },
+                    { label: "No", value: false },
+                  ]}
+                />
+              </span>
+              <span className="flex items-center justify-between">
+                <p className="text-[#515B6F] text-[16px] font-[400]">
+                  Can create remita transactions
+                </p>
+                <RadioGroup
+                  onChange={(e) =>
+                    setRolePermission((prev) => ({
+                      ...prev,
+                      CreateRemitaPaymentTransaction: e.target.value,
+                    }))
+                  }
+                  value={rolePermission?.CreateRemitaPaymentTransaction}
                   options={[
                     { label: "Yes", value: true },
                     { label: "No", value: false },

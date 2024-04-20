@@ -16,11 +16,27 @@ const remitaSlice = ApiSlice.enhanceEndpoints({
           categoryId,
         },
       }),
+      transformResponse: (apiResponse: Record<string, any>) => {
+        const data = apiResponse.data.map((e: Record<string, any>) => ({
+          ...e,
+          value: e?.billerId,
+          label: e?.billerName,
+        }));
+        return data;
+      },
     }),
     getBillers: builder.query({
       query: () => ({
         url: "RemPayment/billers",
       }),
+      transformResponse: (apiResponse: Record<string, any>) => {
+        const data = apiResponse.data.map((e: Record<string, any>) => ({
+          ...e,
+          value: e?.billerId,
+          label: e?.billerName,
+        }));
+        return data;
+      },
     }),
     getBillerProducts: builder.query({
       query: ({ billerId }) => ({
@@ -29,12 +45,22 @@ const remitaSlice = ApiSlice.enhanceEndpoints({
           billerId,
         },
       }),
+      transformResponse: (apiResponse: Record<string, any>) => {
+        const data = apiResponse.data.products.map(
+          (e: Record<string, any>) => ({
+            ...e,
+            value: e?.billPaymentProductId,
+            label: e?.billPaymentProductName,
+          })
+        );
+        return { ...apiResponse.data, products: data };
+      },
     }),
     getTransactionHistory: builder.query({
       query: ({ page, type }) => ({
         url: "RemPayment/transaction/history",
         params: {
-          limit: 10,
+          limit: 5,
           page,
           type,
         },
@@ -53,6 +79,7 @@ const remitaSlice = ApiSlice.enhanceEndpoints({
       query: (body) => ({
         url: "rempayment/make/payment",
         body,
+        method: "POST",
       }),
       invalidatesTags: ["remita-transaction"],
     }),

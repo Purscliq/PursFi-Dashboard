@@ -31,6 +31,8 @@ const permissions = [
   "ModifyBillPayment",
   "CreateBillPaymentTransaction",
   "ViewBillPaymentTransaction",
+  "ViewRemitaPaymentTransaction",
+  "CreateRemitaPaymentTransaction",
 ];
 const PreviewRole = ({ id }: { id: string }) => {
   const [getRole, { data, isLoading }] = useLazyGetSingleRoleQuery();
@@ -247,6 +249,31 @@ const PreviewRole = ({ id }: { id: string }) => {
                 View bill payments transactions
               </p>
               {data?.data?.permissions?.includes(permissions[22]) ? (
+                <Active />
+              ) : (
+                <Inactive />
+              )}
+            </span>
+          </div>
+          <div className="flex flex-col gap-[0.3rem]">
+            <h4 className="text-[#181336] text-[16px] font-[700]">
+              Remita Transactions
+            </h4>
+            <span className="flex items-center justify-between">
+              <p className="text-[#515B6F] text-[16px] font-[400]">
+                Can view Remita Transactions
+              </p>
+              {data?.data?.permissions?.includes(permissions[23]) ? (
+                <Active />
+              ) : (
+                <Inactive />
+              )}
+            </span>
+            <span className="flex items-center justify-between">
+              <p className="text-[#515B6F] text-[16px] font-[400]">
+                Can create Remita Transactions
+              </p>
+              {data?.data?.permissions?.includes(permissions[24]) ? (
                 <Active />
               ) : (
                 <Inactive />

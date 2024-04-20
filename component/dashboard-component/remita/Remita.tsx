@@ -83,7 +83,9 @@ const Remita = () => {
             <div
               key={index}
               onClick={() =>
-                route.push(`/remita-biller?id=${item?.categoryId}`)
+                route.push(
+                  `/remita-biller?id=${item?.categoryId}&name=${item?.categoryName}&desc=${item?.categoryDescription}`
+                )
               }
               className="p-4 bg-white grid grid-cols-[15%_75%] items-center space-x-6 justify-center cursor-pointer justifyaround"
             >

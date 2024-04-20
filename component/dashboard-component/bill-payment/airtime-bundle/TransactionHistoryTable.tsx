@@ -170,7 +170,7 @@ const TransactionHistoryTable = () => {
           onChange={handleTableChange}
         />
       </div>
-      <TransactionModal id={id} open={open} setOpen={setOpen} />
+      {id && <TransactionModal id={id} open={open} setOpen={setOpen} />}
     </div>
   );
 };
