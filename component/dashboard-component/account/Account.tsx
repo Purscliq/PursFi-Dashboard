@@ -77,16 +77,25 @@ const Account = () => {
       <main className="grid grid-cols-1 gap-4">
         <section className="grid grid-cols-1 lg:grid-cols-[58%_40%] gap-[2%] mt-8">
           <article className="bg-white p-[2%]">
-            <div className="flex items-stretch space-x-6 ">
-              <div className="p-[20px] bg-black text-white w-full">
-                <div className="flex items-center justify-between">
-                  <p>Account Balance</p>
-                  <Arrowleft />
+            <div className="flex items-start space-x-6 ">
+              <div className="flex flex-col gap-2 w-full">
+                <div className="p-[20px] bg-black text-white w-full">
+                  <div className="flex items-center justify-between">
+                    <p>Account Balance</p>
+                    <Arrowleft />
+                  </div>
+                  <p className="text-2xl font-semibold">
+                    &#8358;
+                    {Number(wallet?.walletBalance || 0).toLocaleString("en-US")}
+                  </p>
                 </div>
-                <p className="text-2xl font-semibold">
-                  &#8358;
-                  {Number(wallet?.walletBalance || 0).toLocaleString("en-US")}
-                </p>
+                <div className="px-[20px] py-[10px] bg-black text-white w-full flex justify-between items-center text-[14px]">
+                  <p>Ledger Balance</p>
+                  <p className="text-[18px] font-semibold">
+                    &#8358;
+                    {Number(wallet?.ledgerBalance || 0).toLocaleString("en-US")}
+                  </p>
+                </div>
               </div>
               <div className="bg-white p-[20px] text-black w-full border border-gray-300">
                 <div className="flex items-center justify-between">

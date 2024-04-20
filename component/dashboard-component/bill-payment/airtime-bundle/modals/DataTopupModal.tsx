@@ -44,7 +44,7 @@ const scheduleTime: any = "";
 const initialState = {
   product: "data",
   provider: "",
-  paymentType: "",
+  paymentType: options[0].value,
   amount,
   businessId: "",
   scheduleDate,
