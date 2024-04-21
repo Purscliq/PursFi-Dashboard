@@ -4,7 +4,10 @@ import RemitaIcon from "@/assets/icon/RemitaIcon";
 import RemitaTsi from "@/assets/icon/RemitaTsi";
 import RemitaWaec from "@/assets/icon/RemitaWaec";
 import RemitaWater from "@/assets/icon/RemitaWater";
-import { CustomSelect as Select } from "@/lib/AntdComponents";
+import {
+  CustomSelect as Select,
+  CustomSpinner as Spinner,
+} from "@/lib/AntdComponents";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import RemitaTable from "./RemitaTable";
@@ -16,43 +19,7 @@ const Remita = () => {
   const date = new Date();
   const route = useRouter();
   const { data: category, isLoading } = useGetCategoriesQuery({});
-  const data = [
-    {
-      title: "Buy Electricity",
-      route: "remita-electricity",
-      icon: <RemitaIcon />,
-    },
-    {
-      title: "Buy Cable Tv",
-      route: "remita-cable",
-      icon: <RemitaCable />,
-    },
-    {
-      title: "Pay Water",
-      route: "remita-water",
-      icon: <RemitaWater />,
-    },
-    {
-      title: "Pay TSA & States",
-      route: "remita-tsa",
-      icon: <RemitaTsi />,
-    },
-    {
-      title: "Pay Taxes",
-      route: "remita-taxes",
-      icon: <RemitaIcon />,
-    },
-    {
-      title: "Direct Debit",
-      route: "remita-debit",
-      icon: <RemitaWater />,
-    },
-    {
-      title: "Buy WAEC",
-      route: "remita-waec",
-      icon: <RemitaWaec />,
-    },
-  ];
+
   return (
     <>
       <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
@@ -78,24 +45,27 @@ const Remita = () => {
           /> */}
           </div>
         </header>
+        {isLoading && <Spinner className="!mx-auto" />}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-[1.5em] items-center mt-8">
-          {category?.data?.map((item: Record<string, any>, index: number) => (
-            <div
-              key={index}
-              onClick={() =>
-                route.push(
-                  `/remita-biller?id=${item?.categoryId}&name=${item?.categoryName}&desc=${item?.categoryDescription}`
-                )
-              }
-              className="p-4 bg-white grid grid-cols-[15%_75%] items-center space-x-6 justify-center cursor-pointer justifyaround"
-            >
-              {/* {item.icon} */}
-              <span>
-                <RemitaIcon />
-              </span>
-              <span className="text-[16px] w-full">{item?.categoryName}</span>
-            </div>
-          ))}
+          {category?.data
+            ?.filter((_: any, i: number) => [8, 9, 11, 14].includes(i))
+            ?.map((item: Record<string, any>, index: number) => (
+              <div
+                key={index}
+                onClick={() =>
+                  route.push(
+                    `/remita-biller?id=${item?.categoryId}&name=${item?.categoryName}&desc=${item?.categoryDescription}`
+                  )
+                }
+                className="p-4 bg-white grid grid-cols-[15%_75%] items-center space-x-6 justify-center cursor-pointer justifyaround"
+              >
+                {/* {item.icon} */}
+                <span>
+                  <RemitaIcon />
+                </span>
+                <span className="text-[16px] w-full">{item?.categoryName}</span>
+              </div>
+            ))}
         </div>
         <div className="mt-8">
           <RemitaTable />

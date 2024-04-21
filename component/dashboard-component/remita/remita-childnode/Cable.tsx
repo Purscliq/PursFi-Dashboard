@@ -96,7 +96,6 @@ const Cable = () => {
         back();
       })
       .catch((err) => {
-        console.log(err);
         message.error(err?.data?.responseDescription || "an error occured");
       });
   };
@@ -151,9 +150,15 @@ const Cable = () => {
               <Select
                 className="!w-full !h-[2.5rem]"
                 options={data}
+                disabled={isLoading}
                 placeholder="Select biller"
                 onChange={(value, obj: Record<string, any>) => {
-                  setFormdata((prev) => ({ ...prev, biller_id: value }));
+                  setFormdata((prev) => ({
+                    ...prev,
+                    biller_id: value,
+                    product_name: "",
+                    product_id: "",
+                  }));
                   setLogo(obj?.billerLogoUrl);
                 }}
                 showSearch
@@ -171,7 +176,8 @@ const Cable = () => {
                 options={products?.products}
                 placeholder="Select product"
                 showSearch
-                disabled={!formdata?.biller_id}
+                value={formdata?.product_name}
+                disabled={!formdata?.biller_id || products?.products.length < 1}
                 onChange={(value, obj: Record<string, any>) => {
                   setProductFields(obj?.metadata?.customFields);
                   setFormdata((prev) => ({

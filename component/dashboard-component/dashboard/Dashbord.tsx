@@ -57,8 +57,8 @@ const Dashbord = () => {
         </div>
       </header>
       <main className="grid grid-cols-1 lg:grid-cols-[58%_40%] gap-[2%] mt-8">
-        <section className="flex flex-col space-y-16 ">
-          <article className="flex flex-col md:flex-row items-start space-x-4 bg-white p-[2%]">
+        <section className="flex flex-col space-y-8 ">
+          <article className="flex flex-col md:flex-row items-start space-x-4 bg-white py-[1%] px-[2%]">
             <div className="flex flex-col gap-2 w-full">
               <div className="p-[20px] bg-black text-white w-full">
                 <div className="flex items-center justify-between">
@@ -94,12 +94,12 @@ const Dashbord = () => {
               </p>
             </div>
           </article>
-          <div className="my-4 bg-white p-[2%]">
+          <div className="my-4 bg-white py-[1%] px-[2%]">
             <DashboardChart data={stats || []} />
           </div>
           <DashboardTable />
         </section>
-        <section className="flex flex-col space-y-16">
+        <section className="flex flex-col space-y-8">
           <div className="space-y-2 bg-white p-[2%]">
             <p className="text-xl font-semibold">Payment that need Attention</p>
             <div className="grid grid-cols-2 gap-5">

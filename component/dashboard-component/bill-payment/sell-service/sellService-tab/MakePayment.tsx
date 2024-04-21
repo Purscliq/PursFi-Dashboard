@@ -39,8 +39,8 @@ const bundle = [
   {
     image: (
       <Image
-        width={44}
-        height={44}
+        width={60}
+        height={60}
         alt="airtel"
         src={
           "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021232/vrejcpyjqsu3nyv3mfho.png"
@@ -52,8 +52,8 @@ const bundle = [
   {
     image: (
       <Image
-        width={44}
-        height={44}
+        width={60}
+        height={60}
         alt="mtn"
         src={
           "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021274/kkkrbecmzjbhiap2bpv7.png"
@@ -65,8 +65,8 @@ const bundle = [
   {
     image: (
       <Image
-        width={44}
-        height={44}
+        width={60}
+        height={60}
         alt="9mobile"
         src={
           "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021218/c5gkpfnkfgzadu8w7uza.png"
@@ -78,8 +78,8 @@ const bundle = [
   {
     image: (
       <Image
-        width={44}
-        height={44}
+        width={60}
+        height={60}
         alt="glo"
         src={
           "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021243/rm86mmai6swrmsgfkdfp.png"
