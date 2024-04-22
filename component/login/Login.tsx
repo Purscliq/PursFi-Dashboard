@@ -49,20 +49,26 @@ const Login = () => {
     login({ ...formData, email: formData.email.toLowerCase() })
       .unwrap()
       .then((res) => {
+        setIsLoading(false);
         getUserProfile({})
           .unwrap()
           .then((res) => {
-            console.log(res);
             if (!res?.user?.businessId) {
+              setIsLoading(false);
               replace("/signup-business");
               return;
             }
             if (!res?.user?.isEmailValidated) {
+              setIsLoading(true);
               generateEmailOtp({ username: res?.user?.email })
                 .unwrap()
-                .finally(() => replace("/verifyEmail"));
+                .finally(() => {
+                  replace("/verifyEmail");
+                  setIsLoading(false);
+                });
               return;
             }
+            setIsLoading(true);
             getBusinessProfile({})
               .unwrap()
               .then((res) => {
@@ -71,6 +77,9 @@ const Login = () => {
                   return;
                 }
                 replace("/dashboard");
+              })
+              .finally(() => {
+                setIsLoading(false);
               });
           });
       })

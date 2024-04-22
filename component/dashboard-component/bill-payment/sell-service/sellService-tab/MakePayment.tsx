@@ -12,7 +12,10 @@ import PhoneInput from "react-phone-input-2";
 import LinkIcon from "@/assets/icon/LinkIcon";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Mtn from "@/assets/icon/Mtn";
+import Airtel from "@/assets/Airtel Nigeria Logo.png";
+import Glo from "@/assets/Globacom Limited Logo.png";
+import Mtn from "@/assets/mtn.512x512.png";
+import NineMobile from "@/assets/9mobile Logo.png";
 import {
   useLazyGetBillPaymentDataPlansQuery,
   useSellAirtimeMutation,
@@ -37,55 +40,19 @@ const initialState = {
 };
 const bundle = [
   {
-    image: (
-      <Image
-        width={60}
-        height={60}
-        alt="airtel"
-        src={
-          "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021232/vrejcpyjqsu3nyv3mfho.png"
-        }
-      />
-    ),
+    image: <Image width={80} height={80} alt="airtel" src={Airtel} />,
     provider: "Airtel",
   },
   {
-    image: (
-      <Image
-        width={60}
-        height={60}
-        alt="mtn"
-        src={
-          "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021274/kkkrbecmzjbhiap2bpv7.png"
-        }
-      />
-    ),
+    image: <Image width={80} height={80} alt="mtn" src={Mtn} />,
     provider: "MTN",
   },
   {
-    image: (
-      <Image
-        width={60}
-        height={60}
-        alt="9mobile"
-        src={
-          "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021218/c5gkpfnkfgzadu8w7uza.png"
-        }
-      />
-    ),
+    image: <Image width={80} height={80} alt="9mobile" src={NineMobile} />,
     provider: "9mobile",
   },
   {
-    image: (
-      <Image
-        width={60}
-        height={60}
-        alt="glo"
-        src={
-          "https://res.cloudinary.com/dpw7ngpfl/image/upload/v1711021243/rm86mmai6swrmsgfkdfp.png"
-        }
-      />
-    ),
+    image: <Image width={80} height={80} alt="glo" src={Glo} />,
     provider: "GLO",
   },
 ];
