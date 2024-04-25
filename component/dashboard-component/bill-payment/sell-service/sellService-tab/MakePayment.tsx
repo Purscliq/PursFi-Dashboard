@@ -226,7 +226,7 @@ const MakePayment = ({ id }: { id: number }) => {
               value={formdata?.recipient}
             />
           </span>
-          <RadioGroup
+          {/* <RadioGroup
             id="tag"
             name="transactionCategory"
             options={options1}
@@ -235,7 +235,7 @@ const MakePayment = ({ id }: { id: number }) => {
               setFormdata((prev) => ({ ...prev, paymentType: e.target.value }));
             }}
             value={formdata?.paymentType}
-          />
+          /> */}
         </>
       )}
       {selectedOption === options[2].value && (
