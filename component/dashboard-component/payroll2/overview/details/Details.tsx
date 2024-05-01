@@ -96,7 +96,6 @@ const Details = () => {
               <span className="loading loading-dots loading-xs"></span>
             ) : (
               <p className="text-[30px] font-semibold">
-                &#8358;
                 {Number(analytics?.data?.members || 0).toLocaleString()}
               </p>
             )}
