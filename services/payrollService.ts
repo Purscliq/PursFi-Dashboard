@@ -133,6 +133,35 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       }),
       invalidatesTags: ["payroll"],
     }),
+    getPayrollAnalytics: builder.query({
+      query: (body) => ({
+        url: `payroll/analytics`,
+        params: {
+          page: body?.page,
+          type: "history",
+          count: 10,
+        },
+      }),
+      providesTags: ["payroll"],
+    }),
+    getPayrollOverview: builder.query({
+      query: (body) => ({
+        url: `payroll/analytics/transaction`,
+        params: {
+          payrollId: body?.id,
+        },
+      }),
+      providesTags: ["single-payroll"],
+    }),
+    getPayrollDashboardAnalytics: builder.query({
+      query: (body) => ({
+        url: `payroll/analytics/transaction`,
+        params: {
+          payrollId: body?.id,
+        },
+      }),
+      providesTags: ["single-payroll"],
+    }),
   }),
 });
 
@@ -157,4 +186,10 @@ export const {
   useGetSinglePayrollQuery,
   useLazyGetSinglePayrollQuery,
   useTogglePayrollMutation,
+  useGetPayrollAnalyticsQuery,
+  useGetPayrollDashboardAnalyticsQuery,
+  useGetPayrollOverviewQuery,
+  useLazyGetPayrollAnalyticsQuery,
+  useLazyGetPayrollDashboardAnalyticsQuery,
+  useLazyGetPayrollOverviewQuery,
 } = payrollSlice;

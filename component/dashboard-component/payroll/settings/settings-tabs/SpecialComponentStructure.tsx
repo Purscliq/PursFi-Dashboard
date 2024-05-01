@@ -10,9 +10,9 @@ import {
 import { message } from "antd";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
-const taxableOptions = [
-  { label: "Yes", value: "yes" },
-  { label: "No", value: "no" },
+const typeOptions = [
+  { label: "Deductable", value: "deductable" },
+  { label: "Bonus", value: "bonus" },
 ];
 interface Item {
   key: string;
@@ -99,22 +99,24 @@ const EditableCell: React.FC<EditableCellProps> = ({
           },
         ]}
       >
-        {title === "Percentage  of Salary" ? (
+        {title === "Amount" ? (
           <InputNumber
-            suffix="%"
+            suffix="NGN"
             ref={numinputRef}
             onPressEnter={save}
             onBlur={save}
             controls={false}
+            placeholder="Enter Amount"
+            className="!w-[10rem]"
           />
         ) : (
           <>
-            {title === "Taxable" ? (
+            {title === "Type" ? (
               <Select
                 onSelect={save}
                 ref={selectRef}
-                options={taxableOptions}
-                defaultValue={taxableOptions[0].value}
+                options={typeOptions}
+                defaultValue={typeOptions[0].value}
               />
             ) : (
               <Input
@@ -146,14 +148,14 @@ type EditableTableProps = Parameters<typeof Table>[0];
 interface DataType {
   key: React.Key;
   title: string;
-  percentage: number;
-  taxable: string;
+  amount: number;
   name: string;
+  type: string;
 }
 
 type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 
-const StructureTable = ({
+const SpecialStructureTable = ({
   dataSource,
   setDataSource,
 }: {
@@ -173,55 +175,46 @@ const StructureTable = ({
     dataType?: string;
   })[] = [
     {
-      title: "Salary Component",
+      title: "Special Component",
       dataIndex: "name",
       width: "30%",
       editable: true,
     },
     {
-      title: "Percentage  of Salary",
-      dataIndex: "percentage",
+      title: "Amount",
+      dataIndex: "amount",
       editable: true,
       dataType: "number",
     },
     {
-      title: "Taxable",
-      dataIndex: "taxable",
-      editable: false,
+      title: "Type",
+      dataIndex: "type",
+      editable: true,
       dataType: "select",
     },
-    // {
-    //   dataIndex: "operation",
-    //   render: (_, record) => (
-    //     <Button
-    //       onClick={() => handleDelete(record.key)}
-    //       disabled={record.key === 0}
-    //       icon={<MdDeleteForever />}
-    //       className="!ml-auto"
-    //     />
-    //   ),
-    // },
+    {
+      dataIndex: "operation",
+      render: (_, record) => (
+        <Button
+          onClick={() => handleDelete(record.key)}
+          disabled={record.key === 0}
+          icon={<MdDeleteForever />}
+          className="!ml-auto"
+        />
+      ),
+    },
   ];
 
   const handleAdd = () => {
     const newData: DataType = {
       key: count,
-      name: "Enter Structure Title",
-      percentage: 0,
-      taxable: "no",
-      title: "Salary Component",
+      name: "Enter Component Title",
+      amount: 0,
+      type: "deductible",
+      title: "Special Component",
     };
-    const percentage = dataSource.reduce(
-      (acc, curr) => acc + curr.percentage,
-      0
-    );
-    if (percentage + newData.percentage >= 100) {
-      message.error("Total percentage cannot exceed 100%");
-      return;
-    } else {
-      setDataSource([...dataSource, newData]);
-      setCount(count + 1);
-    }
+    setDataSource([...dataSource, newData]);
+    setCount(count + 1);
   };
 
   const handleSave = (row: DataType) => {
@@ -260,19 +253,25 @@ const StructureTable = ({
 
   return (
     <div>
-      <Table
-        components={components}
-        rowClassName={() => "editable-row"}
-        bordered
-        dataSource={dataSource}
-        columns={columns as ColumnTypes}
-        pagination={false}
-      />
-      {/* <Button onClick={handleAdd} style={{ marginBottom: 16 }}>
-        Add Items
-      </Button> */}
+      {dataSource?.length > 0 && (
+        <Table
+          components={components}
+          rowClassName={() => "editable-row"}
+          bordered
+          dataSource={dataSource}
+          columns={columns as ColumnTypes}
+          pagination={false}
+        />
+      )}
+      <Button
+        className="!mt-1"
+        onClick={handleAdd}
+        style={{ marginBottom: 16 }}
+      >
+        Add Item
+      </Button>
     </div>
   );
 };
 
-export default StructureTable;
+export default SpecialStructureTable;

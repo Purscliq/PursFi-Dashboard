@@ -1,11 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MenuProps, Dropdown } from "antd";
 import { CustomTable as Table } from "@/lib/AntdComponents";
 import TableIcon from "@/assets/icon/TableIcon";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import DeletePayrollModal from "../DeletePayrollModal";
-import { useGetPayrollQuery } from "@/services/payrollService";
+import {
+  useGetPayrollQuery,
+  useLazyGetPayrollAnalyticsQuery,
+} from "@/services/payrollService";
 import Link from "next/link";
 
 export interface DataType {
@@ -35,14 +38,40 @@ type listType = {
 };
 
 const PayrollTable = () => {
-  const { data: payroll, isLoading } = useGetPayrollQuery({});
-  // const [tableParams, setTableParams] = useState<TableParams>({
-  //   pagination: {
-  //     current: 1,
-  //     pageSize: 10,
-  //   },
-  // });
+  const [tableParams, setTableParams] = useState<TableParams>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  });
+  const [getPayrolls, { isLoading, data: payroll }] =
+    useLazyGetPayrollAnalyticsQuery();
   const [id, setId] = useState("");
+  useEffect(() => {
+    getPayrolls({
+      page: tableParams?.pagination?.current,
+    })
+      .unwrap()
+      .then((res) => {
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams?.pagination,
+            total: res?.data?.meta?.total,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [tableParams.pagination?.current]);
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    setTableParams((prev) => ({
+      ...prev,
+      pagination,
+    }));
+  };
   const [open, setOpen] = useState(false);
   const items: MenuProps["items"] = [
     {
@@ -79,9 +108,9 @@ const PayrollTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "email",
-      render: (email) => `${20}`,
-      width: "30%",
+      dataIndex: "members",
+      render: (members) => `${members}`,
+      width: "20%",
     },
     {
       title: (
@@ -90,10 +119,27 @@ const PayrollTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "automatic",
-      render: (automatic) => `${automatic === 1 ? "automatic" : "manual"}`,
+      dataIndex: "type",
+      render: (type) => `${type}`,
 
-      width: "20%",
+      width: "10%",
+    },
+    {
+      title: (
+        <span className="flex items-center uppercase space-x-2">
+          <p>Status</p>
+          <TableIcon />
+        </span>
+      ),
+      dataIndex: "payoutDate",
+      render: (date) =>
+        `Auto-running on ${new Date(date).toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        })}`,
+
+      width: "25%",
     },
     {
       title: (
@@ -143,9 +189,10 @@ const PayrollTable = () => {
           <Table
             columns={columns}
             //   rowKey={(record) => record.login.uuid}
-            dataSource={payroll?.data?.data || []}
+            dataSource={payroll?.data || []}
             loading={isLoading}
-            // onChange={handleTableChange}
+            onChange={handleTableChange}
+            pagination={tableParams.pagination}
           />
         </div>
       </section>
