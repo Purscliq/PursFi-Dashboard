@@ -157,7 +157,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       query: (body) => ({
         url: `payroll/analytics/dashboard`,
         params: {
-          payrollId: 1,
+          payrollId: "1",
         },
       }),
       providesTags: ["single-payroll"],

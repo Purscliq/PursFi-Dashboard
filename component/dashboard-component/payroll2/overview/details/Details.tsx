@@ -12,6 +12,7 @@ import {
   useGetSinglePayrollQuery,
   useTogglePayrollMutation,
   useLazyGetPayrollDashboardAnalyticsQuery,
+  useLazyGetPayrollOverviewQuery,
 } from "@/services/payrollService";
 import { useAppSelector } from "@/store/hooks";
 import { useSearchParams } from "next/navigation";
@@ -21,7 +22,7 @@ const Details = () => {
   const { push } = useRouter();
   const { data, isLoading } = useGetSinglePayrollQuery(params.get("id"));
   const [getAnalytics, { isLoading: isLoadingAnalytics, data: analytics }] =
-    useLazyGetPayrollDashboardAnalyticsQuery();
+    useLazyGetPayrollOverviewQuery();
   const [togglePayroll, { isLoading: isTogglingPayroll }] =
     useTogglePayrollMutation();
   const profile = useAppSelector((store) => store?.user?.user);
