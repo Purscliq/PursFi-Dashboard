@@ -79,14 +79,22 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                 <div className="leading-tight font-semibold">
                   {data?.data?.accountName}
                 </div>{" "}
-                <div className="text-slate-500 pr-2">Bank Name:</div>
-                <div className="leading-tight font-semibold">
-                  {data?.data?.bankName}
-                </div>
-                <div className="text-slate-500 pr-2">Account Number:</div>
-                <div className="leading-tight font-semibold">
-                  {data?.data?.accountNumber}
-                </div>
+                {data?.data?.bankName && (
+                  <>
+                    <div className="text-slate-500 pr-2">Bank Name:</div>
+                    <div className="leading-tight font-semibold">
+                      {data?.data?.bankName}
+                    </div>
+                  </>
+                )}
+                {data?.data?.accountNumber && (
+                  <>
+                    <div className="text-slate-500 pr-2">Account Number:</div>
+                    <div className="leading-tight font-semibold">
+                      {data?.data?.accountNumber}
+                    </div>
+                  </>
+                )}
                 <div className="text-slate-500 pr-2">Charges Fee:</div>
                 <div className="leading-tight font-semibold">
                   &#8358;{data?.data?.fee || 0}
