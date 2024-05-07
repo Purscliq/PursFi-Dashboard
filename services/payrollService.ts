@@ -162,8 +162,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       }),
       providesTags: ["single-payroll"],
       transformResponse: (res: Record<string, any>) => {
-        console.log(res);
-        const arr = res?.barchart?.map((e: Record<string, any>) => {
+        const arr = res?.data?.barchart?.map((e: Record<string, any>) => {
           const formattedDate = parseInt(e?.date?.split("-")[1], 10);
           return {
             date: `${formattedDate} ${e?.month}`,
@@ -171,7 +170,7 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
             deductionAmount: e?.total_deductions,
           };
         });
-        return { ...res, barchart: arr };
+        return { ...res?.data, barchart: arr };
       },
     }),
   }),

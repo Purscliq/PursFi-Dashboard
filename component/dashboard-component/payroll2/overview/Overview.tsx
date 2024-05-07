@@ -77,7 +77,7 @@ const Overview = () => {
             <div className="flex flex-col gap-2 justify-between p-2 rounded-md border border-[#B8C9C9]">
               <p className="text-[14px] text-[#515B6F]">Overall Payroll</p>
               <p className="text-[22px] text-[#181336] font-semibold">
-                N50,600,434.00
+                {Number(data?.overall_payroll?.gross_pay || 0)}
               </p>
             </div>
           </div>
