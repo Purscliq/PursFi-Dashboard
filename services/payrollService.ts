@@ -161,6 +161,18 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         },
       }),
       providesTags: ["single-payroll"],
+      transformResponse: (res: Record<string, any>) => {
+        console.log(res);
+        const arr = res?.barchart?.map((e: Record<string, any>) => {
+          const formattedDate = parseInt(e?.date?.split("-")[1], 10);
+          return {
+            date: `${formattedDate} ${e?.month}`,
+            totalPayment: e?.total_gross_payment,
+            deductionAmount: e?.total_deductions,
+          };
+        });
+        return { ...res, barchart: arr };
+      },
     }),
   }),
 });

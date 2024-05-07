@@ -82,7 +82,7 @@ const Overview = () => {
             </div>
           </div>
           <div className="grid grid-cols-1">
-            <OverviewChart />
+            <OverviewChart data={data?.barchart} />
           </div>
         </div>
         {/* upcoming */}
