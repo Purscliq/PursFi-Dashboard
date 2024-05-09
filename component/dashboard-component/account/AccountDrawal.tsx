@@ -122,6 +122,10 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                     "_blank"
                   );
                 }}
+                disabled={
+                  data?.data?.status !== "success" ||
+                  data?.data?.paymentStatus !== "success"
+                }
               >
                 Download Reciept
               </Button>
