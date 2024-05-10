@@ -74,6 +74,7 @@ const TransactionModal = ({
               window.open(`/receipt?bill=${id}`, "_blank");
             }}
             className="!h-[3rem] !bg-black w-full !text-white hover:!text-white"
+            disabled={data?.data[0]?.model?.status !== "Success"}
           >
             Download Reciept
           </Button>

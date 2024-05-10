@@ -58,7 +58,7 @@ export const sidebarData: MenuProps["items"] = [
         key: "payroll-setup",
       },
     ],
-    disabled: true,
+    // disabled: true,
   },
   {
     label: <Link href="/transactions">Transaction</Link>,
@@ -79,12 +79,12 @@ export const sidebarData: MenuProps["items"] = [
       {
         label: <Link href="/administration">Team Member</Link>,
         icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
-        key: "payroll/overview",
+        key: "administration",
       },
       {
         label: <Link href="/roles">Roles And Perimission</Link>,
         icon: <FaRegUser className=" font-bold" />,
-        key: "payroll/settings",
+        key: "roles",
       },
     ],
   },
@@ -108,13 +108,16 @@ export const sidebarData: MenuProps["items"] = [
 export const activeKeys = [
   "dashboard",
   "account",
-  "payment",
   "bill-payment",
+  "payment",
+  "payroll-setup",
   "payroll",
   "transactions",
   "invoice",
   "contact",
   "administration",
+  "roles",
   "setting",
   "ticket",
+  "remita",
 ];

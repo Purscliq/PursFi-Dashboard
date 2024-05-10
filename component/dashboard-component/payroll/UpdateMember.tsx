@@ -95,6 +95,13 @@ const UpdateMember = ({ id }: { id: number }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
+    if (data)
+      setFormData((prev) => ({
+        ...prev,
+        bankCode: data?.find((e: any) => e.label === prev?.bankName)?.value,
+      }));
+  }, [data]);
+  useEffect(() => {
     if (params.get("member")) {
       getBeneficiary({
         payrollId: id,
@@ -104,6 +111,7 @@ const UpdateMember = ({ id }: { id: number }) => {
           setFormData({
             ...res.data.data,
             salary: Number(res.data.data.salary || 0),
+            beneficiaryId: res.data.data.id,
           });
         })
         .catch((err) => {
@@ -287,6 +295,7 @@ const UpdateMember = ({ id }: { id: number }) => {
                       bankName: option?.label,
                     }))
                   }
+                  value={formData?.bankName}
                   id="bank"
                   options={data}
                 />

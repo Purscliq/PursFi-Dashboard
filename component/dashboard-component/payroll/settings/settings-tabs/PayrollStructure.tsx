@@ -14,11 +14,20 @@ import {
 import { useAppSelector } from "@/store/hooks";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
+import SpecialStructureTable from "./SpecialComponentStructure";
 interface DataType {
   key: React.Key;
-  name: string;
+  title: string;
   percentage: number;
-  tax: string;
+  taxable: string;
+  name: string;
+}
+interface SpeicalDataType {
+  key: React.Key;
+  title: string;
+  amount: number;
+  type: string;
+  name: string;
 }
 const PayrollStructure = ({
   formData,
@@ -39,36 +48,45 @@ const PayrollStructure = ({
     formData?.salaryStructures?.structure?.length > 0
       ? formData?.salaryStructures?.structure?.map((e: any, i: any) => ({
           key: i,
-          name: e?.name,
-          percentage: e?.percentage,
-          tax: "Yes",
+          ...e,
         }))
       : [
           {
             key: 0,
             name: "Base Salary",
             percentage: 50,
-            tax: "Yes",
-          },
-          {
-            key: 3,
-            name: "Special Allowance",
-            percentage: 10,
+            taxable: "yes",
+            title: "Salary Component",
           },
         ]
+  );
+  const [specialDataSource, setSpecialDataSource] = useState<SpeicalDataType[]>(
+    formData?.salaryStructures?.structure?.length > 0
+      ? formData?.salaryStructures?.structure?.map((e: any, i: any) => ({
+          key: i,
+          ...e,
+        }))
+      : []
   );
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     if (dataSource.length > 0) {
       const structure = dataSource.map((e) => ({
-        name: e.name,
-        percentage: e.percentage,
-        tax: e.tax === "Yes" ? true : false,
+        title: e.title,
+        name: e?.name,
+        percentage: e?.percentage,
+        taxable: e?.taxable,
+      }));
+      const specialStructure = specialDataSource.map((e) => ({
+        title: e.title,
+        name: e?.name,
+        amount: e?.amount,
+        type: e?.type,
       }));
       if (formData?.payrollId) {
         updatePayroll({
           ...formData,
-          salaryStructure: structure,
+          salaryStructure: [...structure, ...specialStructure],
           businessId,
         })
           .unwrap()
@@ -83,12 +101,12 @@ const PayrollStructure = ({
       } else
         createPayroll({
           ...formData,
-          salaryStructure: structure,
+          salaryStructure: [...structure, ...specialStructure],
           businessId,
         })
           .unwrap()
           .then((res) => {
-            push(`/payroll/preview?id=${res?.data?.id}`);
+            push(`/payroll-preview?id=${res?.data?.id}`);
             message.success("Payroll created successfully");
             setFormData(initialState);
           })
@@ -140,6 +158,10 @@ const PayrollStructure = ({
           <StructureTable
             dataSource={dataSource}
             setDataSource={setDataSource}
+          />
+          <SpecialStructureTable
+            dataSource={specialDataSource}
+            setDataSource={setSpecialDataSource}
           />
         </span>
       </span>

@@ -11,9 +11,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import PayrollTable from "./PayrollTable";
 import OverviewChart from "./OverviewChart";
+import { useGetPayrollDashboardAnalyticsQuery } from "@/services/payrollService";
 
 const Overview = () => {
   const { push } = useRouter();
+  const { data, isLoading } = useGetPayrollDashboardAnalyticsQuery({ id: 1 });
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -48,9 +50,9 @@ const Overview = () => {
           />
         </span>
       </span>
-      <div className="grid md:grid-cols-7 grid-cols-1 gap-6">
+      <div className="grid md:grid-cols-7 grid-cols-1 gap-6 items-start">
         {/* chart */}
-        <div className="bg-white rounded-md p-4 md:col-span-5 flex flex-col gap-4">
+        <div className="bg-white rounded-md p-4 md:col-span-5 grid grid-cols-1 grid-rows-[20%_80%] gap-4">
           <div className="md:flex justify-between gap-4 space-y-3 md:space-y-0">
             <div className="flex flex-col gap-4 justify-between">
               <span className="space-y-0.5">
@@ -75,16 +77,16 @@ const Overview = () => {
             <div className="flex flex-col gap-2 justify-between p-2 rounded-md border border-[#B8C9C9]">
               <p className="text-[14px] text-[#515B6F]">Overall Payroll</p>
               <p className="text-[22px] text-[#181336] font-semibold">
-                N50,600,434.00
+                {Number(data?.overall_payroll?.gross_pay || 0)}
               </p>
             </div>
           </div>
-          <div>
-            <OverviewChart />
+          <div className="grid grid-cols-1">
+            <OverviewChart data={data?.barchart} />
           </div>
         </div>
         {/* upcoming */}
-        <div className="md:col-span-2 flex flex-col gap-4 bg-white rounded-md p-4">
+        <div className="md:col-span-2 flex flex-col gap-4 bg-white rounded-md p-4 h-fit">
           <p className="text-base text-[#181336] font-semibold">
             Upcoming Monthly Payroll
           </p>

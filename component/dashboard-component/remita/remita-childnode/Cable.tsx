@@ -111,7 +111,7 @@ const Cable = () => {
             you can create one time payment, recurring or Schedule payment
           </p>
         </span>
-        <div className="flex items-center space-x-3">
+        {/* <div className="flex items-center space-x-3">
           {" "}
           <button className="btn btn-md  bg-gray-200 hover:bg-gray-200 text-white text-sm normal-case">
             Make Payment
@@ -119,7 +119,7 @@ const Cable = () => {
           <button className="btn btn-md  border border-gray-400 bg-white hover:bg-white text-black text-sm normal-case">
             Cancel
           </button>
-        </div>
+        </div> */}
       </header>
       <div className="grid grid-cols-[300px_500px] gap-[2rem] items-start px-[2em] mt-5">
         <div className="flex items-center gap-[0.5rem]">
@@ -329,7 +329,7 @@ const Cable = () => {
             <div className="mt-4 space-y-3">
               <Button
                 htmlType="submit"
-                className="!h-[3rem] !bg-black w-full  text-white hover:!text-white"
+                className="!h-[3rem] !bg-black w-full !text-white hover:!text-white"
                 loading={isPaying}
               >
                 Make Payment

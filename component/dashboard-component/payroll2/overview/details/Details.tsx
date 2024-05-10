@@ -1,6 +1,6 @@
 "use client";
 import { Select } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import DetailsTab from "./DetailsTab";
 import { useRouter } from "next/navigation";
 import {
@@ -11,6 +11,8 @@ import AddIcon from "@/assets/icon/AddIcon";
 import {
   useGetSinglePayrollQuery,
   useTogglePayrollMutation,
+  useLazyGetPayrollDashboardAnalyticsQuery,
+  useLazyGetPayrollOverviewQuery,
 } from "@/services/payrollService";
 import { useAppSelector } from "@/store/hooks";
 import { useSearchParams } from "next/navigation";
@@ -19,9 +21,16 @@ const Details = () => {
   const params = useSearchParams();
   const { push } = useRouter();
   const { data, isLoading } = useGetSinglePayrollQuery(params.get("id"));
+  const [getAnalytics, { isLoading: isLoadingAnalytics, data: analytics }] =
+    useLazyGetPayrollOverviewQuery();
   const [togglePayroll, { isLoading: isTogglingPayroll }] =
     useTogglePayrollMutation();
   const profile = useAppSelector((store) => store?.user?.user);
+  useEffect(() => {
+    if (params.get("id")) {
+      getAnalytics({ id: params.get("id") });
+    }
+  }, [params.get("id")]);
   return (
     <section className="max-w-[1640px] flex flex-col p-4 h-screen overflow-y-scroll space-y-4 bg-[#FAFAFA]">
       <header className="flex justify-between items-center">
@@ -56,7 +65,7 @@ const Details = () => {
       </header>
       <div className="space-y-4">
         <div className="flex justify-between items-start ">
-          <div className="flex flex-col items-start space-y-4 ">
+          {/* <div className="flex flex-col items-start space-y-4 ">
             <h2 className="text-[18px] text-[#061A14] font-medium">
               Add employees and contractors
             </h2>
@@ -73,7 +82,7 @@ const Details = () => {
                 />
               </span>
             </span>
-          </div>
+          </div> */}
           {/* <button
           // onClick={() => setIsModalOpen(true)}
           className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
@@ -81,24 +90,51 @@ const Details = () => {
           + Run Payroll
         </button> */}
         </div>
-        {/* <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-[#181336]">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-[#181336]">
           <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
             <p className="text-base">Total Member</p>
-            <p className="text-[30px] font-semibold">62</p>
+            {isLoadingAnalytics ? (
+              <span className="loading loading-dots loading-xs"></span>
+            ) : (
+              <p className="text-[30px] font-semibold">
+                {Number(analytics?.data?.members || 0).toLocaleString()}
+              </p>
+            )}
           </span>
           <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
             <p className="text-base">Gross Amount</p>
-            <p className="text-[30px] font-semibold">N5,600,434.00</p>
+            {isLoadingAnalytics ? (
+              <span className="loading loading-dots loading-xs"></span>
+            ) : (
+              <p className="text-[30px] font-semibold">
+                &#8358;
+                {Number(analytics?.data?.gross_pay || 0).toLocaleString()}
+              </p>
+            )}
           </span>
           <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
             <p className="text-base">Total Deduction Amount</p>
-            <p className="text-[30px] font-semibold">N300,000.00</p>
+            {isLoadingAnalytics ? (
+              <span className="loading loading-dots loading-xs"></span>
+            ) : (
+              <p className="text-[30px] font-semibold">
+                &#8358;
+                {Number(analytics?.data?.deductions || 0).toLocaleString()}
+              </p>
+            )}
           </span>
           <span className="bg-white rounded-[4px] py-4 px-6 flex flex-col justify-between gap-6">
             <p className="text-base">Total net paid</p>
-            <p className="text-[30px] font-semibold">N5,300,434.00</p>
+            {isLoadingAnalytics ? (
+              <span className="loading loading-dots loading-xs"></span>
+            ) : (
+              <p className="text-[30px] font-semibold">
+                &#8358;
+                {Number(analytics?.data?.net_pay || 0).toLocaleString()}
+              </p>
+            )}
           </span>
-        </div> */}
+        </div>
         <div>
           <DetailsTab id={params.get("id")!} />
         </div>

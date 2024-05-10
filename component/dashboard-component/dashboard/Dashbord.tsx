@@ -170,7 +170,7 @@ const Dashbord = () => {
                 <span className="flex items-center space-x-3">
                   {" "}
                   <MdArrowOutward size={20} className="text-[#31CFD5]" />
-                  <p>Cash Inflow</p>
+                  <p>Daily Cash Inflow</p>
                 </span>
                 <p className="text-xl font-semibold">
                   &#8358;
@@ -218,7 +218,7 @@ const Dashbord = () => {
               <div>
                 <span className="flex items-center space-x-3">
                   <FiArrowDownLeft size={20} className="text-red-500" />
-                  <p>Cash Outflow</p>
+                  <p>Daily Cash Outflow</p>
                 </span>
                 <p className="text-xl font-semibold">
                   &#8358;

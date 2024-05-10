@@ -1,3 +1,4 @@
+import { logOut } from "@/store/userSlice";
 import {
   FetchArgs,
   FetchBaseQueryError,
@@ -23,7 +24,9 @@ const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   let result: any = await baseQuery(args, api, extraOptions);
   if (result?.error?.originalStatus || result?.error?.status === 401) {
-    console.log(result);
+    if (result?.error?.status === 401) {
+      api.dispatch(logOut());
+    }
     // if (result?.error?.data?.message !== "Invalid login") {
     //   notification.error({
     //     message: result?.error?.data?.message,

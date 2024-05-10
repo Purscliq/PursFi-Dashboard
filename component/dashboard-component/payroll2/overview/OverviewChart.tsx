@@ -86,7 +86,12 @@ const data = [
   },
 ];
 
-export default function OverviewChart() {
+export default function OverviewChart({
+  data,
+}: {
+  data: Array<Record<string, any>>;
+}) {
+  console.log(data);
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart

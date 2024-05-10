@@ -94,23 +94,23 @@ const EmployeeList = ({
     {
       title: (
         <span className="flex items-center  space-x-2">
-          <p>Gross</p>
+          <p>Bank</p>
           <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "gross",
+      dataIndex: "bankName",
       key: "gross",
     },
     {
       title: (
         <span className="flex items-center  space-x-2">
-          <p>Deduction</p>
+          <p>Job Role</p>
           <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "deduction",
+      dataIndex: "jobRole",
       key: "deduction",
-      render: (name) => <p className="text-red-500">{name}</p>,
+      render: (name) => <p className="capitalize">{name}</p>,
     },
     {
       title: (
@@ -119,8 +119,11 @@ const EmployeeList = ({
           <TableIcon className="ml-4" />
         </span>
       ),
-      dataIndex: "amount",
+      dataIndex: "salary",
       key: "amount",
+      render: (amount: string) => (
+        <p>&#8358;{Number(amount || 0).toLocaleString()}</p>
+      ),
     },
     {
       title: (
@@ -133,8 +136,8 @@ const EmployeeList = ({
       key: "status",
       render: (status) => (
         <p
-          className={`p-1 rounded-md w-fit text-sm ${
-            status === "paid" ? "bg-green-200" : "bg-red-200"
+          className={`p-1 rounded-md w-fit text-sm capitalize ${
+            status === "active" ? "bg-green-200" : "bg-red-200"
           }`}
         >
           {status}
