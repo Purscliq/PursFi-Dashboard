@@ -1,7 +1,7 @@
 "use client";
 import { TabsProps } from "antd";
 import AddIcon from "@/assets/icon/AddIcon";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   CustomButton as Button,
   CustomTabs as Tabs,
@@ -33,8 +33,18 @@ const Overview = () => {
       children: <PayrollTable />,
     },
   ];
+  const [date, setDate] = useState("");
   useEffect(() => {
-    console.log(upcomingPayroll);
+    const payrollDate = new Date(upcomingPayroll?.payoutDate);
+    payrollDate.setMonth(new Date().getMonth());
+    payrollDate.setFullYear(new Date().getFullYear());
+    setDate(
+      payrollDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      })
+    );
   }, [upcomingPayroll]);
   return (
     <section className="max-w-[1640px] flex flex-col p-4 h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA]">
@@ -94,41 +104,43 @@ const Overview = () => {
           </div>
         </div>
         {/* upcoming */}
-        <div className="md:col-span-2 flex flex-col gap-4 bg-white rounded-md p-4 h-fit">
-          <p className="text-base text-[#181336] font-semibold">
-            Upcoming Monthly Payroll
-          </p>
-          <span className="flex flex-col gap-3 justify-between p-3 rounded-md  bg-[#FAFAFA]">
-            <p className="text-[14px] text-[#515B6F]">Next Payroll</p>
-            <p className="text-[25px] text-[#181336] font-semibold">
-              {/* N5,600,434.00 */}
-              {upcomingPayroll?.name}
+        {upcomingPayroll?.name && (
+          <div className="md:col-span-2 flex flex-col gap-4 bg-white rounded-md p-4 h-fit">
+            <p className="text-base text-[#181336] font-semibold">
+              Upcoming Monthly Payroll
             </p>
-          </span>
-          <span className="flex flex-col gap-3 justify-between p-3 rounded-md  border border-[#B8C9C9]">
-            <span className="flex gap-4 justify-between">
-              <p className="text-[14px] text-[#515B6F]">Payroll Fee</p>
-              <p className="text-[12px] text-[#181336] font-semibold">
-                {Number(upcomingPayroll?.payableAmount || 0)}
+            <span className="flex flex-col gap-3 justify-between p-3 rounded-md  bg-[#FAFAFA]">
+              <p className="text-[14px] text-[#515B6F]">Next Payroll</p>
+              <p className="text-[25px] text-[#181336] font-semibold">
+                {/* N5,600,434.00 */}
+                {upcomingPayroll?.name}
               </p>
             </span>
-            <span className="flex gap-4 justify-between">
-              <p className="text-[14px] text-[#515B6F]">Run Date</p>
-              <p className="text-[12px] text-[#181336] font-semibold">
-                {upcomingPayroll?.payoutDate}
-              </p>
+            <span className="flex flex-col gap-3 justify-between p-3 rounded-md  border border-[#B8C9C9]">
+              <span className="flex gap-4 justify-between">
+                <p className="text-[14px] text-[#515B6F]">Payroll Fee</p>
+                <p className="text-[12px] text-[#181336] font-semibold">
+                  {Number(upcomingPayroll?.payableAmount || 0)}
+                </p>
+              </span>
+              <span className="flex gap-4 justify-between">
+                <p className="text-[14px] text-[#515B6F]">Run Date</p>
+                <p className="text-[12px] text-[#181336] font-semibold">
+                  {date}
+                </p>
+              </span>
+              <span className="flex gap-4 justify-between">
+                <p className="text-[14px] text-[#515B6F]">People</p>
+                <p className="text-[12px] text-[#181336] font-semibold">
+                  {upcomingPayroll?.members}
+                </p>
+              </span>
             </span>
-            <span className="flex gap-4 justify-between">
-              <p className="text-[14px] text-[#515B6F]">People</p>
-              <p className="text-[12px] text-[#181336] font-semibold">
-                {upcomingPayroll?.members}
-              </p>
-            </span>
-          </span>
-          <button className="text-[16px] text-black font-semibold p-3 rounded-md border border-[#B8C9C9]">
-            View Details
-          </button>
-        </div>
+            <button className="text-[16px] text-black font-semibold p-3 rounded-md border border-[#B8C9C9]">
+              View Details
+            </button>
+          </div>
+        )}
         {/* <button
           // onClick={() => setIsModalOpen(true)}
           className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
