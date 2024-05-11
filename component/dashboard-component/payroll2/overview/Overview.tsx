@@ -1,6 +1,7 @@
 "use client";
 import { TabsProps } from "antd";
 import AddIcon from "@/assets/icon/AddIcon";
+import { useEffect } from "react";
 import {
   CustomButton as Button,
   CustomTabs as Tabs,
@@ -11,11 +12,15 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import PayrollTable from "./PayrollTable";
 import OverviewChart from "./OverviewChart";
-import { useGetPayrollDashboardAnalyticsQuery } from "@/services/payrollService";
+import {
+  useGetPayrollDashboardAnalyticsQuery,
+  useGetNextPayrollAnalyticsQuery,
+} from "@/services/payrollService";
 
 const Overview = () => {
   const { push } = useRouter();
   const { data, isLoading } = useGetPayrollDashboardAnalyticsQuery({ id: 1 });
+  const { data: upcomingPayroll } = useGetNextPayrollAnalyticsQuery({});
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -28,6 +33,9 @@ const Overview = () => {
       children: <PayrollTable />,
     },
   ];
+  useEffect(() => {
+    console.log(upcomingPayroll);
+  }, [upcomingPayroll]);
   return (
     <section className="max-w-[1640px] flex flex-col p-4 h-screen overflow-y-scroll space-y-8 bg-[#FAFAFA]">
       <span className="md:flex justify-between gap-4 space-y-2 md:space-y-0">
@@ -93,25 +101,28 @@ const Overview = () => {
           <span className="flex flex-col gap-3 justify-between p-3 rounded-md  bg-[#FAFAFA]">
             <p className="text-[14px] text-[#515B6F]">Next Payroll</p>
             <p className="text-[25px] text-[#181336] font-semibold">
-              N5,600,434.00
+              {/* N5,600,434.00 */}
+              {upcomingPayroll?.name}
             </p>
           </span>
           <span className="flex flex-col gap-3 justify-between p-3 rounded-md  border border-[#B8C9C9]">
             <span className="flex gap-4 justify-between">
               <p className="text-[14px] text-[#515B6F]">Payroll Fee</p>
               <p className="text-[12px] text-[#181336] font-semibold">
-                N10,000.00
+                {Number(upcomingPayroll?.payableAmount || 0)}
               </p>
             </span>
             <span className="flex gap-4 justify-between">
               <p className="text-[14px] text-[#515B6F]">Run Date</p>
               <p className="text-[12px] text-[#181336] font-semibold">
-                25, Dec, 2023
+                {upcomingPayroll?.payoutDate}
               </p>
             </span>
             <span className="flex gap-4 justify-between">
               <p className="text-[14px] text-[#515B6F]">People</p>
-              <p className="text-[12px] text-[#181336] font-semibold">62</p>
+              <p className="text-[12px] text-[#181336] font-semibold">
+                {upcomingPayroll?.members}
+              </p>
             </span>
           </span>
           <button className="text-[16px] text-black font-semibold p-3 rounded-md border border-[#B8C9C9]">

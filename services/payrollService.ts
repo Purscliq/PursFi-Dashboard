@@ -144,6 +144,34 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       }),
       providesTags: ["payroll"],
     }),
+    getNextPayrollAnalytics: builder.query({
+      query: (body) => ({
+        url: `payroll/analytics`,
+        params: {
+          type: "history",
+        },
+      }),
+      transformResponse: (res: any) => {
+        return res?.data?.reduce(
+          (
+            accumulator: Record<string, any>,
+            currentValue: Record<string, any>
+          ) => {
+            const currentDate = new Date(currentValue?.payoutDate);
+            if (new Date() > currentDate) {
+              currentDate.setMonth(currentDate.getMonth() + 1);
+            }
+            if (currentDate <= new Date(accumulator?.payoutDate)) {
+              return currentValue;
+            } else {
+              return accumulator;
+            }
+          },
+          { ...res?.data[0] }
+        );
+      },
+      providesTags: ["payroll"],
+    }),
     getPayrollOverview: builder.query({
       query: (body) => ({
         url: `payroll/analytics/transaction`,
@@ -203,4 +231,5 @@ export const {
   useLazyGetPayrollAnalyticsQuery,
   useLazyGetPayrollDashboardAnalyticsQuery,
   useLazyGetPayrollOverviewQuery,
+  useGetNextPayrollAnalyticsQuery,
 } = payrollSlice;
