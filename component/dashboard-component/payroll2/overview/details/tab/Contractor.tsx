@@ -185,7 +185,13 @@ const Contractor = ({
             onClick={() => push(`/add-member?type=contractor&id=${id}`)}
             className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
           >
-            + Add Member
+            + Add Single Member
+          </button>
+          <button
+            onClick={() => push(`/add-member/many?id=${id}`)}
+            className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
+          >
+            + Add Multiple Member
           </button>
           <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
             <FilterIcon />

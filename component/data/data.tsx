@@ -57,6 +57,10 @@ export const sidebarData: MenuProps["items"] = [
         label: <Link href="/payroll-setup?step=1">Setup</Link>,
         key: "payroll-setup",
       },
+      {
+        label: <Link href="/payroll-settings">Setting</Link>,
+        key: "payroll-settings",
+      },
     ],
     // disabled: true,
   },
@@ -111,6 +115,7 @@ export const activeKeys = [
   "bill-payment",
   "payment",
   "payroll-setup",
+  "payroll-settings",
   "payroll",
   "transactions",
   "invoice",

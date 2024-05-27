@@ -16,6 +16,7 @@
     "antd": "^5.9.4",
     "dayjs": "^1.11.10",
     "next": "13.5.4",
+    "papaparse": "^5.4.1",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/papaparse": "^5.3.14",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",

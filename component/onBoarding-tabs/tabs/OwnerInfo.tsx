@@ -101,9 +101,9 @@ const OwnerInfo = ({
     e.preventDefault();
     for (const [key, value] of Object.entries({
       ...formData,
-      Email: user?.email,
-      RoleId: user?.roleId,
-      BusinessId: business?.id,
+      Email: user?.user?.email,
+      RoleId: user?.user?.roleId,
+      BusinessId: business?.business?.id,
     })) {
       dataBody.append(key, value);
     }

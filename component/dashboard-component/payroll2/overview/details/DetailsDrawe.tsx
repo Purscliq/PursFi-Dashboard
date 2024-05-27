@@ -119,11 +119,15 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({
                   <form className="grid grid-cols-1 gap-[1.5rem] px-[3%] mt-5">
                     <span className="flex items-center justify-between gap-[2rem]">
                       <span className="flex flex-col w-full">
-                        <label htmlFor="product">Monthly Wage</label>
-                        <TimePicker
-                          defaultOpenValue={dayjs("00:00:00", "HH:mm:ss")}
-                        />{" "}
-                        <p>total hours spend working</p>
+                        <label htmlFor="product">Net Pay</label>
+                        <CustomInputNumber
+                          name="amount"
+                          className="!w-full"
+                          prefix="&#8358;"
+                          placeholder=""
+                          disabled
+                          value={data?.data?.netPay}
+                        />
                       </span>
                       <span className="flex flex-col w-full">
                         <label htmlFor="bank">Total Amount</label>
@@ -135,22 +139,18 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({
                           disabled
                           value={data?.data?.salary}
                         />
-                        <p>total hours spend working</p>
                       </span>
                     </span>
-                    <p className="leading-tight font-semibold">
-                      + Add Salary Type{" "}
-                    </p>
                     <hr />
-                    <span className="flex flex-col w-full">
+                    {/* <span className="flex flex-col w-full">
                       <label htmlFor="bank">Tax Code</label>
                       <Input
                         className="!w-full"
                         placeholder="144444444444"
                         required
                       />
-                    </span>
-                    <span className="flex flex-col w-full">
+                    </span> */}
+                    {/* <span className="flex flex-col w-full">
                       <label htmlFor="bank">Deductions</label>
                       <Select
                         mode="multiple"
@@ -159,14 +159,14 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({
                         placeholder="Please select"
                       />
                     </span>
-                    <hr />
-                    <p className="leading-tight font-semibold">+ Add Bonus</p>
+                    <hr /> */}
+                    {/* <p className="leading-tight font-semibold">+ Add Bonus</p>
                     <p className="leading-tight font-semibold">
                       + Add Deduction
                     </p>
                     <p className="leading-tight font-semibold">
                       + Add Expenses
-                    </p>
+                    </p> */}
                   </form>
                 </>
               )}
@@ -177,48 +177,52 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({
                     <span className="flex justify-between items-center">
                       <div className="text-slate-500 pr-2">Gross pay:</div>
                       <div className="leading-tight font-semibold">
-                        &#8358;200,000
+                        &#8358;
+                        {Number(data?.data?.grossPay || 0).toLocaleString(
+                          "en-US"
+                        )}
                       </div>
                     </span>
                     <span className="flex justify-between items-center">
                       <div className="text-slate-500 pr-2">Salary :</div>
                       <div className="leading-tight font-semibold">
-                        &#8358;80,000
+                        &#8358;
+                        {Number(data?.data?.salary || 0).toLocaleString(
+                          "en-US"
+                        )}
                       </div>
                     </span>
                     <span className="flex justify-between items-center">
-                      <div className="text-slate-500 pr-2">Bonuse:</div>
+                      <div className="text-slate-500 pr-2">Bonus:</div>
                       <div className="leading-tight font-semibold text-green-500">
-                        &#8358;30,000
+                        &#8358;
+                        {Number(data?.data?.bonus || 0).toLocaleString("en-US")}
                       </div>
                     </span>
-                    <span className="flex justify-between items-center">
-                      <div className="text-slate-500 pr-2">Transportation:</div>
-                      <div className="leading-tight font-semibold text-red-500">
-                        -&#8358;10,000
-                      </div>
-                    </span>
-                    <span className="flex justify-between items-center">
-                      <div className="text-slate-500 pr-2">Lunch Plan:</div>
-                      <div className="leading-tight font-semibold text-red-500">
-                        -&#8358;10,000
-                      </div>
-                    </span>
-                    <span className="flex justify-between items-center">
-                      <div className="text-slate-500 pr-2">Income Tax:</div>
-                      <div className="leading-tight font-semibold text-red-500 break-words">
-                        -&#8358;10,000
-                      </div>
-                    </span>
+                    {data?.data?.deductions?.map((e: any, i: any) => (
+                      <span className="flex justify-between items-center">
+                        <div className="text-slate-500 pr-2 capitalize">
+                          {e?.name}:
+                        </div>
+                        <div className="leading-tight font-semibold text-red-500">
+                          -&#8358;
+                          {Number(e?.amount || 0).toLocaleString("en-US")}
+                        </div>
+                      </span>
+                    ))}
+
                     <span className="flex justify-between items-center">
                       <div className="text-slate-500 pr-2">Net pay:</div>
                       <div className="leading-tight font-semibold">
-                        - &#8358;2,000
+                        &#8358;
+                        {Number(data?.data?.netPay || 0).toLocaleString(
+                          "en-US"
+                        )}
                       </div>
                     </span>
                     <div className="border border-gray-200"></div>
                   </div>
-                  <div className="p-4 space-y-4 mt-5 items-center">
+                  {/* <div className="p-4 space-y-4 mt-5 items-center">
                     <p className="leading-tight font-semibold">
                       Employer Contribution
                     </p>
@@ -238,7 +242,7 @@ const DeatilsDrawe: React.FC<PayrollDetailsProps> = ({
                         &#8358;80,000
                       </div>
                     </span>
-                  </div>
+                  </div> */}
                   <div className="my-6 space-y-4">
                     <Button
                       type="primary"
