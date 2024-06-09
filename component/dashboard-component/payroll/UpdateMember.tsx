@@ -304,7 +304,7 @@ const UpdateMember = () => {
             </label>
             <DatePicker
               onChange={(_, date) => {
-                setFormData((prev) => ({ ...prev, hireDate: date }));
+                setFormData((prev) => ({ ...prev, hireDate: date as string }));
               }}
               className="!w-full"
               placeholder="Hire Date"
