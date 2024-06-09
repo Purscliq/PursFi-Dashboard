@@ -1,0 +1,17 @@
+.ant-pagination-item-active {
+    background-color: black !important; 
+    border: 1px solid black !important;
+  }
+.ant-pagination-item {
+    border: 1px solid black !important;
+  }
+  .ant-table-tbody > tr > td {
+    border: none !important;
+  }
+  .ant-table-thead > tr > th {
+    border: none !important;
+  }
+  
+  .ant-pagination-item-active a {
+    color: white !important; 
+  }

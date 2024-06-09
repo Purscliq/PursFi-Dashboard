@@ -28,6 +28,18 @@ export const sidebarData: MenuProps["items"] = [
     label: <Link href="/payment">Payment</Link>,
     icon: <AiOutlineIdcard className=" font-bold" />,
     key: "payment",
+    children: [
+      {
+        label: <Link href="/payment">Payment</Link>,
+        icon: "",
+        key: "payment/payment",
+      },
+      {
+        label: <Link href="/payment/batch">Batch Payment</Link>,
+        icon: "",
+        key: "payroll/settings",
+      },
+    ],
   },
   {
     label: "Payroll",
