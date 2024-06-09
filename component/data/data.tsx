@@ -37,6 +37,10 @@ export const sidebarData: MenuProps["items"] = [
         label: <Link href="/bill-payment">Bill Payment</Link>,
         key: "bill-payment",
       },
+      {
+        label: <Link href="/payment/batch">Batch Payment</Link>,
+        key: "payment/batch",
+      },
     ],
   },
 

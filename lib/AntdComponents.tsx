@@ -37,6 +37,8 @@ import {
   Collapse,
   CollapseProps,
   CollapsePanelProps,
+  Steps,
+  StepsProps,
 } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { Archivo } from "next/font/google";
@@ -268,5 +270,33 @@ export const CustomCollapse = ({ ...props }: CollapseProps) => (
 export const CustomCollapsePanel = ({ ...props }: CollapsePanelProps) => (
   <ConfigProvider theme={{ token: { ...primaryConfig } }}>
     <Collapse.Panel {...props} />
+  </ConfigProvider>
+);
+
+export const CustomSteps = ({ ...props }: StepsProps) => (
+  <ConfigProvider
+    theme={{
+      token: { borderRadius: 5, ...primaryConfig },
+    }}
+  >
+    <Steps {...props} />
+  </ConfigProvider>
+);
+
+export const CustomDragger = ({ ...props }: UploadProps) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        borderRadius: 5,
+        ...primaryConfig,
+      },
+    }}
+  >
+    <Upload.Dragger
+      {...props}
+      style={{
+        border: "3px dashed #000000"
+      }}
+    />
   </ConfigProvider>
 );
