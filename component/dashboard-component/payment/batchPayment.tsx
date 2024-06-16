@@ -11,9 +11,20 @@ import Step2 from "./batch-tabs/step2";
 import Step3 from "./batch-tabs/step3";
 import StepSuccess from "@/assets/icon/StepSuccess";
 
+export interface DataType {
+  key: string;
+  accountname: string;
+  accountnumber: string;
+  bankname: string;
+  date: string;
+  status: string;
+  amount: string;
+}
 
 const BatchPayment = () => {
     const [current, setCurrent] = useState<number>(0);
+    const [csvData, setCsvData] = useState('');
+    const [data, setData] = useState<DataType[]>([]);
     const next = () => {
       setCurrent(current + 1);
     };
@@ -21,6 +32,7 @@ const BatchPayment = () => {
     const prev = () => {
       setCurrent(current - 1);
     };
+    console.log(csvData)
     const steps = useMemo(
         () => [
             {
@@ -30,7 +42,7 @@ const BatchPayment = () => {
                   <p className="text-[14px]">Step 1/3</p>
                 </div>
               ),
-              content: <Step1 next={next}/>,
+              content: <Step1 next={next} setCsvData={setCsvData} />,
               icon:
                 current > 0 ? (
                   <StepSuccess className="h-[56px]" />
@@ -46,7 +58,7 @@ const BatchPayment = () => {
                     <p className="text-[14px]">Step 2/3</p>
                   </div>
                 ),
-                content: <Step2 next={next}/>,
+                content: <Step2 next={next} csvData={csvData} data={data} setData={setData}/>,
                 icon:
                   current > 1 ? (
                     <StepSuccess className="h-[56px]" />
@@ -61,7 +73,7 @@ const BatchPayment = () => {
                     <p className="text-[14px]">Step 3/3</p>
                   </div>
                 ),
-                content: <Step3/>,
+                content: <Step3 data={data}/>,
                 icon:
                   current == 2 ? (
                     <StepSuccess className="h-[56px]" />
@@ -70,7 +82,7 @@ const BatchPayment = () => {
                   ),
               },
           ],
-          [current]
+          [current, data, setData]
     ) 
   const date = new Date();
   return (

@@ -1,14 +1,22 @@
+import React, { useEffect, useState, useCallback } from 'react';
 import TableIcon from "@/assets/icon/TableIcon";
 import {
     CustomButton as Button,
     CustomTable as Table
 } from "@/lib/AntdComponents";
+import { useBulkTransferMutation, useGetBanksQuery, useVerifyAccountMutation } from "@/services/disbursementService";
+import { ColumnsType } from "antd/es/table";
+import { LoadingOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Checkbox, message } from 'antd';
+import { useAppSelector } from '@/store/hooks';
+import { CloseOutlined } from '@ant-design/icons';
 
-import { ColumnsType } from "antd/es/table"
-
-
+interface Props {
+    data: DataType[];
+}
 
 export interface DataType {
+    key: string;
     accountname: string;
     accountnumber: string;
     bankname: string;
@@ -16,17 +24,26 @@ export interface DataType {
     status: string;
     amount: string;
 }
-const Step3 = () => {
-    const dataa = [
-        {
-            accountname: "Samuel woodfree",
-            accountnumber: "1020123457",
-            bankname: "UBA",
-            date: "13 July, 2021",
-            status: "Pending",
-            amount: "N 44,500",
-        }
-    ]
+
+const Step3: React.FC<Props> = ({ data }) => {
+    const { data: banks, isLoading: bankLoading, isSuccess: bankSuccess, isError: bankError } = useGetBanksQuery({});
+    const [verifyAccount, { }] = useVerifyAccountMutation({});
+    const [bulkTransfer, { isLoading: bulkLoading }] = useBulkTransferMutation({});
+    const [currentVerifyingAccount, setCurrentVerifyingAccount] = useState<string | null>(null);
+    const [accountStatuses, setAccountStatuses] = useState<{ [key: string]: string }>({});
+    const [tableData, setTableData] = useState<DataType[]>(data);
+    const bussinesId = useAppSelector((state) => state.user.user.businessId);
+
+    const handleDelete = (key: string) => {
+        setTableData(prevData => prevData.filter(item => item.key !== key));
+    };
+
+    const CustomCheckbox: React.FC<{ record: DataType }> = ({ record }) => (
+        <span className="custom-checkbox border-2 border-black rounded-sm flex items-center justify-center" onClick={() => handleDelete(record.key)} style={{ cursor: 'pointer' }}>
+             <CloseOutlined className="cancel-icon" style={{strokeWidth:"5px"}} /> 
+        </span>
+    );
+
     const columns: ColumnsType<DataType> = [
         {
             title: (
@@ -35,14 +52,13 @@ const Step3 = () => {
                     <TableIcon />
                 </span>
             ),
-            dataIndex: "createdAt",
-            render: (date) =>
-                `${new Date(date).toLocaleString("en-US", {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                })}`,
-
+            dataIndex: "date",
+            render: (date, record) => (
+                <span className="flex items-center space-x-2">
+                    <CustomCheckbox record={record} />
+                    <span>{date}</span>
+                </span>
+            ),
         },
         {
             title: (
@@ -52,9 +68,7 @@ const Step3 = () => {
                 </span>
             ),
             dataIndex: "accountname",
-            render: (accountname) =>
-                `${accountname}`,
-
+            render: (accountname) => `${accountname}`,
         },
         {
             title: (
@@ -64,21 +78,17 @@ const Step3 = () => {
                 </span>
             ),
             dataIndex: "bankname",
-            render: (bankname) =>
-                `${bankname}`,
-
+            render: (bankname) => `${bankname}`,
         },
         {
             title: (
-                <span className="flex items-center space-x-2 text-[#7C8493] text-base">
+                <span className="flex items-center text-[#7C8493] text-base">
                     <p>Account Number</p>
                     <TableIcon />
                 </span>
             ),
             dataIndex: "accountnumber",
-            render: (accountnumber) =>
-                `${accountnumber}`,
-
+            render: (accountnumber) => `${accountnumber}`,
         },
         {
             title: (
@@ -88,8 +98,7 @@ const Step3 = () => {
                 </span>
             ),
             dataIndex: "amount",
-            render: (amount) =>
-                `${amount}`,
+            render: (amount) => `${amount}`,
         },
         {
             title: (
@@ -99,26 +108,99 @@ const Step3 = () => {
                 </span>
             ),
             dataIndex: "status",
-            render: (status) =>
-                <span className="p-[7%] rounded-[80px] bg-[#FFD03A]/[10%] text-[#FFD03A] text-center  text-[14px] font-[600]">
-                    {status}
-                </span>,
+            render: (status, record) => (
+                currentVerifyingAccount === record.key ? (
+                    <span className="p-[7%] text-[#FFD03A] text-center text-[14px] font-[600]">
+                        <LoadingOutlined style={{ fontSize: 24 }} spin />
+                    </span>
+                ) : (
+                    <span className={`p-[7%] rounded-[80px] text-center text-[14px] font-[600] ${accountStatuses[record.key] === 'Verified' ? 'bg-green-100 text-green-600 !text-[14px]' :
+                        accountStatuses[record.key] === 'Failed' ? 'bg-red-100 text-red-600' :
+                            'bg-[#FFD03A]/[10%] text-[#FFD03A]'
+                        }`}>
+                        {accountStatuses[record.key] || status}
+                    </span>
+                )
+            ),
         },
+    ];
 
-    ]
+    const verifyAccounts = useCallback(async () => {
+        if (bankSuccess && data.length > 0 && banks?.length > 0) {
+            for (const item of data) {
+                const matchingBank = banks.find((bank: any) => bank.label.trim().toLowerCase() === item.bankname.trim().toLowerCase());
+                if (matchingBank) {
+                    setCurrentVerifyingAccount(item.key);  // Set the current verifying account number
+                    const payload = {
+                        bankCode: matchingBank.value,
+                        accountNumber: item.accountnumber,
+                        currency: 'NGN',
+                    };
+                    try {
+                        const response = await verifyAccount(payload).unwrap();
+                        const responseAccountName = response.data?.data?.trim().toLowerCase() || '';
+                        const isAccountNameMatched = responseAccountName === item.accountname.trim().toLowerCase();
+                        setAccountStatuses(prev => ({ ...prev, [item.key]: isAccountNameMatched ? 'Verified' : 'Failed' }));
+                    } catch (error) {
+                        setAccountStatuses(prev => ({ ...prev, [item.key]: 'Failed' }));
+                    }
+                    setCurrentVerifyingAccount(null);  // Reset the current verifying account number
+                }
+            }
+        }
+    }, [bankSuccess, data, banks, verifyAccount]);
+
+    const handleBulkTransfer = async () => {
+        const verifiedTransfers = data.filter(item => accountStatuses[item.key] === 'Verified').map(item => {
+            const matchingBank = banks.find((bank: any) => bank.label.trim().toLowerCase() === item.bankname.trim().toLowerCase());
+            return {
+                bankCode: matchingBank?.value || '',
+                accountNumber: item.accountnumber,
+                amount: item.amount,
+                bankName: item.bankname,
+                narration: `Payment to ${item.accountname}`
+            };
+        });
+
+        if (verifiedTransfers.length > 0) {
+            const payload = {
+                businessId: bussinesId, // replace with actual business ID
+                currency: 'NGN',
+                transfers: verifiedTransfers
+            };
+
+            try {
+                await bulkTransfer(payload).unwrap();
+                message.success("Batch payment sent successfully", 5);
+                // Handle success (e.g., show a success message or redirect)
+            } catch (error) {
+                message.error("Batch payment failed", 5);
+                // Handle error (e.g., show an error message)
+            }
+        } else {
+            // Handle case where no transfers are verified
+        }
+    };
+
+    useEffect(() => {
+        verifyAccounts();
+    }, [verifyAccounts]);
+
     return (
-        <section className=" mt-5">
-            <div className=" flex justify-end">
-                <Button className=" bg-black font-normal border-0 text-white text-base py-5 !hover:text-black">Make Payment</Button>
+        <section className="mt-5">
+            <div className="flex justify-end">
+                <Button loading={bulkLoading} className="bg-black font-normal border-0 text-white text-base py-5 !hover:text-black" onClick={handleBulkTransfer}>Make Payment</Button>
             </div>
-            <div className=" bg-white px-2 py-5 mt-5">
+            <div className="bg-white px-2 py-5 mt-5">
                 <Table
                     columns={columns}
-                    dataSource={dataa}
+                    dataSource={tableData}
+                    rowKey="key"
+                    pagination={{ pageSize: 5 }}
                 />
             </div>
         </section>
-    )
+    );
 }
 
-export default Step3
+export default Step3;
