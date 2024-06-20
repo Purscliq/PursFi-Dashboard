@@ -42,6 +42,13 @@ const disbursementSlice = ApiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
+    bulkTransfer: builder.mutation({
+      query: (body) => ({
+        url: "disbursement/bulk/bank/transfer",
+        body,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -51,4 +58,5 @@ export const {
   useGetBanksQuery,
   useVerifyAccountMutation,
   useSingleTransferMutation,
+  useBulkTransferMutation
 } = disbursementSlice;
