@@ -32,6 +32,7 @@ const Step3: React.FC<Props> = ({ data }) => {
     const [currentVerifyingAccount, setCurrentVerifyingAccount] = useState<string | null>(null);
     const [accountStatuses, setAccountStatuses] = useState<{ [key: string]: string }>({});
     const [tableData, setTableData] = useState<DataType[]>(data);
+    const [isVerifying, setIsVerifying] = useState<boolean>(false);
     const bussinesId = useAppSelector((state) => state.user.user.businessId);
 
     const handleDelete = (key: string) => {
@@ -127,6 +128,7 @@ const Step3: React.FC<Props> = ({ data }) => {
 
     const verifyAccounts = useCallback(async () => {
         if (bankSuccess && data.length > 0 && banks?.length > 0) {
+            setIsVerifying(true);
             for (const item of data) {
                 const matchingBank = banks.find((bank: any) => bank.label.trim().toLowerCase() === item.bankname.trim().toLowerCase());
                 if (matchingBank) {
@@ -147,6 +149,7 @@ const Step3: React.FC<Props> = ({ data }) => {
                     setCurrentVerifyingAccount(null);  // Reset the current verifying account number
                 }
             }
+            setIsVerifying(false);
         }
     }, [bankSuccess, data, banks, verifyAccount]);
 
@@ -158,7 +161,7 @@ const Step3: React.FC<Props> = ({ data }) => {
                 accountNumber: item.accountnumber,
                 amount: item.amount,
                 bankName: item.bankname,
-                narration: `Payment to ${item.accountname}`
+                narration: `Payment to ${item.accountname}`,
             };
         });
 
@@ -166,7 +169,9 @@ const Step3: React.FC<Props> = ({ data }) => {
             const payload = {
                 businessId: bussinesId, // replace with actual business ID
                 currency: 'NGN',
-                transfers: verifiedTransfers
+                 transaction_category: "debit",
+                transfers: verifiedTransfers,
+                
             };
 
             try {
@@ -189,7 +194,14 @@ const Step3: React.FC<Props> = ({ data }) => {
     return (
         <section className="mt-5">
             <div className="flex justify-end">
-                <Button loading={bulkLoading} className="bg-black font-normal border-0 text-white text-base py-5 !hover:text-black" onClick={handleBulkTransfer}>Make Payment</Button>
+                <Button 
+                    loading={bulkLoading} 
+                    className="bg-black font-normal border-0 text-white text-base py-5 !hover:text-black" 
+                    onClick={handleBulkTransfer} 
+                    disabled={isVerifying}
+                >
+                    {isVerifying ? 'Verifying...' : 'Batch Payment'}
+                </Button>
             </div>
             <div className="bg-white px-2 py-5 mt-5">
                 <Table

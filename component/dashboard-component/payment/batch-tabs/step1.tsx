@@ -14,10 +14,6 @@ const Step1: React.FC<Props> = ({ next, setCsvData }) => {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const handleNext = () => {
-    next();
-  };
-
   const simulateProgress = () => {
     let simulatedProgress = 0;
     const interval = setInterval(() => {
@@ -46,6 +42,7 @@ const Step1: React.FC<Props> = ({ next, setCsvData }) => {
         message.success(`${file.name} file uploaded successfully`);
         setUploading(false);
         setProgress(100); // Complete the progress bar
+        next();
       }, 1000); // Simulate a delay of 1 second
     };
     reader.readAsText(file);
@@ -95,10 +92,6 @@ const Step1: React.FC<Props> = ({ next, setCsvData }) => {
         )}
         </div>
       </div>
-
-      <Button onClick={handleNext} disabled={uploading}>
-        Next
-      </Button>
     </section>
   );
 };
