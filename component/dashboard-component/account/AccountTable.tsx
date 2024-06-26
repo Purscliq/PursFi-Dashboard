@@ -257,7 +257,7 @@ const AccountTable = () => {
         >
           <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
             <FilterIcon />
-            <p className="text-[#202430] text-[16px] font-[500]">filter</p>
+            <p className="text-white text-[16px] font-[500]">filter</p>
           </span>
         </div>
       </div>

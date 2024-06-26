@@ -48,7 +48,6 @@ const TransactionHistoryTable = () => {
     })
       .unwrap()
       .then((res) => {
-        console.log(res?.data.total);
         setTableParams({
           ...tableParams,
           pagination: {

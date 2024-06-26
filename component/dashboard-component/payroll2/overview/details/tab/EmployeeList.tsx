@@ -17,57 +17,6 @@ interface EmployeeData {
   amount: string;
   status: string;
 }
-const data: EmployeeData[] = [
-  {
-    key: "1",
-    firstName: "John",
-    gross: "₦2000",
-    deduction: "₦500",
-    amount: "₦1500",
-    status: "paid",
-  },
-  {
-    key: "2",
-    firstName: "Alice",
-    gross: "₦2500",
-    deduction: "₦600",
-    amount: "₦1900",
-    status: "unpaid",
-  },
-  {
-    key: "3",
-    firstName: "Bob",
-    gross: "₦1800",
-    deduction: "₦400",
-    amount: "₦1400",
-    status: "unpaid",
-  },
-  {
-    key: "4",
-    firstName: "Emma",
-    gross: "₦3000",
-    deduction: "₦700",
-    amount: "₦2300",
-    status: "paid",
-  },
-  {
-    key: "5",
-    firstName: "Michael",
-    gross: "₦2200",
-    deduction: "₦300",
-    amount: "₦1900",
-    status: "unpaid",
-  },
-  {
-    key: "6",
-    firstName: "Sophia",
-    gross: "₦2700",
-    deduction: "₦550",
-    amount: "₦2150",
-    status: "paid",
-  },
-];
-
 const EmployeeList = ({
   data,
   isLoading,
@@ -184,7 +133,13 @@ const EmployeeList = ({
             onClick={() => push(`/add-member?type=employee&id=${id}`)}
             className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
           >
-            + Add Member
+            + Add Single Member
+          </button>
+          <button
+            onClick={() => push(`/add-member/many?id=${id}`)}
+            className="btn btn-md  bg-black hover:bg-black text-white text-sm normal-case"
+          >
+            + Add Multiple Member
           </button>
           <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
             <FilterIcon />

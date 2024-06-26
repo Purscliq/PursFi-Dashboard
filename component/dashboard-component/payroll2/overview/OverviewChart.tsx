@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   Cell,
   XAxis,
   YAxis,
@@ -91,28 +91,33 @@ export default function OverviewChart({
 }: {
   data: Array<Record<string, any>>;
 }) {
-  console.log(data);
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <BarChart
-        width={500}
-        height={300}
+      <AreaChart
+        width={530}
+        height={250}
         data={data}
-        margin={{
-          top: 20,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
+        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
         <YAxis />
+        <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
-        <Legend />
-        <Bar dataKey="totalPayment" stackId="a" fill="#D4EBEB" />
-        <Bar dataKey="deductionAmount" stackId="a" fill="#000" />
-      </BarChart>
+        <Area
+          type="monotone"
+          dataKey="totalPayment"
+          stroke="#D4EBEB"
+          fillOpacity={1}
+          fill="url(#colorUv)"
+        />
+        <Area
+          type="monotone"
+          dataKey="deductionAmount"
+          stroke="#000"
+          fillOpacity={1}
+          fill="url(#colorUv)"
+        />
+      </AreaChart>
     </ResponsiveContainer>
   );
 }
