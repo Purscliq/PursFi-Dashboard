@@ -41,7 +41,7 @@ const Step3: React.FC<Props> = ({ data }) => {
 
     const CustomCheckbox: React.FC<{ record: DataType }> = ({ record }) => (
         <span className="custom-checkbox border-2 border-black rounded-sm flex items-center justify-center" onClick={() => handleDelete(record.key)} style={{ cursor: 'pointer' }}>
-             <CloseOutlined className="cancel-icon" style={{strokeWidth:"5px"}} /> 
+            <CloseOutlined className="cancel-icon" style={{ strokeWidth: "5px" }} />
         </span>
     );
 
@@ -169,9 +169,9 @@ const Step3: React.FC<Props> = ({ data }) => {
             const payload = {
                 businessId: bussinesId, // replace with actual business ID
                 currency: 'NGN',
-                 transaction_category: "debit",
+                transactionCategory: "debit",
                 transfers: verifiedTransfers,
-                
+
             };
 
             try {
@@ -189,15 +189,18 @@ const Step3: React.FC<Props> = ({ data }) => {
 
     useEffect(() => {
         verifyAccounts();
-    }, [verifyAccounts]);
+        if (bankError) {
+            message.error("faile to fetch banks")
+        }
+    }, [verifyAccounts, bankError]);
 
     return (
         <section className="mt-5">
             <div className="flex justify-end">
-                <Button 
-                    loading={bulkLoading} 
-                    className="bg-black font-normal border-0 text-white text-base py-5 !hover:text-black" 
-                    onClick={handleBulkTransfer} 
+                <Button
+                    loading={bulkLoading}
+                    className="bg-black font-normal border-0 text-white text-base py-5 !hover:text-black"
+                    onClick={handleBulkTransfer}
                     disabled={isVerifying}
                 >
                     {isVerifying ? 'Verifying...' : 'Batch Payment'}
