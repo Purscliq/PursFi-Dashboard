@@ -59,14 +59,14 @@ const Step1: React.FC<Props> = ({ next, setCsvData }) => {
 
   return (
     <section className="bg-white mt-5">
-      <div className="flex justify-between p-5 items-center">
+      <div className=" md:flex  justify-between p-5 items-center">
         <div className="text-left max-w-[300px]">
           <h2 className="font-medium text-2xl">Upload Batch Payment</h2>
           <p className="text-[#515B6F] text-base">
             Upload the payment file, including the amount, bank source code, bank name, account name, bank name.
           </p>
         </div>
-        <div className=' flex flex-col w-[60%]'>
+        <div className=' flex flex-col w-full mt-5 md:mt-0 md:w-[60%]'>
         <Dragger
           className="w-full h-[150px]"
           beforeUpload={handleFileUpload}
