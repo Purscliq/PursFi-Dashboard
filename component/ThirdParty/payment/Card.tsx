@@ -21,7 +21,7 @@ const Card: React.FC<Data> = ({businessId, email}) => {
   })
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setData({
-      ...data,
+      ...data, 
       amount: e.target.value
     });
   };
