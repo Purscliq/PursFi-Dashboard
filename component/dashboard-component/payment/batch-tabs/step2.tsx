@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, InputNumber } from 'antd';
+import { Form, Input, InputNumber, message } from 'antd';
 import TableIcon from "@/assets/icon/TableIcon";
 import { CustomButton as Button, CustomTable as Table } from "@/lib/AntdComponents";
 import { ColumnsType, ColumnType } from "antd/es/table";
 import Papa from 'papaparse';
 import { DataType } from '../batchPayment';
-import "../../../customStyles/soa.css"
+import "@/component/customStyles/soa.css"
 
 interface Props {
     next: () => void;
@@ -30,6 +30,16 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
                 header: true,
                 skipEmptyLines: true,
                 complete: (result) => {
+
+                    const requiredHeaders = ['Date', 'Account Name', 'Bank Name', 'Account Number', 'Amount'];
+                    const headers = result.meta.fields || [];
+
+                    const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
+
+                    if (missingHeaders.length > 0) {
+                        message.error(`Missing required headers: ${missingHeaders.join(', ')}`);
+                        return;
+                    }
                     const parsedData = (result.data as any[]).map((item, index) => ({
                         key: item.key.toString(),
                         date: item['Date'],
@@ -218,6 +228,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
             <div className="flex justify-end">
                 <Button className="bg-[#F9FFFF] font-normal border-0 text-[#899A9A] text-base py-5 !hover:text-black"
                 onClick={handleNext}
+                disabled={data.length === 0}
                 >
                     Batch Payment
                 </Button>
@@ -235,6 +246,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
                         columns={mergedColumns as ColumnsType<DataType>}
                         rowClassName="editable-row"
                         pagination={{ pageSize: 10 }}
+                        className='  overflow-x-scroll max-w-[300px] md:max-w-full'
                     />
                 </Form>
             </div>

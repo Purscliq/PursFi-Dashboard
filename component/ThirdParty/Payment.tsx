@@ -17,11 +17,7 @@ import { GrLock } from "react-icons/gr";
 import Card from "./payment/Card";
 import Bank from "./payment/Bank";
 
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
+
 const PaymentGateway = () => {
   const [activePanel, setActivePanel] = useState("1");
   const searchParams = useSearchParams();
@@ -60,13 +56,12 @@ const PaymentGateway = () => {
           </nav>
           <div className="bg-white rounded-[4px] font-archivo shadow-[0px 4px 8px rgba(0, 0, 0, 0.1)] py-[30px] px-[15px] md:p-[20px] w-[90%] md:w-[45%] midmax:w-[40%] max-w-[500px] m-auto">
             <h6 className="text-[#000000] text-[28px] font-[700]">
-              PURSBUSINESS LTD
+              {data?.data?.accountName}
             </h6>
             <div className="text-[#515B6F] flex justify-between items-end">
               <span className="font-[700] text-[12px]">
-                sikirurazak1@gmail.com
+              {data?.data?.email}
               </span>
-              <span className="font-[900] text-[18px]">NGN5070</span>
             </div>
             <Collapse
               accordion
@@ -90,7 +85,7 @@ const PaymentGateway = () => {
                 showArrow={false}
                 key="1"
               >
-                <Card />
+                <Card businessId={data?.data?.businessId}  email={data?.data?.email}/>
               </Panel>
               <Panel
                 header={
@@ -110,6 +105,8 @@ const PaymentGateway = () => {
               >
                 <Bank />
               </Panel>
+
+              {/** 
               <Panel
                 header={
                   <div
@@ -126,6 +123,7 @@ const PaymentGateway = () => {
               >
                 <p>{text}</p>
               </Panel>
+              */}
             </Collapse>
             <div className="flex items-center gap-1 justify-center my-1 text-[#515B6F] text-[12px]">
               <GrLock />

@@ -14,6 +14,7 @@ const Bank = () => {
   const searchParams = useSearchParams();
   const [fetchWallet, { isLoading, data, isUninitialized }] =
     useLazyGetWalletDetailsQuery();
+  
   useEffect(() => {
     if (searchParams.get("businessId"))
       fetchWallet(searchParams.get("businessId"))
