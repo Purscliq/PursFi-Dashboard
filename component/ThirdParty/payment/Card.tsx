@@ -13,7 +13,7 @@ interface Data {
 const Card: React.FC<Data> = ({businessId, email}) => {
   const [checkout, {isLoading: laoding}] = useCardCheckoutMutation()
 
-  const [data, setData] = useState({
+  const [data, setData] = useState({ 
     email: email,
     amount: "",
     callBack: "https://app.pursfinance.com/cardReceipt",
