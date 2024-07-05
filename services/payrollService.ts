@@ -1,7 +1,12 @@
 import { ApiSlice } from "./Api";
 
 const payrollSlice = ApiSlice.enhanceEndpoints({
-  addTagTypes: ["payroll" as const, "beneficiaries" as const],
+  addTagTypes: [
+    "payroll" as const,
+    "beneficiaries" as const,
+    "single-payroll" as const,
+    "single-beneficiary" as const,
+  ],
 }).injectEndpoints({
   endpoints: (builder) => ({
     createPayroll: builder.mutation({
@@ -41,23 +46,41 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       }),
     }),
     getBeneficiaries: builder.query({
-      query: () => ({
-        url: "payroll/beneficiaries",
+      query: ({ id, count, type }) => ({
+        url: "payroll/employees/contractor",
+        params: {
+          payrollId: id,
+          count: count,
+          beneficiaryType: type,
+        },
       }),
       providesTags: ["beneficiaries"],
     }),
-    getPayroll: builder.query({
-      query: () => ({
-        url: "payroll",
+    togglePayroll: builder.mutation({
+      query: (body) => ({
+        url: "payroll/toggle",
+        body,
+        method: "POST",
       }),
-      transformResponse: (res: Record<string, any>) => {
-        const arrList = res?.data?.map((e: Record<string, string>) => ({
-          label: e?.title,
-          value: e?.reference,
-          ...e,
-        }));
-        return arrList;
-      },
+      invalidatesTags: ["single-payroll"],
+    }),
+    getPayroll: builder.query({
+      query: (body) => ({
+        url: "payroll",
+        params: {
+          count: body?.count,
+        },
+      }),
+      providesTags: ["payroll"],
+    }),
+    getSinglePayroll: builder.query({
+      query: (id) => ({
+        url: "payroll/single",
+        params: {
+          payrollId: id,
+        },
+      }),
+      providesTags: ["single-payroll"],
     }),
     getPayrollBeneficiaries: builder.query({
       query: (payrollId) => ({
@@ -72,10 +95,14 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
       providesTags: ["beneficiaries"],
     }),
     getSingleBeneficiary: builder.query({
-      query: (id) => ({
-        url: `payroll/single/beneficiary?memberId=${id}`,
+      query: (body) => ({
+        url: `payroll/single/beneficiary`,
+        params: {
+          payrollId: body?.payrollId,
+          beneficiaryId: body?.beneficiaryId,
+        },
       }),
-      providesTags: ["beneficiaries"],
+      providesTags: ["single-beneficiary"],
     }),
     updateBeneficiary: builder.mutation({
       query: (body) => ({
@@ -83,17 +110,96 @@ const payrollSlice = ApiSlice.enhanceEndpoints({
         body,
         method: "PUT",
       }),
-      invalidatesTags: ["beneficiaries"],
+      invalidatesTags: ["beneficiaries", "single-beneficiary"],
     }),
     deleteBeneficiary: builder.mutation({
-      query: (id) => ({
+      query: (body) => ({
         url: `payroll/delete/beneficiary`,
         method: "DELETE",
         params: {
-          memberId: id,
+          payrollId: body?.payrollId,
+          beneficiaryId: body?.beneficiaryId,
         },
       }),
       invalidatesTags: ["beneficiaries"],
+    }),
+    deletePayroll: builder.mutation({
+      query: (body) => ({
+        url: `payroll/delete`,
+        method: "DELETE",
+        params: {
+          payrollId: body?.payrollId,
+        },
+      }),
+      invalidatesTags: ["payroll"],
+    }),
+    getPayrollAnalytics: builder.query({
+      query: (body) => ({
+        url: `payroll/analytics`,
+        params: {
+          page: body?.page,
+          type: "history",
+          count: 10,
+        },
+      }),
+      providesTags: ["payroll"],
+    }),
+    getNextPayrollAnalytics: builder.query({
+      query: (body) => ({
+        url: `payroll/analytics`,
+        params: {
+          type: "history",
+        },
+      }),
+      transformResponse: (res: any) => {
+        return res?.data?.reduce(
+          (
+            accumulator: Record<string, any>,
+            currentValue: Record<string, any>
+          ) => {
+            const currentDate = new Date(currentValue?.payoutDate);
+            if (new Date() > currentDate) {
+              currentDate.setMonth(currentDate.getMonth() + 1);
+            }
+            if (currentDate <= new Date(accumulator?.payoutDate)) {
+              return currentValue;
+            } else {
+              return accumulator;
+            }
+          },
+          { ...res?.data[0] }
+        );
+      },
+      providesTags: ["payroll"],
+    }),
+    getPayrollOverview: builder.query({
+      query: (body) => ({
+        url: `payroll/analytics/transaction`,
+        params: {
+          payrollId: body?.id,
+        },
+      }),
+      providesTags: ["single-payroll"],
+    }),
+    getPayrollDashboardAnalytics: builder.query({
+      query: (body) => ({
+        url: `payroll/analytics/dashboard`,
+        params: {
+          payrollId: "1",
+        },
+      }),
+      providesTags: ["single-payroll"],
+      transformResponse: (res: Record<string, any>) => {
+        const arr = res?.data?.barchart?.map((e: Record<string, any>) => {
+          const formattedDate = parseInt(e?.date?.split("-")[1], 10);
+          return {
+            date: `${formattedDate} ${e?.month}`,
+            totalPayment: e?.total_gross_payment,
+            deductionAmount: e?.total_deductions,
+          };
+        });
+        return { ...res?.data, barchart: arr };
+      },
     }),
   }),
 });
@@ -105,6 +211,7 @@ export const {
   useUpdatePayrollMutation,
   useCreateBeneficiariesMutation,
   useGetBeneficiariesQuery,
+  useLazyGetBeneficiariesQuery,
   useGetPayrollQuery,
   useGetPayrollBeneficiariesQuery,
   useLazyGetPayrollBeneficiariesQuery,
@@ -114,4 +221,15 @@ export const {
   useLazyGetSingleBeneficiaryQuery,
   useUpdateBeneficiaryMutation,
   useDeleteBeneficiaryMutation,
+  useDeletePayrollMutation,
+  useGetSinglePayrollQuery,
+  useLazyGetSinglePayrollQuery,
+  useTogglePayrollMutation,
+  useGetPayrollAnalyticsQuery,
+  useGetPayrollDashboardAnalyticsQuery,
+  useGetPayrollOverviewQuery,
+  useLazyGetPayrollAnalyticsQuery,
+  useLazyGetPayrollDashboardAnalyticsQuery,
+  useLazyGetPayrollOverviewQuery,
+  useGetNextPayrollAnalyticsQuery,
 } = payrollSlice;

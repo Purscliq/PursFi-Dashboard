@@ -60,17 +60,22 @@ const days = [
   "Sunday",
 ];
 const amount: any = "";
+const hour: any = "";
+const min: any = "";
+const day: any = "";
+const month: any = "";
 const initialState = {
   amount: amount,
   bankName: "",
   narration: "",
   businessId: "",
   transactionCategory: "",
-  day: "",
-  hour: "",
-  month: "",
+  day,
+  hour,
+  month,
   fee: "0",
   accountName: "",
+  min,
 };
 const initAcctDetails = {
   bankCode: "",
@@ -139,6 +144,7 @@ const MakePayment = () => {
         ...acctdetails,
         amount: formdata?.amount.toString(),
         businessId: profile?.businessId,
+        min: formdata?.hour?.split(":")[1],
         hour: formdata?.hour?.split(":")[0],
         day: formdata?.day?.split("-")[2],
         month: months[Number(formdata?.month?.split("-")[1]) - 1],
@@ -170,6 +176,7 @@ const MakePayment = () => {
         businessId: profile?.businessId,
         active: true,
         automatic: true,
+        min: formdata?.hour?.split(":")[1],
         hour: formdata?.hour?.split(":")[0],
         day: formdata?.day?.split("-")[2],
         month: months[Number(formdata?.month?.split("-")[1]) - 1],

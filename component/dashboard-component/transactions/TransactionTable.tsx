@@ -4,6 +4,7 @@ import {
   CustomTable as Table,
   CustomDatePicker as DatePicker,
   CustomInput as Input,
+  CustomButton as Button,
 } from "@/lib/AntdComponents";
 import TableIcon from "@/assets/icon/TableIcon";
 import FilterIcon from "@/assets/icon/FilterIcon";
@@ -23,12 +24,14 @@ export interface DataType {
 export interface TableParams {
   pagination?: TablePaginationConfig;
 }
+const startDate: any = "";
+const endDate: any = "";
 const initialState = {
   userId: "",
   businessId: "",
-  startDate: "",
+  startDate,
   filterBy: "",
-  endDate: "",
+  endDate,
   amount: "",
   page: 1,
   perPage: 10,
@@ -115,7 +118,7 @@ const TransactionTable = () => {
         </span>
       ),
       dataIndex: "amount",
-      render: (amount) => `${amount}`,
+      render: (amount) => `₦${amount}`,
       width: "20%",
     },
     {
@@ -248,7 +251,16 @@ const TransactionTable = () => {
             placeholder="Amount"
           />
         </div>
-        <div
+        <Button
+          onClick={() => {
+            setFilter((prev) => !prev);
+          }}
+          className="!bg-[#000000]"
+          icon={<FilterIcon />}
+        >
+          filter
+        </Button>
+        {/* <div
           onClick={() => {
             setFilter((prev) => !prev);
           }}
@@ -257,8 +269,8 @@ const TransactionTable = () => {
           <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
             <FilterIcon />
             <p className="text-[#202430] text-[16px] font-[500]">filter</p>
-          </span>
-        </div>
+          </span> */}
+        {/* </div> */}
       </div>
       <div className="relative overflow-x-auto  sm:rounded-lg w-[22rem] md:w-full">
         <Table

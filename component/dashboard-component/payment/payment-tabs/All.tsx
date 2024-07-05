@@ -121,7 +121,7 @@ const All = () => {
         </span>
       ),
       dataIndex: "amount",
-      render: (amount) => `${amount}`,
+      render: (amount) => `₦${amount}`,
       width: "20%",
     },
     {

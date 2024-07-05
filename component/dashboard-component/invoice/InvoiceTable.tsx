@@ -24,12 +24,14 @@ export interface DataType {
 export interface TableParams {
   pagination?: TablePaginationConfig;
 }
+const startDate: any = "";
+const endDate: any = "";
 const initialState = {
   userId: "",
   businessId: "",
-  startDate: "",
+  startDate,
   filterBy: "",
-  endDate: "",
+  endDate,
   amount: "",
   status: "",
   page: 1,
@@ -156,7 +158,7 @@ const InvoiceTable = ({ status }: { status: string }) => {
       ),
       dataIndex: "amount",
       key: "amount",
-      render: (amount) => `N${amount}`,
+      render: (amount) => `₦${amount}`,
     },
     {
       title: (

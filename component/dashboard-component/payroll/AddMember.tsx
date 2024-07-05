@@ -9,10 +9,7 @@ import {
   CustomSelect as Select,
   CustomSpinner as Spinner,
 } from "@/lib/AntdComponents";
-import {
-  useCreateBeneficiariesMutation,
-  useGetPayrollQuery,
-} from "@/services/payrollService";
+import { useCreateBeneficiariesMutation } from "@/services/payrollService";
 import { useGetBanksQuery } from "@/services/disbursementService";
 import { useVerifyAccountMutation } from "@/services/disbursementService";
 import { RadioChangeEvent, message } from "antd";
@@ -24,7 +21,10 @@ import {
 } from "react";
 import { GrFormPreviousLink } from "react-icons/gr";
 import PhoneInput from "react-phone-input-2";
+import { useAppSelector } from "@/store/hooks";
 import "react-phone-input-2/lib/style.css";
+import dayjs, { Dayjs } from "dayjs";
+import { useSearchParams } from "next/navigation";
 
 const employeeOptions = [
   {
@@ -37,38 +37,66 @@ const employeeOptions = [
   },
 ];
 const salary: any = "";
+const hireDate: any = "";
+// const initialState = {
+//   email: "",
+//   employmentType: "",
+//   firstName: "",
+//   lastName: "",
+//   hireDate,
+//   salary,
+//   address: "",
+//   lga: "",
+//   state: "",
+//   accountNumber: "",
+//   bankCode: "",
+//   bankName: "",
+//   businessId: "",
+//   reference: "",
+//   phone: "",
+// };
 const initialState = {
-  email: "",
-  employmentType: "",
+  payrollId: 0,
+  type: "",
   firstName: "",
   lastName: "",
-  hireDate: "",
-  salary,
+  email: "",
+  phone: "",
+  bankName: "",
+  bankCode: "",
+  accountNumber: "",
+  accountName: "",
+  hiredDate: "",
+  jobRole: "",
+  salary: 0,
   address: "",
   lga: "",
   state: "",
-  accountNumber: "",
-  bankCode: "",
-  bankName: "",
   businessId: "",
-  reference: "",
-  phone: "",
 };
 const AddMember = () => {
+  const params = useSearchParams();
   const { back } = useRouter();
+  const profile = useAppSelector((store) => store?.user?.user);
   const { data } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
-  const { data: payroll } = useGetPayrollQuery({});
   const [createBeneficiary, { isLoading }] = useCreateBeneficiariesMutation();
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState({
+    ...initialState,
+    businessId: profile?.businessId,
+  });
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   const onFormSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    if (formData.employmentType && formData.hireDate) {
-      createBeneficiary({ ...formData, salary: formData.salary.toString() })
+    if (formData.type && formData.hiredDate) {
+      createBeneficiary({
+        ...formData,
+        salary: formData.salary.toString(),
+        payrollId: params.get("id"),
+      })
         .unwrap()
         .then((res) => {
           message.success("beneficiary created successfully");
@@ -99,17 +127,14 @@ const AddMember = () => {
       })
         .unwrap()
         .then((res) => {
-          setFormData((prev) => ({ ...prev, bankName: res?.data?.data }));
+          setFormData((prev) => ({ ...prev, accountName: res?.data?.data }));
         })
         .catch((err) => {
           message.error(
             err?.data?.responseDescription || "something went wrong"
           );
         });
-  }, [
-    JSON.stringify(formData.accountNumber),
-    JSON.stringify(formData.bankCode),
-  ]);
+  }, [formData.accountNumber, formData.bankCode]);
   return (
     <div className="relative flex flex-col px-[2%] w-[95%] mx-auto">
       <header className="flex flex-col space-y-3 my-1 border-b border-[#D6DDEB] py-[2%]">
@@ -146,11 +171,11 @@ const AddMember = () => {
           <RadioGroup
             className="!flex !flex-col gap-[0.5rem]"
             options={employeeOptions}
-            value={formData.employmentType}
+            value={formData.type}
             onChange={(e: RadioChangeEvent) => {
               setFormData((prev) => ({
                 ...prev,
-                employmentType: e.target.value,
+                type: e.target.value,
               }));
             }}
           />
@@ -234,10 +259,11 @@ const AddMember = () => {
                   showSearch
                   placeholder="select bank"
                   optionFilterProp="label"
-                  onSelect={(value) =>
+                  onSelect={(value, option: any) =>
                     setFormData((prev) => ({
                       ...prev,
                       bankCode: value,
+                      bankName: option?.label,
                     }))
                   }
                   id="bank"
@@ -261,7 +287,7 @@ const AddMember = () => {
                 />
               </span>
             </span>
-            <Input required disabled value={formData.bankName} />
+            <Input required disabled value={formData.accountName} />
           </span>
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
@@ -277,14 +303,19 @@ const AddMember = () => {
             </label>
             <DatePicker
               onChange={(_, date) => {
-                setFormData((prev) => ({ ...prev, hireDate: date as string }));
+                setFormData((prev) => ({ ...prev, hiredDate: date as string }));
               }}
+              value={
+                formData?.hiredDate
+                  ? (dayjs(formData?.hiredDate) as Dayjs)
+                  : undefined
+              }
               className="!w-full"
               placeholder="Hire Date"
             />
           </span>
         </span>
-        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+        {/* <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
               Select Payroll
@@ -305,7 +336,7 @@ const AddMember = () => {
               options={payroll || []}
             />
           </span>
-        </span>
+        </span> */}
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
@@ -334,6 +365,26 @@ const AddMember = () => {
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">Job Role</h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
+              Please Provide Member Job Role
+            </p>
+          </span>
+          <span className="flex flex-col gap-2">
+            <label className="text-[#24272C] text-[16px] font-[700]">
+              Job Role
+            </label>
+            <Input
+              value={formData.jobRole}
+              className="!w-full"
+              placeholder="job role"
+              name="jobRole"
+              onChange={onInputChange}
+            />
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
               Salary Information
             </h6>
@@ -352,7 +403,7 @@ const AddMember = () => {
               placeholder="salary"
               required
               onChange={(e) => {
-                setFormData((prev) => ({ ...prev, salary: e }));
+                setFormData((prev) => ({ ...prev, salary: e as number }));
               }}
             />
           </span>
@@ -375,7 +426,6 @@ const AddMember = () => {
                 value={formData.address}
                 name="address"
                 onChange={onInputChange}
-                required
                 className="!w-full"
                 placeholder="Enter your address"
               />

@@ -11,8 +11,8 @@ import { message } from "antd";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 const taxableOptions = [
-  { label: "Yes", value: "Yes" },
-  { label: "No", value: "No" },
+  { label: "Yes", value: "yes" },
+  { label: "No", value: "no" },
 ];
 interface Item {
   key: string;
@@ -145,9 +145,10 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   key: React.Key;
-  name: string;
+  title: string;
   percentage: number;
-  tax: string;
+  taxable: string;
+  name: string;
 }
 
 type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
@@ -163,7 +164,6 @@ const StructureTable = ({
 
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
-    console.log(dataSource);
     setDataSource(newData);
   };
 
@@ -186,21 +186,21 @@ const StructureTable = ({
     },
     {
       title: "Taxable",
-      dataIndex: "tax",
-      editable: true,
+      dataIndex: "taxable",
+      editable: false,
       dataType: "select",
     },
-    {
-      dataIndex: "operation",
-      render: (_, record) => (
-        <Button
-          onClick={() => handleDelete(record.key)}
-          disabled={record.key === 0}
-          icon={<MdDeleteForever />}
-          className="!ml-auto"
-        />
-      ),
-    },
+    // {
+    //   dataIndex: "operation",
+    //   render: (_, record) => (
+    //     <Button
+    //       onClick={() => handleDelete(record.key)}
+    //       disabled={record.key === 0}
+    //       icon={<MdDeleteForever />}
+    //       className="!ml-auto"
+    //     />
+    //   ),
+    // },
   ];
 
   const handleAdd = () => {
@@ -208,13 +208,13 @@ const StructureTable = ({
       key: count,
       name: "Enter Structure Title",
       percentage: 0,
-      tax: "Yes",
+      taxable: "no",
+      title: "Salary Component",
     };
     const percentage = dataSource.reduce(
       (acc, curr) => acc + curr.percentage,
       0
     );
-    console.log(percentage);
     if (percentage + newData.percentage >= 100) {
       message.error("Total percentage cannot exceed 100%");
       return;
@@ -266,10 +266,11 @@ const StructureTable = ({
         bordered
         dataSource={dataSource}
         columns={columns as ColumnTypes}
+        pagination={false}
       />
-      <Button onClick={handleAdd} style={{ marginBottom: 16 }}>
+      {/* <Button onClick={handleAdd} style={{ marginBottom: 16 }}>
         Add Items
-      </Button>
+      </Button> */}
     </div>
   );
 };

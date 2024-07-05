@@ -57,19 +57,26 @@ const Dashbord = () => {
         </div>
       </header>
       <main className="grid grid-cols-1 lg:grid-cols-[58%_40%] gap-[2%] mt-8">
-        <section className="flex flex-col space-y-16 ">
-          <article className="flex flex-col md:flex-row items-stretch space-x-4 bg-white p-[2%]">
-            <div className="p-[20px] bg-black text-white w-full">
-              <div className="flex items-center justify-between">
-                <p>Account Balance</p>
-                <Arrowleft />
+        <section className="flex flex-col space-y-8 ">
+          <article className="flex flex-col md:flex-row items-start space-x-4 bg-white py-[1%] px-[2%]">
+            <div className="flex flex-col gap-2 w-full">
+              <div className="p-[20px] bg-black text-white w-full">
+                <div className="flex items-center justify-between">
+                  <p>Account Balance</p>
+                  <Arrowleft />
+                </div>
+                <p className="text-2xl font-semibold">
+                  &#8358;
+                  {Number(wallet?.walletBalance || 0).toLocaleString("en-US")}
+                </p>
               </div>
-              <p className="text-2xl font-semibold">
-                N
-                {Number(data?.wallet?.walletBalance || 0).toLocaleString(
-                  "en-US"
-                )}
-              </p>
+              <div className="px-[20px] py-[10px] bg-black text-white w-full flex justify-between items-center text-[14px]">
+                <p>Ledger Balance</p>
+                <p className="text-[18px] font-semibold">
+                  &#8358;
+                  {Number(wallet?.ledgerBalance || 0).toLocaleString("en-US")}
+                </p>
+              </div>
             </div>
             <div className="bg-white p-[20px] text-black w-full border border-gray-300">
               <div className="flex items-center justify-between">
@@ -80,19 +87,19 @@ const Dashbord = () => {
                 <ArrowRight />
               </div>
               <p className="text-2xl font-semibold">
-                N
+                &#8358;
                 {Number(analysis?.data?.todayBalance || 0).toLocaleString(
                   "en-US"
                 )}
               </p>
             </div>
           </article>
-          <div className="my-4 bg-white p-[2%]">
+          <div className="my-4 bg-white py-[1%] px-[2%]">
             <DashboardChart data={stats || []} />
           </div>
           <DashboardTable />
         </section>
-        <section className="flex flex-col space-y-16">
+        <section className="flex flex-col space-y-8">
           <div className="space-y-2 bg-white p-[2%]">
             <p className="text-xl font-semibold">Payment that need Attention</p>
             <div className="grid grid-cols-2 gap-5">
@@ -127,7 +134,7 @@ const Dashbord = () => {
                   {status?.data?.upcomingPaymentCount}
                 </p>
                 <p className="text-2xl font-semibold">
-                  N
+                  &#8358;
                   {Number(
                     status?.data?.totalUpcomingPayment || 0
                   ).toLocaleString("en-US")}
@@ -163,10 +170,10 @@ const Dashbord = () => {
                 <span className="flex items-center space-x-3">
                   {" "}
                   <MdArrowOutward size={20} className="text-[#31CFD5]" />
-                  <p>Cash Inflow</p>
+                  <p>Daily Cash Inflow</p>
                 </span>
                 <p className="text-xl font-semibold">
-                  N
+                  &#8358;
                   {Number(status?.data?.cashInflow || 0).toLocaleString(
                     "en-US"
                   )}
@@ -190,14 +197,15 @@ const Dashbord = () => {
                 <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
                 <p>Invoice</p>
                 <p className="text-2xl font-semibold">
-                &#8358;{Number(status?.data?.invoice || 0).toLocaleString("en-US")}
+                  &#8358;
+                  {Number(status?.data?.invoice || 0).toLocaleString("en-US")}
                 </p>
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-[#31CFD5] h-3 w-3 rounded-full" />
                 <p>Others</p>
                 <p className="text-2xl font-semibold">
-                &#8358;
+                  &#8358;
                   {Number(status?.data?.otherCollection || 0).toLocaleString(
                     "en-US"
                   )}
@@ -210,10 +218,10 @@ const Dashbord = () => {
               <div>
                 <span className="flex items-center space-x-3">
                   <FiArrowDownLeft size={20} className="text-red-500" />
-                  <p>Cash Outflow</p>
+                  <p>Daily Cash Outflow</p>
                 </span>
                 <p className="text-xl font-semibold">
-                  N
+                  &#8358;
                   {Number(status?.data?.cashOutflow || 0).toLocaleString(
                     "en-US"
                   )}
@@ -236,14 +244,15 @@ const Dashbord = () => {
                 <div className="bg-red-500 h-3 w-3 rounded-full" />
                 <p>Payroll</p>
                 <p className="text-2xl font-semibold">
-                &#8358;{Number(status?.data?.payroll || 0).toLocaleString("en-US")}
+                  &#8358;
+                  {Number(status?.data?.payroll || 0).toLocaleString("en-US")}
                 </p>
               </div>
               <div className="p-3 border border-gray-300  rounded-md space-y-1">
                 <div className="bg-red-500 h-3 w-3 rounded-full" />
                 <p>Payment</p>
                 <p className="text-2xl font-semibold">
-                &#8358;
+                  &#8358;
                   {Number(status?.data?.otherDisbursment || 0).toLocaleString(
                     "en-US"
                   )}

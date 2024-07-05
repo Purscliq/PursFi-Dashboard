@@ -1,7 +1,7 @@
-import PayrollSettings from "@/component/dashboard-component/payroll/settings/PayrollSettings";
+import Overview from "@/component/dashboard-component/payroll2/overview/Overview";
 
 const page = () => {
-  return <PayrollSettings />;
+  return <Overview />;
 };
 
 export default page;
