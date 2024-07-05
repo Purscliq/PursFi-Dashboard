@@ -9,7 +9,7 @@ import Step3 from "./batch-tabs/step3";
 import StepSuccess from "@/assets/icon/StepSuccess";
 import { CustomModal as Modal } from "@/lib/AntdComponents";
 import Image from "next/image";
-import csvImage from "@/assets/pursCsv.png"; 
+import csvImage from "@/assets/purs.png"; 
 
 export interface Bank {
   value: string;
