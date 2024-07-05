@@ -17,36 +17,35 @@ import { CloseOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
 
-interface Props {
-  data: DataType[];
+interface Bank {
+  value: string;
+  label: string;
 }
 
-export interface DataType {
+interface Props {
+  data: DataType[];
+  prev: () => void;
+  banks: Bank[]
+}
+
+ interface DataType {
+  
   key: string;
   accountname: string;
   accountnumber: string;
   bankname: string;
-  date: string;
   status: string;
   amount: string;
+  failedField?: string;
 }
 
-const Step3: React.FC<Props> = ({ data }) => {
-  const {
-    data: banks,
-    isLoading: bankLoading,
-    isSuccess: bankSuccess,
-    isError: bankError,
-  } = useGetBanksQuery({});
+const Step3: React.FC<Props> = ({ data, prev, banks }) => {
+ 
   const [verifyAccount, {}] = useVerifyAccountMutation({});
   const [bulkTransfer, { isLoading: bulkLoading }] = useBulkTransferMutation({});
   const {push} = useRouter()
-  const [currentVerifyingAccount, setCurrentVerifyingAccount] = useState<
-    string | null
-  >(null);
-  const [accountStatuses, setAccountStatuses] = useState<{
-    [key: string]: string;
-  }>({});
+  const [currentVerifyingAccount, setCurrentVerifyingAccount] = useState<string | null>(null);
+  const [accountStatuses, setAccountStatuses] = useState<{[key: string]: string;}>({});
   const [tableData, setTableData] = useState<DataType[]>(data);
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const bussinesId = useAppSelector((state) => state.user.user.businessId);
@@ -69,27 +68,21 @@ const Step3: React.FC<Props> = ({ data }) => {
     {
       title: (
         <span className="flex items-center space-x-2 text-[#7C8493] text-base">
-          <p>Date</p>
-          <TableIcon />
-        </span>
-      ),
-      dataIndex: "date",
-      render: (date, record) => (
-        <span className="flex items-center space-x-2">
-          <CustomCheckbox record={record} />
-          <span>{date}</span>
-        </span>
-      ),
-    },
-    {
-      title: (
-        <span className="flex items-center space-x-2 text-[#7C8493] text-base">
           <p>Account Name</p>
           <TableIcon />
         </span>
       ),
       dataIndex: "accountname",
-      render: (accountname) => `${accountname}`,
+      render: (accountname, record) => (
+        <span
+          style={{
+            color: accountStatuses[record.key] === "Failed" && record.failedField === "accountname" ? "red" : "",
+           
+          }}
+        >
+          {accountname}
+        </span>
+      ),
     },
     {
       title: (
@@ -99,7 +92,16 @@ const Step3: React.FC<Props> = ({ data }) => {
         </span>
       ),
       dataIndex: "bankname",
-      render: (bankname) => `${bankname}`,
+      render: (bankname, record) => (
+        <span
+          style={{
+            color: accountStatuses[record.key] === "Failed" && record.failedField === "bankname" ? "red" : "",
+           
+          }}
+        >
+          {bankname}
+        </span>
+      ),
     },
     {
       title: (
@@ -109,7 +111,16 @@ const Step3: React.FC<Props> = ({ data }) => {
         </span>
       ),
       dataIndex: "accountnumber",
-      render: (accountnumber) => `${accountnumber}`,
+      render: (accountnumber, record) => (
+        <span
+          style={{
+            color: accountStatuses[record.key] === "Failed" && record.failedField === "accountnumber" ? "red" : "",
+            
+          }}
+        >
+          {accountnumber}
+        </span>
+      ),
     },
     {
       title: (
@@ -151,13 +162,12 @@ const Step3: React.FC<Props> = ({ data }) => {
   ];
 
   const verifyAccounts = useCallback(async () => {
-    if (bankSuccess && data.length > 0 && banks?.length > 0) {
+    if ( data.length > 0 && banks?.length > 0) {
       setIsVerifying(true);
       for (const item of data) {
         const matchingBank = banks.find(
           (bank: any) =>
-            bank.label.trim().toLowerCase() ===
-            item.bankname.trim().toLowerCase()
+            bank.label.trim().toLowerCase() === item.bankname.trim().toLowerCase()
         );
         if (matchingBank) {
           setCurrentVerifyingAccount(item.key); // Set the current verifying account number
@@ -172,19 +182,55 @@ const Step3: React.FC<Props> = ({ data }) => {
               response.data?.data?.trim().toLowerCase() || "";
             const isAccountNameMatched =
               responseAccountName === item.accountname.trim().toLowerCase();
-            setAccountStatuses((prev) => ({
-              ...prev,
-              [item.key]: isAccountNameMatched ? "Verified" : "Failed",
-            }));
+            if (isAccountNameMatched) {
+              if (matchingBank.label.trim().toLowerCase() === item.bankname.trim().toLowerCase()) {
+                setAccountStatuses((prev) => ({ ...prev, [item.key]: "Verified" }));
+              } else {
+                setAccountStatuses((prev) => ({ ...prev, [item.key]: "Failed" }));
+                setTableData((prevData) =>
+                  prevData.map((dataItem) =>
+                    dataItem.key === item.key
+                      ? { ...dataItem, failedField: "bankname" }
+                      : dataItem
+                  )
+                );
+              }
+            } else {
+              setAccountStatuses((prev) => ({ ...prev, [item.key]: "Failed" }));
+              setTableData((prevData) =>
+                prevData.map((dataItem) =>
+                  dataItem.key === item.key
+                    ? { ...dataItem, failedField: "accountname" }
+                    : dataItem
+                )
+              );
+            }
           } catch (error) {
             setAccountStatuses((prev) => ({ ...prev, [item.key]: "Failed" }));
+            setTableData((prevData) =>
+              prevData.map((dataItem) =>
+                dataItem.key === item.key
+                  ? { ...dataItem, failedField: "accountnumber" }
+                  : dataItem
+              )
+            );
           }
           setCurrentVerifyingAccount(null); // Reset the current verifying account number
+        } else {
+          setAccountStatuses((prev) => ({ ...prev, [item.key]: "Failed" }));
+          setTableData((prevData) =>
+            prevData.map((dataItem) =>
+              dataItem.key === item.key
+                ? { ...dataItem, failedField: "bankname" }
+                : dataItem
+            )
+          );
         }
       }
       setIsVerifying(false);
     }
-  }, [bankSuccess, data, banks, verifyAccount]);
+  }, [ data, banks, verifyAccount]);
+  
 
   const handleBulkTransfer = async () => {
     const verifiedTransfers = data
@@ -226,14 +272,17 @@ const Step3: React.FC<Props> = ({ data }) => {
 
   useEffect(() => {
     verifyAccounts();
-    if (bankError) {
-      message.error("failed to fetch banks");
-    }
-  }, [verifyAccounts, bankError]);
+    
+  }, [verifyAccounts]);
 
   return (
     <section className="mt-5">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-5">
+      <Button 
+      className="font-normal border border-black text-base py-5 !hover:bg-transparent"
+      onClick={()=>{prev()}}>
+        Previous
+      </Button>
         <Button
           loading={bulkLoading}
           className="bg-black font-normal border-0 text-white text-base py-5 !hover:text-black"
@@ -250,7 +299,9 @@ const Step3: React.FC<Props> = ({ data }) => {
           rowKey="key"
           pagination={{ pageSize: 10}}
         />
+        
       </div>
+      
     </section>
   );
 };

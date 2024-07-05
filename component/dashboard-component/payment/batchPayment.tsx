@@ -1,5 +1,4 @@
 "use client";
-import { CustomSelect as Select } from "@/lib/AntdComponents";
 import { CustomSteps as Steps } from "@/lib/AntdComponents";
 import { useEffect, useMemo, useState } from "react";
 import Done from "@/assets/icon/Done";
@@ -10,15 +9,18 @@ import Step3 from "./batch-tabs/step3";
 import StepSuccess from "@/assets/icon/StepSuccess";
 import { CustomModal as Modal } from "@/lib/AntdComponents";
 import Image from "next/image";
-import csvImage from "@/assets/purscsvi.png"; 
+import csvImage from "@/assets/pursCsv.png"; 
 
+export interface Bank {
+  value: string;
+  label: string;
+}
 
 export interface DataType {
   key: string;
   accountname: string;
   accountnumber: string;
   bankname: string;
-  date: string;
   status: string;
   amount: string;
 }
@@ -28,8 +30,13 @@ const BatchPayment = () => {
   const [csvData, setCsvData] = useState("");
   const [data, setData] = useState<DataType[]>([]);
   const [modal, setModal] = useState(false);
+  const [banks, setBanks] = useState<Bank[]>([]);
+
   const next = () => {
     setCurrent(current + 1);
+  };
+  const prev = () => {
+    setCurrent(current - 1);
   };
 
   useEffect(() => {
@@ -61,7 +68,7 @@ const BatchPayment = () => {
           </div>
         ),
         content: (
-          <Step2 next={next} csvData={csvData} data={data} setData={setData} />
+          <Step2 next={next} csvData={csvData} data={data} setData={setData} setBank={setBanks} />
         ),
         icon:
           current > 1 ? (
@@ -77,7 +84,7 @@ const BatchPayment = () => {
             <p className="text-[14px]">Step 3/3</p>
           </div>
         ),
-        content: <Step3 data={data} />,
+        content: <Step3 data={data} prev={prev} banks={banks} />,
         icon:
           current == 2 ? (
             <StepSuccess className="h-[56px]" />

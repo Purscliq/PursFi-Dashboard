@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, InputNumber, message } from 'antd';
 import TableIcon from "@/assets/icon/TableIcon";
-import { CustomButton as Button, CustomTable as Table } from "@/lib/AntdComponents";
+import {
+     CustomButton as Button, 
+     CustomTable as Table ,
+     CustomSelect as Select,
+    } from "@/lib/AntdComponents";
 import { ColumnsType, ColumnType } from "antd/es/table";
 import Papa from 'papaparse';
-import { DataType } from '../batchPayment';
+import { Bank, DataType } from '../batchPayment';
 import "@/component/customStyles/soa.css"
+import { useGetBanksQuery } from '@/services/disbursementService';
+import { DefaultOptionType } from 'antd/es/select';
+
+
 
 interface Props {
     next: () => void;
     csvData: string;
     data: DataType[];
     setData: React.Dispatch<React.SetStateAction<DataType[]>>;
+    setBank: React.Dispatch<React.SetStateAction<Bank[]>>;
 }
 
 
@@ -19,7 +28,8 @@ interface EditableColumnType<DataType> extends ColumnType<DataType> {
     editable?: boolean;
 }
 
-const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
+const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
+    const {data: bank, isSuccess, isError} = useGetBanksQuery({})
     
     const [editingKey, setEditingKey] = useState<string>('');
     const [form] = Form.useForm();
@@ -31,7 +41,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
                 skipEmptyLines: true,
                 complete: (result) => {
 
-                    const requiredHeaders = ['Date', 'Account Name', 'Bank Name', 'Account Number', 'Amount'];
+                    const requiredHeaders = ['Account Name', 'Bank Name', 'Account Number', 'Amount'];
                     const headers = result.meta.fields || [];
 
                     const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
@@ -42,7 +52,6 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
                     }
                     const parsedData = (result.data as any[]).map((item, index) => ({
                         key: item.key.toString(),
-                        date: item['Date'],
                         accountname: item['Account Name'],
                         bankname: item['Bank Name'],
                         accountnumber: item['Account Number'],
@@ -53,7 +62,14 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
                 },
             });
         }
-    }, [csvData, setData]);
+
+        if(isSuccess && bank.length > 0){
+            setBank(bank)
+        }
+        if(isError){
+            message.error("failed to get bank list")
+        }
+    }, [csvData, setData, isSuccess, bank]);
 
     const isEditing = (record: DataType) => record.key === editingKey;
 
@@ -90,22 +106,12 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
         {
             title: (
                 <span className="flex items-center space-x-2 text-[#7C8493] text-base">
-                    <p>Date</p>
-                    <TableIcon />
-                </span>
-            ),
-            dataIndex: "date",
-            render: (date: string) =>
-                `${date}`,
-        },
-        {
-            title: (
-                <span className="flex items-center space-x-2 text-[#7C8493] text-base">
                     <p>Account Name</p>
                     <TableIcon />
                 </span>
             ),
             dataIndex: "accountname",
+            editable: true,
         },
         {
             title: (
@@ -115,6 +121,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
                 </span>
             ),
             dataIndex: "bankname",
+            editable: true,
         },
         {
             title: (
@@ -185,7 +192,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
                 editable: col.editable,
                 dataIndex: col.dataIndex,
                 title: col.title,
-                inputType: col.dataIndex === 'amount' ? 'number' : 'text',
+                inputType: col.dataIndex === 'amount' ? 'number' : (col.dataIndex === 'bankname' ? 'select' : 'text'),
                 editing: isEditing(record),
             }),
         };
@@ -201,7 +208,19 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
         children,
         ...restProps
     }) => {
-        const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+        const inputNode = inputType === 'number' ? <InputNumber /> :
+        (inputType === 'select' ? (
+            <Select
+            showSearch
+            placeholder="Select bank"
+            optionFilterProp="label"
+            options={bank}
+            onChange={(_, option) => {
+                const selectedOption = option as DefaultOptionType;
+                form.setFieldsValue({ [dataIndex]: selectedOption.label });
+            }}
+        />
+        ) : <Input />);
         return (
             <td {...restProps}>
                 {editing ? (
@@ -230,7 +249,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData }) => {
                 onClick={handleNext}
                 disabled={data.length === 0}
                 >
-                    Batch Payment
+                    Verify Details
                 </Button>
             </div>
             <div className="bg-white px-2 py-5 mt-5">
