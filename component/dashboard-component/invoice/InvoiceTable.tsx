@@ -218,7 +218,7 @@ const InvoiceTable = ({ status }: { status: string }) => {
           onChange={(_, date) =>
             setTableFilter((prev) => ({
               ...prev,
-              startDate: date,
+              startDate: date as string,
             }))
           }
           className="h-fit !w-[15rem]"
@@ -228,7 +228,7 @@ const InvoiceTable = ({ status }: { status: string }) => {
           onChange={(_, date) =>
             setTableFilter((prev) => ({
               ...prev,
-              endDate: date,
+              endDate: date as string,
             }))
           }
           className="h-fit !w-[15rem]"

@@ -86,7 +86,7 @@ const StatementModal = ({
             </label>
             <DatePicker
               onChange={(_, date) => {
-                setFormData((prev) => ({ ...prev, startDate: date }));
+                setFormData((prev) => ({ ...prev, startDate: date as string }));
               }}
               className="h-fit !w-full"
               placeholder="Start Date"
@@ -101,7 +101,7 @@ const StatementModal = ({
             </label>
             <DatePicker
               onChange={(_, date) => {
-                setFormData((prev) => ({ ...prev, endDate: date }));
+                setFormData((prev) => ({ ...prev, endDate: date as string }));
               }}
               className="h-fit !w-full"
               placeholder="End Date"
