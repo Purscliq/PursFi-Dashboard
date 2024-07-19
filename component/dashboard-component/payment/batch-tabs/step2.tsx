@@ -41,7 +41,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
                 skipEmptyLines: true,
                 complete: (result) => {
 
-                    const requiredHeaders = ['Account Name', 'Bank Name', 'Account Number', 'Amount'];
+                    const requiredHeaders = ['Account Name', 'Bank Name', 'Account Number', 'Amount', 'Description'];
                     const headers = result.meta.fields || [];
 
                     const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
@@ -56,6 +56,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
                         bankname: item['Bank Name'],
                         accountnumber: item['Account Number'],
                         amount: item['Amount'],
+                        description: item['Description'],
                         status: "Pending", // Default status
                     }));
                     setData(parsedData);
@@ -141,6 +142,16 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
                 </span>
             ),
             dataIndex: "amount",
+            editable: true,
+        },
+        {
+            title: (
+                <span className="flex items-center space-x-2 text-[#7C8493] text-base">
+                    <p>Narration</p>
+                    <TableIcon />
+                </span>
+            ),
+            dataIndex: "description",
             editable: true,
         },
         {

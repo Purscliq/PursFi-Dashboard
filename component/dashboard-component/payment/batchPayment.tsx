@@ -23,6 +23,7 @@ export interface DataType {
   bankname: string;
   status: string;
   amount: string;
+  description: string
 }
 
 const BatchPayment = () => {
