@@ -13,8 +13,6 @@ import "@/component/customStyles/soa.css"
 import { useGetBanksQuery } from '@/services/disbursementService';
 import { DefaultOptionType } from 'antd/es/select';
 
-
-
 interface Props {
     next: () => void;
     csvData: string;
@@ -23,14 +21,12 @@ interface Props {
     setBank: React.Dispatch<React.SetStateAction<Bank[]>>;
 }
 
-
 interface EditableColumnType<DataType> extends ColumnType<DataType> {
     editable?: boolean;
 }
 
 const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
-    const {data: bank, isSuccess, isError} = useGetBanksQuery({})
-    
+    const { data: bank, isSuccess, isError } = useGetBanksQuery({})
     const [editingKey, setEditingKey] = useState<string>('');
     const [form] = Form.useForm();
 
@@ -40,8 +36,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
                 header: true,
                 skipEmptyLines: true,
                 complete: (result) => {
-
-                    const requiredHeaders = ['Account Name', 'Bank Name', 'Account Number', 'Amount'];
+                    const requiredHeaders = ['Account Name', 'Bank Name', 'Account Number', 'Amount', 'Description'];
                     const headers = result.meta.fields || [];
 
                     const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
@@ -56,6 +51,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
                         bankname: item['Bank Name'],
                         accountnumber: item['Account Number'],
                         amount: item['Amount'],
+                        description: item['Description'],
                         status: "Pending", // Default status
                     }));
                     setData(parsedData);
@@ -63,13 +59,26 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
             });
         }
 
-        if(isSuccess && bank.length > 0){
+        if (isSuccess && bank.length > 0) {
             setBank(bank)
         }
-        if(isError){
-            message.error("failed to get bank list")
+        if (isError) {
+            message.error("Failed to get bank list")
         }
     }, [csvData, setData, isSuccess, bank]);
+
+    // Load data from localStorage on mount
+    useEffect(() => {
+        const savedData = localStorage.getItem('step2Data');
+        if (savedData) {
+            setData(JSON.parse(savedData));
+        }
+    }, [setData]);
+
+    // Save data to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem('step2Data', JSON.stringify(data));
+    }, [data]);
 
     const isEditing = (record: DataType) => record.key === editingKey;
 
@@ -141,6 +150,16 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
                 </span>
             ),
             dataIndex: "amount",
+            editable: true,
+        },
+        {
+            title: (
+                <span className="flex items-center space-x-2 text-[#7C8493] text-base">
+                    <p>Narration</p>
+                    <TableIcon />
+                </span>
+            ),
+            dataIndex: "description",
             editable: true,
         },
         {
@@ -239,6 +258,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
     };
 
     const handleNext = () => {
+        localStorage.removeItem('step2Data');
         next();
     };
 

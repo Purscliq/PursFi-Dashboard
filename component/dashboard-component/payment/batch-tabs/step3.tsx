@@ -36,6 +36,7 @@ interface Props {
   bankname: string;
   status: string;
   amount: string;
+  description: string;
   failedField?: string;
 }
 
@@ -131,6 +132,16 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
       ),
       dataIndex: "amount",
       render: (amount) => `${amount}`,
+    },
+    {
+      title: (
+        <span className="flex items-center space-x-2 text-[#7C8493] text-base">
+          <p>Narration</p>
+          <TableIcon />
+        </span>
+      ),
+      dataIndex: "description",
+      render: (description) => `${description}`,
     },
     {
       title: (
@@ -246,7 +257,7 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
           accountNumber: item.accountnumber,
           amount: item.amount,
           bankName: item.bankname,
-          narration: `Payment to ${item.accountname}`,
+          narration: item.description || `Payment from PursFi ${item.accountname}`,
         };
       });
 
