@@ -323,8 +323,8 @@ const MakePayment = () => {
                 onChange={(value, date) => {
                   setFormdata((prev) => ({
                     ...prev,
-                    day: date,
-                    month: date,
+                    day: date as string,
+                    month: date as string,
                   }));
                 }}
                 value={formdata?.day ? dayjs(formdata?.day) : undefined}
@@ -339,7 +339,7 @@ const MakePayment = () => {
                 onChange={(value, date) => {
                   setFormdata((prev) => ({
                     ...prev,
-                    hour: date,
+                    hour: date as string,
                   }));
                 }}
                 className="!w-full "
