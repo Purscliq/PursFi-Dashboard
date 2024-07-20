@@ -32,6 +32,7 @@ const BatchPayment = () => {
   const [data, setData] = useState<DataType[]>([]);
   const [modal, setModal] = useState(false);
   const [banks, setBanks] = useState<Bank[]>([]);
+  const [csvParsed, setCsvParsed] = useState<boolean>(false);
 
   const next = () => {
     setCurrent(current + 1);
@@ -42,6 +43,7 @@ const BatchPayment = () => {
 
   useEffect(() => {
     setModal(true);
+    localStorage.removeItem('step2Data')
   }, []);
 
   const steps = useMemo(
@@ -69,7 +71,7 @@ const BatchPayment = () => {
           </div>
         ),
         content: (
-          <Step2 next={next} csvData={csvData} data={data} setData={setData} setBank={setBanks} />
+          <Step2 next={next} csvParsed={csvParsed} setCsvParsed={setCsvParsed} csvData={csvData} data={data} setData={setData} setBank={setBanks} />
         ),
         icon:
           current > 1 ? (
