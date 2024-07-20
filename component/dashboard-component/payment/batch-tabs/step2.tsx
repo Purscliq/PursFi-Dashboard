@@ -13,72 +13,71 @@ import "@/component/customStyles/soa.css"
 import { useGetBanksQuery } from '@/services/disbursementService';
 import { DefaultOptionType } from 'antd/es/select';
 
+
+
 interface Props {
     next: () => void;
     csvData: string;
     data: DataType[];
+    csvParsed: boolean;
+    setCsvParsed: React.Dispatch<React.SetStateAction<boolean>>; // Define the type for the setter function
     setData: React.Dispatch<React.SetStateAction<DataType[]>>;
     setBank: React.Dispatch<React.SetStateAction<Bank[]>>;
-}
+  }
+
 
 interface EditableColumnType<DataType> extends ColumnType<DataType> {
     editable?: boolean;
 }
 
-const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
-    const { data: bank, isSuccess, isError } = useGetBanksQuery({})
+const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank, csvParsed, setCsvParsed }) => {
+    const {data: bank, isSuccess, isError} = useGetBanksQuery({})
     const [editingKey, setEditingKey] = useState<string>('');
+
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (csvData) {
+        if (csvData && !csvParsed) {
             Papa.parse(csvData, {
                 header: true,
                 skipEmptyLines: true,
                 complete: (result) => {
                     const requiredHeaders = ['Account Name', 'Bank Name', 'Account Number', 'Amount', 'Description'];
                     const headers = result.meta.fields || [];
-
-                    const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
-
+        
+                    const missingHeaders = requiredHeaders.filter((header) => !headers.includes(header));
+        
                     if (missingHeaders.length > 0) {
                         message.error(`Missing required headers: ${missingHeaders.join(', ')}`);
                         return;
                     }
                     const parsedData = (result.data as any[]).map((item, index) => ({
-                        key: item.key.toString(),
+                        key: index.toString(),
                         accountname: item['Account Name'],
                         bankname: item['Bank Name'],
                         accountnumber: item['Account Number'],
                         amount: item['Amount'],
                         description: item['Description'],
-                        status: "Pending", // Default status
+                        status: 'Pending', // Default status
                     }));
                     setData(parsedData);
+                    setCsvParsed(true);
                 },
             });
         }
 
         if (isSuccess && bank.length > 0) {
-            setBank(bank)
+            setBank(bank);
         }
         if (isError) {
-            message.error("Failed to get bank list")
+            message.error('Failed to get bank list');
         }
-    }, [csvData, setData, isSuccess, bank]);
+    }, [csvData, isSuccess, bank, isError, setData, setBank, csvParsed]);
 
-    // Load data from localStorage on mount
-    useEffect(() => {
-        const savedData = localStorage.getItem('step2Data');
-        if (savedData) {
-            setData(JSON.parse(savedData));
-        }
-    }, [setData]);
-
-    // Save data to localStorage whenever it changes
-    useEffect(() => {
+      useEffect(() => {
         localStorage.setItem('step2Data', JSON.stringify(data));
-    }, [data]);
+      }, [data]);
+      
 
     const isEditing = (record: DataType) => record.key === editingKey;
 
@@ -258,7 +257,6 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
     };
 
     const handleNext = () => {
-        localStorage.removeItem('step2Data');
         next();
     };
 
