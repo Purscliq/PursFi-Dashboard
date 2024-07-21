@@ -72,11 +72,9 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank, csvPars
         if (isError) {
             message.error('Failed to get bank list');
         }
-    }, [csvData, isSuccess, bank, isError, setData, setBank, csvParsed]);
+    }, [csvData, isSuccess, bank, isError, setData, setBank, csvParsed, setCsvParsed]);
 
-      useEffect(() => {
-        localStorage.setItem('step2Data', JSON.stringify(data));
-      }, [data]);
+     
       
 
     const isEditing = (record: DataType) => record.key === editingKey;
