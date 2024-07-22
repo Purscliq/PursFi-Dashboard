@@ -41,18 +41,13 @@ const BatchPayment = () => {
     setCurrent(current - 1);
   };
 
-  useEffect(() => {
-    setModal(true);
-    localStorage.removeItem('step2Data')
-  }, []);
-
   const steps = useMemo(
     () => [
       {
         title: (
           <div className="flex flex-col font-[400] text-[#2A2069] leading-[28.80px]">
             <p className="text-[16px]">Upload CSV</p>
-            <p className="text-[14px]">Step 1/3</p>
+            <p className="text-[14px]">Step 1/3 Testing</p>
           </div>
         ),
         content: <Step1 next={next} setCsvData={setCsvData} />,
