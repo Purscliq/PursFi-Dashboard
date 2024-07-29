@@ -19,57 +19,63 @@ interface Props {
     next: () => void;
     csvData: string;
     data: DataType[];
+    csvParsed: boolean;
+    setCsvParsed: React.Dispatch<React.SetStateAction<boolean>>; // Define the type for the setter function
     setData: React.Dispatch<React.SetStateAction<DataType[]>>;
     setBank: React.Dispatch<React.SetStateAction<Bank[]>>;
-}
+  }
 
 
 interface EditableColumnType<DataType> extends ColumnType<DataType> {
     editable?: boolean;
 }
 
-const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
+const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank, csvParsed, setCsvParsed }) => {
     const {data: bank, isSuccess, isError} = useGetBanksQuery({})
-    
     const [editingKey, setEditingKey] = useState<string>('');
+
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (csvData) {
+        if (csvData && !csvParsed) {
             Papa.parse(csvData, {
                 header: true,
                 skipEmptyLines: true,
                 complete: (result) => {
-
-                    const requiredHeaders = ['Account Name', 'Bank Name', 'Account Number', 'Amount'];
+                    const requiredHeaders = ['Account Name', 'Bank Name', 'Account Number', 'Amount', 'Description'];
                     const headers = result.meta.fields || [];
-
-                    const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
-
+        
+                    const missingHeaders = requiredHeaders.filter((header) => !headers.includes(header));
+        
                     if (missingHeaders.length > 0) {
                         message.error(`Missing required headers: ${missingHeaders.join(', ')}`);
                         return;
                     }
                     const parsedData = (result.data as any[]).map((item, index) => ({
-                        key: item.key.toString(),
+                        key: index.toString(),
                         accountname: item['Account Name'],
                         bankname: item['Bank Name'],
                         accountnumber: item['Account Number'],
                         amount: item['Amount'],
-                        status: "Pending", // Default status
+                        description: item['Description'],
+                        status: 'Pending', // Default status
                     }));
                     setData(parsedData);
+                    setCsvParsed(true);
                 },
             });
         }
 
-        if(isSuccess && bank.length > 0){
-            setBank(bank)
+        if (isSuccess && bank.length > 0) {
+            setBank(bank);
         }
-        if(isError){
-            message.error("failed to get bank list")
+        if (isError) {
+            message.error('Failed to get bank list');
         }
-    }, [csvData, setData, isSuccess, bank]);
+    }, [csvData, isSuccess, bank, isError, setData, setBank, csvParsed, setCsvParsed]);
+
+     
+      
 
     const isEditing = (record: DataType) => record.key === editingKey;
 
@@ -141,6 +147,16 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
                 </span>
             ),
             dataIndex: "amount",
+            editable: true,
+        },
+        {
+            title: (
+                <span className="flex items-center space-x-2 text-[#7C8493] text-base">
+                    <p>Narration</p>
+                    <TableIcon />
+                </span>
+            ),
+            dataIndex: "description",
             editable: true,
         },
         {
@@ -245,7 +261,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank }) => {
     return (
         <section className="mt-5">
             <div className="flex justify-end">
-                <Button className="bg-[#F9FFFF] font-normal border-0 text-[#899A9A] text-base py-5 !hover:text-black"
+                <Button className="!bg-[#F9FFFF] !font-normal !border-0 !text-[#899A9A] !text-base !hover:text-black !h-11"
                 onClick={handleNext}
                 disabled={data.length === 0}
                 >

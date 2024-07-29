@@ -9,7 +9,7 @@ import Step3 from "./batch-tabs/step3";
 import StepSuccess from "@/assets/icon/StepSuccess";
 import { CustomModal as Modal } from "@/lib/AntdComponents";
 import Image from "next/image";
-import csvImage from "@/assets/purs.png"; 
+import csvImage from "@/assets/newCsv.png"; 
 
 export interface Bank {
   value: string;
@@ -23,6 +23,7 @@ export interface DataType {
   bankname: string;
   status: string;
   amount: string;
+  description: string
 }
 
 const BatchPayment = () => {
@@ -31,6 +32,7 @@ const BatchPayment = () => {
   const [data, setData] = useState<DataType[]>([]);
   const [modal, setModal] = useState(false);
   const [banks, setBanks] = useState<Bank[]>([]);
+  const [csvParsed, setCsvParsed] = useState<boolean>(false);
 
   const next = () => {
     setCurrent(current + 1);
@@ -38,10 +40,6 @@ const BatchPayment = () => {
   const prev = () => {
     setCurrent(current - 1);
   };
-
-  useEffect(() => {
-    setModal(true);
-  }, []);
 
   const steps = useMemo(
     () => [
@@ -68,7 +66,7 @@ const BatchPayment = () => {
           </div>
         ),
         content: (
-          <Step2 next={next} csvData={csvData} data={data} setData={setData} setBank={setBanks} />
+          <Step2 next={next} csvParsed={csvParsed} setCsvParsed={setCsvParsed} csvData={csvData} data={data} setData={setData} setBank={setBanks} />
         ),
         icon:
           current > 1 ? (
