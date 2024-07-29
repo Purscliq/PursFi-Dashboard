@@ -290,13 +290,13 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
     <section className="mt-5">
       <div className="flex justify-end gap-5">
       <Button 
-      className="font-normal !border !border-black text-base !py-5 !hover:bg-transparent"
+      className="!font-normal !border !border-black !text-base !h-11 !hover:bg-transparent"
       onClick={()=>{prev()}}>
         Previous
       </Button>
         <Button
           loading={bulkLoading}
-          className="!bg-black font-normal !border-0 !text-white text-base !py-5 !hover:text-black"
+          className="!bg-black !font-normal !border-0 !text-white !text-base !hover:text-black !h-11"
           onClick={handleBulkTransfer}
           disabled={isVerifying}
         >
