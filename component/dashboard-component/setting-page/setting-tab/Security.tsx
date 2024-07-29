@@ -2,10 +2,21 @@ import {
   CustomPasswordInput as PasswordInput,
   CustomButton as Button,
 } from "@/lib/AntdComponents";
-import { useState, ChangeEventHandler, FormEventHandler } from "react";
+import {
+  useState,
+  ChangeEventHandler,
+  FormEventHandler,
+  MouseEventHandler,
+  useRef,
+  ChangeEvent,
+  KeyboardEvent,
+  useEffect,
+} from "react";
 import { useUpdatePasswordMutation } from "@/services/authService";
 import { message } from "antd";
 import { passwordSchema } from "@/lib/validationSchema";
+import { useCreatePinMutation, useLazyGetSecurityDetailsQuery, useUpdatePinMutation } from "@/services/securityService";
+import { useAppSelector } from "@/store/hooks";
 
 const initialState = {
   password: "",
@@ -14,9 +25,31 @@ const initialState = {
 };
 const Security = () => {
   const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
+  const [updatePin, {isLoading: pinLoading}] = useUpdatePinMutation();
+  const [securityDetails, {data: userSecurity}] = useLazyGetSecurityDetailsQuery();
+  const [createPin, { isLoading: createPinLoading }] = useCreatePinMutation();
   const [formData, setFormData] = useState(initialState);
   const [validationError, setValidationError] = useState("");
   const [confirmValidationError, setConfirmValidationError] = useState("");
+  const [pin, setPin] = useState<string[]>(["", "", "", ""]);
+  const [hasPin, setHasPin] = useState(false);
+  const [oldPin, setOldPin] = useState<string[]>(["", "", "", ""]);
+  const [confirmPin, setConfirmPin] = useState<string[]>(["", "", "", ""]);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const inputRefsConfirm = useRef<(HTMLInputElement | null)[]>([]);
+  const inputRefsOld = useRef<(HTMLInputElement | null)[]>([]);
+
+  const bussinesId = useAppSelector((state) => state.user.user.businessId);
+
+  useEffect(()=>{
+    securityDetails(bussinesId).unwrap()
+    .then((res)=>{
+      setHasPin(res.data.has_pin)
+    })
+    .catch(()=>{})
+  },[])
+
+  ///HANDLE PASSWORD SUBMIT*******************
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (!validationError && !confirmValidationError)
@@ -34,6 +67,58 @@ const Security = () => {
           );
         });
   };
+
+  ///Hadles New PIN CREATION*********************
+  const handleCreatePin: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    if (pin.join("") !== confirmPin.join("")) {
+      message.warning("Pins do not match. Please try again.");
+      return;
+    }
+    createPin({
+      businessId: bussinesId,
+      pin: pin.join(""),
+      pinConfirmation: confirmPin.join(""),
+    })
+      .unwrap()
+      .then(() => {
+        message.success("Pin Creation successful")
+        setPin(["","","",""])
+        setConfirmPin(["","","",""])
+        setHasPin(true)
+      })
+      .catch((err) => {
+        message.error("Pin creation failed");
+      });
+  };
+///HANDLES OLD PIN CHANGE*********************
+  const handlePinChange: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    if (pin.join("") !== confirmPin.join("")) {
+      message.warning("Pins do not match. Please try again.");
+      return;
+    }
+
+    updatePin({
+      businessId: bussinesId,
+      oldPin: oldPin.join(""),
+      newPin: pin.join(""),
+      newPinConfirmation: confirmPin.join(""),
+    })
+      .unwrap()
+      .then(() => {
+       message.success("Pin Update successful")
+       setPin(["","","",""])
+       setOldPin(["","","",""])
+       setConfirmPin(["","","",""])
+      })
+      .catch((err) => {
+        message.error( err?.data?.message || "Pin Update failed");
+      });
+      
+  };
+
+///HANDLE PASSWORD CHANGE**************************
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.name === "newPassword")
       passwordSchema
@@ -55,6 +140,53 @@ const Security = () => {
       [e.target?.name]: e.target?.value,
     }));
   };
+
+  const handleChangePin = (value: string, index: number) => {
+    const newPin = [...pin];
+    newPin[index] = value;
+    if (value.length > 0 && index < 3) {
+      inputRefs.current[index + 1]?.focus();
+    }
+    setPin(newPin);
+  };
+  const handleChangeConfirm = (value: string, index: number) => {
+    const newPin = [...confirmPin];
+    newPin[index] = value;
+    if (value.length > 0 && index < 3) {
+      inputRefsConfirm.current[index + 1]?.focus();
+    }
+    setConfirmPin(newPin);
+  };
+  const handleChangeOld = (value: string, index: number) => {
+    const newPin = [...oldPin];
+    newPin[index] = value;
+    if (value.length > 0 && index < 3) {
+      inputRefsOld.current[index + 1]?.focus();
+    }
+    setOldPin(newPin);
+  };
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === "Backspace" && index > 0 && pin[index] === "") {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
+  const handleKeyDownConfirm = (
+    e: KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    if (e.key === "Backspace" && index > 0 && confirmPin[index] === "") {
+      inputRefsConfirm.current[index - 1]?.focus();
+    }
+  };
+  const handleKeyDownOld = (
+    e: KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    if (e.key === "Backspace" && index > 0 && oldPin[index] === "") {
+      inputRefsOld.current[index - 1]?.focus();
+    }
+  };
+
   return (
     <div className="flex flex-col py-4 w-full space-y-3">
       <span>
@@ -186,6 +318,119 @@ const Security = () => {
                 Save Changes
               </Button>
             </div>
+          </div>
+        </div>
+      </form>
+      <hr />
+      {/*****************************PIN CHANGE******************************************************/}
+      <form className=" w-full rounded-md">
+        <div className="mb-4 p-2 grid grid-cols-[400px,1fr] gap-6 items-start">
+          <div className="text-sm flex-col flex">
+            <h1 className="font-semibold">Change Pin</h1>{" "}
+          </div>
+          <div className="w-full md:w-[400px] flex flex-col space-y-4">
+            <div className={`${hasPin===false ? 'hidden' : 'block'}`}>
+              <h3 className=" font-semibold text-sm mb-2">Old Pin</h3>
+              <div className=" flex gap-5">
+                {oldPin.map((digit, index) => (
+                  <input
+                    key={index}
+                    type="number"
+                    placeholder="0"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleChangeOld(e.target.value, index)
+                    }
+                    onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+                      handleKeyDownOld(e, index)
+                    }
+                    ref={(el) => {
+                      inputRefsOld.current[index] = el;
+                    }}
+                    className=" w-[50px] h-[50px] border border-gray-200 rounded-md p-1 text-center"
+                  />
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className=" font-semibold text-sm mb-2">New Pin</h3>
+              <div className=" flex gap-5">
+                {pin.map((digit, index) => (
+                  <input
+                    key={index}
+                    type="number"
+                    placeholder="0"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleChangePin(e.target.value, index)
+                    }
+                    onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+                      handleKeyDown(e, index)
+                    }
+                    ref={(el) => {
+                      inputRefs.current[index] = el;
+                    }}
+                    className=" w-[50px] h-[50px] border border-gray-200 rounded-md p-1 text-center"
+                  />
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className=" font-semibold text-sm mb-2">Confirm Pin</h3>
+              <div className=" flex gap-5">
+                {confirmPin.map((digit, index) => (
+                  <input
+                    key={index}
+                    type="number"
+                    placeholder="0"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleChangeConfirm(e.target.value, index)
+                    }
+                    onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+                      handleKeyDownConfirm(e, index)
+                    }
+                    ref={(el) => {
+                      inputRefsConfirm.current[index] = el;
+                    }}
+                    className=" w-[50px] h-[50px] border border-gray-200 rounded-md p-1 text-center"
+                  />
+                ))}
+              </div>
+            </div>
+            {
+              hasPin === false ? 
+              (
+                <div className="flex justify-end items-end my-[1rem]">
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  loading={createPinLoading}
+                  className="!bg-black w-full"
+                  onClick={handleCreatePin}
+                >
+                  Create Pin
+                </Button>
+                </div>
+              ) : (
+                <div className="flex justify-end items-end my-[1rem]">
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  loading={pinLoading}
+                  className="!bg-black w-full"
+                  onClick={handlePinChange}
+                >
+                  Save Changes
+                </Button>
+                </div>
+              )
+            }
+           
+            
           </div>
         </div>
       </form>
