@@ -261,7 +261,7 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank, csvPars
     return (
         <section className="mt-5">
             <div className="flex justify-end">
-                <Button className="!bg-[#F9FFFF] font-normal !border-0 !text-[#899A9A] text-base !py-5 !hover:text-black"
+                <Button className="!bg-[#F9FFFF] !font-normal !border-0 !text-[#899A9A] !text-base !hover:text-black !h-11"
                 onClick={handleNext}
                 disabled={data.length === 0}
                 >
