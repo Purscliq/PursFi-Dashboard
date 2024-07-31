@@ -67,6 +67,11 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
 
   const columns: ColumnsType<DataType> = [
     {
+      title: "",
+      dataIndex: "delete",
+      render: (_, record) => <CustomCheckbox record={record} />,
+    },
+    {
       title: (
         <span className="flex items-center space-x-2 text-[#7C8493] text-base">
           <p>Account Name</p>
