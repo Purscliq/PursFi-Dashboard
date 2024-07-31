@@ -41,6 +41,10 @@ const BatchPayment = () => {
     setCurrent(current - 1);
   };
 
+  useEffect(()=>{
+    setModal(true)
+  },[])
+
   const steps = useMemo(
     () => [
       {
@@ -138,7 +142,7 @@ const BatchPayment = () => {
           <p className=" text-xs">
             <span className=" font-semibold">NOTE: </span>It is important your table header contains only
             the following: key, Date, Account Name, Bank Name, Account Number,
-            Amount. If your CSV table does not match it you will see an empty
+            Amount, Description. If your CSV table does not match it you will see an empty
             table after upload
           </p>
           <div className="h-[300px] ">
