@@ -17,16 +17,19 @@ const Pin = () => {
   const { replace } = useRouter();
   const handleChange = (value: string, index: number) => {
     const newPin = [...pin];
+    if (/^\d*$/.test(value)) {
     newPin[index] = value;
-
     if (value.length > 0 && index < 3) {
       inputRefs.current[index + 1]?.focus();
     }
 
     setPin(newPin);
+  }
   };
+
   const handleChangeConfirm = (value: string, index: number) => {
     const newPin = [...confirmPin];
+    if (/^\d*$/.test(value)){
     newPin[index] = value;
 
     if (value.length > 0 && index < 3) {
@@ -34,9 +37,13 @@ const Pin = () => {
     }
 
     setConfirmPin(newPin);
+  }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+    }
     if (e.key === "Backspace" && index > 0 && pin[index] === "") {
       inputRefs.current[index - 1]?.focus();
     }
@@ -45,6 +52,9 @@ const Pin = () => {
     e: KeyboardEvent<HTMLInputElement>,
     index: number
   ) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+    }
     if (e.key === "Backspace" && index > 0 && confirmPin[index] === "") {
       inputRefsConfirm.current[index - 1]?.focus();
     }
@@ -86,7 +96,8 @@ const skip = () => {
             {pin.map((digit, index) => (
               <input
                 key={index}
-                type="number"
+                type="text"  // Change to text to prevent number input scroll behavior
+                    inputMode="numeric"  // Ensures numeric keyboard on mobile devices
                 placeholder="0"
                 maxLength={1}
                 value={digit}
@@ -111,7 +122,8 @@ const skip = () => {
             {confirmPin.map((digit, index) => (
               <input
                 key={index}
-                type="number"
+                type="text"  // Change to text to prevent number input scroll behavior
+                inputMode="numeric"  // Ensures numeric keyboard on mobile devices
                 placeholder="0"
                 maxLength={1}
                 value={digit}

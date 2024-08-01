@@ -6,16 +6,15 @@ import {
 } from "@/lib/AntdComponents";
 import {
   useBulkTransferMutation,
-  useGetBanksQuery,
   useVerifyAccountMutation,
 } from "@/services/disbursementService";
 import { ColumnsType } from "antd/es/table";
-import { LoadingOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Checkbox, message } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { message } from "antd";
 import { useAppSelector } from "@/store/hooks";
-import { CloseOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-
+import PinModal from "../../Modals/pinModal";
+import SuccessfulPaymentModal from "../modals/successfulPaymentModal";
 
 interface Bank {
   value: string;
@@ -25,11 +24,10 @@ interface Bank {
 interface Props {
   data: DataType[];
   prev: () => void;
-  banks: Bank[]
+  banks: Bank[];
 }
 
- interface DataType {
-  
+interface DataType {
   key: string;
   accountname: string;
   accountnumber: string;
@@ -41,36 +39,23 @@ interface Props {
 }
 
 const Step3: React.FC<Props> = ({ data, prev, banks }) => {
- 
-  const [verifyAccount, {}] = useVerifyAccountMutation({});
+  const [verifyAccount] = useVerifyAccountMutation({});
   const [bulkTransfer, { isLoading: bulkLoading }] = useBulkTransferMutation({});
-  const {push} = useRouter()
+  const { push } = useRouter();
   const [currentVerifyingAccount, setCurrentVerifyingAccount] = useState<string | null>(null);
-  const [accountStatuses, setAccountStatuses] = useState<{[key: string]: string;}>({});
+  const [accountStatuses, setAccountStatuses] = useState<{ [key: string]: string }>({});
   const [tableData, setTableData] = useState<DataType[]>(data);
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
-  const bussinesId = useAppSelector((state) => state.user.user.businessId);
+  const [modal, setModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPinValid, setIsPinValid] = useState(false);
+  const businessId = useAppSelector((state) => state.user.user.businessId);
 
-  const handleDelete = (key: string) => {
-    setTableData((prevData) => prevData.filter((item) => item.key !== key));
+  const openModal = () => {
+    setModal(true);
   };
 
-  const CustomCheckbox: React.FC<{ record: DataType }> = ({ record }) => (
-    <span
-      className="custom-checkbox border-2 border-black rounded-sm flex items-center justify-center"
-      onClick={() => handleDelete(record.key)}
-      style={{ cursor: "pointer" }}
-    >
-      <CloseOutlined className="cancel-icon" style={{ strokeWidth: "5px" }} />
-    </span>
-  );
-
   const columns: ColumnsType<DataType> = [
-    {
-      title: "",
-      dataIndex: "delete",
-      render: (_, record) => <CustomCheckbox record={record} />,
-    },
     {
       title: (
         <span className="flex items-center space-x-2 text-[#7C8493] text-base">
@@ -83,7 +68,6 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
         <span
           style={{
             color: accountStatuses[record.key] === "Failed" && record.failedField === "accountname" ? "red" : "",
-           
           }}
         >
           {accountname}
@@ -102,7 +86,6 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
         <span
           style={{
             color: accountStatuses[record.key] === "Failed" && record.failedField === "bankname" ? "red" : "",
-           
           }}
         >
           {bankname}
@@ -121,7 +104,6 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
         <span
           style={{
             color: accountStatuses[record.key] === "Failed" && record.failedField === "accountnumber" ? "red" : "",
-            
           }}
         >
           {accountnumber}
@@ -178,7 +160,7 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
   ];
 
   const verifyAccounts = useCallback(async () => {
-    if ( data.length > 0 && banks?.length > 0) {
+    if (data.length > 0 && banks?.length > 0) {
       setIsVerifying(true);
       for (const item of data) {
         const matchingBank = banks.find(
@@ -245,8 +227,7 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
       }
       setIsVerifying(false);
     }
-  }, [ data, banks, verifyAccount]);
-  
+  }, [data, banks, verifyAccount]);
 
   const handleBulkTransfer = async () => {
     const verifiedTransfers = data
@@ -260,7 +241,7 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
         return {
           bankCode: matchingBank?.value || "",
           accountNumber: item.accountnumber,
-          amount: item.amount,
+          amount: String(item.amount),
           bankName: item.bankname,
           narration: item.description || `Payment from PursFi ${item.accountname}`,
         };
@@ -268,41 +249,51 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
 
     if (verifiedTransfers.length > 0) {
       const payload = {
-        businessId: bussinesId, // replace with actual business ID
+        businessId, // use the business ID from the selector
         currency: "NGN",
         transactionCategory: "debit",
         transfers: verifiedTransfers,
       };
 
-      try {
-        await bulkTransfer(payload).unwrap();
-        message.success("Batch payment sent successfully", 10);
-        push("/dashboard")
-      } catch (error) {
-        message.error("Batch payment failed", 5);
-      }
+       bulkTransfer(payload).unwrap()
+       .then(()=>{
+        setIsModalOpen(true);
+        setIsPinValid(false)
+        push("/dashboard");
+       }).catch((error)=>{
+        message.error(error?.data?.responseDescription || "Batch payment failed", 5);
+        console.error("Bulk transfer error:", error); // Add error logging
+        setIsPinValid(false)
+       });
+
     } else {
-      // Handle case where no transfers are verified
+      message.error("No verified transfers available", 5);
     }
   };
 
   useEffect(() => {
+    if (isPinValid) {
+      handleBulkTransfer();
+    }
+  }, [isPinValid]);
+
+  useEffect(() => {
     verifyAccounts();
-    
   }, [verifyAccounts]);
 
   return (
     <section className="mt-5">
       <div className="flex justify-end gap-5">
-      <Button 
-      className="!font-normal !border !border-black !text-base !h-11 !hover:bg-transparent"
-      onClick={()=>{prev()}}>
-        Previous
-      </Button>
+        <Button
+          className="!font-normal !border !border-black !text-base !h-11 !hover:bg-transparent"
+          onClick={() => prev()}
+        >
+          Previous
+        </Button>
         <Button
           loading={bulkLoading}
           className="!bg-black !font-normal !border-0 !text-white !text-base !hover:text-black !h-11"
-          onClick={handleBulkTransfer}
+          onClick={openModal}
           disabled={isVerifying}
         >
           {isVerifying ? "Verifying..." : "Batch Payment"}
@@ -313,11 +304,16 @@ const Step3: React.FC<Props> = ({ data, prev, banks }) => {
           columns={columns}
           dataSource={tableData}
           rowKey="key"
-          pagination={{ pageSize: 10}}
+          pagination={{ pageSize: 10 }}
         />
-        
       </div>
-      
+
+      <PinModal
+        modal={modal}
+        setModal={setModal}
+        setPinValid={setIsPinValid}
+      />
+      <SuccessfulPaymentModal  open={isModalOpen} setOpen={setIsModalOpen} />
     </section>
   );
 };

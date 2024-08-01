@@ -23,6 +23,13 @@ const securitySlice = ApiSlice.injectEndpoints({
           url: `SecurityService/${id}`,
         }),
       }),
+    validatePin: builder.mutation({
+        query: (body) => ({
+          url: `SecurityService/validate-pin`,
+          body,
+          method: "POST",
+        }),
+      }),
    
    
   }),
@@ -31,6 +38,7 @@ const securitySlice = ApiSlice.injectEndpoints({
 export const {
     useCreatePinMutation,
     useUpdatePinMutation,
-    useLazyGetSecurityDetailsQuery
+    useLazyGetSecurityDetailsQuery,
+    useValidatePinMutation
 
 } = securitySlice;
