@@ -10,6 +10,7 @@ import StepSuccess from "@/assets/icon/StepSuccess";
 import { CustomModal as Modal } from "@/lib/AntdComponents";
 import Image from "next/image";
 import csvImage from "@/assets/newCsv.png"; 
+import Link from "next/link";
 
 export interface Bank {
   value: string;
@@ -152,6 +153,11 @@ const BatchPayment = () => {
               alt="CSV"
               className=" w-full h-full"
             />
+          </div>
+          <div className="mt-4">
+            <Link href="/Batch-Template.csv" download>
+              <span className="bg-blue-500 text-white px-4 py-2 rounded">Download Sample CSV</span>
+            </Link>
           </div>
         </div>
       </Modal>
