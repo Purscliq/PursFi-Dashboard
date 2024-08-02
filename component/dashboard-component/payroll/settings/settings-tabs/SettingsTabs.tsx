@@ -1,18 +1,29 @@
+"use client";
 import { CustomTabs as Tabs } from "@/lib/AntdComponents";
 import { TabsProps } from "antd";
 import { useState } from "react";
 import PayrollSetup from "./PayrollSetup";
 import PayrollStructure from "./PayrollStructure";
-const day: any = "";
+const payoutDate: any = "";
+const payoutTime: any = "";
+// const initialState = {
+//   automatic: true,
+//   day: day,
+//   title: "",
+//   single: true,
+//   businessId: "",
+//   structure: [],
+//   currency: "NGN",
+//   hour: "06",
+// };
 const initialState = {
+  name: "",
+  isBusiness: true,
   automatic: true,
-  day: day,
-  title: "",
-  single: true,
+  payoutDate,
+  payoutTime,
+  salaryStructure: [],
   businessId: "",
-  structure: [],
-  currency: "NGN",
-  hour: "06",
 };
 export type dataType = typeof initialState;
 const SettingsTabs = () => {
@@ -21,7 +32,7 @@ const SettingsTabs = () => {
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: "Payroll Setup",
+      label: <div onClick={() => setActiveKey(1)}>Payroll Setup</div>,
       children: (
         <PayrollSetup
           formData={formData}
@@ -32,7 +43,7 @@ const SettingsTabs = () => {
     },
     {
       key: "2",
-      label: "Salary Structure",
+      label: <div onClick={() => setActiveKey(2)}>Salary Structure</div>,
       children: (
         <PayrollStructure
           formData={formData}

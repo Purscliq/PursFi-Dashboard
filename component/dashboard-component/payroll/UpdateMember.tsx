@@ -1,5 +1,5 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   CustomInput as Input,
   CustomRadioGroup as RadioGroup,
@@ -9,11 +9,6 @@ import {
   CustomSelect as Select,
   CustomSpinner as Spinner,
 } from "@/lib/AntdComponents";
-import {
-  useGetPayrollQuery,
-  useUpdateBeneficiaryMutation,
-  useLazyGetSingleBeneficiaryQuery,
-} from "@/services/payrollService";
 import { useGetBanksQuery } from "@/services/disbursementService";
 import { useVerifyAccountMutation } from "@/services/disbursementService";
 import { RadioChangeEvent, message } from "antd";
@@ -25,8 +20,14 @@ import {
 } from "react";
 import { GrFormPreviousLink } from "react-icons/gr";
 import PhoneInput from "react-phone-input-2";
+import { useAppSelector } from "@/store/hooks";
 import "react-phone-input-2/lib/style.css";
-import dayjs from "dayjs";
+import { useSearchParams } from "next/navigation";
+import {
+  useLazyGetSingleBeneficiaryQuery,
+  useUpdateBeneficiaryMutation,
+} from "@/services/payrollService";
+import dayjs, { Dayjs } from "dayjs";
 
 const employeeOptions = [
   {
@@ -39,40 +40,78 @@ const employeeOptions = [
   },
 ];
 const salary: any = "";
+const hireDate: any = "";
+// const initialState = {
+//   email: "",
+//   employmentType: "",
+//   firstName: "",
+//   lastName: "",
+//   hireDate,
+//   salary,
+//   address: "",
+//   lga: "",
+//   state: "",
+//   accountNumber: "",
+//   bankCode: "",
+//   bankName: "",
+//   businessId: "",
+//   reference: "",
+//   phone: "",
+// };
 const initialState = {
-  email: "",
-  employmentType: "",
+  payrollId: 0,
+  type: "",
   firstName: "",
   lastName: "",
-  hireDate: "",
-  salary,
+  email: "",
+  phone: "",
+  bankName: "",
+  bankCode: "",
+  accountNumber: "",
+  accountName: "",
+  hiredDate: "",
+  jobRole: "",
+  salary: 0,
   address: "",
   lga: "",
   state: "",
-  accountNumber: "",
-  bankCode: "",
-  bankName: "",
-  single: true,
   businessId: "",
-  reference: "",
-  phone: "",
 };
-const UpdateMember = () => {
+const UpdateMember = ({ id }: { id: number }) => {
   const { back } = useRouter();
   const params = useSearchParams();
+  const [getBeneficiary, { isFetching }] = useLazyGetSingleBeneficiaryQuery();
+  const profile = useAppSelector((store) => store?.user?.user);
   const { data } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
-  const { data: payroll } = useGetPayrollQuery({});
-  const [getBeneficiary, { isLoading: isLoadingBeneficiary }] =
-    useLazyGetSingleBeneficiaryQuery();
   const [updateBeneficiary, { isLoading }] = useUpdateBeneficiaryMutation();
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState({
+    ...initialState,
+    payrollId: id,
+    businessId: profile?.businessId,
+  });
+  const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
   useEffect(() => {
-    if (params.get("id")) {
-      getBeneficiary(params.get("id") as string)
+    if (data)
+      setFormData((prev) => ({
+        ...prev,
+        bankCode: data?.find((e: any) => e.label === prev?.bankName)?.value,
+      }));
+  }, [data]);
+  useEffect(() => {
+    if (params.get("member")) {
+      getBeneficiary({
+        payrollId: id,
+        beneficiaryId: params.get("member") as string,
+      })
         .then((res) => {
           setFormData({
             ...res.data.data,
+            salary: Number(res.data.data.salary || 0),
+            beneficiaryId: res.data.data.id,
           });
         })
         .catch((err) => {
@@ -80,39 +119,36 @@ const UpdateMember = () => {
             err?.data?.responseDescription ||
               "error getting beneficiary details"
           );
-          back();
         });
     }
   }, [params]);
-  const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
   const onFormSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    if (!formData?.phone) {
-      message.error("please provide phone field");
-      return;
-    }
-    if (formData.employmentType && formData.hireDate) {
+    if (formData.type && formData.hiredDate) {
       updateBeneficiary({ ...formData, salary: formData.salary.toString() })
         .unwrap()
         .then((res) => {
-          console.log(res);
           message.success("beneficiary created successfully");
           setFormData(initialState);
           back();
         })
         .catch((err) => {
-          const errors = Object.keys(err?.data?.errors).join(", ");
+          const errors = Object?.keys(err?.errors || {}).join(", ");
+          const errorsShape2 = `${
+            JSON.parse(err?.data?.responseDescription)[0]?.message
+          }`;
           message.error(
-            `please provide ${errors} field` || "something went wrong"
+            err?.errors
+              ? `please provide ${errors} field(s)`
+              : errorsShape2
+              ? errorsShape2.toString()
+              : "something went wrong"
           );
         });
     }
   };
   useEffect(() => {
-    if (formData?.accountNumber?.length === 10 && formData?.bankCode)
+    if (formData.accountNumber.length === 10 && formData.bankCode)
       verify({
         accountNumber: formData.accountNumber,
         bankCode: formData.bankCode,
@@ -120,17 +156,14 @@ const UpdateMember = () => {
       })
         .unwrap()
         .then((res) => {
-          setFormData((prev) => ({ ...prev, bankName: res?.data?.data }));
+          setFormData((prev) => ({ ...prev, accountName: res?.data?.data }));
         })
         .catch((err) => {
           message.error(
             err?.data?.responseDescription || "something went wrong"
           );
         });
-  }, [
-    JSON.stringify(formData?.accountNumber),
-    JSON.stringify(formData?.bankCode),
-  ]);
+  }, [formData.accountNumber, formData.bankCode]);
   return (
     <div className="relative flex flex-col px-[2%] w-[95%] mx-auto">
       <header className="flex flex-col space-y-3 my-1 border-b border-[#D6DDEB] py-[2%]">
@@ -139,7 +172,7 @@ const UpdateMember = () => {
             <GrFormPreviousLink className="cursor-pointer" onClick={back} />
             <span>
               <h2 className="text-2xl font-medium">
-                Update employee details{" "}
+                Update employees and contractors |{" "}
                 <span className="text-gray-400">Add one</span>
               </h2>
             </span>
@@ -150,12 +183,11 @@ const UpdateMember = () => {
         onSubmit={onFormSubmit}
         className="bg-white rounded-[10px] flex flex-col p-[2%] gap-[1rem] w[90%] mxauto relative overflow-x-hidden"
       >
-        {isVerifying ||
-          (isLoadingBeneficiary && (
-            <div className="flex items-center justify-center h-full w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
-              <Spinner className="!m-auto !block" />
-            </div>
-          ))}
+        {(isVerifying || isFetching) && (
+          <div className="flex items-center justify-center h-full w-full absolute opacity-[0.7] bg-gray-100 z-[100]">
+            <Spinner className="!m-auto !block" />
+          </div>
+        )}
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
@@ -168,11 +200,11 @@ const UpdateMember = () => {
           <RadioGroup
             className="!flex !flex-col gap-[0.5rem]"
             options={employeeOptions}
-            value={formData?.employmentType}
+            value={formData.type}
             onChange={(e: RadioChangeEvent) => {
               setFormData((prev) => ({
                 ...prev,
-                employmentType: e.target.value,
+                type: e.target.value,
               }));
             }}
           />
@@ -191,7 +223,7 @@ const UpdateMember = () => {
               </label>
               <Input
                 name="firstName"
-                value={formData?.firstName}
+                value={formData.firstName}
                 className="!w-full"
                 placeholder="Enter your name"
                 required
@@ -206,7 +238,7 @@ const UpdateMember = () => {
                 name="lastName"
                 required
                 onChange={onInputChange}
-                value={formData?.lastName}
+                value={formData.lastName}
                 className="!w-full"
                 placeholder="Enter your name"
               />
@@ -229,7 +261,7 @@ const UpdateMember = () => {
             <Input
               type="email"
               name="email"
-              value={formData?.email}
+              value={formData.email}
               onChange={onInputChange}
               required
               className="!w-full"
@@ -256,19 +288,16 @@ const UpdateMember = () => {
                   showSearch
                   placeholder="select bank"
                   optionFilterProp="label"
-                  onSelect={(value) =>
+                  onSelect={(value, option: any) =>
                     setFormData((prev) => ({
                       ...prev,
                       bankCode: value,
+                      bankName: option?.label,
                     }))
                   }
-                  value={
-                    data?.find(
-                      (e: Record<string, any>) => e.value === formData?.bankCode
-                    )?.label || ""
-                  }
+                  value={formData?.bankName}
                   id="bank"
-                  options={Array.isArray(data) ? data : []}
+                  options={data}
                 />
               </span>
               <span className="flex flex-col gap-2 w-full">
@@ -280,7 +309,7 @@ const UpdateMember = () => {
                   name="accountNumber"
                   maxLength={10}
                   minLength={10}
-                  value={formData?.accountNumber}
+                  value={formData.accountNumber}
                   required
                   type="number"
                   className="!w-full"
@@ -288,7 +317,7 @@ const UpdateMember = () => {
                 />
               </span>
             </span>
-            <Input disabled value={formData?.bankName} />
+            <Input required disabled value={formData.accountName} />
           </span>
         </span>
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
@@ -304,15 +333,19 @@ const UpdateMember = () => {
             </label>
             <DatePicker
               onChange={(_, date) => {
-                setFormData((prev) => ({ ...prev, hireDate: date }));
+                setFormData((prev) => ({ ...prev, hiredDate: date as string }));
               }}
+              value={
+                formData?.hiredDate
+                  ? (dayjs(formData?.hiredDate) as Dayjs)
+                  : undefined
+              }
               className="!w-full"
               placeholder="Hire Date"
-              value={dayjs(formData?.hireDate)}
             />
           </span>
         </span>
-        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+        {/* <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
               Select Payroll
@@ -326,14 +359,14 @@ const UpdateMember = () => {
               Payroll
             </label>
             <Select
-              value={formData?.reference}
+              value={formData.reference}
               onSelect={(value) =>
                 setFormData((prev) => ({ ...prev, reference: value }))
               }
-              options={Array.isArray(payroll) ? payroll : []}
+              options={payroll || []}
             />
           </span>
-        </span>
+        </span> */}
         <span className="grid grid-cols-[40%_50%] gap-[10%]">
           <span className="flex flex-col gap-1">
             <h6 className="text-[#181336] text-[16px] font-[700]">
@@ -353,10 +386,30 @@ const UpdateMember = () => {
               disableCountryCode
               containerClass="!w-full"
               inputClass="phone-input-input !w-full"
-              value={formData?.phone}
+              value={formData.phone}
               onChange={(value) =>
                 setFormData((prev) => ({ ...prev, phone: value }))
               }
+            />
+          </span>
+        </span>
+        <span className="grid grid-cols-[40%_50%] gap-[10%]">
+          <span className="flex flex-col gap-1">
+            <h6 className="text-[#181336] text-[16px] font-[700]">Job Role</h6>
+            <p className="text-[#515B6F] text-[16px] font-[400]">
+              Please Provide Member Job Role
+            </p>
+          </span>
+          <span className="flex flex-col gap-2">
+            <label className="text-[#24272C] text-[16px] font-[700]">
+              Job Role
+            </label>
+            <Input
+              value={formData.jobRole}
+              className="!w-full"
+              placeholder="job role"
+              name="jobRole"
+              onChange={onInputChange}
             />
           </span>
         </span>
@@ -375,12 +428,12 @@ const UpdateMember = () => {
             </label>
             <InputNumber
               controls={false}
-              value={formData?.salary}
+              value={formData.salary}
               className="!w-full"
               placeholder="salary"
               required
               onChange={(e) => {
-                setFormData((prev) => ({ ...prev, salary: e }));
+                setFormData((prev) => ({ ...prev, salary: e as number }));
               }}
             />
           </span>
@@ -400,10 +453,9 @@ const UpdateMember = () => {
                 Address
               </label>
               <Input
-                value={formData?.address}
+                value={formData.address}
                 name="address"
                 onChange={onInputChange}
-                required
                 className="!w-full"
                 placeholder="Enter your address"
               />
@@ -415,7 +467,7 @@ const UpdateMember = () => {
                 </label>
                 <Input
                   name="lga"
-                  value={formData?.lga}
+                  value={formData.lga}
                   onChange={onInputChange}
                   className="!w-full"
                   placeholder="Enter your name"
@@ -427,7 +479,7 @@ const UpdateMember = () => {
                 </label>
                 <Input
                   name="state"
-                  value={formData?.state}
+                  value={formData.state}
                   onChange={onInputChange}
                   className="!w-full"
                   placeholder="Enter state"

@@ -37,12 +37,13 @@ const employeeOptions = [
   },
 ];
 const salary: any = "";
+const hireDate: any = "";
 const initialState = {
   email: "",
   employmentType: "",
   firstName: "",
   lastName: "",
-  hireDate: "",
+  hireDate,
   salary,
   accountNumber: "",
   bankName: "",
@@ -163,7 +164,7 @@ const AddManyMembers = () => {
             </label>
             <DatePicker
               onChange={(_, date) => {
-                setFormData((prev) => ({ ...prev, hireDate: date }));
+                setFormData((prev) => ({ ...prev, hireDate: date as string }));
               }}
               className="!w-full"
               placeholder="Hire Date"

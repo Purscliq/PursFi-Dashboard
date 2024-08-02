@@ -25,32 +25,55 @@ export const sidebarData: MenuProps["items"] = [
     key: "account",
   },
   {
-    label: <Link href="/payment">Payment</Link>,
+    label: "Payment",
     icon: <AiOutlineIdcard className=" font-bold" />,
-    key: "payment",
+    key: "payment-group",
+    children: [
+      {
+        label: <Link href="/payment">Payment</Link>,
+        key: "payment",
+      },
+      {
+        label: <Link href="/bill-payment">Bill Payment</Link>,
+        key: "bill-payment",
+      },
+      {
+        label: <Link href="/payment/batch">Batch Payment</Link>,
+        key: "payment/batch",
+      },
+    ],
   },
+
   {
     label: "Payroll",
     icon: <FaRegUser className=" font-bold" />,
-    key: "payroll",
+    key: "payroll-group",
     children: [
       {
-        label: <Link href="/payroll-overview">Overview</Link>,
-        icon: <FaRegUser className=" font-bold" />,
-        key: "payroll/overview",
+        label: (
+          <Link prefetch={false} href="/payroll">
+            Overview
+          </Link>
+        ),
+        key: "payroll",
       },
       {
-        label: <Link href="/payroll">Create Payroll</Link>,
-        icon: <FaRegUser className=" font-bold" />,
-        key: "payroll/settings",
+        label: <Link href="/payroll-setup?step=1">Setup</Link>,
+        key: "payroll-setup",
+      },
+      {
+        label: <Link href="/payroll-settings">Setting</Link>,
+        key: "payroll-settings",
       },
     ],
+    // disabled: true,
   },
   {
     label: <Link href="/transactions">Transaction</Link>,
     icon: <GrTransaction className=" font-bold" />,
     key: "transactions",
   },
+
   {
     label: <Link href="/invoice">Invoice</Link>,
     icon: <MdOutlineAdminPanelSettings className=" font-bold" />,
@@ -64,12 +87,12 @@ export const sidebarData: MenuProps["items"] = [
       {
         label: <Link href="/administration">Team Member</Link>,
         icon: <VscGitPullRequestGoToChanges className=" font-bold" />,
-        key: "payroll/overview",
+        key: "administration",
       },
       {
         label: <Link href="/roles">Roles And Perimission</Link>,
         icon: <FaRegUser className=" font-bold" />,
-        key: "payroll/settings",
+        key: "roles",
       },
     ],
   },
@@ -93,12 +116,17 @@ export const sidebarData: MenuProps["items"] = [
 export const activeKeys = [
   "dashboard",
   "account",
+  "bill-payment",
   "payment",
+  "payroll-setup",
+  "payroll-settings",
   "payroll",
   "transactions",
   "invoice",
   "contact",
   "administration",
+  "roles",
   "setting",
   "ticket",
+  "remita",
 ];

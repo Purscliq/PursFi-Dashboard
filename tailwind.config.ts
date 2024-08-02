@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "payroll-pattern": "url('/assets/circles-bg.png')",
+      },
     },
     fontSize: {
       xs: ".75rem",

@@ -82,7 +82,7 @@ const DashboardSider = () => {
                   business?.businessName?.charAt(0).toUpperCase() +
                     business?.businessName?.slice(1)}
               </p>
-              <p>
+              <span>
                 <p>
                   {user?.firstName &&
                     user?.firstName?.charAt(0).toUpperCase() +
@@ -91,7 +91,7 @@ const DashboardSider = () => {
                     user?.lastName?.charAt(0).toUpperCase() +
                       user?.lastName?.slice(1)}
                 </p>{" "}
-              </p>
+              </span>
             </span>
             <RiArrowDropDownLine className="cursor-pointer" size={25} />
           </summary>

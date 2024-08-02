@@ -22,7 +22,7 @@ const SuccessfulPaymentModal = ({
         <SuccessModalLogo />
         <h4 className="text-[28px] font-[700]">Successful</h4>
         <p className="text-[#515B6F] text-[18px] font-[400] text-center">
-          Transaction successfull and the payment is is currently being
+          Transaction successful and the payment is currently being
           processed .
         </p>
       </div>

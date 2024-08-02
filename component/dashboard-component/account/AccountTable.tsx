@@ -24,12 +24,14 @@ export interface DataType {
 export interface TableParams {
   pagination?: TablePaginationConfig;
 }
+const startDate: any = "";
+const endDate: any = "";
 const initialState = {
   userId: "",
   businessId: "",
-  startDate: "",
+  startDate,
   filterBy: "",
-  endDate: "",
+  endDate,
   amount: "",
   page: 1,
   perPage: 5,
@@ -117,7 +119,7 @@ const AccountTable = () => {
         </span>
       ),
       dataIndex: "amount",
-      render: (amount) => `${amount}`,
+      render: (amount) => `₦${amount}`,
       width: "20%",
     },
     {
@@ -180,7 +182,7 @@ const AccountTable = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [JSON.stringify(tableParams)]);
+  }, [tableParams.pagination?.current]);
   useEffect(() => {
     fetchTransactions({
       ...tableFilter,
@@ -208,9 +210,6 @@ const AccountTable = () => {
       ...prev,
       pagination,
     }));
-    // if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-    //   setData([]);
-    // }
   };
 
   return (
@@ -221,7 +220,7 @@ const AccountTable = () => {
           onChange={(_, date) =>
             setTableFilter((prev) => ({
               ...prev,
-              startDate: date,
+              startDate: date as string,
             }))
           }
           className="h-fit !w-[15rem]"
@@ -231,7 +230,7 @@ const AccountTable = () => {
           onChange={(_, date) =>
             setTableFilter((prev) => ({
               ...prev,
-              endDate: date,
+              endDate: date as string,
             }))
           }
           className="h-fit !w-[15rem]"
@@ -258,7 +257,7 @@ const AccountTable = () => {
         >
           <span className="flex items-center rounded-[5px] border border-[#B8C9C9] p-[1%] justify-self-end self-end">
             <FilterIcon />
-            <p className="text-[#202430] text-[16px] font-[500]">filter</p>
+            <p className="text-white text-[16px] font-[500]">filter</p>
           </span>
         </div>
       </div>

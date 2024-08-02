@@ -53,7 +53,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                   data?.data?.transactionType
                 )}`}
               >
-                {data?.data?.transactionType === "debit" ? "-" : "+"}
+                &#8358;{data?.data?.transactionType === "debit" ? "-" : "+"}
                 {data?.data?.amount}
               </h1>
               <p className="text-slate-700 mt-3 uppercase">
@@ -65,7 +65,7 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
               <div className="grid grid-cols-[40%_60%] gap-y-4 gap-x-[1%] px-[1%]">
                 <div className="text-slate-500 pr-2">Amount :</div>
                 <div className="leading-tight font-semibold">
-                  {data?.data?.amount}
+                  &#8358;{data?.data?.amount}
                 </div>
                 <div className="text-slate-500 pr-2">Date:</div>
                 <div className="leading-tight font-semibold">
@@ -79,14 +79,22 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
                 <div className="leading-tight font-semibold">
                   {data?.data?.accountName}
                 </div>{" "}
-                <div className="text-slate-500 pr-2">Bank Name:</div>
-                <div className="leading-tight font-semibold">
-                  {data?.data?.bankName}
-                </div>
-                <div className="text-slate-500 pr-2">Account Number:</div>
-                <div className="leading-tight font-semibold">
-                  {data?.data?.accountNumber}
-                </div>
+                {data?.data?.bankName && (
+                  <>
+                    <div className="text-slate-500 pr-2">Bank Name:</div>
+                    <div className="leading-tight font-semibold">
+                      {data?.data?.bankName}
+                    </div>
+                  </>
+                )}
+                {data?.data?.accountNumber && (
+                  <>
+                    <div className="text-slate-500 pr-2">Account Number:</div>
+                    <div className="leading-tight font-semibold">
+                      {data?.data?.accountNumber}
+                    </div>
+                  </>
+                )}
                 <div className="text-slate-500 pr-2">Charges Fee:</div>
                 <div className="leading-tight font-semibold">
                   &#8358;{data?.data?.fee || 0}
@@ -107,13 +115,17 @@ const AccountDrawal: React.FC<AccountDetailsProps> = ({
             <div className="my-6 space-y-4">
               <Button
                 type="primary"
-                className="!h-[3rem] !bg-[#000] w-full text-white hover:!text-white"
+                className="!h-[3rem] !bg-[#000] w-full !text-white hover:!text-white"
                 onClick={() => {
                   window.open(
                     `/receipt?reference=${data?.data?.reference}`,
                     "_blank"
                   );
                 }}
+                disabled={
+                  data?.data?.status !== "success" ||
+                  data?.data?.paymentStatus !== "success"
+                }
               >
                 Download Reciept
               </Button>

@@ -8,10 +8,12 @@ import {
   CustomDatePicker as DatePicker,
 } from "@/lib/AntdComponents";
 import { message } from "antd";
+const startDate: any = "";
+const endDate: any = "";
 const initialState = {
   businessId: "",
-  startDate: "",
-  endDate: "",
+  startDate,
+  endDate,
 };
 import { useAppSelector } from "@/store/hooks";
 const StatementModal = ({
@@ -84,7 +86,7 @@ const StatementModal = ({
             </label>
             <DatePicker
               onChange={(_, date) => {
-                setFormData((prev) => ({ ...prev, startDate: date }));
+                setFormData((prev) => ({ ...prev, startDate: date as string }));
               }}
               className="h-fit !w-full"
               placeholder="Start Date"
@@ -99,7 +101,7 @@ const StatementModal = ({
             </label>
             <DatePicker
               onChange={(_, date) => {
-                setFormData((prev) => ({ ...prev, endDate: date }));
+                setFormData((prev) => ({ ...prev, endDate: date as string }));
               }}
               className="h-fit !w-full"
               placeholder="End Date"

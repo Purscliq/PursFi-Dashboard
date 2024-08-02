@@ -7,6 +7,7 @@ import OwnerInfo from "./tabs/OwnerInfo";
 import BusinessDocs from "./tabs/BusinessDocs";
 import Review from "./tabs/Review";
 import { useAppSelector } from "@/store/hooks";
+import Pin from "./tabs/pinCreation";
 
 export type docsData = {
   Address: string;
@@ -77,6 +78,13 @@ const OnBoardingTabs = () => {
             setFormData={setFormData}
             formData={formData}
           />
+        ),
+      },
+      {
+        key: "5",
+        label: <span className="text-inherit">Pin</span>,
+        children: (
+         <Pin />
         ),
       },
     ],

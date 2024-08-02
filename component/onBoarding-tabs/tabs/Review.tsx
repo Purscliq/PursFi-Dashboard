@@ -24,7 +24,7 @@ const Review = ({
 }) => {
   const dispatch = useAppDispatch();
   const { business } = useAppSelector((state) => state?.user);
-  const { replace } = useRouter();
+  
   const [checked, setChecked] = useState(false);
   const [create, { isLoading }] = useCompleteBusinessOnboardingMutation();
   const dataBody = new FormData();
@@ -40,7 +40,8 @@ const Review = ({
           dispatch(
             updateBusiness({ ...business, isOnboardingCompleted: true })
           );
-          replace("/dashboard");
+          setActive("5");
+         
         })
         .catch((err) => {
           message.error(

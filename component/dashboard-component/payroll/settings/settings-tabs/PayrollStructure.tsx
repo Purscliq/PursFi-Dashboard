@@ -1,3 +1,4 @@
+"use client";
 import CheckIcon from "@/assets/icon/CheckIcon";
 import {
   CustomRadioGroup as RadioGroup,
@@ -6,14 +7,27 @@ import {
 import { FormEventHandler, useState } from "react";
 import StructureTable from "./StructureTable";
 import { dataType } from "./SettingsTabs";
-import { useCreatePayrollMutation } from "@/services/payrollService";
+import {
+  useCreatePayrollMutation,
+  useUpdatePayrollMutation,
+} from "@/services/payrollService";
 import { useAppSelector } from "@/store/hooks";
 import { message } from "antd";
+import { useRouter } from "next/navigation";
+import SpecialStructureTable from "./SpecialComponentStructure";
 interface DataType {
   key: React.Key;
-  name: string;
+  title: string;
   percentage: number;
-  tax: string;
+  taxable: string;
+  name: string;
+}
+interface SpeicalDataType {
+  key: React.Key;
+  title: string;
+  amount: number;
+  type: string;
+  name: string;
 }
 const PayrollStructure = ({
   formData,
@@ -27,57 +41,78 @@ const PayrollStructure = ({
   initialState: dataType;
 }) => {
   const [createPayroll, { isLoading }] = useCreatePayrollMutation();
+  const [updatePayroll, { isLoading: isUpdating }] = useUpdatePayrollMutation();
+  const { push } = useRouter();
   const businessId = useAppSelector((store) => store?.user?.user?.businessId);
-  const [dataSource, setDataSource] = useState<DataType[]>([
-    {
-      key: 0,
-      name: "Base Salary",
-      percentage: 50,
-      tax: "Yes",
-    },
-    {
-      key: 1,
-      name: "HRA",
-      percentage: 25,
-      tax: "Yes",
-    },
-    {
-      key: 2,
-      name: "LTA",
-      percentage: 15,
-      tax: "Yes",
-    },
-    {
-      key: 3,
-      name: "Special Allowance",
-      percentage: 10,
-      tax: "Yes",
-    },
-  ]);
+  const [dataSource, setDataSource] = useState<DataType[]>(
+    formData?.salaryStructures?.structure?.length > 0
+      ? formData?.salaryStructures?.structure?.map((e: any, i: any) => ({
+          key: i,
+          ...e,
+        }))
+      : [
+          {
+            key: 0,
+            name: "Base Salary",
+            percentage: 50,
+            taxable: "yes",
+            title: "Salary Component",
+          },
+        ]
+  );
+  const [specialDataSource, setSpecialDataSource] = useState<SpeicalDataType[]>(
+    formData?.salaryStructures?.structure?.length > 0
+      ? formData?.salaryStructures?.structure?.map((e: any, i: any) => ({
+          key: i,
+          ...e,
+        }))
+      : []
+  );
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     if (dataSource.length > 0) {
       const structure = dataSource.map((e) => ({
-        name: e.name,
-        percentage: e.percentage.toString(),
-        tax: e.tax === "Yes" ? true : false,
+        title: e.title,
+        name: e?.name,
+        percentage: e?.percentage,
+        taxable: e?.taxable,
       }));
-      createPayroll({
-        ...formData,
-        day: formData?.day?.split("-")[2],
-        structure,
-        businessId,
-      })
-        .unwrap()
-        .then((res) => {
-          console.log(res);
-          message.success("Payroll created successfully");
-          setFormData(initialState);
-          setActiveKey(1);
+      const specialStructure = specialDataSource.map((e) => ({
+        title: e.title,
+        name: e?.name,
+        amount: e?.amount,
+        type: e?.type,
+      }));
+      if (formData?.payrollId) {
+        updatePayroll({
+          ...formData,
+          salaryStructure: [...structure, ...specialStructure],
+          businessId,
         })
-        .catch((err) => {
-          console.log(err);
-        });
+          .unwrap()
+          .then((res) => {
+            push(`/payroll/preview?id=${res?.data?.id}`);
+            message.success("Payroll updated successfully");
+          })
+          .catch((err) => {
+            console.log(err);
+            message.error(err?.data?.responseDescription || "an error occured");
+          });
+      } else
+        createPayroll({
+          ...formData,
+          salaryStructure: [...structure, ...specialStructure],
+          businessId,
+        })
+          .unwrap()
+          .then((res) => {
+            push(`/payroll-preview?id=${res?.data?.id}`);
+            message.success("Payroll created successfully");
+            setFormData(initialState);
+          })
+          .catch((err) => {
+            message.error(err?.data?.responseDescription || "an error occured");
+          });
     }
   };
   return (
@@ -124,12 +159,16 @@ const PayrollStructure = ({
             dataSource={dataSource}
             setDataSource={setDataSource}
           />
+          <SpecialStructureTable
+            dataSource={specialDataSource}
+            setDataSource={setSpecialDataSource}
+          />
         </span>
       </span>
       <Button
         htmlType="submit"
         type="primary"
-        loading={isLoading}
+        loading={isLoading || isUpdating}
         className="!bg-black !ml-auto !w-[55%] self-end"
       >
         save
