@@ -95,7 +95,7 @@ const PinModal: React.FC<Props> = ({ modal, setModal,setPinValid }) => {
 
         <div>
           <h6 className=" text-base font-semibold">Enter Pin</h6>
-          <div className=" flex gap-5 mt-5">
+          <div className=" flex gap-5 mt-5 justify-center">
             {pin.map((digit, index) => (
               <input
                 key={index}
