@@ -110,12 +110,11 @@ const MakePayment = () => {
         })
         .catch((err) => {});
   }, [acctdetails.accountNumber, acctdetails.bankCode]);
-  const openModal: FormEventHandler<HTMLFormElement> = (e) =>{
-    e.preventDefault()
-    setModal(true)
-  }
+  const openModal: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    setModal(true);
+  };
   const handleSubmit = () => {
-    
     if (
       formdata.accountName &&
       formdata.transactionCategory === options[0].value
@@ -131,14 +130,14 @@ const MakePayment = () => {
           setIsModalOpen(true);
           setAcctDetails(initAcctDetails);
           setFormdata(initialState);
-          setIsPinValid(false)
+          setIsPinValid(false);
           // message.success("payment successful");
         })
         .catch((err) => {
           message.error(
             err?.data?.responseDescription || "something went wrong"
           );
-          setIsPinValid(false)
+          setIsPinValid(false);
         });
     else if (
       formdata.accountName &&
@@ -163,14 +162,14 @@ const MakePayment = () => {
           setIsModalOpen(true);
           setAcctDetails(initAcctDetails);
           setFormdata(initialState);
-          setIsPinValid(false)
+          setIsPinValid(false);
           message.success("payment queued successful");
         })
         .catch((err) => {
           message.error(
             err?.data?.responseDescription || "something went wrong"
           );
-          setIsPinValid(false)
+          setIsPinValid(false);
         });
     } else if (
       formdata.accountName &&
@@ -204,7 +203,7 @@ const MakePayment = () => {
           message.error(
             err?.data?.responseDescription || "something went wrong"
           );
-          setIsPinValid(false)
+          setIsPinValid(false);
         });
     }
   };
@@ -424,11 +423,7 @@ const MakePayment = () => {
         </Button>
       </form>
       <SuccessfulPaymentModal open={isModalOpen} setOpen={setIsModalOpen} />
-      <PinModal
-        modal={modal}
-        setModal={setModal}
-        setPinValid={setIsPinValid}
-       />
+      <PinModal modal={modal} setModal={setModal} setPinValid={setIsPinValid} />
     </>
   );
 };
