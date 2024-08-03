@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
+import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
 import { Modal, message } from "antd";
 import Airtel from "@/assets/Airtel Nigeria Logo.png";
 import Glo from "@/assets/Globacom Limited Logo.png";
@@ -20,6 +20,7 @@ import {
   useFundWalletRecurringMutation,
 } from "@/services/bill-payment";
 import { useAppSelector } from "@/store/hooks";
+import PinModal from "@/component/dashboard-component/Modals/pinModal";
 
 interface Props {
   provider: {
@@ -67,6 +68,9 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
     useFundWalletRecurringMutation();
   const [fundWalletScheduled, { isLoading: isLoadingScheduled }] =
     useFundWalletScheduledMutation();
+    const [modal, setModal] = useState(false);
+    const [isPinValid, setIsPinValid] = useState(false);
+  
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -78,11 +82,20 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const openModal: FormEventHandler<HTMLFormElement> = (e) =>{
+    e.preventDefault()
+    if (!formdata?.paymentType || !formdata?.amount) {
+      message.error("all fields are required");
+      return;
+    }
+    setModal(true)
+  }
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setFormdata((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+  
     if (!formdata?.paymentType || !formdata?.amount) {
       message.error("all fields are required");
     }
@@ -92,10 +105,12 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
         .then((res) => {
           setFormdata(initialState);
           handleCancel();
+          setIsPinValid(false);
           message.success("airtime wallet funded succesfully");
         })
         .catch((err) => {
           message.error(err?.data?.responseDescription || "an error occured");
+          setIsPinValid(false);
         });
     }
     if (formdata?.paymentType === options[1]?.value) {
@@ -104,9 +119,12 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
         .then((res) => {
           setFormdata(initialState);
           handleCancel();
+          setIsPinValid(false);
           message.success("airtime wallet funded succesfully");
         })
-        .catch((err) => {});
+        .catch((err) => {
+          setIsPinValid(false);
+        });
     }
     if (formdata?.paymentType === options[2]?.value) {
       fundWalletRecurring(formdata)
@@ -114,11 +132,20 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
         .then((res) => {
           setFormdata(initialState);
           handleCancel();
+          setIsPinValid(false);
           message.success("airtime wallet funded succesfully");
         })
-        .catch((err) => {});
+        .catch((err) => {
+          setIsPinValid(false);
+        });
     }
   };
+
+  useEffect(() => {
+    if (isPinValid) {
+      handleSubmit();
+    }
+  }, [isPinValid]);
 
   return (
     <>
@@ -141,7 +168,7 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
           {bundle[provider.network]}
           <p className="text-[24px] font-bold py-2">Airtime Top up</p>
         </span>
-        <form onSubmit={handleSubmit} className="mt-12 flex flex-col gap-3">
+        <form onSubmit={openModal} className="mt-12 flex flex-col gap-3">
           <span className="flex flex-col gap-2">
             <label
               htmlFor="amount"
@@ -236,6 +263,11 @@ const AirtimeTopupModal: React.FC<Props> = ({ provider }) => {
             </button>
           </span>
         </form>
+        <PinModal
+        modal={modal}
+        setModal={setModal}
+        setPinValid={setIsPinValid}
+         />
       </Modal>
     </>
   );

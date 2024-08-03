@@ -7,7 +7,7 @@ import {
 } from "@/lib/AntdComponents";
 import "react-phone-input-2/lib/style.css";
 import { RadioChangeEvent, message } from "antd";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import LinkIcon from "@/assets/icon/LinkIcon";
 import Image from "next/image";
@@ -22,6 +22,7 @@ import {
   useSellDataPlanMutation,
 } from "@/services/bill-payment";
 import { useAppSelector } from "@/store/hooks";
+import PinModal from "@/component/dashboard-component/Modals/pinModal";
 const amount: any = 0;
 const options1 = [
   { label: "instant payment", value: "instant" },
@@ -76,6 +77,13 @@ const MakePayment = ({ id }: { id: number }) => {
   ];
   const [selectedOption, setSelectedOption] = useState(options[0].value);
   const [productType, setProductType] = useState("");
+  const [modal, setModal] = useState(false);
+  const [isPinValid, setIsPinValid] = useState(false);
+
+  const openModal: FormEventHandler<HTMLFormElement> = (e) =>{
+    e.preventDefault()
+    setModal(true)
+  }
 
   const handleRadioChange = (e: RadioChangeEvent) => {
     setSelectedOption(e.target.value);
@@ -85,8 +93,8 @@ const MakePayment = ({ id }: { id: number }) => {
   const handleTabClick = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
   };
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  const handleSubmit  = () => {
+  
     if (!productType) {
       message?.error("select product type");
     }
@@ -111,9 +119,11 @@ const MakePayment = ({ id }: { id: number }) => {
           message.success("Transaction successful");
           setFormdata({ ...initialState });
           setSelectedOption(options[0].value);
+          setIsPinValid(false);
         })
         .catch((err) => {
           message.error(err?.data?.responseDescription || "Transaction failed");
+          setIsPinValid(false)
         });
     }
     if (productType === "airtime") {
@@ -131,15 +141,23 @@ const MakePayment = ({ id }: { id: number }) => {
           message.success("Transaction successful");
           setFormdata({ ...initialState });
           setSelectedOption(options[0].value);
+          setIsPinValid(false);
         })
         .catch((err) => {
           message.error(err?.data?.responseDescription || "Transaction failed");
+          setIsPinValid(false)
         });
     }
   };
+
+  useEffect(() => {
+    if (isPinValid) {
+      handleSubmit();
+    }
+  }, [isPinValid]);
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={openModal}
       className="grid grid-cols-1 gap-[1.5rem] px-[3%] relative mx-auto w-[70%]"
     >
       <div className="flex items-center space-x-4">
@@ -368,6 +386,12 @@ const MakePayment = ({ id }: { id: number }) => {
       >
         Cancel
       </Button>
+
+      <PinModal
+      modal={modal}
+      setModal={setModal}
+      setPinValid={setIsPinValid}
+       />
     </form>
   );
 };

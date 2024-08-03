@@ -38,8 +38,8 @@ export const sidebarData: MenuProps["items"] = [
         key: "bill-payment",
       },
       {
-        label: <Link href="/payment/batch">Batch Payment</Link>,
-        key: "payment/batch",
+        label: <Link href="/batch-payment">Batch Payment</Link>,
+        key: "batch-payment",
       },
     ],
   },
@@ -117,6 +117,7 @@ export const activeKeys = [
   "dashboard",
   "account",
   "bill-payment",
+  "batch-payment",
   "payment",
   "payroll-setup",
   "payroll-settings",

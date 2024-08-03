@@ -31,6 +31,7 @@ import { message } from "antd";
 import LinkIcon from "@/assets/icon/LinkIcon";
 import dayjs from "dayjs";
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
+import PinModal from "../../Modals/pinModal";
 const options = [
   { label: "instant payment", value: "instant_payment" },
   { label: "Schedule Payment", value: "schedule_payment" },
@@ -89,6 +90,8 @@ const MakePayment = () => {
   const { data } = useGetBanksQuery({});
   const [verify, { isLoading: isVerifying }] = useVerifyAccountMutation();
   const [transfer, { isLoading: isProcessing }] = useSingleTransferMutation();
+  const [modal, setModal] = useState(false);
+  const [isPinValid, setIsPinValid] = useState(false);
   const [recurring_transfer, { isLoading: isProcessing_recurring }] =
     useRecurringExpenditureMutation();
   const [scheduled_transfer, { isLoading: isProcessing_scheduled }] =
@@ -107,8 +110,11 @@ const MakePayment = () => {
         })
         .catch((err) => {});
   }, [acctdetails.accountNumber, acctdetails.bankCode]);
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const openModal: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    setModal(true);
+  };
+  const handleSubmit = () => {
     if (
       formdata.accountName &&
       formdata.transactionCategory === options[0].value
@@ -124,12 +130,14 @@ const MakePayment = () => {
           setIsModalOpen(true);
           setAcctDetails(initAcctDetails);
           setFormdata(initialState);
+          setIsPinValid(false);
           // message.success("payment successful");
         })
         .catch((err) => {
           message.error(
             err?.data?.responseDescription || "something went wrong"
           );
+          setIsPinValid(false);
         });
     else if (
       formdata.accountName &&
@@ -154,12 +162,14 @@ const MakePayment = () => {
           setIsModalOpen(true);
           setAcctDetails(initAcctDetails);
           setFormdata(initialState);
+          setIsPinValid(false);
           message.success("payment queued successful");
         })
         .catch((err) => {
           message.error(
             err?.data?.responseDescription || "something went wrong"
           );
+          setIsPinValid(false);
         });
     } else if (
       formdata.accountName &&
@@ -186,12 +196,14 @@ const MakePayment = () => {
           setIsModalOpen(true);
           setAcctDetails(initAcctDetails);
           setFormdata(initialState);
+          setIsPinValid(false);
           message.success("payment successful");
         })
         .catch((err) => {
           message.error(
             err?.data?.responseDescription || "something went wrong"
           );
+          setIsPinValid(false);
         });
     }
   };
@@ -223,10 +235,16 @@ const MakePayment = () => {
       return info.file;
     }
   };
+
+  useEffect(() => {
+    if (isPinValid) {
+      handleSubmit();
+    }
+  }, [isPinValid]);
   return (
     <>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={openModal}
         className="grid grid-cols-1 w-[80%] gap-[1.5rem] px-[3%] relative"
       >
         {isVerifying && (
@@ -405,6 +423,7 @@ const MakePayment = () => {
         </Button>
       </form>
       <SuccessfulPaymentModal open={isModalOpen} setOpen={setIsModalOpen} />
+      <PinModal modal={modal} setModal={setModal} setPinValid={setIsPinValid} />
     </>
   );
 };

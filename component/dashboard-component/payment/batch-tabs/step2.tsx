@@ -12,6 +12,7 @@ import { Bank, DataType } from '../batchPayment';
 import "@/component/customStyles/soa.css"
 import { useGetBanksQuery } from '@/services/disbursementService';
 import { DefaultOptionType } from 'antd/es/select';
+import { CloseOutlined } from "@ant-design/icons";
 
 
 
@@ -74,9 +75,21 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank, csvPars
         }
     }, [csvData, isSuccess, bank, isError, setData, setBank, csvParsed, setCsvParsed]);
 
-     
-      
+    const handleDelete = (key: string) => {
+        setData((prevData) => prevData.filter((item) => item.key !== key));
+    };
 
+    const CustomCheckbox: React.FC<{ record: DataType }> = ({ record }) => (
+        <span
+            className="custom-checkbox border-2 border-black rounded-sm flex items-center justify-center"
+            onClick={() => handleDelete(record.key)}
+            style={{ cursor: "pointer" }}
+        >
+            <CloseOutlined className="cancel-icon" style={{ strokeWidth: "5px" }} />
+        </span>
+    );
+
+        
     const isEditing = (record: DataType) => record.key === editingKey;
 
     const edit = (record: DataType) => {
@@ -109,6 +122,11 @@ const Step2: React.FC<Props> = ({ next, csvData, data, setData, setBank, csvPars
     };
 
     const columns: EditableColumnType<DataType>[] = [
+        {
+            title: '',
+            dataIndex: 'delete',
+            render: (_, record: DataType) => <CustomCheckbox record={record} />,
+        },
         {
             title: (
                 <span className="flex items-center space-x-2 text-[#7C8493] text-base">

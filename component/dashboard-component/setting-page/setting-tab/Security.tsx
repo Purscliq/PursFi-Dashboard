@@ -7,6 +7,7 @@ import {
   ChangeEventHandler,
   FormEventHandler,
   MouseEventHandler,
+  WheelEvent,
   useRef,
   ChangeEvent,
   KeyboardEvent,
@@ -40,6 +41,7 @@ const Security = () => {
   const inputRefsOld = useRef<(HTMLInputElement | null)[]>([]);
 
   const bussinesId = useAppSelector((state) => state.user.user.businessId);
+  
 
   useEffect(()=>{
     securityDetails(bussinesId).unwrap()
@@ -48,6 +50,8 @@ const Security = () => {
     })
     .catch(()=>{})
   },[])
+
+  
 
   ///HANDLE PASSWORD SUBMIT*******************
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -141,31 +145,47 @@ const Security = () => {
     }));
   };
 
+  const handleWheelConfirm = (e: WheelEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
   const handleChangePin = (value: string, index: number) => {
     const newPin = [...pin];
     newPin[index] = value;
-    if (value.length > 0 && index < 3) {
-      inputRefs.current[index + 1]?.focus();
+    if (/^\d*$/.test(value)) {
+      newPin[index] = value;
+      if (value.length > 0 && index < 3) {
+        inputRefs.current[index + 1]?.focus();
+      }
+      setPin(newPin);
     }
-    setPin(newPin);
   };
   const handleChangeConfirm = (value: string, index: number) => {
     const newPin = [...confirmPin];
     newPin[index] = value;
-    if (value.length > 0 && index < 3) {
-      inputRefsConfirm.current[index + 1]?.focus();
+    if (/^\d*$/.test(value)) {
+      newPin[index] = value;
+      if (value.length > 0 && index < 3) {
+        inputRefsConfirm.current[index + 1]?.focus();
+      }
+      setConfirmPin(newPin);
     }
-    setConfirmPin(newPin);
   };
   const handleChangeOld = (value: string, index: number) => {
     const newPin = [...oldPin];
     newPin[index] = value;
-    if (value.length > 0 && index < 3) {
-      inputRefsOld.current[index + 1]?.focus();
+    if (/^\d*$/.test(value)) {
+      newPin[index] = value;
+      if (value.length > 0 && index < 3) {
+        inputRefsOld.current[index + 1]?.focus();
+      }
+      setOldPin(newPin);
     }
-    setOldPin(newPin);
   };
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+    }
     if (e.key === "Backspace" && index > 0 && pin[index] === "") {
       inputRefs.current[index - 1]?.focus();
     }
@@ -174,6 +194,9 @@ const Security = () => {
     e: KeyboardEvent<HTMLInputElement>,
     index: number
   ) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+    }
     if (e.key === "Backspace" && index > 0 && confirmPin[index] === "") {
       inputRefsConfirm.current[index - 1]?.focus();
     }
@@ -182,10 +205,16 @@ const Security = () => {
     e: KeyboardEvent<HTMLInputElement>,
     index: number
   ) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+    }
     if (e.key === "Backspace" && index > 0 && oldPin[index] === "") {
       inputRefsOld.current[index - 1]?.focus();
     }
+    
   };
+
+  
 
   return (
     <div className="flex flex-col py-4 w-full space-y-3">
@@ -335,10 +364,12 @@ const Security = () => {
                 {oldPin.map((digit, index) => (
                   <input
                     key={index}
-                    type="number"
+                    type="text"  // Change to text to prevent number input scroll behavior
+                    inputMode="numeric"  // Ensures numeric keyboard on mobile devices
                     placeholder="0"
                     maxLength={1}
                     value={digit}
+                    onWheel={handleWheelConfirm}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       handleChangeOld(e.target.value, index)
                     }
@@ -359,10 +390,12 @@ const Security = () => {
                 {pin.map((digit, index) => (
                   <input
                     key={index}
-                    type="number"
+                    type="text"  // Change to text to prevent number input scroll behavior
+                    inputMode="numeric"  // Ensures numeric keyboard on mobile devices
                     placeholder="0"
                     maxLength={1}
                     value={digit}
+                    onWheel={handleWheelConfirm}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       handleChangePin(e.target.value, index)
                     }
@@ -383,10 +416,12 @@ const Security = () => {
                 {confirmPin.map((digit, index) => (
                   <input
                     key={index}
-                    type="number"
+                    type="text"  // Change to text to prevent number input scroll behavior
+                    inputMode="numeric"  // Ensures numeric keyboard on mobile devices
                     placeholder="0"
                     maxLength={1}
                     value={digit}
+                    onWheel={handleWheelConfirm}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       handleChangeConfirm(e.target.value, index)
                     }
