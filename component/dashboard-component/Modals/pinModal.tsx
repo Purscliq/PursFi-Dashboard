@@ -94,8 +94,7 @@ const PinModal: React.FC<Props> = ({ modal, setModal,setPinValid }) => {
         <p className=" text-center text-sm text-gray-400">Enter your 4-digit PIN to authorize this payment</p>
 
         <div className=" mt-10">
-          <h6 className=" text-base font-semibold">Enter Pin</h6>
-          <div className=" flex gap-5 mt-5 justify-center">
+          <div className=" flex gap-5 justify-center">
             {pin.map((digit, index) => (
               <input
                 key={index}
