@@ -5,7 +5,14 @@ import {
 import { useValidatePinMutation } from "@/services/securityService";
 import { useAppSelector } from "@/store/hooks";
 import { message } from "antd";
-import React, { useState, useRef, ChangeEvent, KeyboardEvent, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import React, {
+  useState,
+  useRef,
+  ChangeEvent,
+  KeyboardEvent,
+  useEffect,
+} from "react";
 
 interface Props {
   modal: boolean;
@@ -13,15 +20,18 @@ interface Props {
   setPinValid: (data: boolean) => void;
 }
 
-const PinModal: React.FC<Props> = ({ modal, setModal,setPinValid }) => {
+const PinModal: React.FC<Props> = ({ modal, setModal, setPinValid }) => {
   //const [modal, setModal] = useState(false);
   const [pin, setPin] = useState<string[]>(["", "", "", ""]);
   const inputRefsConfirm = useRef<(HTMLInputElement | null)[]>([]);
   const [countdown, setCountdown] = useState<number | null>(null);
-  const [errMessage, setErrMessage] = useState("")
+  const [errMessage, setErrMessage] = useState("");
   const [validatePin, { isLoading }] = useValidatePinMutation();
 
   const businessId = useAppSelector((state) => state.user.user.businessId);
+  const hasPin = useAppSelector((state) => state.user.hasPin.has_pin);
+
+  const router = useRouter();
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -35,7 +45,6 @@ const PinModal: React.FC<Props> = ({ modal, setModal,setPinValid }) => {
     }
     return () => clearTimeout(timer);
   }, [countdown]);
-
 
   const handleChangeConfirm = (value: string, index: number) => {
     const newPin = [...pin];
@@ -60,17 +69,21 @@ const PinModal: React.FC<Props> = ({ modal, setModal,setPinValid }) => {
   };
 
   const handleValidatePin = () => {
-    validatePin({ businessId, pin: pin.join("")}).unwrap()
-    .then(()=>{
-      setPinValid(true);
-      setPin(["","","",""])
-      setModal(false)
-    })
-    .catch((err)=>{
-      setErrMessage(err?.data?.message);
-      setCountdown(60);
-    
-    })
+    validatePin({ businessId, pin: pin.join("") })
+      .unwrap()
+      .then(() => {
+        setPinValid(true);
+        setPin(["", "", "", ""]);
+        setModal(false);
+      })
+      .catch((err) => {
+        setErrMessage(err?.data?.message);
+        setCountdown(60);
+      });
+  };
+
+  const settingPage = () => {
+    router.push("/setting");
   };
 
   return (
@@ -91,48 +104,64 @@ const PinModal: React.FC<Props> = ({ modal, setModal,setPinValid }) => {
         <h1 className=" text-center text-[28px] font-bold mt-10">
           Enter Your 4-digit Pin
         </h1>
-        <p className=" text-center text-sm text-gray-400">Enter your 4-digit PIN to authorize this payment</p>
+        <p className=" text-center text-sm text-gray-400">
+          {hasPin === true
+            ? " Enter your 4-digit PIN to authorize this payment"
+            : "You dont have a pin. Go to the setting page to create a new pin ."}
+        </p>
+        {hasPin === true ? (
+          <div className=" mt-10">
+            <div className=" flex gap-5 justify-center">
+              {pin.map((digit, index) => (
+                <input
+                  key={index}
+                  type="text" // Change to text to prevent number input scroll behavior
+                  inputMode="numeric" // Ensures numeric keyboard on mobile devices
+                  placeholder="0"
+                  maxLength={1}
+                  value={digit}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleChangeConfirm(e.target.value, index)
+                  }
+                  onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+                    handleKeyDownConfirm(e, index)
+                  }
+                  ref={(el) => {
+                    inputRefsConfirm.current[index] = el;
+                  }}
+                  className=" w-[50px] h-[50px] border border-gray-200 rounded-md p-1 text-center"
+                />
+              ))}
+            </div>
 
-        <div className=" mt-10">
-          <div className=" flex gap-5 justify-center">
-            {pin.map((digit, index) => (
-              <input
-                key={index}
-                type="text" // Change to text to prevent number input scroll behavior
-                inputMode="numeric" // Ensures numeric keyboard on mobile devices
-                placeholder="0"
-                maxLength={1}
-                value={digit}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleChangeConfirm(e.target.value, index)
-                }
-                onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
-                  handleKeyDownConfirm(e, index)
-                }
-                ref={(el) => {
-                  inputRefsConfirm.current[index] = el;
-                }}
-                className=" w-[50px] h-[50px] border border-gray-200 rounded-md p-1 text-center"
-              />
-            ))}
+            <div className=" mt-5">
+              <Button
+                loading={isLoading}
+                onClick={handleValidatePin}
+                className=" w-full bg-black text-white !h-10"
+                disabled={countdown !== null}
+              >
+                Send Payments
+              </Button>
+            </div>
+            {countdown && (
+              <div className=" text-red-600 font-bold text-lg text-center mt-5">
+                {countdown !== null && `(${countdown}s)`}
+              </div>
+            )}
           </div>
-
-          <div className=" mt-5">
-            <Button
-            loading={isLoading}
-            onClick={handleValidatePin}
-             className=" w-full bg-black text-white !h-10"
-             disabled={countdown !== null}
-             >
-              Send Payments
-            </Button>
-          </div>
-          {countdown && (
-          <div className=" text-red-600 font-bold text-lg text-center mt-5">
-             {countdown !== null && `(${countdown}s)`}
+        ) : (
+          <div>
+            <div className=" mt-5">
+              <Button
+                onClick={settingPage}
+                className=" w-full bg-black text-white !h-10"
+              >
+                Settings Page
+              </Button>
+            </div>
           </div>
         )}
-        </div>
       </Modal>
     </section>
   );

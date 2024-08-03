@@ -16,7 +16,10 @@ import {
 import { useUpdatePasswordMutation } from "@/services/authService";
 import { message } from "antd";
 import { passwordSchema } from "@/lib/validationSchema";
-import { useCreatePinMutation, useLazyGetSecurityDetailsQuery, useUpdatePinMutation } from "@/services/securityService";
+import {
+  useCreatePinMutation,
+  useUpdatePinMutation,
+} from "@/services/securityService";
 import { useAppSelector } from "@/store/hooks";
 
 const initialState = {
@@ -26,14 +29,12 @@ const initialState = {
 };
 const Security = () => {
   const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
-  const [updatePin, {isLoading: pinLoading}] = useUpdatePinMutation();
-  const [securityDetails, {data: userSecurity}] = useLazyGetSecurityDetailsQuery();
+  const [updatePin, { isLoading: pinLoading }] = useUpdatePinMutation();
   const [createPin, { isLoading: createPinLoading }] = useCreatePinMutation();
   const [formData, setFormData] = useState(initialState);
   const [validationError, setValidationError] = useState("");
   const [confirmValidationError, setConfirmValidationError] = useState("");
   const [pin, setPin] = useState<string[]>(["", "", "", ""]);
-  const [hasPin, setHasPin] = useState(false);
   const [oldPin, setOldPin] = useState<string[]>(["", "", "", ""]);
   const [confirmPin, setConfirmPin] = useState<string[]>(["", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -41,17 +42,7 @@ const Security = () => {
   const inputRefsOld = useRef<(HTMLInputElement | null)[]>([]);
 
   const bussinesId = useAppSelector((state) => state.user.user.businessId);
-  
-
-  useEffect(()=>{
-    securityDetails(bussinesId).unwrap()
-    .then((res)=>{
-      setHasPin(res.data.has_pin)
-    })
-    .catch(()=>{})
-  },[])
-
-  
+  const hasPin = useAppSelector((state) => state.user.hasPin.has_pin);
 
   ///HANDLE PASSWORD SUBMIT*******************
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -86,16 +77,15 @@ const Security = () => {
     })
       .unwrap()
       .then(() => {
-        message.success("Pin Creation successful")
-        setPin(["","","",""])
-        setConfirmPin(["","","",""])
-        setHasPin(true)
+        message.success("Pin Creation successful");
+        setPin(["", "", "", ""]);
+        setConfirmPin(["", "", "", ""]);
       })
       .catch((err) => {
         message.error("Pin creation failed");
       });
   };
-///HANDLES OLD PIN CHANGE*********************
+  ///HANDLES OLD PIN CHANGE*********************
   const handlePinChange: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     if (pin.join("") !== confirmPin.join("")) {
@@ -111,18 +101,17 @@ const Security = () => {
     })
       .unwrap()
       .then(() => {
-       message.success("Pin Update successful")
-       setPin(["","","",""])
-       setOldPin(["","","",""])
-       setConfirmPin(["","","",""])
+        message.success("Pin Update successful");
+        setPin(["", "", "", ""]);
+        setOldPin(["", "", "", ""]);
+        setConfirmPin(["", "", "", ""]);
       })
       .catch((err) => {
-        message.error( err?.data?.message || "Pin Update failed");
+        message.error(err?.data?.message || "Pin Update failed");
       });
-      
   };
 
-///HANDLE PASSWORD CHANGE**************************
+  ///HANDLE PASSWORD CHANGE**************************
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.name === "newPassword")
       passwordSchema
@@ -183,7 +172,7 @@ const Security = () => {
     }
   };
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
     }
     if (e.key === "Backspace" && index > 0 && pin[index] === "") {
@@ -194,7 +183,7 @@ const Security = () => {
     e: KeyboardEvent<HTMLInputElement>,
     index: number
   ) => {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
     }
     if (e.key === "Backspace" && index > 0 && confirmPin[index] === "") {
@@ -205,16 +194,13 @@ const Security = () => {
     e: KeyboardEvent<HTMLInputElement>,
     index: number
   ) => {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
     }
     if (e.key === "Backspace" && index > 0 && oldPin[index] === "") {
       inputRefsOld.current[index - 1]?.focus();
     }
-    
   };
-
-  
 
   return (
     <div className="flex flex-col py-4 w-full space-y-3">
@@ -358,14 +344,14 @@ const Security = () => {
             <h1 className="font-semibold">Change Pin</h1>{" "}
           </div>
           <div className="w-full md:w-[400px] flex flex-col space-y-4">
-            <div className={`${hasPin===false ? 'hidden' : 'block'}`}>
+            <div className={`${hasPin === false ? "hidden" : "block"}`}>
               <h3 className=" font-semibold text-sm mb-2">Old Pin</h3>
               <div className=" flex gap-5">
                 {oldPin.map((digit, index) => (
                   <input
                     key={index}
-                    type="text"  // Change to text to prevent number input scroll behavior
-                    inputMode="numeric"  // Ensures numeric keyboard on mobile devices
+                    type="text" // Change to text to prevent number input scroll behavior
+                    inputMode="numeric" // Ensures numeric keyboard on mobile devices
                     placeholder="0"
                     maxLength={1}
                     value={digit}
@@ -390,8 +376,8 @@ const Security = () => {
                 {pin.map((digit, index) => (
                   <input
                     key={index}
-                    type="text"  // Change to text to prevent number input scroll behavior
-                    inputMode="numeric"  // Ensures numeric keyboard on mobile devices
+                    type="text" // Change to text to prevent number input scroll behavior
+                    inputMode="numeric" // Ensures numeric keyboard on mobile devices
                     placeholder="0"
                     maxLength={1}
                     value={digit}
@@ -416,8 +402,8 @@ const Security = () => {
                 {confirmPin.map((digit, index) => (
                   <input
                     key={index}
-                    type="text"  // Change to text to prevent number input scroll behavior
-                    inputMode="numeric"  // Ensures numeric keyboard on mobile devices
+                    type="text" // Change to text to prevent number input scroll behavior
+                    inputMode="numeric" // Ensures numeric keyboard on mobile devices
                     placeholder="0"
                     maxLength={1}
                     value={digit}
@@ -436,10 +422,8 @@ const Security = () => {
                 ))}
               </div>
             </div>
-            {
-              hasPin === false ? 
-              (
-                <div className="flex justify-end items-end my-[1rem]">
+            {hasPin === false ? (
+              <div className="flex justify-end items-end my-[1rem]">
                 <Button
                   htmlType="submit"
                   type="primary"
@@ -449,9 +433,9 @@ const Security = () => {
                 >
                   Create Pin
                 </Button>
-                </div>
-              ) : (
-                <div className="flex justify-end items-end my-[1rem]">
+              </div>
+            ) : (
+              <div className="flex justify-end items-end my-[1rem]">
                 <Button
                   htmlType="submit"
                   type="primary"
@@ -461,11 +445,8 @@ const Security = () => {
                 >
                   Save Changes
                 </Button>
-                </div>
-              )
-            }
-           
-            
+              </div>
+            )}
           </div>
         </div>
       </form>
