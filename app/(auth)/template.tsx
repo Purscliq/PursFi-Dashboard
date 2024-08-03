@@ -9,6 +9,7 @@ import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import { useAppDispatch } from "@/store/hooks";
 import { updateUser, updateBusiness } from "@/store/userSlice";
+import { useLazyGetSecurityDetailsQuery } from "@/services/securityService";
 const Template = ({ children }: { children: React.ReactNode }) => {
   useLayoutEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -22,10 +23,12 @@ const Template = ({ children }: { children: React.ReactNode }) => {
     getBusiness,
     { isLoading: isFetchingBusiness, isUninitialized: isBusinessUninitialized },
   ] = useLazyBusinessProfileQuery({});
+  const [securityDetails,{}] = useLazyGetSecurityDetailsQuery();
   useEffect(() => {
     getUser({})
       .unwrap()
       .then((res) => {
+        securityDetails(res?.user?.businessId);
         dispatch(updateUser(res?.user));
         if (!res?.user?.businessId) {
           push("/signup-business");

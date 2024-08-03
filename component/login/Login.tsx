@@ -23,6 +23,7 @@ import {
 } from "@/services/authService";
 import { useAppDispatch } from "@/store/hooks";
 import { logOutAction } from "@/store/userSlice";
+import { useLazyGetSecurityDetailsQuery } from "@/services/securityService";
 
 const initailState = {
   email: "",
@@ -43,6 +44,8 @@ const Login = () => {
     useLazyProfileQuery();
   const [getBusinessProfile, { isLoading: businessProfileLoading }] =
     useLazyBusinessProfileQuery();
+    const [securityDetails,{}] = useLazyGetSecurityDetailsQuery();
+    
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -53,6 +56,7 @@ const Login = () => {
         getUserProfile({})
           .unwrap()
           .then((res) => {
+            securityDetails(res?.user?.businessId)
             if (!res?.user?.businessId) {
               setIsLoading(false);
               replace("/signup-business");

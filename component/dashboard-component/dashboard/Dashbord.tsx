@@ -1,6 +1,6 @@
 "use client";
 import { CustomSelect as Select } from "@/lib/AntdComponents";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DashboardChart from "./DashboardChart";
 import DashboardTable from "./DashboardTable";
 import DashboardModal from "./DashboardModal";
@@ -16,6 +16,7 @@ import {
 } from "@/services/transactionService";
 import Arrowleft from "@/assets/icon/Arrowleft";
 import ArrowRight from "@/assets/icon/ArrowRight";
+import { useLazyGetSecurityDetailsQuery } from "@/services/securityService";
 
 const Dashbord = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,8 +24,12 @@ const Dashbord = () => {
   const { data: stats } = useGetWalletHistoryQuery({});
   const { data: analysis } = useGetExpensesQuery({});
   const { data: status } = useGetTransactionStatusQuery("");
+ 
   const wallet = useAppSelector((store) => store?.user?.wallet);
+  
   const date = new Date();
+
+ 
   return (
     <div className="max-w-[1640px] flex flex-col p-4  h-screen overflow-y-scroll">
       <header className="flex flex-col md:flex-row justify-between items-center ">

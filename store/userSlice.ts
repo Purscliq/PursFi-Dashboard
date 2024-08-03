@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const user: Record<string, any> = {};
 const wallet: Record<string, any> = {};
 const business: Record<string, any> = {};
+const hasPin: Record<string, any> = {};
 const initialState = {
   logOutAction: false,
   networkError: false,
   user,
   wallet,
   business,
+  hasPin,
 };
 const userSlice = createSlice({
   name: "user",
@@ -34,6 +36,9 @@ const userSlice = createSlice({
     updateBusiness: (state, action) => {
       state.business = action.payload;
     },
+    updateUserPin: (state, action) => {
+      state.hasPin = action.payload;
+    },
   },
 });
 
@@ -44,5 +49,6 @@ export const {
   updateUser,
   updateBusiness,
   updateWallet,
+  updateUserPin,
 } = userSlice.actions;
 export default userSlice;
