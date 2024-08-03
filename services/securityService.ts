@@ -1,7 +1,10 @@
+import { updateUserPin } from "@/store/userSlice";
 import { ApiSlice } from "./Api";
 
 
-const securitySlice = ApiSlice.injectEndpoints({
+const securitySlice = ApiSlice.enhanceEndpoints({
+  addTagTypes: ["hasPin" as const,],
+}).injectEndpoints({
   
   endpoints: (builder) => ({
     createPin: builder.mutation({
@@ -22,6 +25,16 @@ const securitySlice = ApiSlice.injectEndpoints({
         query: (id) => ({
           url: `SecurityService/${id}`,
         }),
+        providesTags: ["hasPin"],
+        onQueryStarted(id, { dispatch, queryFulfilled }) {
+          queryFulfilled
+            .then((apiResponse) => {
+              dispatch(updateUserPin(apiResponse?.data?.data));
+            })
+            .catch(() => {
+              // dispatch(logOut());
+            });
+        },
       }),
     validatePin: builder.mutation({
         query: (body) => ({
