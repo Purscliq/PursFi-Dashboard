@@ -2,9 +2,10 @@
 import { useState, useRef, ChangeEvent, KeyboardEvent } from "react";
 import { CustomButton as Button } from "@/lib/AntdComponents";
 import { useCreatePinMutation } from "@/services/securityService";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { message } from "antd";
+import { updateUserPin } from "@/store/userSlice";
 
 const Pin = () => {
   const [pin, setPin] = useState<string[]>(["", "", "", ""]);
@@ -13,6 +14,7 @@ const Pin = () => {
   const inputRefsConfirm = useRef<(HTMLInputElement | null)[]>([]);
   const [createPin, { isLoading }] = useCreatePinMutation();
 
+  const dispatch = useAppDispatch()
   const bussinesId = useAppSelector((state) => state.user.user.businessId);
   const { replace } = useRouter();
   const handleChange = (value: string, index: number) => {
@@ -72,7 +74,8 @@ const Pin = () => {
       pinConfirmation: confirmPin.join(""),
     })
       .unwrap()
-      .then(() => {
+      .then((res) => {
+        dispatch(updateUserPin(res?.data?.data))
         replace("/dashboard");
       })
       .catch((err) => {
