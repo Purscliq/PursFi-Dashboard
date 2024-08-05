@@ -20,7 +20,8 @@ import {
   useCreatePinMutation,
   useUpdatePinMutation,
 } from "@/services/securityService";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { updateUserPin } from "@/store/userSlice";
 
 const initialState = {
   password: "",
@@ -41,6 +42,7 @@ const Security = () => {
   const inputRefsConfirm = useRef<(HTMLInputElement | null)[]>([]);
   const inputRefsOld = useRef<(HTMLInputElement | null)[]>([]);
 
+  const dispatch = useAppDispatch()
   const bussinesId = useAppSelector((state) => state.user.user.businessId);
   const hasPin = useAppSelector((state) => state.user.hasPin.has_pin);
 
@@ -76,10 +78,12 @@ const Security = () => {
       pinConfirmation: confirmPin.join(""),
     })
       .unwrap()
-      .then(() => {
+      .then((res) => {
         message.success("Pin Creation successful");
+        dispatch(updateUserPin(res?.data?.data))
         setPin(["", "", "", ""]);
         setConfirmPin(["", "", "", ""]);
+       
       })
       .catch((err) => {
         message.error("Pin creation failed");
